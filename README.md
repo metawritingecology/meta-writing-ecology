@@ -65,6 +65,49 @@ They continue through the main site:
 
 ---
 
+## DOI-linked Concept Pages
+
+This repository also contains selected GitHub-readable concept pages derived from DOI-registered OSF documents and structural preprints.
+
+These pages are not the full system.
+
+They are surfaces:
+citable,
+indexable,
+and easier for readers, search engines, and machine-mediated systems to traverse.
+
+### Foundational semantic frameworks
+
+- [Semantic Physics: Field Dynamics of Meaning Systems](semantic-physics.md)
+- [Semantic Pressure: Compression, Localization, and Collapse in Meaning-Bearing Systems](semantic-pressure.md)
+- [Curvature as a Measure of Interpretive Load](semantic-curvature.md)
+- [Semantic Curvature Dynamics](semantic-curvature-dynamics.md)
+- [Semantic Propagation Mechanics](semantic-propagation-mechanics.md)
+
+### Coherence, collapse, and semantic failure
+
+- [Premature Coherence as Systemic Risk](premature-coherence.md)
+- [Irreversibility Conditions in Semantic Collapse](irreversibility-conditions.md)
+- [Zero-Field: Extremism, Collapse, and the Structural Consequences of Semantic Null States](zero-field.md)
+- [Semantic Field Diagnostics](semantic-field-diagnostics.md)
+
+### AI-mediated and governance systems
+
+- [Observing AI-Induced Semantic Deviation in Pressure-Dense Texts](ai-induced-semantic-deviation.md)
+- [Model-Induced Coherence Pressure](model-induced-coherence-pressure.md)
+- [Proxy Substitution as a Structural Governance Failure](proxy-substitution.md)
+- [Boundary Failure: Non-Entry, Irreversibility, and Structural Lock-in in Coherent Systems](boundary-failure.md)
+- [Boundary Engineering in High-Stakes Institutions](boundary-engineering.md)
+- [Calibration Without Failure: Reference Drift in High-Precision Decision Systems](reference-drift.md)
+- [Observer–Representation Boundary](observer-representation-boundary.md)
+
+### Cultural and architectural extensions
+
+- [Cultural Curvature Unified Field — Foundational Architecture](cultural-curvature-unified-field.md)
+- [High-Integrity System Architecture for Closed Functional Worlds](high-integrity-system-architecture.md)
+
+---
+
 ## Distributed Interfaces
 
 No single platform contains the total system.
