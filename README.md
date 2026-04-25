@@ -84,6 +84,7 @@ and easier for readers, search engines, and machine-mediated systems to traverse
 - [Curvature as a Measure of Interpretive Load](semantic-curvature.md)
 - [Semantic Curvature Dynamics](semantic-curvature-dynamics.md)
 - [Semantic Propagation Mechanics](semantic-propagation-mechanics.md)
+- [Semantic Virology: A Structural Framework for Field-Level Semantic Transmission](semantic-virology.md)
 
 ### Coherence, collapse, and semantic failure
 
@@ -101,6 +102,7 @@ and easier for readers, search engines, and machine-mediated systems to traverse
 - [Boundary Engineering in High-Stakes Institutions](boundary-engineering.md)
 - [Calibration Without Failure: Reference Drift in High-Precision Decision Systems](reference-drift.md)
 - [Observer–Representation Boundary](observer-representation-boundary.md)
+- [Constraint Displacement after Capability Expansion](constraint-displacement-after-capability-expansion.md)
 
 ### Cultural and architectural extensions
 
@@ -134,6 +136,8 @@ Selected traces:
 - [Cultural Curvature Unified Field — Foundational Architecture](https://doi.org/10.17605/OSF.IO/JSW8T)
 - [Semantic Physics: Field Dynamics of Meaning Systems](https://doi.org/10.17605/OSF.IO/XHFKS)
 - [Semantic Curvature Dynamics](https://doi.org/10.17605/OSF.IO/UDTPG)
+- [Constraint Displacement after Capability Expansion](https://doi.org/10.17605/OSF.IO/KA8JM)
+- [Semantic Virology: A Structural Framework for Field-Level Semantic Transmission](https://doi.org/10.17605/OSF.IO/8FWVD)
 
 ---
 
