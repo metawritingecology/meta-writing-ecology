@@ -74,6 +74,7 @@ These pages are not the full system.
 They are surfaces:
 citable,
 indexable,
+searchable,
 and easier for readers, search engines, and machine-mediated systems to traverse.
 
 ### Foundational semantic frameworks
