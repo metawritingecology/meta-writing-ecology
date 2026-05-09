@@ -235,6 +235,9 @@ Cultural Curvature Unified Field is defined here as a high-dimensional theoretic
 
 ---
 
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
 ## Keywords
 
 Cultural Curvature; Cultural Curvature Unified Field; Civilizational Singularity; Civilizational Topology; Curvature-Based Modeling; Curvature Field Dynamics; Field-Memory Architecture; Geometric Cultural Analysis; High-Dimensional Conceptual Modeling; Identity Coherence Dynamics; Multi-Regime Cultural Systems; Non-Linear Cultural Geometry; Symbolic Density Fields; Symbolic Mass Formation; Unified Field Framework; Meta-Writing Ecology
