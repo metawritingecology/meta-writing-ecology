@@ -146,3 +146,9 @@ Irreversibility Conditions are defined here as the structural thresholds beyond 
 ## Keywords
 
 Irreversibility Conditions; Semantic Collapse; Meaning-Bearing Systems; Structural Thresholds; No-Return Regimes; Loss of Distinctive Resolution; Boundary Closure; Representational Dominance; Temporal Lock-In; Premature Coherence; Proxy Substitution; Semantic Curvature; AI-Mediated Systems; Governance; Institutional Stability; Structural Analysis; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
