@@ -144,3 +144,9 @@ Model-Induced Coherence Pressure is defined here as a content-independent condit
 ## Keywords
 
 Model-Induced Coherence Pressure; Coherence; Generative AI; LLM-Mediated Communication Systems; Semantic Environments; Structural Analysis; Alignment Overproduction; Premature Coherence; Proxy Substitution; Interpretive Variance; Representational Smoothness; Semantic Closure; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
