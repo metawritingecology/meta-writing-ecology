@@ -151,3 +151,9 @@ Semantic Pressure is defined here as a foundational structural concept for futur
 ## Keywords
 
 Semantic Pressure; Meaning-Bearing Systems; Semantic Compression; Interpretive Volume; Semantic Localization; Singular Pressure Collapse; Semantic Density; Structural Containment; Semantic Physics; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
