@@ -116,3 +116,9 @@ Huang, Tzu Yuan. *Semantic Physics: Field Dynamics of Meaning Systems*. OSF Regi
 ## Keywords
 
 Semantic Physics; semantic fields; meaning systems; semantic density; structural pressure; semantic pressure; semantic curvature; interpretive drift; recursive structures; observer interaction; relational fields; knowledge systems; cultural narratives; information ecosystems; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
