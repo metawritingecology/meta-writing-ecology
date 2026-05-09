@@ -158,3 +158,9 @@ Calibration is defined here not as corrective intervention after failure, but as
 ## Keywords
 
 Reference Drift; Calibration Without Failure; high-precision decision systems; alignment; calibration; governance; reference layer; decision systems; operational stability; internal coherence; reference baseline; reference inertia; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
