@@ -160,3 +160,9 @@ It defines an observational lens for structured comparison under machine-mediate
 ## Keywords
 
 AI-Induced Semantic Deviation; Pressure-Dense Texts; Semantic Pressure; Machine-Mediated Transformation; Pressure Flattening; Interpretive Substitution; Compression Drift; Selective Omission; Reweighted Emphasis; Structural Fidelity; AI Language Systems; Search-Mediated Summary; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
