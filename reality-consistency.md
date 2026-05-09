@@ -246,3 +246,9 @@ The Reality Consistency Model therefore asks not only whether something can be r
 ## Keywords
 
 Reality Consistency; First Recognizability; Sustained Reality; AI-Mediated Verification; Structural Consistency; Synthetic Media Verification; Source Consistency; Process Consistency; Form Consistency; Scale Consistency; Exchange Consistency; Subject-Position Consistency; Cross-Dimensional Validation; Plausibility Breakdown; Surface Coherence; Reality Retention; Reality Breakdown; Verification Burden; Semantic Deviation; Downstream Validation; Operational Usability; Structural Fidelity; Machine-Mediated Transformation; Meaning-Bearing Systems; Descriptive Framework; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
