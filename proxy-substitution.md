@@ -146,3 +146,9 @@ Proxy Substitution is defined here as the condition in which representation ceas
 ## Keywords
 
 Proxy Substitution; Proxy Collapse; governance failure; representation; AI-mediated systems; algorithmic governance; decision systems; meaning-bearing systems; semantic collapse; irreversibility; structural analysis; metric governance; representational dominance; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
