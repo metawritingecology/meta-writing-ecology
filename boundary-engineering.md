@@ -158,3 +158,9 @@ Boundary Engineering is defined here as a structural lens for understanding how 
 ## Keywords
 
 Boundary Engineering; Boundary Thickness; Entry Conditions; Boundary Failure; Interpretive Load; High-Stakes Institutions; Institutional Stability; Governance; Administrative Systems; AI-Mediated Systems; Meaning-Bearing Systems; Structural Analysis; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
