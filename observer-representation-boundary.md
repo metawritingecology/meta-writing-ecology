@@ -147,3 +147,9 @@ The Observer–Representation Boundary is defined here as the structural limit g
 ## Keywords
 
 Observer–Representation Boundary; Representation Ceiling; Visibility Gap; Recognition Collapse; Observability; System Observability; Information Structure; Structural Limits; Complex Systems; Coherent Systems; Structural Analysis; Theoretical Framework; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
