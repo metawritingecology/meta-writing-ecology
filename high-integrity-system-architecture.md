@@ -175,3 +175,9 @@ High-Integrity System Architecture is defined here as a constraint-driven, curva
 ## Keywords
 
 High-Integrity System Architecture; Closed Functional Worlds; Closed-World Architecture; Constraint-Driven Systems; Curvature Dynamics; System Stability Mechanics; Structural Coherence; Multi-Layer Ontology; Complexity Constraints; Information-Flow Architecture; Formal System Modeling; Worldbuilding Grammar; Artificial Reasoning Environments; Abstract Systems Design; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
