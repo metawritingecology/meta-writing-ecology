@@ -144,3 +144,9 @@ Semantic Field Diagnostics is defined here as a descriptive grammar for recogniz
 ## Keywords
 
 Semantic Field Diagnostics; Semantic Field; Drift; Projection; Boundary Substitution; Semantic Collapse; Meaning-Bearing Systems; Structural Analysis; Systemic Failure; Institutional Analysis; Governance; AI-Mediated Systems; Diagnostics; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
