@@ -153,3 +153,9 @@ Boundary Failure is defined here as the condition in which a system maintains co
 ## Keywords
 
 Boundary Failure; Non-Entry; Structural Irreversibility; Structural Lock-in; Coherent Systems; System Closure; System Dynamics; Boundary Saturation; Organizational Structure; Structural Analysis; Reference Drift; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
