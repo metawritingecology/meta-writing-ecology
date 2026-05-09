@@ -84,13 +84,14 @@ Further layers:
 ## Structural Documents
 
 Selected traces:
-- [Meta-Writing Ecology — Recursive Language System](https://doi.org/10.17605/OSF.IO/M2TXG)
-- [Meta-Writing Corpus 2025](https://doi.org/10.17605/OSF.IO/9VZ7R)
-- [Meta-Writing Ecology — Speech Layer](https://doi.org/10.17605/OSF.IO/B2GFA)
-- [Cultural Curvature Unified Field — Foundational Architecture](https://doi.org/10.17605/OSF.IO/JSW8T)
-- [Semantic Physics: Field Dynamics of Meaning Systems](https://doi.org/10.17605/OSF.IO/XHFKS)
-- [Semantic Curvature Dynamics](https://doi.org/10.17605/OSF.IO/UDTPG)
-- [Reality Consistency Model](https://doi.org/10.17605/OSF.IO/76ZJ2)
+
+- [Meta-Writing Ecology — Recursive Language System](https://doi.org/10.17605/OSF.IO/M2TXG) — recursive language system, structural recurrence, and the broader architecture of Meta-Writing Ecology.
+- [Meta-Writing Corpus 2025](https://doi.org/10.17605/OSF.IO/9VZ7R) — archived corpus layer containing the early recursive writing field and source materials.
+- [Meta-Writing Ecology — Speech Layer](https://doi.org/10.17605/OSF.IO/B2GFA) — spoken-interface layer for public compression, explanation, and external circulation.
+- [Cultural Curvature Unified Field — Foundational Architecture](https://doi.org/10.17605/OSF.IO/JSW8T) — foundational architecture for cultural curvature, field deformation, and structural interpretation.
+- [Semantic Physics: Field Dynamics of Meaning Systems](https://doi.org/10.17605/OSF.IO/XHFKS) — field-dynamic framework for semantic density, pressure, curvature, drift, and transformation.
+- [Semantic Curvature Dynamics](https://doi.org/10.17605/OSF.IO/UDTPG) — structural framework for migration, growth, dominance, and delayed cohesion in curved semantic space.
+- [Reality Consistency Model](https://doi.org/10.17605/OSF.IO/76ZJ2) — first recognizability, sustained reality, and structural verification in AI-mediated environments.
 
 ---
 
