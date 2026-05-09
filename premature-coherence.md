@@ -136,3 +136,9 @@ Premature Coherence is defined here as a structural condition in which semantic 
 ## Keywords
 
 Premature Coherence; systemic risk; meaning-bearing systems; semantic resolution; structural closure; semantic collapse; irreversibility; boundary failure; proxy substitution; semantic curvature; institutional stability; governance; AI-mediated systems; structural analysis; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
