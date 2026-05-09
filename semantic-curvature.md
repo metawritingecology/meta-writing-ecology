@@ -158,3 +158,9 @@ Semantic Curvature is defined here as the structural deformation of semantic spa
 ## Keywords
 
 Semantic Curvature; Interpretive Load; Semantic Compression; Meaning-Bearing Systems; Coherence Pressure; Premature Coherence; Irreversibility; Semantic Collapse; AI-Mediated Systems; Institutional Analysis; Governance; Structural Analysis; Meta-Writing Ecology
+
+---
+
+## Context Note
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system. In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, and fields of interpretation. It does not refer to environmental ecology, ecological science, biodiversity research, or nature writing.
