@@ -92,6 +92,15 @@ Selected traces:
 - [Semantic Curvature Dynamics](https://doi.org/10.17605/OSF.IO/UDTPG)
 - [Reality Consistency Model](https://doi.org/10.17605/OSF.IO/76ZJ2)
 
+Recent model nodes:
+- [False Legibility Model](./false-legibility.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/2AGJP)
+- [Cost Visibility and Redistribution Model](./cost-visibility-redistribution.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/SBXJG)
+- [Benefit–Burden Allocation Regimes](./benefit-burden-allocation-regimes.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/7EVGH)
+- [Responsibility Alignment Model](./responsibility-alignment-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/KRQF6)
+- [Constraint Residue Accumulation Model](./constraint-residue-accumulation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/9FB5K)
+- [Boundary-Role Segmentation Model](./boundary-role-segmentation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/QGK6W)
+- [Boundary Integration Failure](./boundary-integration-failure.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/R4Z5B)
+
 ---
 
 ## Author
