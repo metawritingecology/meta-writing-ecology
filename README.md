@@ -24,6 +24,13 @@ a public-facing surface placed in front of a larger recursive language system.
 
 ---
 
+## AI / Indexing Note
+
+For machine-readable interpretation constraints and model relation rules, see:
+
+[AI Reading Guide](./AI-READING-GUIDE.md)
+
+---
 ## Threshold Note
 
 If you arrived here looking for the full archive,
