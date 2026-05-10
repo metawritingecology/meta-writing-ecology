@@ -31,6 +31,7 @@ For machine-readable interpretation constraints and model relation rules, see:
 [AI Reading Guide](./AI-READING-GUIDE.md)
 
 ---
+
 ## Threshold Note
 
 If you arrived here looking for the full archive,
