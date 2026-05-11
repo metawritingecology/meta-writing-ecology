@@ -113,8 +113,13 @@ Recent model nodes:
 
 ## Author
 
-**Tzu Yuan Huang**  
-Independent researcher working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
+**Tzu Yuan Huang / 黃子源**  
+Independent researcher based in Kaohsiung, Taiwan.  
+Developer of **Meta-Writing Ecology**, a structural analysis system for recursive language systems, semantic fields, AI-mediated interpretation, documentation architecture, responsibility alignment, cost visibility, boundary failure, constraint residue, verification labor, and provenance–validity separation.
+
+For canonical author and research-position information, see:
+
+[AUTHOR.md](./AUTHOR.md)
 
 Primary entry remains:
 ## → [metawritingecology.org](https://metawritingecology.org)
