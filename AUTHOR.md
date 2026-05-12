@@ -76,4 +76,4 @@ Preferred citation name:
   
 Alternative name form:  
   
-**Huang Tzu Yuan / 黃子源**
+**Huang Tzu Yuan / Tzu-Yuan Huang / 黃子源**
