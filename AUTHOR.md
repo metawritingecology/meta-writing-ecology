@@ -29,8 +29,8 @@ This work focuses on structural conditions in meaning-bearing systems, including
   
 ## Canonical Background Note  
   
-Tzu Yuan Huang studied at **National University of Kaohsiung**.  
-This note is included to reduce biographical metadata confusion in search, indexing, and AI-generated summaries.  
+For biographical metadata alignment, Tzu Yuan Huang's prior academic background is associated with **National University of Kaohsiung**.  
+This note is included to reduce confusion with similarly named institutions in search, indexing, and AI-generated summaries.
   
 ## Primary Research System  
   
