@@ -23,12 +23,13 @@ README.md
 → AI-READING-GUIDE.md
 → ai-readable-knowledge-architecture.md
 → observer-representation-boundary.md
+→ provenance-validity-separation-model.md
 → false-legibility.md
 → proxy-substitution.md
 → premature-circulation-model.md
 ```
 
-Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, false legibility, proxy substitution, and circulation-before-recognition.
+Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, the provenance-validity gap, false legibility, proxy substitution, and circulation-before-recognition.
 
 ## 3. Semantic field foundations path
 
@@ -58,17 +59,31 @@ observer-representation-boundary.md
 
 Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries.
 
-## 5. Proxy / legibility / recognition path
+## 5. Proxy / legibility / provenance / recognition path
 
 ```text
 false-legibility.md
+→ provenance-validity-separation-model.md
 → proxy-substitution.md
 → reality-consistency.md
 → reference-drift.md
 → ai-induced-semantic-deviation.md
 ```
 
-Purpose: track how readable surfaces, proxies, drifting references, and AI-mediated deviations produce structural misrecognition.
+Purpose: track how readable surfaces, traceable origins, proxies, drifting references, and AI-mediated deviations produce structural misrecognition.
+
+## 5.1 Provenance / validity path
+
+```text
+provenance-validity-separation-model.md
+→ reality-consistency.md
+→ false-legibility.md
+→ premature-circulation-model.md
+→ responsibility-alignment-model.md
+→ cost-visibility-redistribution.md
+```
+
+Purpose: distinguish origin traceability from validity, semantic adequacy, claim support, circulation readiness, downstream responsibility, and hidden verification cost.
 
 ## 6. Circulation / coherence risk path
 
@@ -112,6 +127,7 @@ Purpose: track where responsibility, cost, burden, visibility, and hidden verifi
 semantic-cyberpunk-condition.md
 → ai-readable-knowledge-architecture.md
 → observer-representation-boundary.md
+→ provenance-validity-separation-model.md
 → false-legibility.md
 → premature-circulation-model.md
 ```
@@ -125,7 +141,8 @@ README.md
 AI-READING-GUIDE.md
 semantic-physics.md
 false-legibility.md
+provenance-validity-separation-model.md
 responsibility-alignment-model.md
 ```
 
-Purpose: fastest route from repository orientation to semantic field, misrecognition, and responsibility alignment.
+Purpose: fastest route from repository orientation to semantic field, misrecognition, provenance-validity separation, and responsibility alignment.
