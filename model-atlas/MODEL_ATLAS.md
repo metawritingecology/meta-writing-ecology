@@ -1,7 +1,5 @@
 # MODEL_ATLAS.md — GitHub-Visible Model Atlas v1.0
 
-This atlas groups the current `08_Github` Markdown files by content function rather than by filename order.
-
 
 ## Entry / Orientation
 
@@ -273,6 +271,17 @@ Structures where surface readability, proxy substitution, or apparent legibility
 - **Declared function:** A structural framework for how readable forms can become accepted before they are structurally recognized.
 
 - **Minimal formulation:** False Legibility describes the condition in which a form becomes readable before it becomes structurally recognized. It does not mean that nothing is visible. It means that what is visible becomes prematurely stabilized as enough. In compressed form: Operationally: The system fails not because the form was hidden. It fails because the form became legible too early.
+
+
+### [Provenance–Validity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems](../provenance-validity-separation-model.md)
+
+- **File:** `provenance-validity-separation-model.md`
+
+- **Type:** Model / Domain Declaration
+
+- **Declared function:** A structural model for distinguishing origin traceability from validity, semantic adequacy, evidentiary support, and operational fitness.
+
+- **Minimal formulation:** Provenance–Validity Separation describes the structural condition in which an object's origin, attribution, custody, generation history, transformation record, source trace, credential status, or provenance pathway can be established while validity remains unresolved. In compressed form: provenance can stabilize origin without stabilizing validity.
 
 
 ### [Proxy Substitution as a Structural Governance Failure](../proxy-substitution.md)
