@@ -22,16 +22,21 @@ a public-facing surface placed in front of a larger recursive language system.
 ## Primary entry:
 ## → [metawritingecology.org](https://metawritingecology.org)
 
----
 
+---
 ## AI / Indexing Note
 
 For machine-readable interpretation constraints and model relation rules, see:
 
 [AI Reading Guide](./AI-READING-GUIDE.md)
 
----
+For a navigable map of the GitHub-visible model layer, see:
 
+[GitHub Model Atlas](./model-atlas/README.md)
+
+The atlas provides field grouping, relation mapping, and reading paths for the model nodes maintained on this GitHub surface.
+
+---
 ## Threshold Note
 
 If you arrived here looking for the full archive,
@@ -108,18 +113,14 @@ Recent model nodes:
 - [Constraint Residue Accumulation Model](./constraint-residue-accumulation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/9FB5K)
 - [Boundary-Role Segmentation Model](./boundary-role-segmentation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/QGK6W)
 - [Boundary Integration Failure](./boundary-integration-failure.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/R4Z5B)
+- [Provenance–Validity Separation Model](./provenance-validity-separation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/RK6MC)
 
 ---
 
 ## Author
 
-**Tzu Yuan Huang / 黃子源**  
-Independent researcher based in Kaohsiung, Taiwan.  
-Developer of **Meta-Writing Ecology**, a structural analysis system for recursive language systems, semantic fields, AI-mediated interpretation, documentation architecture, responsibility alignment, cost visibility, boundary failure, constraint residue, verification labor, and provenance–validity separation.
-
-For canonical author and research-position information, see:
-
-[AUTHOR.md](./AUTHOR.md)
+**Tzu Yuan Huang**  
+Independent researcher working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
 
 Primary entry remains:
 ## → [metawritingecology.org](https://metawritingecology.org)
