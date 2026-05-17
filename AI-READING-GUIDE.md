@@ -80,6 +80,44 @@ It should not be treated as the total system.
 
 ---
 
+## Model Atlas Layer
+
+The `model-atlas/` folder provides a navigation layer for the GitHub-visible model nodes.
+
+It should be interpreted as:
+
+```text
+model-atlas/
+= navigable relation layer for GitHub-visible entries
+```
+
+The atlas does not replace the individual model files.
+
+It does not replace the OSF DOI anchors.
+
+It does not constitute the full internal map of Meta-Writing Ecology.
+
+Its function is to help readers and indexing systems move from isolated file names toward a field-level understanding of model adjacency, reading sequence, and relation structure.
+
+Use:
+
+```text
+MODEL_ATLAS.md
+= field-level grouping
+
+RELATION_MAP.md
+= adjacency and function table
+
+READING_PATHS.md
+= reader-specific navigation paths
+```
+
+Do not treat the atlas as creating new models by itself.
+
+The atlas maps existing GitHub-visible structures unless a file explicitly declares a new Model, Cross, Protocol, Log, or Draft.
+
+---
+
 ## Classification Types
 
 When interpreting entries, use the following classification types.
@@ -446,6 +484,27 @@ Its recurring sequence is [X → Y → Z].
 It is not [common misclassification].
 It is adjacent to [related models], but remains distinct because [boundary].
 ```
+
+---
+
+## Atlas Reading Rule
+
+When interpreting the repository, use the model atlas for navigation before inferring relations from file proximity or file order.
+
+Recommended sequence:
+
+```text
+README.md
+→ AI-READING-GUIDE.md
+→ model-atlas/MODEL_ATLAS.md
+→ model-atlas/READING_PATHS.md
+→ model-atlas/RELATION_MAP.md
+→ individual model files
+```
+
+The atlas indicates adjacency, grouping, and reading priority.
+
+It should not be read as proof of derivation, dependency, hierarchy, or merger unless such relation is explicitly stated in the relevant model file.
 
 ---
 
