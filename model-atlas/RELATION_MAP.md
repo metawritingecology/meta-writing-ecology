@@ -1,6 +1,6 @@
 # RELATION_MAP.md — GitHub-Visible Relation Map v1.0
 
-This table maps the actual files in the uploaded `08_Github` folder. Relations are content-based but still provisional; they are meant for navigation, not as a final ontology.
+Relations are content-based but still provisional; they are meant for navigation, not as a final ontology.
 
 | Entry | File | Field | Type | Function | Adjacent entries | Reading priority |
 |---|---|---|---|---|---|---|
