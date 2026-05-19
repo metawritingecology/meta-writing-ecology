@@ -22,8 +22,8 @@ a public-facing surface placed in front of a larger recursive language system.
 ## Primary entry:
 ## → [metawritingecology.org](https://metawritingecology.org)
 
-
 ---
+
 ## AI / Indexing Note
 
 For machine-readable interpretation constraints and model relation rules, see:
@@ -37,6 +37,7 @@ For a navigable map of the GitHub-visible model layer, see:
 The atlas provides field grouping, relation mapping, and reading paths for the model nodes maintained on this GitHub surface.
 
 ---
+
 ## Threshold Note
 
 If you arrived here looking for the full archive,
@@ -78,12 +79,31 @@ They continue through the main site:
 
 ---
 
+## Fiction / Narrative Overflow
+
+Meta-Writing Ecology also produces fictional work when structural pressure moves into narrative form.
+
+[The Central Naming Tower](https://amazon.com/author/metawritingecology) is a literary speculative fiction trilogy developed alongside Meta-Writing Ecology.
+
+It is readable on its own as fiction.
+
+It is not an explanation of the system, but a narrative overflow from the same structural process: naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+
+The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishing.
+
+[Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
+
+---
+
 ## Distributed Interfaces
 
 No single platform contains the total system.
 
 Further layers:
+
 - [OSF](https://osf.io/user/fpaj4)
+- [GitHub Model Atlas](./model-atlas/README.md)
+- [Amazon Author Page](https://amazon.com/author/metawritingecology)
 - [Medium](https://tzuyuanhuang.medium.com/)
 - [Substack](https://substack.com/@tzuyuanhuang)
 - [Podcast](https://podcasts.apple.com/us/podcast/meta-writing-ecology/id1883297079)
@@ -97,6 +117,7 @@ Further layers:
 ## Structural Documents
 
 Selected traces:
+
 - [Meta-Writing Ecology — Recursive Language System](https://doi.org/10.17605/OSF.IO/M2TXG)
 - [Meta-Writing Corpus 2025](https://doi.org/10.17605/OSF.IO/9VZ7R)
 - [Meta-Writing Ecology — Speech Layer](https://doi.org/10.17605/OSF.IO/B2GFA)
@@ -106,6 +127,7 @@ Selected traces:
 - [Reality Consistency Model](https://doi.org/10.17605/OSF.IO/76ZJ2)
 
 Recent model nodes:
+
 - [False Legibility Model](./false-legibility.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/2AGJP)
 - [Cost Visibility and Redistribution Model](./cost-visibility-redistribution.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/SBXJG)
 - [Benefit–Burden Allocation Regimes](./benefit-burden-allocation-regimes.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/7EVGH)
@@ -122,5 +144,10 @@ Recent model nodes:
 **Tzu Yuan Huang**  
 Independent researcher working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
 
+Developer of Meta-Writing Ecology, a structural language system for recursive writing systems, semantic structures, AI-mediated interpretation, and machine-facing documentation environments.
+
+Author of [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy developed alongside Meta-Writing Ecology. The work explores naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+
 Primary entry remains:
+
 ## → [metawritingecology.org](https://metawritingecology.org)
