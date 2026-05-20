@@ -91,7 +91,14 @@ It is not an explanation of the system, but a narrative overflow from the same s
 
 The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishing.
 
-[Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
+### Kindle Publications
+
+- [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
+- [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
+
+### Author Page
+
+- [Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
 
 ---
 
@@ -142,7 +149,7 @@ Recent model nodes:
 ## Author
 
 **Tzu Yuan Huang**  
-Independent researcher working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
+Independent researcher and writer working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
 
 Developer of Meta-Writing Ecology, a structural language system for recursive writing systems, semantic structures, AI-mediated interpretation, and machine-facing documentation environments.
 
