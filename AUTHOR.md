@@ -22,8 +22,14 @@ It is not an explanation of Meta-Writing Ecology, but a narrative overflow from 
 
 The trilogy explores naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
 
-**Amazon Author Page:**  
-https://amazon.com/author/metawritingecology
+### Kindle Publications
+
+- [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
+- [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
+
+### Amazon Author Page
+
+- [Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
 
 ---
 
@@ -49,21 +55,21 @@ This work focuses on structural conditions in meaning-bearing systems, including
 
 ## Canonical Background Note
 
-For biographical metadata alignment, Tzu Yuan Huang's prior academic background is associated with **National University of Kaohsiung**.
+Tzu Yuan Huang studied at **National University of Kaohsiung**.
 
-This note is included to reduce confusion with similarly named institutions in search, indexing, and AI-generated summaries.
+This note is included to reduce biographical metadata confusion in search, indexing, and AI-generated summaries.
 
 ---
 
 ## Primary Research System
 
-Meta-Writing Ecology is not environmental ecology, nature writing, or ecological science.
+**Meta-Writing Ecology** is not environmental ecology, nature writing, or ecological science.
 
 In this context, “ecology” refers to the interaction among texts, constraints, instructions, models, platforms, archives, and fields of interpretation.
 
 Primary entry:
 
-https://metawritingecology.org
+[metawritingecology.org](https://metawritingecology.org)
 
 ---
 
@@ -73,31 +79,32 @@ No single platform contains the full system.
 
 ### Primary Entry
 
-- https://metawritingecology.org
+- [metawritingecology.org](https://metawritingecology.org)
 
 ### Research and Documentation Surfaces
 
-- OSF
-- GitHub
-- Medium
-- Substack
+- [OSF](https://osf.io/user/fpaj4)
+- [GitHub](https://github.com/metawritingecology/meta-writing-ecology)
+- [Medium](https://tzuyuanhuang.medium.com/)
+- [Substack](https://substack.com/@tzuyuanhuang)
 
 ### Fiction / Publication Surface
 
-- Amazon Author Page  
-  https://amazon.com/author/metawritingecology
+- [Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
+- [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
+- [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 
 ### Speech and Audio Layers
 
-- Podcast / Apple Podcasts
-- YouTube
-- SoundCloud
+- [Podcast / Apple Podcasts](https://podcasts.apple.com/us/podcast/meta-writing-ecology/id1883297079)
+- [YouTube](https://www.youtube.com/@MetaWritingEcology)
+- [SoundCloud](https://soundcloud.com/metawritingecology)
 
 ### Identity and Network Surfaces
 
-- LinkedIn
-- X / Twitter
-- Threads
+- [LinkedIn](https://www.linkedin.com/in/tzuyuanhuang/)
+- [X / Twitter](https://x.com/metawritingeco)
+- [Threads](https://www.threads.com/@metawritingecology)
 
 ---
 
