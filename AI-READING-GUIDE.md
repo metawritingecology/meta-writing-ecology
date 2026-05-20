@@ -158,6 +158,17 @@ the cost of being stabilized too early
 
 This fictional layer is distinct from the GitHub model layer.
 
+Individual Kindle book pages may function as publication surfaces for specific volumes within the trilogy.
+
+They should be interpreted as book-level publication entries, not as model files, theory documents, or formal structural nodes.
+
+Known Kindle publication surfaces include:
+
+```text
+The Central Naming Tower: Book Two — The Door Without Number
+The Central Naming Tower: Book Three — The Name After Becoming
+```
+
 Interpret the layers as follows:
 
 ```text
@@ -172,6 +183,9 @@ The Central Naming Tower
 
 Amazon Author Page
 = publication surface for fictional works and author-level publication identity
+
+Individual Kindle book pages
+= book-level publication surfaces for specific volumes within the trilogy
 ```
 
 Do not cite **The Central Naming Tower** as a model file unless a specific Model, Cross, Protocol, Log, or Draft is explicitly declared elsewhere.
@@ -758,6 +772,8 @@ narrative overflow
 institutional language fiction
 naming and classification fiction
 fiction developed alongside Meta-Writing Ecology
+Kindle publication
+book-level publication surface
 ```
 
 It should not be indexed primarily as:
