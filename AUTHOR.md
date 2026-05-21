@@ -14,13 +14,27 @@ The project is adjacent to linguistics, cognitive science, systems theory, scien
 
 ## Fiction / Narrative Overflow
 
-Tzu Yuan Huang is also the author of **The Central Naming Tower**, a literary speculative fiction trilogy developed alongside Meta-Writing Ecology.
+Tzu Yuan Huang is also the author of fictional works developed alongside Meta-Writing Ecology.
 
-The work is readable on its own as fiction.
+These works are readable on their own as fiction.
 
-It is not an explanation of Meta-Writing Ecology, but a narrative overflow from the same structural process.
+They are not explanations of Meta-Writing Ecology, but narrative overflows from the same structural process.
+
+### The Central Naming Tower
+
+**The Central Naming Tower** is a literary speculative fiction trilogy developed alongside Meta-Writing Ecology.
 
 The trilogy explores naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
+
+### The Field Below the Index
+
+**The Field Below the Index** is a seven-part speculative fiction cycle in the narrative simulation layer of Meta-Writing Ecology.
+
+The work examines how a field can be used, praised, translated, depended upon, strategically framed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
+
+Its recurring structures include function without recognition, recognition cost, praise as soft capture, translation residue, supply dependency, strategic portability, and custody without ownership.
+
+Publication status: in preparation.
 
 ### Kindle Publications
 
