@@ -109,6 +109,7 @@ Publication status: in preparation.
 
 ### Kindle Publications
 
+- [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 
