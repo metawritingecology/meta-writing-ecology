@@ -83,13 +83,29 @@ They continue through the main site:
 
 Meta-Writing Ecology also produces fictional work when structural pressure moves into narrative form.
 
+These works are readable on their own as fiction.
+
+They are not explanations of the system, but narrative overflows from the same structural process.
+
+### The Central Naming Tower
+
 [The Central Naming Tower](https://amazon.com/author/metawritingecology) is a literary speculative fiction trilogy developed alongside Meta-Writing Ecology.
 
-It is readable on its own as fiction.
-
-It is not an explanation of the system, but a narrative overflow from the same structural process: naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+It explores naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
 
 The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishing.
+
+### The Field Below the Index
+
+**The Field Below the Index** is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
+
+It belongs to the narrative simulation layer of the system.
+
+The work examines how a field can be used, praised, translated, depended upon, strategically framed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
+
+Its recurring structures include function without recognition, recognition cost, praise as soft capture, translation residue, supply dependency, strategic portability, and custody without ownership.
+
+Publication status: in preparation.
 
 ### Kindle Publications
 
