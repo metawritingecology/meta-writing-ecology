@@ -183,6 +183,7 @@ the cost of being stabilized too early
 Known Kindle publication surfaces include:
 
 ```text
+The Central Naming Tower: Book One — The Right to Name
 The Central Naming Tower: Book Two — The Door Without Number
 The Central Naming Tower: Book Three — The Name After Becoming
 ```
