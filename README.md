@@ -97,26 +97,27 @@ The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishin
 
 ### The Field Below the Index
 
-**The Field Below the Index** is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
+[The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M) is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
 
 It belongs to the narrative simulation layer of the system.
 
-The work examines how a field can be used, praised, translated, depended upon, strategically framed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
+The work examines how a field can be used, recognized, praised, depended upon, translated, strategically framed, claimed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
 
 Its recurring structures include function without recognition, recognition cost, praise as soft capture, translation residue, supply dependency, strategic portability, and custody without ownership.
 
-Publication status: in preparation.
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### Kindle Publications
 
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
+- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
 
 ### Author Page
 
 - [Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
-
+ 
 ---
 
 ## Distributed Interfaces
