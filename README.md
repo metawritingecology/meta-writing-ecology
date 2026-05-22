@@ -171,7 +171,10 @@ Independent researcher and writer working on recursive writing systems, semantic
 
 Developer of Meta-Writing Ecology, a structural language system for recursive writing systems, semantic structures, AI-mediated interpretation, and machine-facing documentation environments.
 
-Author of [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy developed alongside Meta-Writing Ecology. The work explores naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+Author of fictional works developed alongside Meta-Writing Ecology, including:
+
+- [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy exploring naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
 
 Primary entry remains:
 
