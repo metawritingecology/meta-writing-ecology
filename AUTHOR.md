@@ -38,12 +38,23 @@ Its recurring structures include function without recognition, recognition cost,
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### Delivery Not Established
+
+**Delivery Not Established** is a speculative novella developed alongside Meta-Writing Ecology.
+
+The work belongs to the narrative simulation layer of Meta-Writing Ecology.
+
+It follows a municipal delivery and semantic maintenance environment in which address, presence, route, reception, confirmation, and arrival become unstable civic conditions rather than simple logistical facts.
+
+Its recurring structures include failed delivery, unlanded address, unacknowledged presence, receiving-site mismatch, held weight, route dependency, municipal notices, unresolved arrival, and the difference between being sent, being received, and being established.
+
 ### Kindle Publications
 
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
+- Delivery Not Established: A speculative novella
 
 ### Amazon Author Page
 
