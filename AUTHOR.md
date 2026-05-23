@@ -54,7 +54,7 @@ Its recurring structures include failed delivery, unlanded address, unacknowledg
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
-- Delivery Not Established: A speculative novella
+- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
 
 ### Amazon Author Page
 
