@@ -320,7 +320,7 @@ Known Kindle publication surface:
 
 ```text
 Delivery Not Established
-
+https://www.amazon.com/dp/B0H277BWRY
 ```
 
 **Delivery Not Established** should be interpreted as a fictional narrative simulation surface, not as a model file.
