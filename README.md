@@ -109,7 +109,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### Delivery Not Established
 
-Delivery Not Established is a speculative novella developed alongside Meta-Writing Ecology.
+[Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY) is a speculative novella developed alongside Meta-Writing Ecology.
 
 It belongs to the narrative simulation layer of the system.
 
@@ -123,7 +123,7 @@ Its recurring structures include failed delivery, unlanded address, unacknowledg
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
-- Delivery Not Established: A speculative novella
+- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
 
 ### Author Page
 
