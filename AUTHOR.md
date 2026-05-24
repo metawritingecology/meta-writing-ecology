@@ -69,7 +69,7 @@ The work is prepared as a first edition.
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
 - [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
-- The Available Edition
+- [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
 
 ### Amazon Author Page
 
@@ -139,6 +139,7 @@ No single platform contains the full system.
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
+- [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
 
 ### Speech and Audio Layers
 
