@@ -129,7 +129,19 @@ It examines how auxiliary materials, metadata, summaries, citations, catalogues,
 
 Its recurring structures include unavailable primary text, external-document narration, auxiliary-material dominance, machine-reading constraint, summary refusal, citation boundary, catalogue placeholder removal, availability without access, and the risk that absence will be converted into a substitute text.
 
-The work is prepared as a first edition.
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
+### The Office of Allocated Meaning
+
+[The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS) is a speculative novel developed alongside Meta-Writing Ecology.
+
+The work follows a civic infrastructure in which meaning is prepared, portioned, distributed, corrected, withheld, and sometimes refused as a public resource.
+
+It stages a city where no citizen is supposed to be left without explanation, but where an unassigned event is forced into public allocation before its structure has stabilized.
+
+Its recurring structures include public meaning supply, allocation pressure, meaning ration cards, surface preparation, civic explanation, unassigned events, premature portioning, surviving witness association, correction hold, ambiguity status, non-portion surfaces, non-allocation, empty acknowledgment objects, unassigned holding, and the risk that explanation itself becomes a form of misassignment.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ---
 
@@ -190,6 +202,7 @@ Author of fictional works developed alongside Meta-Writing Ecology, including:
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
 - [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY), a speculative novella exploring failed delivery, address, route, reception, confirmation, unresolved arrival, and the difference between being sent, being received, and being established.
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
+- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
 
 Primary entry remains:
 
