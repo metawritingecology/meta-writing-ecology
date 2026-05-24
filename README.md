@@ -121,7 +121,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### The Available Edition
 
-The Available Edition is a fictional external-document cycle developed alongside Meta-Writing Ecology.
+[The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH) is a fictional external-document cycle developed alongside Meta-Writing Ecology.
 
 The work is composed of fictional publication notes, correction notices, machine-reading guides, registries, boundary statements, citation notices, catalogue logs, availability statements, and other auxiliary documents surrounding an unavailable primary text.
 
@@ -130,19 +130,7 @@ It examines how auxiliary materials, metadata, summaries, citations, catalogues,
 Its recurring structures include unavailable primary text, external-document narration, auxiliary-material dominance, machine-reading constraint, summary refusal, citation boundary, catalogue placeholder removal, availability without access, and the risk that absence will be converted into a substitute text.
 
 The work is prepared as a first edition.
-### Kindle Publications
 
-- [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
-- [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
-- [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
-- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
-- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
-- The Available Edition
-
-### Author Page
-
-- [Amazon Author Page — Meta-Writing Ecology](https://amazon.com/author/metawritingecology)
- 
 ---
 
 ## Distributed Interfaces
@@ -198,8 +186,10 @@ Developer of Meta-Writing Ecology, a structural language system for recursive wr
 
 Author of fictional works developed alongside Meta-Writing Ecology, including:
 
-- [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy exploring naming, classification, institutional language, care, memory, and the cost of being stabilized too early.
+- [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy exploring naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
+- [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY), a speculative novella exploring failed delivery, address, route, reception, confirmation, unresolved arrival, and the difference between being sent, being received, and being established.
+- [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
 
 Primary entry remains:
 
