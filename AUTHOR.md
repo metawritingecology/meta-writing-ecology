@@ -30,6 +30,8 @@ Their relation to Meta-Writing Ecology should be understood as narrative overflo
 
 The trilogy explores naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
 
+The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishing.
+
 ### The Field Below the Index
 
 **The Field Below the Index: A Seven-Part Speculative Novella Cycle** is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
@@ -60,7 +62,19 @@ It examines how auxiliary materials, metadata, summaries, citations, catalogues,
 
 Its recurring structures include unavailable primary text, external-document narration, auxiliary-material dominance, machine-reading constraint, summary refusal, citation boundary, catalogue placeholder removal, availability without access, and the risk that absence will be converted into a substitute text.
 
-The work is prepared as a first edition.
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
+### The Office of Allocated Meaning
+
+**The Office of Allocated Meaning: A Speculative Novel** is a speculative novel developed alongside Meta-Writing Ecology.
+
+It follows a civic infrastructure in which meaning is prepared, portioned, distributed, corrected, withheld, and sometimes refused as a public resource.
+
+It stages a city where no citizen is supposed to be left without explanation, but where an unassigned event is forced into public allocation before its structure has stabilized.
+
+Its recurring structures include public meaning supply, allocation pressure, meaning ration cards, surface preparation, civic explanation, unassigned events, premature portioning, surviving witness association, correction hold, ambiguity status, non-portion surfaces, non-allocation, empty acknowledgment objects, unassigned holding, and the risk that explanation itself becomes a form of misassignment.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### Kindle Publications
 
@@ -70,6 +84,7 @@ The work is prepared as a first edition.
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
 - [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
+- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS)
 
 ### Amazon Author Page
 
@@ -139,7 +154,9 @@ No single platform contains the full system.
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
+- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
+- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS)
 
 ### Speech and Audio Layers
 
