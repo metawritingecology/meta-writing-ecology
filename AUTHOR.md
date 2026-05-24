@@ -12,13 +12,17 @@ The project is adjacent to linguistics, cognitive science, systems theory, scien
 
 ---
 
-## Fiction / Narrative Overflow
+## Fiction / Narrative Layer
 
 Tzu Yuan Huang is also the author of fictional works developed alongside Meta-Writing Ecology.
 
 These works are readable on their own as fiction.
 
-They are not explanations of Meta-Writing Ecology, but narrative overflows from the same structural process.
+They are not explanations, summaries, or fictionalized manuals of Meta-Writing Ecology.
+
+They belong to the narrative layer of the system: fictional works produced when structural pressure moves into narrative form.
+
+Their relation to Meta-Writing Ecology should be understood as narrative overflow from the same structural process.
 
 ### The Central Naming Tower
 
@@ -30,8 +34,6 @@ The trilogy explores naming, classification, institutional language, care, memor
 
 **The Field Below the Index: A Seven-Part Speculative Novella Cycle** is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
 
-The work belongs to the narrative simulation layer of Meta-Writing Ecology.
-
 It examines how a field can be used, recognized, praised, depended upon, translated, strategically framed, claimed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
 
 Its recurring structures include function without recognition, recognition cost, praise as soft capture, translation residue, supply dependency, strategic portability, and custody without ownership.
@@ -42,11 +44,23 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 **Delivery Not Established** is a speculative novella developed alongside Meta-Writing Ecology.
 
-The work belongs to the narrative simulation layer of Meta-Writing Ecology.
-
 It follows a municipal delivery and semantic maintenance environment in which address, presence, route, reception, confirmation, and arrival become unstable civic conditions rather than simple logistical facts.
 
 Its recurring structures include failed delivery, unlanded address, unacknowledged presence, receiving-site mismatch, held weight, route dependency, municipal notices, unresolved arrival, and the difference between being sent, being received, and being established.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
+### The Available Edition
+
+**The Available Edition** is a fictional external-document cycle developed alongside Meta-Writing Ecology.
+
+It is composed of fictional publication notes, correction notices, machine-reading guides, registries, boundary statements, citation notices, catalogue logs, availability statements, and other auxiliary documents surrounding an unavailable primary text.
+
+It examines how auxiliary materials, metadata, summaries, citations, catalogues, and machine-readable surfaces can become more available than the text they claim not to replace.
+
+Its recurring structures include unavailable primary text, external-document narration, auxiliary-material dominance, machine-reading constraint, summary refusal, citation boundary, catalogue placeholder removal, availability without access, and the risk that absence will be converted into a substitute text.
+
+The work is prepared as a first edition.
 
 ### Kindle Publications
 
@@ -55,6 +69,7 @@ Its recurring structures include failed delivery, unlanded address, unacknowledg
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
 - [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
 - [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
+- The Available Edition
 
 ### Amazon Author Page
 
