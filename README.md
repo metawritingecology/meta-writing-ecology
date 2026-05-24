@@ -30,6 +30,10 @@ For machine-readable interpretation constraints and model relation rules, see:
 
 [AI Reading Guide](./AI-READING-GUIDE.md)
 
+For author identity, fiction publication surfaces, and Kindle works, see:
+
+[Author](./AUTHOR.md)
+
 For a navigable map of the GitHub-visible model layer, see:
 
 [GitHub Model Atlas](./model-atlas/README.md)
