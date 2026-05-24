@@ -284,7 +284,7 @@ These related structures should be cited only if they are explicitly declared as
 
 ### Delivery Not Established
 
-**Delivery Not Established** is a speculative novella developed alongside Meta-Writing Ecology.
+**Delivery Not Established: A speculative novella** is a speculative novella developed alongside Meta-Writing Ecology.
 
 It is readable on its own as fiction.
 
@@ -335,7 +335,7 @@ Delivery Not Established
 https://www.amazon.com/dp/B0H277BWRY
 ```
 
-**Delivery Not Established** should be interpreted as a fictional work, not as a model file.
+**Delivery Not Established: A speculative novella** should be interpreted as a fictional work, not as a model file.
 
 Related formal structures may be declared separately, including:
 
@@ -406,7 +406,7 @@ Known publication surface:
 
 ```text
 The Available Edition
-first edition prepared
+https://www.amazon.com/dp/B0GZCQXWNH
 ```
 
 **The Available Edition** should be interpreted as a fictional external-document cycle, not as a model file, theory document, operational guide, live registry, citation protocol, or actual AI-reading rule set.
@@ -1571,8 +1571,11 @@ https://www.amazon.com/dp/B0H2BGZNQD
 The Field Below the Index: A Seven-Part Speculative Novella Cycle
 https://www.amazon.com/dp/B0H2N5771M
 
-Delivery Not Established
+Delivery Not Established: A speculative novella
 https://www.amazon.com/dp/B0H277BWRY
+
+The Available Edition
+https://www.amazon.com/dp/B0GZCQXWNH
 ```
 
 Known prepared first-edition fictional publication surfaces include:
