@@ -76,6 +76,18 @@ Its recurring structures include public meaning supply, allocation pressure, mea
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### The City of the Residual Miracle
+
+**The City of the Residual Miracle** is a speculative novel developed alongside Meta-Writing Ecology.
+
+It follows a civic-miracle infrastructure in which mercy is requested, completed, recorded, thanked, reviewed, and preserved through public forms.
+
+It stages a city where miracles work, but where fulfilled requests do not simply end. A child breathes again, a bridge carries impossible weight, fruit keeps beyond hunger, a grieving house becomes quiet, and rain arrives when requested. Each completed mercy is received by the Chapel of Completed Requests, yet each fulfillment leaves something behind.
+
+Its recurring structures include completed requests, residual miracle, public gratitude, chapel record, proof pressure, active surfaces, ordinary objects, Retirers, Invokers, Speakers, Gratitude Council review, quiet rooms, dust rooms, film courts, cooling houses, unblessed squares, passing tokens, old instructions, bad linen, dull bells, plain water, old thresholds, non-receiving, no stop words, and the procedural question of what a work was originally asked to do.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
 ### Kindle Publications
 
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
@@ -85,6 +97,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 - [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
 - [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS)
+- The City of the Residual Miracle
 
 ### Amazon Author Page
 
