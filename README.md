@@ -147,6 +147,18 @@ Its recurring structures include public meaning supply, allocation pressure, mea
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### The City of the Residual Miracle
+
+The City of the Residual Miracle is a speculative novel developed alongside Meta-Writing Ecology.
+
+The work follows a civic-miracle infrastructure in which mercy is requested, completed, recorded, thanked, reviewed, and preserved through public forms.
+
+It stages a city where miracles work, but where fulfilled requests do not simply end. A child breathes again, a bridge carries impossible weight, fruit keeps beyond hunger, a grieving house becomes quiet, and rain arrives when requested. Each completed mercy is received by the Chapel of Completed Requests, yet each fulfillment leaves something behind.
+
+Its recurring structures include completed requests, residual miracle, public gratitude, chapel record, proof pressure, active surfaces, ordinary objects, Retirers, Invokers, Speakers, Gratitude Council review, quiet rooms, dust rooms, film courts, cooling houses, unblessed squares, passing tokens, old instructions, bad linen, dull bells, plain water, old thresholds, non-receiving, no stop words, and the procedural question of what a work was originally asked to do.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
 ---
 
 ## Distributed Interfaces
@@ -207,6 +219,7 @@ Author of fictional works developed alongside Meta-Writing Ecology, including:
 - [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY), a speculative novella exploring failed delivery, address, route, reception, confirmation, unresolved arrival, and the difference between being sent, being received, and being established.
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
 - [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
+- The City of the Residual Miracle, a speculative novel exploring completed requests, residual miracles, public gratitude, chapel record, proof pressure, active surfaces, quiet rooms, non-receiving, plain water, old thresholds, and the institutional handling of fulfilled work that may not have fully left.
 
 Primary entry remains:
 
