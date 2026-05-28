@@ -105,7 +105,7 @@ The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishin
 
 ### The Field Below the Index
 
-[The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M) is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
+[The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M) is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
 
 The work examines how a field can be used, recognized, praised, depended upon, translated, strategically framed, claimed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
 
@@ -137,7 +137,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### The Office of Allocated Meaning
 
-[The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS) is a speculative novel developed alongside Meta-Writing Ecology.
+[The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS) is a speculative novel developed alongside Meta-Writing Ecology.
 
 The work follows a civic infrastructure in which meaning is prepared, portioned, distributed, corrected, withheld, and sometimes refused as a public resource.
 
@@ -149,7 +149,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
 ### The City of the Residual Miracle
 
-The City of the Residual Miracle is a speculative novel developed alongside Meta-Writing Ecology.
+[The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7) is a speculative novel developed alongside Meta-Writing Ecology.
 
 The work follows a civic-miracle infrastructure in which mercy is requested, completed, recorded, thanked, reviewed, and preserved through public forms.
 
@@ -215,11 +215,11 @@ Developer of Meta-Writing Ecology, a structural language system for recursive wr
 Author of fictional works developed alongside Meta-Writing Ecology, including:
 
 - [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy exploring naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
-- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
+- [The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
 - [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY), a speculative novella exploring failed delivery, address, route, reception, confirmation, unresolved arrival, and the difference between being sent, being received, and being established.
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
-- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
-- The City of the Residual Miracle, a speculative novel exploring completed requests, residual miracles, public gratitude, chapel record, proof pressure, active surfaces, quiet rooms, non-receiving, plain water, old thresholds, and the institutional handling of fulfilled work that may not have fully left.
+- [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
+- [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7), a speculative novel exploring completed requests, residual miracles, public gratitude, chapel record, proof pressure, active surfaces, quiet rooms, non-receiving, plain water, old thresholds, and the institutional handling of fulfilled work that may not have fully left.
 
 Primary entry remains:
 
