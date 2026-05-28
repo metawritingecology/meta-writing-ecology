@@ -93,11 +93,11 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
-- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
-- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
+- [The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M)
+- [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY)
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
-- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS)
-- The City of the Residual Miracle
+- [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS)
+- [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7)
 
 ### Amazon Author Page
 
@@ -166,10 +166,11 @@ No single platform contains the full system.
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
 - [The Central Naming Tower: Book Two — The Door Without Number](https://www.amazon.com/dp/B0H27831ZV)
 - [The Central Naming Tower: Book Three — The Name After Becoming](https://www.amazon.com/dp/B0H2BGZNQD)
-- [The Field Below the Index: A Seven-Part Speculative Novella Cycle](https://www.amazon.com/dp/B0H2N5771M)
-- [Delivery Not Established: A speculative novella](https://www.amazon.com/dp/B0H277BWRY)
+- [The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M)
+- [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY)
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
-- [The Office of Allocated Meaning: A Speculative Novel](https://www.amazon.com/dp/B0H2RXS9LS)
+- [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS)
+- [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7)
 
 ### Speech and Audio Layers
 
