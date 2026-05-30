@@ -88,6 +88,18 @@ Its recurring structures include completed requests, residual miracle, public gr
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### The Repair of Neglected Wings
+
+**The Repair of Neglected Wings** is a literary speculative novel developed alongside Meta-Writing Ecology.
+
+It follows repair technician Ira Quell after a midnight noise complaint brings her to Glassmere Heights, a luxury residential tower where residents hear something moving inside the walls. What first appears to be a local sound problem becomes an investigation into old drainage lines, service corridors, restricted archives, source lists, repair boundaries, delayed records, and a responsibility transfer that was never properly received.
+
+It stages a city where ordinary administrative language can become physically consequential: a summary can erase a source, a wrong label can move harm from one surface to another, and a room can become quiet by learning how to hold what no office agreed to receive.
+
+Its recurring structures include neglected wings, repair boundaries, responsibility sheets, source lists, quiet rooms, background frequencies, temporary receiving, old drainage maps, resident reports, delayed receipt, archive restriction, non-reading perimeters, civic memory, unresolved transfer records, procedural closure, and the danger of mistaking silence for repair.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
 ### Kindle Publications
 
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
@@ -98,6 +110,7 @@ The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
 - [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS)
 - [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7)
+- [The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55)
 
 ### Amazon Author Page
 
@@ -171,6 +184,7 @@ No single platform contains the full system.
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH)
 - [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS)
 - [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7)
+- [The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55)
 
 ### Speech and Audio Layers
 
