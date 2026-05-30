@@ -93,7 +93,7 @@ They are not explanations, summaries, or fictionalized manuals of the system.
 
 They belong to the narrative layer of Meta-Writing Ecology: fictional works produced when structural pressure moves into narrative form.
 
-Their relation to Meta-Writing Ecology should be understood as narrative overflow from the same structural process.
+Their relation to Meta-Writing Ecology should be understood as narrative overflow from the same structural process: naming, indexing, delivery, availability, allocation, residual completion, repair, responsibility transfer, classification, institutional language, and source conditions.
 
 ### The Central Naming Tower
 
@@ -159,6 +159,18 @@ Its recurring structures include completed requests, residual miracle, public gr
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### The Repair of Neglected Wings
+
+[The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55) is a literary speculative novel developed alongside Meta-Writing Ecology.
+
+The work follows repair technician Ira Quell after a midnight noise complaint brings her to Glassmere Heights, a luxury residential tower where residents hear something moving inside the walls. What first appears to be a local sound problem becomes an investigation into old drainage lines, service corridors, restricted archives, source lists, repair boundaries, delayed records, and a responsibility transfer that was never properly received.
+
+It stages a city where ordinary administrative language can become physically consequential: a summary can erase a source, a wrong label can move harm from one surface to another, and a room can become quiet by learning how to hold what no office agreed to receive.
+
+Its recurring structures include neglected wings, repair boundaries, responsibility sheets, source lists, quiet rooms, background frequencies, temporary receiving, old drainage maps, resident reports, delayed receipt, archive restriction, non-reading perimeters, civic memory, unresolved transfer records, procedural closure, and the danger of mistaking silence for repair.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
 ---
 
 ## Distributed Interfaces
@@ -220,6 +232,7 @@ Author of fictional works developed alongside Meta-Writing Ecology, including:
 - [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
 - [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
 - [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7), a speculative novel exploring completed requests, residual miracles, public gratitude, chapel record, proof pressure, active surfaces, quiet rooms, non-receiving, plain water, old thresholds, and the institutional handling of fulfilled work that may not have fully left.
+- [The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55), a literary speculative novel exploring repair boundaries, neglected infrastructure, delayed records, responsibility transfer, source lists, quiet rooms, civic memory, administrative language, and the forms of harm that survive by being called ordinary.
 
 Primary entry remains:
 
