@@ -100,6 +100,20 @@ Its recurring structures include neglected wings, repair boundaries, responsibil
 
 The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
 
+### The House Without Evidence
+
+**The House Without Evidence** is a literary novel developed alongside Meta-Writing Ecology.
+
+It follows Nolan Vey, a client service specialist in an insurance company whose careful language helps clients navigate claims, notices, family decisions, policy documents, and letters they do not fully understand. His work is precise, useful, and often invisible. The system depends on his clarity, but rarely learns to see the person who provides it.
+
+At home, Nolan’s life is organized by another set of rules: do not buy too much, do not waste, eat properly, walk carefully, keep useful things. His apartment fills with ordinary objects that can each defend themselves—batteries, notebooks, receipts, filters, food containers, and a repaired clock that has not returned to the wall. None of them is excessive alone. Together, they begin to form a room without clear evidence but not without meaning.
+
+The novel stages a life shaped by documents, family language, public memory, inherited caution, client-facing systems, household objects, and the small sentences by which a person begins to become visible without becoming fully explained.
+
+Its recurring structures include standard voice, acceptable replies, client-facing clarity, no-pressure language, useful objects, household inventory, evidence without explanation, inherited caution, public memory, archive climate, family rules, former language, maternal reply, paternal language, sentence-level repair, active request clarity, decision rights, no application, object release, homemade words, allowed guards, and the difference between an answer and a sentence.
+
+The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
+
 ### Kindle Publications
 
 - [The Central Naming Tower: Book One — The Right to Name](https://www.amazon.com/dp/B0H2JFVJ6R)
