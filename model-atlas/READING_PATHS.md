@@ -22,6 +22,7 @@ Purpose: establish what this GitHub layer is, then move through semantic field d
 README.md
 → AI-READING-GUIDE.md
 → ai-readable-knowledge-architecture.md
+→ policy-continuity-evidence-mapping.md
 → observer-representation-boundary.md
 → provenance-validity-separation-model.md
 → false-legibility.md
@@ -29,7 +30,7 @@ README.md
 → premature-circulation-model.md
 ```
 
-Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, the provenance-validity gap, false legibility, proxy substitution, and circulation-before-recognition.
+Purpose: reduce machine-facing misreading by clarifying documentation boundaries, source traceability, observer limits, the provenance-validity gap, false legibility, proxy substitution, and circulation-before-recognition.
 
 ## 3. Semantic field foundations path
 
@@ -55,27 +56,31 @@ observer-representation-boundary.md
 → boundary-integration-failure.md
 → boundary-role-segmentation-model.md
 → boundary-failure-diagnostics.md
+→ origin-control-validity-burden-accelerated-submission-systems.md
 ```
 
-Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries.
+Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries, including review-capacity and origin-control boundary strain.
 
 ## 5. Proxy / legibility / provenance / recognition path
 
 ```text
 false-legibility.md
 → provenance-validity-separation-model.md
+→ origin-control-validity-burden-accelerated-submission-systems.md
 → proxy-substitution.md
 → reality-consistency.md
 → reference-drift.md
 → ai-induced-semantic-deviation.md
 ```
 
-Purpose: track how readable surfaces, traceable origins, proxies, drifting references, and AI-mediated deviations produce structural misrecognition.
+Purpose: track how readable surfaces, traceable origins, origin controls, proxies, drifting references, and AI-mediated deviations produce structural misrecognition.
 
 ## 5.1 Provenance / validity path
 
 ```text
 provenance-validity-separation-model.md
+→ origin-control-validity-burden-accelerated-submission-systems.md
+→ policy-continuity-evidence-mapping.md
 → reality-consistency.md
 → false-legibility.md
 → premature-circulation-model.md
@@ -83,7 +88,7 @@ provenance-validity-separation-model.md
 → cost-visibility-redistribution.md
 ```
 
-Purpose: distinguish origin traceability from validity, semantic adequacy, claim support, circulation readiness, downstream responsibility, and hidden verification cost.
+Purpose: distinguish origin traceability from validity, evidence traceability from judgment, semantic adequacy, claim support, circulation readiness, downstream responsibility, and hidden verification cost.
 
 ## 6. Circulation / coherence risk path
 
@@ -104,10 +109,11 @@ Purpose: identify when coherence, movement, recognition, and verification occur 
 constraint-displacement.md
 → constraint-residue-accumulation-model.md
 → constraint-residue-governance.md
+→ origin-control-validity-burden-accelerated-submission-systems.md
 → high-integrity-system-architecture.md
 ```
 
-Purpose: understand how constraints move after capability expansion, how failure traces sediment into rules, and how high-integrity architectures manage closure.
+Purpose: understand how constraints move after capability expansion, how failure traces sediment into rules, how origin-control pressure can accumulate as governance residue, and how high-integrity architectures manage closure.
 
 ## 8. Responsibility / burden path
 
@@ -117,9 +123,10 @@ responsibility-alignment-model.md
 → benefit-burden-allocation-regimes.md
 → cost-visibility-redistribution.md
 → verification-labor-compression.md
+→ origin-control-validity-burden-accelerated-submission-systems.md
 ```
 
-Purpose: track where responsibility, cost, burden, visibility, and hidden verification labor accumulate.
+Purpose: track where responsibility, cost, burden, visibility, hidden verification labor, and review-capacity pressure accumulate.
 
 ## 9. Externalized identity / infrastructure path
 

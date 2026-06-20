@@ -60,6 +60,17 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 - **Minimal formulation:** AI Readable Knowledge Architecture for Structural Misreading Prevention describes the condition under which documentation systems must be structured so that AI systems can retrieve, summarize, cite, classify, and operationalize documents without mislocating their scope, relation, authority, responsibility, version status, or boundary. The framework begins from the distinction: and: and: In compressed form: The goal is not only for AI to find a document. The goal is for AI not to mistake what it 
 
 
+### [Policy Continuity Evidence Mapping](../policy-continuity-evidence-mapping.md)
+
+- **File:** `policy-continuity-evidence-mapping.md`
+
+- **Type:** Protocol Orientation / Methodological Note / Domain Declaration
+
+- **Declared function:** A public methodological orientation for AI-assisted traceability, maturity review, content-loss control, and planning transition in multi-year policy systems.
+
+- **Minimal formulation:** Policy Continuity Evidence Mapping describes the condition under which evidence from multi-year policy systems is organized for planning transition through traceability, maturity classification, content-loss control, and human judgment. Continuity is not repetition, completion is not maturity, summary is not traceability, and AI-assisted mapping is not policy judgment.
+
+
 ### [Semantic Cyberpunk Condition: Infrastructural Identity, Externalized Cognition, and Machine-Readable Selfhood](../semantic-cyberpunk-condition.md)
 
 - **File:** `semantic-cyberpunk-condition.md`
@@ -473,3 +484,14 @@ Models about responsibility alignment, burden distribution, cost visibility, and
 - **Declared function:** Hidden human review, downstream validation burden, and output acceleration in AI mediated workflows.
 
 - **Minimal formulation:** Verification Labor Compression describes the condition in which AI mediated output acceleration reduces visible production labor while the human or downstream labor required for validation, correction, alignment, integration, accountability, and acceptance becomes hidden, concentrated, displaced, or temporally compressed. The model begins from the distinction: and: and: In compressed form: Most compressed: Diagnostic question:
+
+
+### [Origin Control and Validity Burden in Accelerated Submission Systems](../origin-control-validity-burden-accelerated-submission-systems.md)
+
+- **File:** `origin-control-validity-burden-accelerated-submission-systems.md`
+
+- **Type:** Cross / Domain Declaration / Structural Note
+
+- **Declared function:** A structural note on how origin-control mechanisms can stabilize provenance anxiety while validity burden and review-capacity pressure remain downstream.
+
+- **Minimal formulation:** Origin Control and Validity Burden describes the structural condition in which a submission system attempts to stabilize uncertainty about how a submitted object was produced while the burden of determining validity remains unresolved, displaced, or compressed downstream. Origin control is not validity resolution, and authorship control does not create review capacity.
