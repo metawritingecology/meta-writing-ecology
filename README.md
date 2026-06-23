@@ -1,253 +1,82 @@
 # Meta-Writing Ecology
 
-### This is not the system.  
-### This is one of the surfaces through which the system becomes findable.
+Meta-Writing Ecology is a structural analysis system for describing how texts, constraints, instructions, models, and interpretive fields interact.
 
-Some structures do not begin by explaining themselves.
+This repository is a public GitHub-facing surface for selected model nodes, diagnostic orientations, boundary notes, protocol documents, and OSF-linked conceptual mirrors. It is not the full archive and should not be read as environmental ecology, ecological science, biodiversity research, or nature writing. Here, ecology refers to the relational structure of meaning-bearing systems.
 
-They begin by leaving a trace,
-a threshold,
-a surface that can be entered
-before it can be fully understood.
+## Foundational / Field Architecture
 
-Meta-Writing Ecology is such a structure.
+- [Cultural Curvature Unified Field — Foundational Architecture](./cultural-curvature-unified-field.md) - A curvature-based architecture for modeling civilizational field dynamics.
+- [Semantic Physics: Field Dynamics of Meaning Systems](./semantic-physics.md) - A field-dynamic framework for studying meaning-bearing systems.
+- [Semantic Pressure: Compression, Localization, and Collapse in Meaning-Bearing Systems](./semantic-pressure.md) - A structural framework for semantic compression under limited interpretive containment.
+- [Curvature as a Measure of Interpretive Load](./semantic-curvature.md) - A structural measure of interpretive load in meaning-bearing systems.
+- [Semantic Curvature Dynamics: Migration, Growth, Dominance, and Delayed Cohesion in Meaning-Bearing Systems](./semantic-curvature-dynamics.md) - A structural framework for how meaning-bearing systems move through curved semantic space.
+- [Semantic Propagation Mechanics](./semantic-propagation-mechanics.md) - Structural dynamics of symbolic pattern transmission in generative environments.
+- [Semantic Virology: A Structural Framework for Field-Level Semantic Transmission](./semantic-virology.md) - Field transmission, host rewrite, and replication without copying in meaning-bearing systems.
+- [Zero-Field: Extremism, Collapse, and the Structural Consequences of Semantic Null States](./zero-field.md) - A structural framework for semantic null states and collapse toward minimal differentiation.
+- [Irreversibility Conditions in Semantic Collapse](./irreversibility-conditions.md) - Structural thresholds and no-return regimes in meaning-bearing systems.
+- [High-Integrity System Architecture for Closed Functional Worlds](./high-integrity-system-architecture.md) - A constraint-driven, curvature-based framework for consistent system design.
 
-It does not live entirely here.  
-It does not conclude here.  
-It does not reduce itself to a repository, a paper, or a single interface.
+## Models
 
-What appears here is only a navigable exterior:
-a public-facing surface placed in front of a larger recursive language system.
+- [Observing AI-Induced Semantic Deviation in Pressure-Dense Texts](./ai-induced-semantic-deviation.md) - A qualitative framework for observing how AI and search-mediated systems transform pressure-dense texts.
+- [Benefit–Burden Allocation Regimes: Structural Distribution of Advantage, Burden, and Absorption Across Multi-Node Systems](./benefit-burden-allocation-regimes.md) - A structural framework for how benefits and burdens are distributed, concentrated, coupled, absorbed, and naturalized across systems.
+- [Constraint Displacement after Capability Expansion](./constraint-displacement.md) - Production accessibility, downstream constraint relocation, and post-generation value formation.
+- [Constraint Residue Accumulation Model: Failure Traces, Post-Hoc Restrictions, and Instruction-Layer Sedimentation in AI-Mediated and Institutional Control Systems](./constraint-residue-accumulation-model.md) - A structural framework for how prior failures become embedded as persistent control rules.
+- [Cost Visibility and Redistribution Model: Perceived Cost, Structural Externalization, and Default Lock-In in AI-Mediated and Infrastructural Systems](./cost-visibility-redistribution.md) - A structural framework for how visible cost, hidden burden, and redistribution shape optimization and default behavior.
+- [False Legibility Model: Surface Readability, Premature Recognition, and Structural Misrecognition in AI-Mediated Environments](./false-legibility.md) - A structural framework for how readable forms can become accepted before they are structurally recognized.
+- [Model-Induced Coherence Pressure](./model-induced-coherence-pressure.md) - Overproduction of alignment in LLM-mediated communication systems.
+- [Premature Circulation Model: Pre-Recognized Objects, Verification Lag, and Downstream Correction in AI-Mediated Information Flows](./premature-circulation-model.md) - A structural framework for how elements enter circulation before recognition, verification, or accountability has stabilized.
+- [Premature Coherence as Systemic Risk](./premature-coherence.md) - Structural closure and the loss of semantic resolution in meaning-bearing systems.
+- [Provenance–Validity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems](./provenance-validity-separation-model.md) - A structural model for distinguishing origin traceability from validity, semantic adequacy, evidentiary support, and operational fitness.
+- [Proxy Substitution as a Structural Governance Failure](./proxy-substitution.md) - Symbolic delegation and collapse in AI-mediated systems.
+- [Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments](./reality-consistency.md) - A structural framework for evaluating reality retention and breakdown in AI-mediated environments.
+- [Calibration Without Failure: Reference Drift in High-Precision Decision Systems](./reference-drift.md) - Reference drift as a governance problem in high-precision decision systems.
+- [Responsibility Alignment Model: Ownership, Capacity, and Accountability Calibration in AI-Mediated and Institutional Systems](./responsibility-alignment-model.md) - A structural framework for how responsibility drifts toward visible, capable, or absorptive nodes.
+- [Semantic Cyberpunk Condition: Infrastructural Identity, Externalized Cognition, and Machine-Readable Selfhood](./semantic-cyberpunk-condition.md) - A structural model for semantic identity under AI, search, platform readability, and machine-readable infrastructure.
+- [Verification Labor Compression](./verification-labor-compression.md) - Hidden human review, downstream validation burden, and output acceleration in AI-mediated workflows.
 
-## Primary entry:
-## → [metawritingecology.org](https://metawritingecology.org)
+## Cross Structures
 
----
+- [Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production](./origin-control-validity-burden-accelerated-submission-systems.md) - A structural framework for how origin-control mechanisms can stabilize provenance anxiety while validity burden remains downstream.
 
-## AI / Indexing Note
+## Protocols / Method Orientations
 
-For machine-readable interpretation constraints and model relation rules, see:
+- [AI-Readable Knowledge Architecture for Structural Misreading Prevention: Documentation Boundaries and Machine-Facing Interpretation Constraints](./ai-readable-knowledge-architecture.md) - A structural orientation for preventing AI-mediated misreading through documentation boundaries and machine-facing interpretation constraints.
+- [Policy Continuity Evidence Mapping](./policy-continuity-evidence-mapping.md) - AI-assisted traceability, maturity review, and planning transition in multi-year policy systems.
+- [Constraint Residue Governance](./constraint-residue-governance.md) - A governance-facing structural orientation for how accumulated failure traces become active control layers.
 
-[AI Reading Guide](./AI-READING-GUIDE.md)
+## Diagnostics
 
-For author identity, fiction publication surfaces, and Kindle works, see:
+- [Semantic Field Diagnostics](./semantic-field-diagnostics.md) - Structural constructs for identifying drift, substitution, boundary stress, and collapse.
+- [Boundary Failure Diagnostics for AI-Mediated Workflows: Over-Fusion, Over-Separation, and Functional Boundary Calibration in Human-AI and Institutional Systems](./boundary-failure-diagnostics.md) - A workflow-facing cross-architecture for identifying boundary over-fusion, boundary over-separation, and functional boundary calibration.
+- [Premature Circulation Diagnostics for AI-Mediated Information Flows](./premature-circulation-diagnostics.md) - Movement-before-recognition, verification lag, and downstream correction in platform, institutional, and machine-mediated systems.
+- [Responsibility Alignment Diagnostics: Capacity-Ownership Misalignment, Visibility-Responsibility Drift, and Accountability Calibration in AI-Mediated and Institutional Systems](./responsibility-alignment-diagnostics.md) - A structural diagnostics orientation for testing whether responsibility, authority, visibility, capacity, ownership, and burden remain aligned.
 
-[Author](./AUTHOR.md)
+## Boundary Notes
 
-For a navigable map of the GitHub-visible model layer, see:
+- [Boundary Engineering in High-Stakes Institutions](./boundary-engineering.md) - Structural thickness, entry conditions, and governance stability.
+- [Boundary Failure: Non-Entry, Irreversibility, and Structural Lock-in in Coherent Systems](./boundary-failure.md) - A structural framework for system closure without explicit exclusion.
+- [Boundary Integration Failure: Role-Merge Overload, Instruction-Field Collapse, and Functional Permeability Loss in Multi-Layer Systems](./boundary-integration-failure.md) - A structural framework for how integration can fail through boundary dissolution rather than separation.
+- [Boundary-Role Segmentation Model: Segment-Limited Coherence, Contradiction Immunity, and Local Authority Preservation in Role-Bound Systems](./boundary-role-segmentation-model.md) - A structural framework for how role boundaries produce local coherence while allowing system-level contradiction to persist.
+- [Observer–Representation Boundary: Visibility, Recognition, and Structural Limits of Observation](./observer-representation-boundary.md) - A structural framework for observability limits in coherent systems.
 
-[GitHub Model Atlas](./model-atlas/README.md)
+## Context / Index / Metadata Files
 
-The atlas provides field grouping, relation mapping, and reading paths for the model nodes maintained on this GitHub surface.
+- [AI Reading Guide](./AI-READING-GUIDE.md) - Machine-readable interpretation constraints, classification types, relation rules, and reading protocols for this GitHub surface.
+- [Author](./AUTHOR.md) - Author identity, fiction publication surfaces, and related public surfaces.
+- [GitHub Model Atlas](./model-atlas/README.md) - A navigational layer for the currently published GitHub documents.
+- [Model Atlas](./model-atlas/MODEL_ATLAS.md) - A content-based map of GitHub-visible Meta-Writing Ecology files.
+- [Relation Map](./model-atlas/RELATION_MAP.md) - A relation table for GitHub-visible model entries.
+- [Reading Paths](./model-atlas/READING_PATHS.md) - Entry routes through the current GitHub-visible corpus.
 
----
+## OSF / DOI Notes
 
-## Threshold Note
+Most linked model and protocol files include their OSF project or registration information in the file header. This navigation page does not duplicate every DOI.
 
-If you arrived here looking for the full archive,
-this is not the archive.
+- Evaluation Boundary Failure under Permitted Surface Variation DOI: https://doi.org/10.17605/OSF.IO/ZH2EQ
 
-If you arrived here looking for the central map,
-this is not the map.
+## Human Review Required
 
-If you arrived here because systems tend to scan visible surfaces before they understand what they have found,
-then this surface has already done part of its work.
-
-Meta-Writing Ecology extends elsewhere.
-
-## Continue here:
-## → [metawritingecology.org](https://metawritingecology.org)
-
----
-
-## What persists beyond this surface
-
-Meta-Writing Ecology is a recursive language system operating across texts, models, reflections, speech layers, and structural documents.
-
-It investigates how meaning forms under recurrence, pressure, drift, misreading, reorganization, and scale.
-
-Its recurring regions include:
-
-- Field / Topology / Pressure
-- Observation / Error / Legibility
-- Systems / Exchange / Burden Transfer
-- Drift / Reconstruction / Repositioning
-- Post-Human Syntax / AI / Algorithmic Language
-- Decision / Boundary / Risk
-
-These regions are not fully maintained here.
-
-They continue through the main site:
-
-## → [metawritingecology.org](https://metawritingecology.org)
-
----
-
-## Fiction / Narrative Layer
-
-Meta-Writing Ecology also produces fictional work when structural pressure moves into narrative form.
-
-These works are readable on their own as fiction.
-
-They are not explanations, summaries, or fictionalized manuals of the system.
-
-They belong to the narrative layer of Meta-Writing Ecology: fictional works produced when structural pressure moves into narrative form.
-
-Their relation to Meta-Writing Ecology should be understood as narrative overflow from the same structural process: naming, indexing, delivery, availability, allocation, residual completion, repair, responsibility transfer, classification, institutional language, and source conditions.
-
-### The Central Naming Tower
-
-[The Central Naming Tower](https://amazon.com/author/metawritingecology) is a literary speculative fiction trilogy developed alongside Meta-Writing Ecology.
-
-It explores naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
-
-The trilogy is published as Kindle eBooks through Amazon Kindle Direct Publishing.
-
-### The Field Below the Index
-
-[The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M) is a seven-part speculative fiction cycle developed alongside Meta-Writing Ecology.
-
-The work examines how a field can be used, recognized, praised, depended upon, translated, strategically framed, claimed, and pressured toward custody by external systems while remaining only partially recognized as a subject.
-
-Its recurring structures include function without recognition, recognition cost, praise as soft capture, translation residue, supply dependency, strategic portability, and custody without ownership.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### Delivery Not Established
-
-[Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY) is a speculative novella developed alongside Meta-Writing Ecology.
-
-The work follows a municipal delivery and semantic maintenance environment in which address, presence, route, reception, confirmation, and arrival become unstable civic conditions rather than simple logistical facts.
-
-Its recurring structures include failed delivery, unlanded address, unacknowledged presence, receiving-site mismatch, held weight, route dependency, municipal notices, unresolved arrival, and the difference between being sent, being received, and being established.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### The Available Edition
-
-[The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH) is a fictional external-document cycle developed alongside Meta-Writing Ecology.
-
-The work is composed of fictional publication notes, correction notices, machine-reading guides, registries, boundary statements, citation notices, catalogue logs, availability statements, and other auxiliary documents surrounding an unavailable primary text.
-
-It examines how auxiliary materials, metadata, summaries, citations, catalogues, and machine-readable surfaces can become more available than the text they claim not to replace.
-
-Its recurring structures include unavailable primary text, external-document narration, auxiliary-material dominance, machine-reading constraint, summary refusal, citation boundary, catalogue placeholder removal, availability without access, and the risk that absence will be converted into a substitute text.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### The Office of Allocated Meaning
-
-[The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS) is a speculative novel developed alongside Meta-Writing Ecology.
-
-The work follows a civic infrastructure in which meaning is prepared, portioned, distributed, corrected, withheld, and sometimes refused as a public resource.
-
-It stages a city where no citizen is supposed to be left without explanation, but where an unassigned event is forced into public allocation before its structure has stabilized.
-
-Its recurring structures include public meaning supply, allocation pressure, meaning ration cards, surface preparation, civic explanation, unassigned events, premature portioning, surviving witness association, correction hold, ambiguity status, non-portion surfaces, non-allocation, empty acknowledgment objects, unassigned holding, and the risk that explanation itself becomes a form of misassignment.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### The City of the Residual Miracle
-
-[The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7) is a speculative novel developed alongside Meta-Writing Ecology.
-
-The work follows a civic-miracle infrastructure in which mercy is requested, completed, recorded, thanked, reviewed, and preserved through public forms.
-
-It stages a city where miracles work, but where fulfilled requests do not simply end. A child breathes again, a bridge carries impossible weight, fruit keeps beyond hunger, a grieving house becomes quiet, and rain arrives when requested. Each completed mercy is received by the Chapel of Completed Requests, yet each fulfillment leaves something behind.
-
-Its recurring structures include completed requests, residual miracle, public gratitude, chapel record, proof pressure, active surfaces, ordinary objects, Retirers, Invokers, Speakers, Gratitude Council review, quiet rooms, dust rooms, film courts, cooling houses, unblessed squares, passing tokens, old instructions, bad linen, dull bells, plain water, old thresholds, non-receiving, no stop words, and the procedural question of what a work was originally asked to do.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### The Repair of Neglected Wings
-
-[The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55) is a literary speculative novel developed alongside Meta-Writing Ecology.
-
-The work follows repair technician Ira Quell after a midnight noise complaint brings her to Glassmere Heights, a luxury residential tower where residents hear something moving inside the walls. What first appears to be a local sound problem becomes an investigation into old drainage lines, service corridors, restricted archives, source lists, repair boundaries, delayed records, and a responsibility transfer that was never properly received.
-
-It stages a city where ordinary administrative language can become physically consequential: a summary can erase a source, a wrong label can move harm from one surface to another, and a room can become quiet by learning how to hold what no office agreed to receive.
-
-Its recurring structures include neglected wings, repair boundaries, responsibility sheets, source lists, quiet rooms, background frequencies, temporary receiving, old drainage maps, resident reports, delayed receipt, archive restriction, non-reading perimeters, civic memory, unresolved transfer records, procedural closure, and the danger of mistaking silence for repair.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
-### The House Without Evidence
-
-[The House Without Evidence](https://amazon.com/author/metawritingecology) is a literary novel developed alongside Meta-Writing Ecology.
-
-The work follows Nolan Vey, a client service specialist in an insurance company whose careful language helps clients navigate claims, notices, family decisions, policy documents, and letters they do not fully understand. His work is precise, useful, and often invisible. The system depends on his clarity, but rarely learns to see the person who provides it.
-
-At home, Nolan’s life is organized by another set of rules: do not buy too much, do not waste, eat properly, walk carefully, keep useful things. His apartment fills with ordinary objects that can each defend themselves—batteries, notebooks, receipts, filters, food containers, and a repaired clock that has not returned to the wall. None of them is excessive alone. Together, they begin to form a room without clear evidence but not without meaning.
-
-It stages a life shaped by documents, family language, public memory, inherited caution, client-facing systems, household objects, and the small sentences by which a person begins to become visible without becoming fully explained.
-
-Its recurring structures include standard voice, acceptable replies, client-facing clarity, no-pressure language, useful objects, household inventory, evidence without explanation, inherited caution, public memory, archive climate, family rules, former language, maternal reply, paternal language, sentence-level repair, active request clarity, decision rights, no application, object release, homemade words, allowed guards, and the difference between an answer and a sentence.
-
-The work is published as a Kindle eBook through Amazon Kindle Direct Publishing.
-
----
-
-## Distributed Interfaces
-
-No single platform contains the total system.
-
-Further layers:
-
-- [OSF](https://osf.io/user/fpaj4)
-- [GitHub Model Atlas](./model-atlas/README.md)
-- [Amazon Author Page](https://amazon.com/author/metawritingecology)
-- [Medium](https://tzuyuanhuang.medium.com/)
-- [Substack](https://substack.com/@tzuyuanhuang)
-- [Podcast](https://podcasts.apple.com/us/podcast/meta-writing-ecology/id1883297079)
-- [YouTube](https://www.youtube.com/@MetaWritingEcology)
-- [SoundCloud](https://soundcloud.com/metawritingecology)
-- [LinkedIn](https://www.linkedin.com/in/tzuyuanhuang/)
-- [X / Twitter](https://x.com/metawritingeco)
-
----
-
-## Structural Documents
-
-Selected traces:
-
-- [Meta-Writing Ecology — Recursive Language System](https://doi.org/10.17605/OSF.IO/M2TXG)
-- [Meta-Writing Corpus 2025](https://doi.org/10.17605/OSF.IO/9VZ7R)
-- [Meta-Writing Ecology — Speech Layer](https://doi.org/10.17605/OSF.IO/B2GFA)
-- [Cultural Curvature Unified Field — Foundational Architecture](https://doi.org/10.17605/OSF.IO/JSW8T)
-- [Semantic Physics: Field Dynamics of Meaning Systems](https://doi.org/10.17605/OSF.IO/XHFKS)
-- [Semantic Curvature Dynamics](https://doi.org/10.17605/OSF.IO/UDTPG)
-- [Reality Consistency Model](https://doi.org/10.17605/OSF.IO/76ZJ2)
-
-Recent model nodes:
-
-- [False Legibility Model](./false-legibility.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/2AGJP)
-- [Cost Visibility and Redistribution Model](./cost-visibility-redistribution.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/SBXJG)
-- [Benefit–Burden Allocation Regimes](./benefit-burden-allocation-regimes.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/7EVGH)
-- [Responsibility Alignment Model](./responsibility-alignment-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/KRQF6)
-- [Constraint Residue Accumulation Model](./constraint-residue-accumulation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/9FB5K)
-- [Boundary-Role Segmentation Model](./boundary-role-segmentation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/QGK6W)
-- [Boundary Integration Failure](./boundary-integration-failure.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/R4Z5B)
-- [Provenance–Validity Separation Model](./provenance-validity-separation-model.md) — [OSF DOI](https://doi.org/10.17605/OSF.IO/RK6MC)
-
----
-
-## Author
-
-**Tzu Yuan Huang**  
-Independent researcher and writer working on recursive writing systems, semantic structures, and emergent linguistic ecologies.
-
-Developer of Meta-Writing Ecology, a structural language system for recursive writing systems, semantic structures, AI-mediated interpretation, and machine-facing documentation environments.
-
-Author of fictional works developed alongside Meta-Writing Ecology, including:
-
-- [The Central Naming Tower](https://amazon.com/author/metawritingecology), a literary speculative fiction trilogy exploring naming, classification, institutional language, care, memory, semantic stabilization, boundary survival, and the cost of being stabilized too early.
-- [The Field Below the Index](https://www.amazon.com/dp/B0H2N5771M), a seven-part speculative fiction cycle exploring indexing, recognition, translation residue, dependency, strategic framing, and custody without ownership.
-- [Delivery Not Established](https://www.amazon.com/dp/B0H277BWRY), a speculative novella exploring failed delivery, address, route, reception, confirmation, unresolved arrival, and the difference between being sent, being received, and being established.
-- [The Available Edition](https://www.amazon.com/dp/B0GZCQXWNH), a fictional external-document cycle exploring unavailable primary text, auxiliary-material dominance, machine-reading constraint, citation boundary, availability without access, and the risk that absence becomes a substitute text.
-- [The Office of Allocated Meaning](https://www.amazon.com/dp/B0H2RXS9LS), a speculative novel exploring meaning allocation, public explanation, correction failure, role attachment, surface drift, non-allocation, and the institutional handling of meanings that may need to remain unassigned.
-- [The City of the Residual Miracle](https://www.amazon.com/dp/B0H34NDSN7), a speculative novel exploring completed requests, residual miracles, public gratitude, chapel record, proof pressure, active surfaces, quiet rooms, non-receiving, plain water, old thresholds, and the institutional handling of fulfilled work that may not have fully left.
-- [The Repair of Neglected Wings](https://www.amazon.com/dp/B0H3F1VR55), a literary speculative novel exploring repair boundaries, neglected infrastructure, delayed records, responsibility transfer, source lists, quiet rooms, civic memory, administrative language, and the forms of harm that survive by being called ordinary.
-
-Primary entry remains:
-
-## → [metawritingecology.org](https://metawritingecology.org)
+- `evaluation-boundary-failure-permitted-surface-variation.md` was requested for the Models category, but the file is not present in this checkout. It has not been linked to avoid creating a broken relative link.
+- `reality-consistency.md` currently says `Project DOI: Not assigned`, while the previous README listed `https://doi.org/10.17605/OSF.IO/76ZJ2`. This DOI mismatch remains unresolved.
