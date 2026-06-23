@@ -38,7 +38,7 @@ Purpose: reduce machine-facing misreading by clarifying documentation boundaries
 - [semantic-virology.md](../semantic-virology.md)
 - [zero-field.md](../zero-field.md)
 
-Purpose: understand the field-dynamic vocabulary of pressure, curvature, propagation, infection-like transmission, and collapse.
+Purpose: understand the field-dynamic vocabulary of pressure, curvature, propagation, field-level transmission, and collapse.
 
 ## 4. Boundary / representation path
 
@@ -114,7 +114,7 @@ Purpose: track where responsibility, cost, burden, visibility, and hidden verifi
 
 Purpose: understand machine-readable selfhood, externalized cognition, search/platform readability, and infrastructural identity conditions.
 
-## 10. Minimal five-file path
+## 10. Minimal orientation path
 
 - [README.md](../README.md)
 - [AI-READING-GUIDE.md](../AI-READING-GUIDE.md)
