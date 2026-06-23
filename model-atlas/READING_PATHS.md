@@ -29,6 +29,7 @@ Purpose: reduce machine-facing misreading by clarifying documentation boundaries
 
 ## 3. Semantic field foundations path
 
+- [cultural-curvature-unified-field.md](../cultural-curvature-unified-field.md)
 - [semantic-physics.md](../semantic-physics.md)
 - [semantic-pressure.md](../semantic-pressure.md)
 - [semantic-curvature.md](../semantic-curvature.md)
@@ -51,6 +52,18 @@ Purpose: understand the field-dynamic vocabulary of pressure, curvature, propaga
 
 Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries.
 
+## Evaluation / boundary robustness path
+
+- [evaluation-boundary-failure-permitted-surface-variation.md](../evaluation-boundary-failure-permitted-surface-variation.md)
+- [false-legibility.md](../false-legibility.md)
+- [boundary-engineering.md](../boundary-engineering.md)
+- [proxy-substitution.md](../proxy-substitution.md)
+- [responsibility-alignment-model.md](../responsibility-alignment-model.md)
+- [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
+- [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
+
+Purpose: understand how permitted surfaces, premature readability, boundary design, proxy substitution, responsibility alignment, and provenance-validity separation affect evaluation robustness.
+
 ## 5. Proxy / legibility / provenance / recognition path
 
 - [false-legibility.md](../false-legibility.md)
@@ -65,6 +78,7 @@ Purpose: track how readable surfaces, traceable origins, proxies, drifting refer
 ## 5.1 Provenance / validity path
 
 - [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
+- [origin-control-validity-burden-accelerated-submission-systems.md](../origin-control-validity-burden-accelerated-submission-systems.md)
 - [reality-consistency.md](../reality-consistency.md)
 - [false-legibility.md](../false-legibility.md)
 - [premature-circulation-model.md](../premature-circulation-model.md)
@@ -113,6 +127,15 @@ Purpose: track where responsibility, cost, burden, visibility, and hidden verifi
 - [premature-circulation-model.md](../premature-circulation-model.md)
 
 Purpose: understand machine-readable selfhood, externalized cognition, search/platform readability, and infrastructural identity conditions.
+
+## Protocols / method orientations path
+
+- [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
+- [policy-continuity-evidence-mapping.md](../policy-continuity-evidence-mapping.md)
+- [constraint-residue-governance.md](../constraint-residue-governance.md)
+- [verification-labor-compression.md](../verification-labor-compression.md)
+
+Purpose: understand public-facing methodological orientations for documentation structure, policy continuity evidence, governance residue, and verification labor.
 
 ## 10. Minimal orientation path
 
