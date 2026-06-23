@@ -24,6 +24,7 @@ This repository is a public GitHub-facing surface for selected model nodes, diag
 - [Constraint Displacement after Capability Expansion](./constraint-displacement.md) - Production accessibility, downstream constraint relocation, and post-generation value formation.
 - [Constraint Residue Accumulation Model: Failure Traces, Post-Hoc Restrictions, and Instruction-Layer Sedimentation in AI-Mediated and Institutional Control Systems](./constraint-residue-accumulation-model.md) - A structural framework for how prior failures become embedded as persistent control rules.
 - [Cost Visibility and Redistribution Model: Perceived Cost, Structural Externalization, and Default Lock-In in AI-Mediated and Infrastructural Systems](./cost-visibility-redistribution.md) - A structural framework for how visible cost, hidden burden, and redistribution shape optimization and default behavior.
+- [Evaluation Boundary Failure under Permitted Surface Variation](./evaluation-boundary-failure-permitted-surface-variation.md) - A structural framework for outcome movement under allowed surface variation in evaluation systems. DOI: https://doi.org/10.17605/OSF.IO/ZH2EQ
 - [False Legibility Model: Surface Readability, Premature Recognition, and Structural Misrecognition in AI-Mediated Environments](./false-legibility.md) - A structural framework for how readable forms can become accepted before they are structurally recognized.
 - [Model-Induced Coherence Pressure](./model-induced-coherence-pressure.md) - Overproduction of alignment in LLM-mediated communication systems.
 - [Premature Circulation Model: Pre-Recognized Objects, Verification Lag, and Downstream Correction in AI-Mediated Information Flows](./premature-circulation-model.md) - A structural framework for how elements enter circulation before recognition, verification, or accountability has stabilized.
@@ -75,8 +76,3 @@ This repository is a public GitHub-facing surface for selected model nodes, diag
 Most linked model and protocol files include their OSF project or registration information in the file header. This navigation page does not duplicate every DOI.
 
 - Evaluation Boundary Failure under Permitted Surface Variation DOI: https://doi.org/10.17605/OSF.IO/ZH2EQ
-
-## Human Review Required
-
-- `evaluation-boundary-failure-permitted-surface-variation.md` was requested for the Models category, but the file is not present in this checkout. It has not been linked to avoid creating a broken relative link.
-- `reality-consistency.md` currently says `Project DOI: Not assigned`, while the previous README listed `https://doi.org/10.17605/OSF.IO/76ZJ2`. This DOI mismatch remains unresolved.
