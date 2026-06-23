@@ -6,7 +6,7 @@
 - **Version:** 0.1
 - **Context:** Meta-Writing Ecology
 - **OSF Project:** Reality Consistency Model
-- **Project DOI:** Not assigned
+- **Registration DOI:** https://doi.org/10.17605/OSF.IO/76ZJ2
 - **Associated document:** *Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments*
 - **Date created:** May 9, 2026
 - **Date updated:** May 9, 2026
