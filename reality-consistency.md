@@ -216,7 +216,7 @@ It names a narrower condition: reality retention or breakdown through accumulate
 
 ## Citation
 
-Huang, Tzu Yuan. *Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments*. OSF Project. DOI pending.
+Huang, Tzu Yuan. *Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments*. OSF Project. https://doi.org/10.17605/OSF.IO/76ZJ2
 
 ---
 

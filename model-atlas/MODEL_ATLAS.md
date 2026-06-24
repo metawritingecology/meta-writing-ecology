@@ -30,7 +30,7 @@ Entry surfaces that explain how the GitHub layer should be read and where the pu
 
 - **Type:** Interface / Guide
 
-- **Declared function:** This is not the system.
+- **Declared function:** README.md functions as the public GitHub entry layer for the repository.
 
 
 ## AI-Readable Interface / Externalization
@@ -200,6 +200,15 @@ Boundary, observability, representation, segmentation, integration, and failure 
 - **Declared function:** Structural thickness, entry conditions, and governance stability.
 
 - **Minimal formulation:** Boundary Engineering is a structural framework for understanding how boundaries regulate semantic entry, interpretive load, and system stability within high stakes institutions. Boundaries are not merely administrative lines. They are structural regions. Their stability depends not only on where they are placed, but on how much interpretive pressure they can absorb before that pressure reaches the institutional core. Boundary thickness, rather than boundary location, determines whether instituti
+
+
+### [Evaluation Boundary Failure under Permitted Surface Variation](../evaluation-boundary-failure-permitted-surface-variation.md)
+
+- **File:** `evaluation-boundary-failure-permitted-surface-variation.md`
+
+- **Type:** Model / Conceptual Framework / Domain Declaration
+
+- **Declared function:** A structural framework for describing how evaluation systems may lose outcome robustness when permitted surface variation becomes evaluatively consequential.
 
 
 ### [Boundary Failure Diagnostics for AI-Mediated Workflows: Over-Fusion, Over-Separation, and Functional Boundary Calibration in Human-AI and Institutional Systems](../boundary-failure-diagnostics.md)
@@ -473,3 +482,4 @@ Models about responsibility alignment, burden distribution, cost visibility, and
 - **Declared function:** Hidden human review, downstream validation burden, and output acceleration in AI mediated workflows.
 
 - **Minimal formulation:** Verification Labor Compression describes the condition in which AI mediated output acceleration reduces visible production labor while the human or downstream labor required for validation, correction, alignment, integration, accountability, and acceptance becomes hidden, concentrated, displaced, or temporally compressed. The model begins from the distinction: and: and: In compressed form: Most compressed: Diagnostic question:
+
