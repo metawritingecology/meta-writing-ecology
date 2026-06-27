@@ -62,6 +62,16 @@ This repository is a public GitHub-facing surface for selected model nodes, diag
 - [Boundary-Role Segmentation Model: Segment-Limited Coherence, Contradiction Immunity, and Local Authority Preservation in Role-Bound Systems](./boundary-role-segmentation-model.md) - A structural framework for how role boundaries produce local coherence while allowing system-level contradiction to persist.
 - [Observer–Representation Boundary: Visibility, Recognition, and Structural Limits of Observation](./observer-representation-boundary.md) - A structural framework for observability limits in coherent systems.
 
+## Source Navigation
+
+For GitHub-visible model traversal, use:
+
+- [Model Atlas](./model-atlas/MODEL_ATLAS.md)
+- [Relation Map](./model-atlas/RELATION_MAP.md)
+- [Reading Paths](./model-atlas/READING_PATHS.md)
+
+These files are navigation layers only. They do not replace the full internal archive, complete registry, or authority map.
+
 ## Context / Index / Metadata Files
 
 - [AI Reading Guide](./AI-READING-GUIDE.md) - Machine-readable interpretation constraints, classification types, relation rules, and reading protocols for this GitHub surface.
