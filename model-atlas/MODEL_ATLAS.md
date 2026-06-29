@@ -426,7 +426,7 @@ Models about capability expansion, constraint displacement, failure residue, gov
 
 ## Responsibility / Benefit-Burden / Cost
 
-Models about responsibility alignment, burden distribution, cost visibility, and human verification load.
+Models and Cross structures about responsibility alignment, burden distribution, cost visibility, support dependency, and human verification load.
 
 
 ### [Benefit–Burden Allocation Regimes: Structural Distribution of Advantage, Burden, and Absorption Across Multi-Node Systems](../benefit-burden-allocation-regimes.md)
@@ -449,6 +449,17 @@ Models about responsibility alignment, burden distribution, cost visibility, and
 - **Declared function:** A structural framework for how visible cost, hidden burden, and redistribution shape optimization and default behavior.
 
 - **Minimal formulation:** Cost Visibility and Redistribution describes the condition in which total cost becomes decision relevant only when cost is made visible, represented, decomposable, comparable, or redistributed into an actionable layer. It begins from the distinction: A cost may exist materially, temporally, cognitively, institutionally, environmentally, or infrastructurally while remaining outside the system’s decision field. Systems do not optimize total cost automatically. They optimize around visible cost. In
+
+
+### [External Lifeline Collapse under Residual Infrastructure Cross](../external-lifeline-collapse-under-residual-infrastructure-cross.md)
+
+- **File:** `external-lifeline-collapse-under-residual-infrastructure-cross.md`
+
+- **Type:** Cross / Structural Account / Domain Declaration
+
+- **Declared function:** A structural account of residual infrastructure, external support failure, and survival-field transition in dependent systems.
+
+- **Minimal formulation:** External Lifeline Collapse under Residual Infrastructure Cross describes the condition in which a system continues to display visible institutional or infrastructural continuity while its actual function depends on external support flows that the system itself cannot regenerate.
 
 
 ### [Responsibility Alignment Diagnostics: Capacity-Ownership Misalignment, Visibility-Responsibility Drift, and Accountability Calibration in AI-Mediated and Institutional Systems](../responsibility-alignment-diagnostics.md)
