@@ -39,6 +39,7 @@ This repository is a public GitHub-facing surface for selected model nodes, diag
 
 ## Cross Structures
 
+- [External Lifeline Collapse under Residual Infrastructure Cross](./external-lifeline-collapse-under-residual-infrastructure-cross.md) - A structural account of residual infrastructure, external support failure, and survival-field transition in dependent systems.
 - [Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production](./origin-control-validity-burden-accelerated-submission-systems.md) - A structural framework for how origin-control mechanisms can stabilize provenance anxiety while validity burden remains downstream.
 
 ## Protocols / Method Orientations

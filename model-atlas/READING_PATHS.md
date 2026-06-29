@@ -113,9 +113,10 @@ Purpose: understand how constraints move after capability expansion, how failure
 - [responsibility-alignment-diagnostics.md](../responsibility-alignment-diagnostics.md)
 - [benefit-burden-allocation-regimes.md](../benefit-burden-allocation-regimes.md)
 - [cost-visibility-redistribution.md](../cost-visibility-redistribution.md)
+- [external-lifeline-collapse-under-residual-infrastructure-cross.md](../external-lifeline-collapse-under-residual-infrastructure-cross.md)
 - [verification-labor-compression.md](../verification-labor-compression.md)
 
-Purpose: track where responsibility, cost, burden, visibility, and hidden verification labor accumulate.
+Purpose: track where responsibility, cost, burden, visibility, residual support dependency, and hidden verification labor accumulate.
 
 ## 9. Externalized identity / infrastructure path
 
