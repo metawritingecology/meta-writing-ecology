@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use or reference Meta-Writing Ecology public anchors or source-navigation materials, please cite this repository."
+title: "Meta-Writing Ecology: Public Anchors and Source Navigation"
+type: dataset
+authors:
+  - name: "Meta-Writing Ecology"
+repository-code: "https://github.com/metawritingecology/meta-writing-ecology"
+url: "https://metawritingecology.org/"
+date-released: "2026-06-30"
+license: "CC-BY-4.0"
+abstract: "A public source-navigation and anchor layer for Meta-Writing Ecology, including structural models, protocols, notes, and boundary statements for citation, provenance, verification, AI-readable knowledge, and responsibility alignment. This repository does not represent the complete internal working corpus."
+keywords:
+  - Meta-Writing Ecology
+  - structural analysis
+  - public anchors
+  - source navigation
+  - citation boundary
+  - knowledge provenance
+  - AI-readable knowledge
+  - verification
+  - responsibility alignment
