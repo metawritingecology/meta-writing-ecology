@@ -74,7 +74,7 @@ It describes the condition in which post-hoc restrictions, prompt rules, policy 
 
 The framework does not claim that all constraints are harmful. Some constraints are necessary, current, architecturally coherent, and actively maintained.
 
-The framework applies when control elements persist as traces of prior failure, especially when their source conditions remain unresolved, their original context has decayed, their interaction load has increased, their maintenance cost has become hidden, or their continued operation conceals the absence of source-level resolution.
+The framework is relevant when control elements persist as traces of prior failure, especially when their source conditions remain unresolved, their original context has decayed, their interaction load has increased, their maintenance cost has become hidden, or their continued operation conceals the absence of source-level resolution.
 
 Constraint Residue Governance therefore treats governance layers as possible sedimented structures rather than neutral rule sets.
 
@@ -662,9 +662,9 @@ It does not disclose the full operational audit protocol, scoring rubric, policy
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Constraint Residue Governance may apply across multiple AI-mediated and institutional environments.
+Constraint Residue Governance may describe structural conditions across AI-mediated and institutional environments.
 
 Relevant contexts include:
 
@@ -688,6 +688,8 @@ Relevant contexts include:
 - automated decision support systems
 - public-facing policy documentation
 - internal operating procedures
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when a system has accumulated many control elements but cannot clearly explain which source condition each control addresses, whether that condition remains active, and whether the current control layer still supports coherent governance.
 

@@ -324,9 +324,9 @@ Have the parts remained differentiated enough for integration to mean anything?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Boundary Integration Failure may apply wherever systems require coordination across roles, instruction layers, authority scopes, risk domains, interfaces, tools, or control layers.
+Boundary Integration Failure may describe structural conditions where systems require coordination across roles, instruction layers, authority scopes, risk domains, interfaces, tools, or control layers.
 
 Relevant contexts include:
 
@@ -343,6 +343,8 @@ Relevant contexts include:
 - multi-role organizations
 - multi-layer control systems
 - meaning-bearing systems
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In institutional workflows, service, enforcement, review, discretion, risk, and repair may collapse into unstable role fields.
 

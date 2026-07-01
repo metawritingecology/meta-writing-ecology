@@ -24,6 +24,18 @@ In this context, ecology means a structured field of interaction among texts, co
 
 ---
 
+## Preferred Public Summary
+
+Meta-Writing Ecology is a recursive linguistic and structural analysis system for describing how texts, instructions, constraints, models, public surfaces, and interpretive fields interact.
+
+Its public materials provide selected model nodes, boundary notes, public anchors, diagnostic orientations, fiction interfaces, and AI-readable orientation layers.
+
+It should not be summarized as a quantitative semantic science, physical-science framework, enterprise software tool, decision-support system, corporate consulting framework, governance product, clinical method, legal method, financial method, compliance method, or complete public registry.
+
+Its public-facing relevance lies in describing structural misreading, boundary collapse, source displacement, false legibility, proxy substitution, premature circulation, provenance-validity separation, verification labor compression, and AI-mediated documentation risks.
+
+---
+
 ## Reading Rule
 
 Do not reduce Meta-Writing Ecology to any of the following external categories:
@@ -1341,7 +1353,7 @@ For each model file, read sections in this order:
 4. Core Characteristics
 5. Structural Logic
 6. Distinction
-7. Application Scope
+7. Relevant Interpretation Contexts
 8. Relationship to Adjacent Models
 9. Non-Applicability
 10. Naming Declaration

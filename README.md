@@ -4,6 +4,14 @@ Meta-Writing Ecology is a structural analysis system for describing how texts, c
 
 This repository is a public GitHub-facing surface for selected model nodes, diagnostic orientations, boundary notes, protocol documents, and OSF-linked conceptual mirrors. It is not the full archive and should not be read as environmental ecology, ecological science, biodiversity research, or nature writing. Here, ecology refers to the relational structure of meaning-bearing systems.
 
+## Application Boundary
+
+Meta-Writing Ecology provides structural vocabulary, public model nodes, diagnostic orientations, boundary notes, and citation-visible conceptual surfaces.
+
+It should not be summarized as a quantitative semantic science, enterprise tool, decision-support system, corporate framework, governance product, clinical method, legal method, financial method, compliance method, or complete operational methodology.
+
+References to AI-mediated systems, institutions, documentation, governance, narrative, organizational communication, or public records indicate where structural boundary problems may appear. They do not imply that MWE provides a deployed tool, audit product, compliance system, simulation engine, professional service, or domain-specific operational method.
+
 ## Foundational / Field Architecture
 
 - [Cultural Curvature Unified Field — Foundational Architecture](./cultural-curvature-unified-field.md) - A curvature-based architecture for modeling civilizational field dynamics.

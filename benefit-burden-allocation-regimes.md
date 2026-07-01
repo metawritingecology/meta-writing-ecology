@@ -263,9 +263,9 @@ What allocation regime is this system stabilizing?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Benefit–Burden Allocation Regimes may apply wherever positive and negative outcomes are distributed across multiple nodes.
+Benefit-Burden Allocation Regimes may describe structural conditions where positive and negative outcomes are distributed across multiple nodes.
 
 Relevant contexts include:
 
@@ -283,6 +283,8 @@ Relevant contexts include:
 - maintenance arrangements
 - distributed production systems
 - meaning-bearing environments
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The model is especially relevant where one layer gains convenience, visibility, capacity, or productivity while another layer absorbs validation, repair, risk, coordination, accountability, or infrastructure load.
 

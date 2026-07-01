@@ -78,7 +78,7 @@ Its core characteristics include:
 
 Semantic Cyberpunk Condition does not claim that every digital profile, AI interaction, online publication, or public archive is cyberpunk.
 
-It applies when semantic identity becomes infrastructurally compiled.
+It describes conditions where semantic identity becomes infrastructurally compiled.
 
 ---
 
@@ -277,7 +277,7 @@ How is the subject being compiled once found?
 
 ## Boundary Conditions
 
-Semantic Cyberpunk Condition applies when several conditions converge:
+Semantic Cyberpunk Condition describes a convergence of conditions:
 
 ```text
 1. A subject externalizes identity-bearing semantic structure.
@@ -343,9 +343,9 @@ They identify the diagnostic field.
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Semantic Cyberpunk Condition may apply to:
+Semantic Cyberpunk Condition may describe structural conditions in:
 
 - AI search results
 - search summaries
@@ -363,6 +363,8 @@ Semantic Cyberpunk Condition may apply to:
 - hybrid or copied identity conditions
 - networked authorship systems
 - technical systems that summarize, classify, or route identity-bearing content
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The model is especially relevant where AI, search, platform, or archival systems become the first layer through which an identity-bearing structure is externally read.
 

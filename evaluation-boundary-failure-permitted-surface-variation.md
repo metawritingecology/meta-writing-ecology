@@ -76,7 +76,7 @@ Its core characteristics include:
 
 The framework is not a theory of ordinary editing, stylistic improvement, presentation quality, or communication repair.
 
-It applies when permitted surface variation produces outcome movement without corresponding object-level change.
+It is relevant when permitted surface variation produces outcome movement without corresponding object-level change.
 
 ---
 
@@ -310,7 +310,7 @@ An evaluation outcome may improve because the object improved.
 
 It may also improve because the surface became more compatible with the evaluator.
 
-The framework applies to the second condition.
+The framework describes the second condition.
 
 ---
 
@@ -395,9 +395,9 @@ object enters through surface
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Evaluation Boundary Failure under Permitted Surface Variation may apply wherever evaluation outcomes are mediated by surfaces.
+Evaluation Boundary Failure under Permitted Surface Variation may describe structural conditions where evaluation outcomes are mediated by surfaces.
 
 Relevant contexts include:
 
@@ -420,6 +420,8 @@ Relevant contexts include:
 - AI-mediated assessment systems
 - organizational decision workflows
 - machine-readable documentation environments
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant where:
 

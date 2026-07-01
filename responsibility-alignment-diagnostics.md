@@ -78,7 +78,7 @@ Its core characteristics include:
 - **Residual responsibility** — the leftover burden that lands where formal roles, workflows, automation, or policies fail to contain it.
 - **Repair capacity** — whether the assigned node can repair the source condition or only correct visible effects.
 
-The framework applies when responsibility appears to land somewhere because a node is visible, proximate, competent, available, or capable of repair, rather than because the node owns, authorizes, benefits from, or can structurally repair the condition.
+The framework is relevant when responsibility appears to land somewhere because a node is visible, proximate, competent, available, or capable of repair, rather than because the node owns, authorizes, benefits from, or can structurally repair the condition.
 
 ---
 
@@ -358,9 +358,9 @@ has received transfer
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Responsibility Alignment Diagnostics may apply wherever responsibility moves through AI-mediated, institutional, platform, agentic, or meaning-bearing systems.
+Responsibility Alignment Diagnostics may describe structural conditions where responsibility moves through AI-mediated, institutional, platform, agentic, or meaning-bearing systems.
 
 Relevant contexts include:
 
@@ -383,6 +383,8 @@ Relevant contexts include:
 - organizational AI usage guidelines
 - high-risk workflow review
 - multi-role institutional procedures
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when a system can answer who touched the output, but cannot answer who owns the condition that made the output risky.
 

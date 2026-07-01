@@ -187,9 +187,9 @@ Which parts of the cost are visible, to whom, through what representation, and a
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Cost Visibility and Redistribution may apply wherever systems select, optimize, repeat, or govern configurations on the basis of partial cost visibility.
+Cost Visibility and Redistribution may describe structural conditions where systems select, optimize, repeat, or govern configurations on the basis of partial cost visibility.
 
 Relevant contexts include:
 
@@ -206,6 +206,8 @@ Relevant contexts include:
 - infrastructure governance
 - platform governance
 - public service configurations
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In AI-mediated systems, low-friction generation can lower visible production cost while shifting validation, source checking, contextual alignment, legal responsibility, semantic fidelity review, and repair downstream.
 

@@ -293,9 +293,9 @@ Who owns this, who has authority, who can see enough, who is accountable, and wh
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-The Responsibility Alignment Model may apply wherever responsibility moves through multi-node systems.
+The Responsibility Alignment Model may describe structural conditions where responsibility moves through multi-node systems.
 
 Relevant contexts include:
 
@@ -313,6 +313,8 @@ Relevant contexts include:
 - organizational coordination roles
 - public communication workflows
 - meaning-bearing systems with distributed production and concentrated sign-off
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The model is especially relevant where production becomes distributed while validation, interpretation, correction, legal exposure, or public accountability concentrates downstream.
 

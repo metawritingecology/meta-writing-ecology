@@ -89,7 +89,7 @@ Its core characteristics include:
 
 Verification Labor Compression does not claim that AI systems cannot reduce work.
 
-It applies to a narrower condition:
+It describes a narrower condition:
 
 ```text
 visible production labor decreases
@@ -346,9 +346,9 @@ Can the system support the verification labor needed to responsibly use those ou
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Verification Labor Compression may apply wherever accelerated AI-mediated production outpaces verification capacity.
+Verification Labor Compression may describe structural conditions where accelerated AI-mediated production outpaces verification capacity.
 
 Relevant contexts include:
 
@@ -377,6 +377,8 @@ Relevant contexts include:
 - organizational AI usage systems
 - high-risk decision support
 - institutional sign-off pipelines
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when outputs become easier to generate than to validate.
 

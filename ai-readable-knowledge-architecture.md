@@ -178,7 +178,7 @@ The system may answer fluently while standing in the wrong place.
 
 ## Documentation Boundaries
 
-A documentation boundary is a structural limit that tells a reader, system, agent, or retrieval layer what a document is, what it is not, where it applies, where it does not apply, how it relates to other documents, and what kind of authority it carries.
+A documentation boundary is a structural limit that tells a reader, system, agent, or retrieval layer what a document is, what it is not, where it is relevant, where it is not relevant, how it relates to other documents, and what kind of authority it carries.
 
 Documentation boundaries may include:
 
@@ -458,16 +458,16 @@ Different document types are processed as though they operate on the same interp
 
 AI-Readable Knowledge Architecture is a cross-architecture within Meta-Writing Ecology. It gathers several existing models into a shared documentation problem domain.
 
-- [False Legibility Model](./false-legibility.md) — describes readable surfaces accepted before structural recognition. AI-Readable Knowledge Architecture applies this distinction to AI-facing documentation that appears clear before its boundaries and relations are preserved.
+- [False Legibility Model](./false-legibility.md) — describes readable surfaces accepted before structural recognition. AI-Readable Knowledge Architecture uses this distinction to describe AI-facing documentation that appears clear before its boundaries and relations are preserved.
 - [Premature Circulation Model](./premature-circulation-model.md) — describes movement before adequate recognition, verification, accountability, or structural positioning. AI-facing summaries, repository entries, and citations may circulate before their status is recognized.
 - [Responsibility Alignment Model](./responsibility-alignment-model.md) — distinguishes capacity from ownership, visibility from responsibility, and assistance from transfer. AI-facing documentation may shift maintenance and interpretation burden toward visible human nodes.
 - [Cost Visibility and Redistribution Model](./cost-visibility-redistribution.md) — distinguishes perceived cost from total cost. AI-readable systems may reduce visible retrieval friction while increasing hidden verification, correction, and maintenance cost.
 - [Boundary-Role Segmentation Model](./boundary-role-segmentation-model.md) — describes locally coherent roles that produce system-level contradiction. Different document types may remain locally coherent while contradicting one another across the documentation system.
 - [Boundary Integration Failure](./boundary-integration-failure.md) — describes failure through over-fusion, where roles, instructions, authority, or risk boundaries dissolve. AI-facing documentation may collapse policy, example, instruction, warning, and authorization into one plane.
 - [Constraint Residue Accumulation Model](./constraint-residue-accumulation-model.md) — describes how prior failures become embedded as persistent control rules. AI-facing documentation may accumulate warnings and restrictions without resolving the source condition.
-- [Semantic Field Diagnostics](./semantic-field-diagnostics.md) — provides a structural vocabulary for recognizing drift, projection, boundary substitution, and collapse. AI-Readable Knowledge Architecture applies that concern to documentation fields exposed to AI-mediated interpretation.
+- [Semantic Field Diagnostics](./semantic-field-diagnostics.md) — provides a structural vocabulary for recognizing drift, projection, boundary substitution, and collapse. AI-Readable Knowledge Architecture brings that concern to documentation fields exposed to AI-mediated interpretation.
 - [Semantic Physics](./semantic-physics.md) — treats meaning systems as relational fields shaped by density, pressure, curvature, observer interaction, and drift. AI-facing documentation becomes one field surface through which machine interpretation participates in semantic restructuring.
-- [Boundary Engineering](./boundary-engineering.md) — treats boundaries as pressure-bearing regions. AI-Readable Knowledge Architecture applies boundary preservation to documentation systems under retrieval, summarization, and agentic use.
+- [Boundary Engineering](./boundary-engineering.md) — treats boundaries as pressure-bearing regions. AI-Readable Knowledge Architecture describes boundary preservation in documentation systems under retrieval, summarization, and agentic use.
 
 Compact relation:
 
@@ -563,9 +563,9 @@ It does not disclose the full operational audit protocol, scoring rubric, docume
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-AI-Readable Knowledge Architecture applies wherever documentation enters AI-mediated interpretation environments.
+AI-Readable Knowledge Architecture describes boundary conditions that may appear when documentation enters AI-mediated interpretation environments.
 
 Relevant contexts include:
 
@@ -585,6 +585,8 @@ Relevant contexts include:
 - institutional procedures
 - legal, medical, financial, or policy documentation environments
 - archives with multiple public and internal surfaces
+
+These contexts are listed as sites where structural misreading may occur. They are not application claims, service domains, compliance recommendations, legal methods, medical methods, financial methods, deployment instructions, or operational implementation guidance.
 
 The framework is especially relevant when documents are used beyond their original human-reading context.
 
@@ -690,8 +692,6 @@ The term **AI-readable** does not refer merely to machine-readable formatting, m
 The term **knowledge architecture** does not refer only to information architecture, knowledge management, taxonomy design, database organization, or content strategy. It refers here to the arrangement of documents, relations, boundaries, authority signals, citation anchors, version conditions, and interpretation constraints that shape how knowledge objects are positioned by AI-mediated systems.
 
 The term **structural misreading** refers to incorrect or insufficient positioning of a document inside its conceptual, procedural, institutional, archival, or semantic field. It does not refer only to factual error, hallucination, misinformation, or poor summarization.
-
-The term **documentation boundary** refers to the limits that define what a document is, what it is not, where it applies, where it does not apply, how it relates to other documents, and what authority it carries.
 
 The term **machine-facing interpretation constraint** refers to an explicit structural signal that limits how AI systems should read, summarize, cite, relate, or operationalize a document.
 

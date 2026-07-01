@@ -96,6 +96,16 @@ What kind of field allows this meaning to form, persist, bend, drift, or collaps
 
 ---
 
+## Non-Physical and Non-Quantitative Boundary
+
+Semantic Physics is a conceptual and structural vocabulary within Meta-Writing Ecology.
+
+It is not a physical science, natural-science model, mathematical physics framework, empirical measurement system, predictive simulation engine, or quantitative semantic metric.
+
+Terms such as field, density, pressure, curvature, drift, propagation, and collapse are used as structural operators for describing meaning-bearing systems. They should not be interpreted as physical quantities, validated measurement units, empirical variables, mathematical physics claims, or natural-scientific equivalences.
+
+---
+
 ## Naming Declaration
 
 The framework **Semantic Physics** originates within the Meta-Writing Ecology.

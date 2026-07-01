@@ -387,9 +387,9 @@ this Cross
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-External Lifeline Collapse under Residual Infrastructure Cross may apply where a visible system continues to operate in form while its practical function depends on external lifelines.
+External Lifeline Collapse under Residual Infrastructure Cross may describe structural conditions where a visible system continues to operate in form while its practical function depends on external lifelines.
 
 Relevant contexts may include:
 
@@ -407,6 +407,8 @@ Relevant contexts may include:
 - residual infrastructure after crisis
 - public systems where institutional continuity hides functional insufficiency
 - meaning-bearing systems where continuity language outlasts delivery capacity
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The Cross is especially relevant when visible institutional continuity causes observers to underestimate dependency, fragility, delayed risk, or downward burden transfer.
 

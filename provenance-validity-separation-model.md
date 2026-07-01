@@ -521,9 +521,9 @@ It may still fail validity if the form, source, process, authority, or claim rel
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Provenance–Validity Separation may apply across AI-mediated, institutional, platform, evidentiary, and meaning-bearing systems.
+Provenance-Validity Separation may describe structural conditions across AI-mediated, institutional, platform, evidentiary, and meaning-bearing systems.
 
 Relevant contexts include:
 
@@ -554,6 +554,8 @@ Relevant contexts include:
 - workflow approvals
 - AI governance documentation
 - machine-readable provenance systems
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when an object becomes more trusted because its origin is traceable, even though the validity of its claim, meaning, interpretation, or use remains unresolved.
 

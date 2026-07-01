@@ -513,9 +513,9 @@ miscalibrated relation between tools, roles, instructions, authority, and respon
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Boundary Failure Diagnostics may apply across AI-mediated and institutional environments where multiple roles, tools, review steps, interfaces, policies, or governance layers must coordinate without losing functional distinction.
+Boundary Failure Diagnostics may describe structural conditions in AI-mediated and institutional environments where multiple roles, tools, review steps, interfaces, policies, or governance layers must coordinate without losing functional distinction.
 
 Relevant contexts include:
 
@@ -540,6 +540,8 @@ Relevant contexts include:
 - interface design
 - public-sector AI deployment
 - high-risk AI workflow review
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when failure appears not at a single point but at the boundary relation between points.
 
