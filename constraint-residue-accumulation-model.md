@@ -336,9 +336,9 @@ and what happens when many such residues accumulate?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Constraint Residue Accumulation may apply wherever repeated deviation produces persistent control-layer additions.
+Constraint Residue Accumulation may describe structural conditions where repeated deviation produces persistent control-layer additions.
 
 Relevant contexts include:
 
@@ -357,6 +357,8 @@ Relevant contexts include:
 - templates and reporting formats
 - governance control environments
 - meaning-bearing systems
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In AI-mediated systems, prompt layers, tool restrictions, review requirements, and safety instructions may accumulate as visible corrections to prior outputs.
 

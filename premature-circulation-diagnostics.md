@@ -85,7 +85,7 @@ Its core characteristics include:
 
 Premature Circulation Diagnostics does not claim that circulation is inherently harmful.
 
-It applies to a narrower condition:
+It describes a narrower condition:
 
 ```text
 movement begins before adequate recognition, verification,
@@ -561,9 +561,9 @@ It is structurally repositioned.
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Premature Circulation Diagnostics may apply across multiple AI-mediated, platform, institutional, and meaning-bearing environments.
+Premature Circulation Diagnostics may describe structural conditions across AI-mediated, platform, institutional, and meaning-bearing environments.
 
 Relevant contexts include:
 
@@ -595,6 +595,8 @@ Relevant contexts include:
 - organizational knowledge management
 - internal review workflows
 - meaning-bearing systems
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when an element can enter reuse before source, status, boundary, responsibility, or evidentiary position is established.
 

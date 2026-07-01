@@ -171,9 +171,9 @@ Can this continue to remain coherent after further dimensions appear?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Reality Consistency may apply across multiple AI-mediated and machine-mediated environments, including:
+Reality Consistency may describe structural conditions across AI-mediated and machine-mediated environments, including:
 
 - AI-generated answers
 - synthetic media
@@ -185,6 +185,8 @@ Reality Consistency may apply across multiple AI-mediated and machine-mediated e
 - provenance-dependent media objects
 - public claims circulating before verification
 - machine-mediated transformations of pressure-dense source material
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In each case, the central issue is not only whether the output appears real, fluent, useful, or plausible.
 

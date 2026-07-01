@@ -355,9 +355,9 @@ policy continuity evidence mapping
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Policy Continuity Evidence Mapping may apply where policy evidence accumulates across multiple years, documents, institutions, and planning cycles.
+Policy Continuity Evidence Mapping may describe structural conditions where policy evidence accumulates across multiple years, documents, institutions, and planning cycles.
 
 Relevant contexts include:
 
@@ -373,6 +373,8 @@ Relevant contexts include:
 - policy systems with distributed execution evidence
 - review settings where summary compression may produce content loss
 - future planning processes that rely on incomplete but accumulating evidence
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework is especially relevant when policy continuity depends on documentary accumulation rather than a single evaluation dataset.
 

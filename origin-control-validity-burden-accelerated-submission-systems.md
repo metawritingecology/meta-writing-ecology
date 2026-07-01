@@ -321,9 +321,9 @@ What validity burden remains after origin has been stabilized?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Origin Control and Validity Burden may apply wherever submitted objects must be evaluated under conditions of production acceleration, limited review capacity, hidden production conditions, and downstream responsibility.
+Origin Control and Validity Burden may describe structural conditions where submitted objects must be evaluated under production acceleration, limited review capacity, hidden production conditions, and downstream responsibility.
 
 Relevant contexts include:
 
@@ -340,6 +340,8 @@ Relevant contexts include:
 - machine-mediated review environments
 - delegated production workflows
 - assisted drafting or transformation pipelines
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 The framework should not be read as specific to any one domain.
 

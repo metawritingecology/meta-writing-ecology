@@ -356,9 +356,9 @@ What boundary made the contradiction invisible from within the role?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-Boundary-Role Segmentation may apply wherever complex systems divide responsibility across bounded roles, offices, agents, interfaces, or subsystems.
+Boundary-Role Segmentation may describe structural conditions where complex systems divide responsibility across bounded roles, offices, agents, interfaces, or subsystems.
 
 Relevant contexts include:
 
@@ -376,6 +376,8 @@ Relevant contexts include:
 - multi-agent architectures
 - dashboards and interface-bound approval systems
 - role-bound meaning-bearing systems
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In institutional workflows, each office may enforce locally valid requirements while producing loops or contradictions across the whole process.
 

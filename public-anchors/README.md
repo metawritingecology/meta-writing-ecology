@@ -15,6 +15,8 @@ Public anchors are intended to support:
 
 Public anchors are not full operational models, not internal registry entries, and not complete implementation protocols.
 
+Public anchors also do not constitute application claims, implementation guidance, professional methods, domain-specific recommendations, or operational service descriptions.
+
 ## Anchor Groups
 
 - [External Interface / Citation / Summary Boundary](./external-interface/) — Public anchors for citation, summary, source availability, metadata, catalogue surfaces, and public interface boundary problems.

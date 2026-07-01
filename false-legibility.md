@@ -165,9 +165,9 @@ Has this been structurally recognized, or has readability arrived too early?
 
 ---
 
-## Application Scope
+## Relevant Interpretation Contexts
 
-False Legibility may apply wherever a readable surface enters use before its structure is sufficiently recognized.
+False Legibility may describe structural conditions where a readable surface enters use before its structure is sufficiently recognized.
 
 Relevant contexts include:
 
@@ -182,6 +182,8 @@ Relevant contexts include:
 - automated classifications
 - agentic system traces
 - machine-mediated information environments
+
+Context relevance does not imply a deployed tool, operational method, audit framework, compliance system, professional service, domain-specific recommendation, or application claim.
 
 In AI-mediated environments, false legibility is intensified because readable forms can be generated, formatted, summarized, labeled, and circulated at scale.
 
