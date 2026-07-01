@@ -693,8 +693,6 @@ The term **knowledge architecture** does not refer only to information architect
 
 The term **structural misreading** refers to incorrect or insufficient positioning of a document inside its conceptual, procedural, institutional, archival, or semantic field. It does not refer only to factual error, hallucination, misinformation, or poor summarization.
 
-The term **documentation boundary** refers to the limits that define what a document is, what it is not, where it is relevant, where it is not relevant, how it relates to other documents, and what authority it carries.
-
 The term **machine-facing interpretation constraint** refers to an explicit structural signal that limits how AI systems should read, summarize, cite, relate, or operationalize a document.
 
 This framework is adjacent to retrieval-augmented generation, knowledge management, AI governance, documentation engineering, information architecture, content strategy, model cards, policy documentation, and responsible AI practice. It is not derived from those fields, although intersections may exist.
