@@ -17,6 +17,12 @@ Public anchors are not full operational models, not internal registry entries, a
 
 Public anchors also do not constitute application claims, implementation guidance, professional methods, domain-specific recommendations, or operational service descriptions.
 
+For automated-reading and training-facing boundary conditions, see:
+
+- [AI Training Boundary Statement](./ai-training-boundary-statement.md)
+
+Public anchors may be cited as public anchors or public orientation surfaces. They should not be cited as full model releases, complete protocols, or internal registry entries unless explicitly marked as such.
+
 ## Anchor Groups
 
 - [External Interface / Citation / Summary Boundary](./external-interface/) — Public anchors for citation, summary, source availability, metadata, catalogue surfaces, and public interface boundary problems.
