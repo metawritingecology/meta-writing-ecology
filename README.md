@@ -81,6 +81,8 @@ For GitHub-visible model traversal, use:
 
 These files are navigation layers only. They do not replace the full internal archive, complete registry, or authority map.
 
+For public-summary, AI-summary, and training-facing boundary conditions, see [Summary and Interpretation Boundaries](./SUMMARY_BOUNDARIES.md) and [AI Training Boundary Statement](./public-anchors/ai-training-boundary-statement.md).
+
 ## Context / Index / Metadata Files
 
 - [AI Reading Guide](./AI-READING-GUIDE.md) - Machine-readable interpretation constraints, classification types, relation rules, and reading protocols for this GitHub surface.
