@@ -24,8 +24,11 @@ Purpose: establish what this GitHub layer is, then move through semantic field d
 - [false-legibility.md](../false-legibility.md)
 - [proxy-substitution.md](../proxy-substitution.md)
 - [premature-circulation-model.md](../premature-circulation-model.md)
+- [source-summary-citation-boundary-packet.md](../source-summary-citation-boundary-packet.md)
+- [model-use-reporting-boundary-protocol.md](../model-use-reporting-boundary-protocol.md)
+- [generation-condition-disclosure-reproducibility-cross.md](../generation-condition-disclosure-reproducibility-cross.md)
 
-Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, the provenance-validity gap, false legibility, proxy substitution, and circulation-before-recognition.
+Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, the provenance-validity gap, false legibility, proxy substitution, circulation-before-recognition, source custody, model-use reporting, and generation-condition reproducibility pressure.
 
 ## 3. Semantic field foundations path
 
@@ -49,6 +52,8 @@ Purpose: understand the field-dynamic vocabulary of pressure, curvature, propaga
 - [boundary-integration-failure.md](../boundary-integration-failure.md)
 - [boundary-role-segmentation-model.md](../boundary-role-segmentation-model.md)
 - [boundary-failure-diagnostics.md](../boundary-failure-diagnostics.md)
+- [text-conditioned-semantic-rendering.md](../text-conditioned-semantic-rendering.md)
+- [surface-bounded-semantic-rendering.md](../surface-bounded-semantic-rendering.md)
 
 Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries.
 
@@ -137,6 +142,27 @@ Purpose: understand machine-readable selfhood, externalized cognition, search/pl
 - [verification-labor-compression.md](../verification-labor-compression.md)
 
 Purpose: understand public-facing methodological orientations for documentation structure, policy continuity evidence, governance residue, and verification labor.
+
+## Semantic surface formation path
+
+- [text-conditioned-semantic-rendering.md](../text-conditioned-semantic-rendering.md)
+- [surface-bounded-semantic-rendering.md](../surface-bounded-semantic-rendering.md)
+- [false-legibility.md](../false-legibility.md)
+- [observer-representation-boundary.md](../observer-representation-boundary.md)
+- [semantic-field-diagnostics.md](../semantic-field-diagnostics.md)
+
+Purpose: understand how textual structures condition readable semantic surfaces, why rendered surfaces remain bounded, and how surface readability can become misrecognized as structural completeness.
+
+## Source / reporting / reproducibility boundary path
+
+- [source-summary-citation-boundary-packet.md](../source-summary-citation-boundary-packet.md)
+- [model-use-reporting-boundary-protocol.md](../model-use-reporting-boundary-protocol.md)
+- [generation-condition-disclosure-reproducibility-cross.md](../generation-condition-disclosure-reproducibility-cross.md)
+- [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
+- [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
+- [verification-labor-compression.md](../verification-labor-compression.md)
+
+Purpose: understand how source custody, model-use reporting, generation conditions, provenance-validity separation, AI-readable documentation, and verification labor interact under public-facing knowledge conditions.
 
 ## 10. Minimal orientation path
 
