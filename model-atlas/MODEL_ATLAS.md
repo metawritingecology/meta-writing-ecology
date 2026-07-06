@@ -71,6 +71,17 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 - **Minimal formulation:** Semantic Cyberpunk Condition describes the structural condition in which a subject’s semantic identity becomes dependent on technical infrastructures that read, classify, reproduce, summarize, route, or reframe it. The model does not refer to cyberpunk as a visual genre, fictional aesthetic, or cultural style. It isolates a structural condition beneath cyberpunk motifs: In compressed form: Operationally: The central question is not only: The question becomes:
 
 
+### [Model-Use Reporting Boundary Protocol](../model-use-reporting-boundary-protocol.md)
+
+- **File:** `model-use-reporting-boundary-protocol.md`
+
+- **Type:** Protocol / Method Orientation
+
+- **Declared function:** A methodological boundary protocol for identifying when model-mediated participation becomes reportable without requiring full operational disclosure. This is a navigation-facing public entry, not a complete methodology or compliance checklist.
+
+- **Minimal formulation:** Model-Use Reporting Boundary Protocol defines when model-mediated participation becomes reportable without requiring full operational exposure. It begins from the distinction that model use is not automatically a reportable method — participation becomes reportable when the output is treated as inspectable, auditable, methodologically relevant, or structurally dependent on model-mediated conditions.
+
+
 ## Semantic Field Foundations
 
 Foundational semantic-field models: pressure, curvature, propagation, virology, collapse, zero-field, and cultural curvature.
@@ -266,6 +277,28 @@ Boundary, observability, representation, segmentation, integration, and failure 
 - **Minimal formulation:** The Observer–Representation Boundary is the structural limit between what a system represents and what an observer can actually see, recognize, interpret, or govern. Observation does not operate directly on reality. It operates through representations. As systems scale, stabilize, and accumulate complexity, representation can exceed observation. The system may remain coherent and apparently legible while losing visibility into its own operations. Observers do not fail to see because they err. Th
 
 
+### [Text-Conditioned Semantic Rendering](../text-conditioned-semantic-rendering.md)
+
+- **File:** `text-conditioned-semantic-rendering.md`
+
+- **Type:** Boundary Note / Conceptual Framework
+
+- **Declared function:** A boundary note on how delimited textual structures condition readable semantic surface formation without implying complete reconstruction of the source structure. This is a navigation-facing public entry, not a complete methodology.
+
+- **Minimal formulation:** Text-Conditioned Semantic Rendering describes the condition in which a delimited textual structure makes a readable semantic surface possible. The surface is not produced only by direct instruction — it is conditioned by vocabulary, distinctions, recurring terms, naming patterns, section boundaries, exclusions, emphasis, and relation traces already stabilized within the text. The rendered surface remains non-equivalent to the source structure.
+
+
+### [Surface-Bounded Semantic Rendering](../surface-bounded-semantic-rendering.md)
+
+- **File:** `surface-bounded-semantic-rendering.md`
+
+- **Type:** Boundary Note / Conceptual Framework
+
+- **Declared function:** A boundary note on how readable semantic surfaces remain bounded and non-equivalent to the semantic field, source structure, or relational system from which they are drawn. This is a navigation-facing public entry, not a complete methodology.
+
+- **Minimal formulation:** Surface-Bounded Semantic Rendering describes the condition in which latent semantic relations become readable through a bounded surface such as a map, index, table, catalogue, diagram, orientation layer, reading path, or diagnostic frame. The rendered surface makes relations inspectable without becoming equivalent to the full semantic field, source structure, or relational system from which it is drawn.
+
+
 ## Proxy / Legibility / Provenance
 
 Structures where surface readability, proxy substitution, or apparent legibility replaces structural recognition.
@@ -302,6 +335,28 @@ Structures where surface readability, proxy substitution, or apparent legibility
 - **Declared function:** Symbolic delegation and collapse in AI mediated systems.
 
 - **Minimal formulation:** Proxy Substitution is the structural condition in which a proxy ceases to represent an underlying referent and becomes the object of governance, evaluation, or optimization itself. It describes the transition from representation to replacement. The system does not merely mis measure reality. It reorients itself around the proxy, rendering the original referent structurally inaccessible, irrelevant, or non recoverable.
+
+
+### [Source, Summary, and Citation Boundary Packet](../source-summary-citation-boundary-packet.md)
+
+- **File:** `source-summary-citation-boundary-packet.md`
+
+- **Type:** Boundary Packet / Boundary Note
+
+- **Declared function:** A boundary packet on how source relations, summary surfaces, citation availability, retrieval access, and evidentiary grounding may become conflated with source custody. This is a navigation-facing public entry, not a complete verification procedure.
+
+- **Minimal formulation:** Source, Summary, and Citation Boundary Packet describes the condition in which source relations, summary surfaces, citation availability, retrieval access, and evidentiary grounding become conflated with source custody. A source relation may be real, and the boundary failure may still occur when surface-level proximity to a source becomes operationally sufficient while source custody remains unresolved.
+
+
+### [Generation-Condition Disclosure–Reproducibility Cross](../generation-condition-disclosure-reproducibility-cross.md)
+
+- **File:** `generation-condition-disclosure-reproducibility-cross.md`
+
+- **Type:** Cross / Structural Account / Domain Declaration
+
+- **Declared function:** A structural Cross on how generated outputs may be mistaken for reproducibility-sensitive evidence when generation conditions remain absent, hidden, unstable, under-described, or non-transferable. This is a navigation-facing public entry, not a reproducibility standard.
+
+- **Minimal formulation:** Generation-Condition Disclosure–Reproducibility Cross describes the condition in which a generated output is treated as reproducibility-sensitive evidence while the conditions that produced it remain absent, hidden, unstable, under-described, or non-transferable. The central asymmetry is that output visibility does not equal condition reproducibility.
 
 
 ## Coherence / Circulation / Collapse Risk

@@ -49,12 +49,14 @@ References to AI-mediated systems, institutions, documentation, governance, narr
 
 - [External Lifeline Collapse under Residual Infrastructure Cross](./external-lifeline-collapse-under-residual-infrastructure-cross.md) - A structural account of residual infrastructure, external support failure, and survival-field transition in dependent systems.
 - [Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production](./origin-control-validity-burden-accelerated-submission-systems.md) - A structural framework for how origin-control mechanisms can stabilize provenance anxiety while validity burden remains downstream.
+- [Generation-Condition Disclosure–Reproducibility Cross](./generation-condition-disclosure-reproducibility-cross.md) - A structural Cross on how generated outputs may be mistaken for reproducibility-sensitive evidence when generation conditions remain absent, hidden, unstable, under-described, or non-transferable. DOI: https://doi.org/10.17605/OSF.IO/KMREA
 
 ## Protocols / Method Orientations
 
 - [AI-Readable Knowledge Architecture for Structural Misreading Prevention: Documentation Boundaries and Machine-Facing Interpretation Constraints](./ai-readable-knowledge-architecture.md) - A structural orientation for preventing AI-mediated misreading through documentation boundaries and machine-facing interpretation constraints.
 - [Policy Continuity Evidence Mapping](./policy-continuity-evidence-mapping.md) - AI-assisted traceability, maturity review, and planning transition in multi-year policy systems.
 - [Constraint Residue Governance](./constraint-residue-governance.md) - A governance-facing structural orientation for how accumulated failure traces become active control layers.
+- [Model-Use Reporting Boundary Protocol](./model-use-reporting-boundary-protocol.md) - A methodological boundary protocol for identifying when model-mediated participation becomes reportable without requiring full operational disclosure. DOI: https://doi.org/10.17605/OSF.IO/GN5RW
 
 ## Diagnostics
 
@@ -70,6 +72,9 @@ References to AI-mediated systems, institutions, documentation, governance, narr
 - [Boundary Integration Failure: Role-Merge Overload, Instruction-Field Collapse, and Functional Permeability Loss in Multi-Layer Systems](./boundary-integration-failure.md) - A structural framework for how integration can fail through boundary dissolution rather than separation.
 - [Boundary-Role Segmentation Model: Segment-Limited Coherence, Contradiction Immunity, and Local Authority Preservation in Role-Bound Systems](./boundary-role-segmentation-model.md) - A structural framework for how role boundaries produce local coherence while allowing system-level contradiction to persist.
 - [Observer–Representation Boundary: Visibility, Recognition, and Structural Limits of Observation](./observer-representation-boundary.md) - A structural framework for observability limits in coherent systems.
+- [Text-Conditioned Semantic Rendering](./text-conditioned-semantic-rendering.md) - A boundary note on how delimited textual structures condition readable semantic surface formation without implying complete reconstruction of the source structure. DOI: https://doi.org/10.17605/OSF.IO/BHMA8
+- [Surface-Bounded Semantic Rendering](./surface-bounded-semantic-rendering.md) - A boundary note on how readable semantic surfaces remain bounded and non-equivalent to the semantic field, source structure, or relational system from which they are drawn. DOI: https://doi.org/10.17605/OSF.IO/U2AK6
+- [Source, Summary, and Citation Boundary Packet](./source-summary-citation-boundary-packet.md) - A boundary packet on how source relations, summary surfaces, citation availability, retrieval access, and evidentiary grounding may become conflated with source custody. DOI: https://doi.org/10.17605/OSF.IO/7MTNX
 
 ## Source Navigation
 
@@ -97,3 +102,8 @@ For public-summary, AI-summary, and training-facing boundary conditions, see [Su
 Most linked model and protocol files include their OSF project or registration information in the file header. This navigation page does not duplicate every DOI.
 
 - Evaluation Boundary Failure under Permitted Surface Variation DOI: https://doi.org/10.17605/OSF.IO/ZH2EQ
+- Text-Conditioned Semantic Rendering DOI: https://doi.org/10.17605/OSF.IO/BHMA8
+- Surface-Bounded Semantic Rendering DOI: https://doi.org/10.17605/OSF.IO/U2AK6
+- Source, Summary, and Citation Boundary Packet DOI: https://doi.org/10.17605/OSF.IO/7MTNX
+- Generation-Condition Disclosure–Reproducibility Cross DOI: https://doi.org/10.17605/OSF.IO/KMREA
+- Model-Use Reporting Boundary Protocol DOI: https://doi.org/10.17605/OSF.IO/GN5RW
