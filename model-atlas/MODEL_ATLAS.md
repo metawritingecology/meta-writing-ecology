@@ -82,6 +82,17 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 - **Minimal formulation:** Model-Use Reporting Boundary Protocol defines when model-mediated participation becomes reportable without requiring full operational exposure. It begins from the distinction that model use is not automatically a reportable method — participation becomes reportable when the output is treated as inspectable, auditable, methodologically relevant, or structurally dependent on model-mediated conditions.
 
 
+### [Policy Continuity Evidence Mapping](../policy-continuity-evidence-mapping.md)
+
+- **File:** `policy-continuity-evidence-mapping.md`
+
+- **Type:** Protocol Orientation / Methodological Note / Domain Declaration
+
+- **Declared function:** AI-assisted traceability, maturity review, and planning transition in multi-year policy systems.
+
+- **Minimal formulation:** Policy Continuity Evidence Mapping describes the condition under which evidence from multi-year policy systems is organized for planning transition through traceability, maturity classification, content-loss control, and human judgment.
+
+
 ## Semantic Field Foundations
 
 Foundational semantic-field models: pressure, curvature, propagation, virology, collapse, zero-field, and cultural curvature.
@@ -324,6 +335,17 @@ Structures where surface readability, proxy substitution, or apparent legibility
 - **Declared function:** A structural model for distinguishing origin traceability from validity, semantic adequacy, evidentiary support, and operational fitness.
 
 - **Minimal formulation:** Provenance–Validity Separation describes the structural condition in which an object's origin, attribution, custody, generation history, transformation record, source trace, credential status, or provenance pathway can be established while validity remains unresolved. In compressed form: provenance can stabilize origin without stabilizing validity.
+
+
+### [Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production](../origin-control-validity-burden-accelerated-submission-systems.md)
+
+- **File:** `origin-control-validity-burden-accelerated-submission-systems.md`
+
+- **Type:** Cross / Domain Declaration / Structural Note
+
+- **Declared function:** A structural framework for how origin-control mechanisms can stabilize provenance anxiety while validity burden remains downstream.
+
+- **Minimal formulation:** Origin Control and Validity Burden describes the structural condition in which a submission system attempts to stabilize uncertainty about how a submitted object was produced while the burden of determining validity remains unresolved, displaced, or compressed downstream.
 
 
 ### [Proxy Substitution as a Structural Governance Failure](../proxy-substitution.md)
