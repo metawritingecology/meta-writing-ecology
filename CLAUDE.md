@@ -14,6 +14,15 @@ Do not edit MODEL_ATLAS, RELATION_MAP, READING_PATHS, public anchors, OSF-linked
 
 If a task requires naming, classification, relation confirmation, OSF judgment, public/private judgment, or model merging, stop and ask for user review.
 
+## Symbol hygiene
+
+Follow the canonical symbol hygiene rule in `AGENTS.md`.
+
+Operational reminder:
+- prose/content: use `≠`
+- code/operators: preserve `!=` and `!==`
+- before committing prose edits, scan touched content files for literal `!=`
+
 Before finishing, report:
 - files changed
 - what was implemented
