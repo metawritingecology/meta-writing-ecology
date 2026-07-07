@@ -145,7 +145,7 @@ It is most relevant when a readable source surface begins to replace direct sour
 
 ## Relationship to Adjacent Models
 
-This packet is adjacent to AI-Readable Knowledge Architecture, Provenance–Validity Separation, False Legibility, Summary Boundaries, and Model-Use Reporting Boundary Protocol.
+This packet is adjacent to [AI-Readable Knowledge Architecture](./ai-readable-knowledge-architecture.md), [Provenance–Validity Separation](./provenance-validity-separation-model.md), [False Legibility](./false-legibility.md), Summary Boundaries, and [Model-Use Reporting Boundary Protocol](./model-use-reporting-boundary-protocol.md).
 
 It supports the distinction between public source visibility and source custody.
 
