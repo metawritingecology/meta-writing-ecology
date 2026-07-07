@@ -395,12 +395,12 @@ In agentic systems, planners, retrievers, executors, validators, safety layers, 
 
 Boundary-Role Segmentation is adjacent to, but distinct from, several related Meta-Writing Ecology models.
 
-- Boundary Integration Failure — describes over-fusion of boundaries; Boundary-Role Segmentation describes over-separation of role logics.
-- Boundary Engineering — describes boundary thickness and entry conditions; Boundary-Role Segmentation describes how role boundaries must preserve distinction while remaining permeable enough for cross-segment contradiction.
-- Boundary Failure — describes non-entry and lock-in in coherent systems; Boundary-Role Segmentation can contribute when signals cannot enter any role without already matching local logic.
-- Responsibility Alignment Model — asks whether responsibility corresponds to ownership, authority, visibility, capacity, and accountability; Boundary-Role Segmentation identifies one mechanism through which responsibility misaligns across role boundaries.
+- [Boundary Integration Failure](./boundary-integration-failure.md) — describes over-fusion of boundaries; Boundary-Role Segmentation describes over-separation of role logics.
+- [Boundary Engineering](./boundary-engineering.md) — describes boundary thickness and entry conditions; Boundary-Role Segmentation describes how role boundaries must preserve distinction while remaining permeable enough for cross-segment contradiction.
+- [Boundary Failure](./boundary-failure.md) — describes non-entry and lock-in in coherent systems; Boundary-Role Segmentation can contribute when signals cannot enter any role without already matching local logic.
+- [Responsibility Alignment Model](./responsibility-alignment-model.md) — asks whether responsibility corresponds to ownership, authority, visibility, capacity, and accountability; Boundary-Role Segmentation identifies one mechanism through which responsibility misaligns across role boundaries.
 - [Constraint Residue Accumulation Model](./constraint-residue-accumulation-model.md) — describes how prior failures become persistent controls; Boundary-Role Segmentation can generate residue when cross-segment contradiction is handled through additional local restrictions instead of boundary redesign.
-- Constraint Displacement after Capability Expansion — describes how expanded production relocates constraints downstream; Boundary-Role Segmentation becomes relevant when downstream constraints are assigned to fragmented roles without integration authority.
+- [Constraint Displacement after Capability Expansion](./constraint-displacement.md) — describes how expanded production relocates constraints downstream; Boundary-Role Segmentation becomes relevant when downstream constraints are assigned to fragmented roles without integration authority.
 - [Cost Visibility and Redistribution Model](./cost-visibility-redistribution.md) — describes how costs become visible, hidden, redistributed, or locked into default behavior; Boundary-Role Segmentation can hide integration cost by distributing burden across roles.
 - [False Legibility Model](./false-legibility.md) — describes readable surfaces accepted before structural recognition; role clarity can become falsely legible when local procedure appears sufficient while cross-segment contradiction remains unresolved.
 - [Semantic Field Diagnostics](./semantic-field-diagnostics.md) — provides a vocabulary for drift, projection, boundary substitution, and collapse; Boundary-Role Segmentation can be read diagnostically as a role-level field deformation.

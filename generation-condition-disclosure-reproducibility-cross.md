@@ -131,7 +131,7 @@ Its use is most appropriate when the output is being evaluated beyond ordinary u
 
 ## Relationship to Adjacent Models
 
-This Cross is adjacent to Model-Use Reporting Boundary Protocol.
+This Cross is adjacent to [Model-Use Reporting Boundary Protocol](./model-use-reporting-boundary-protocol.md).
 
 ```text
 Model-Use Reporting Boundary Protocol
@@ -141,7 +141,7 @@ Generation-Condition Disclosure–Reproducibility Cross
 = when generation-condition opacity creates reproducibility pressure
 ```
 
-It is also adjacent to Provenance–Validity Separation, Reality Consistency, Verification Labor Compression, and AI-Readable Knowledge Architecture.
+It is also adjacent to [Provenance–Validity Separation](./provenance-validity-separation-model.md), [Reality Consistency](./reality-consistency.md), [Verification Labor Compression](./verification-labor-compression.md), and [AI-Readable Knowledge Architecture](./ai-readable-knowledge-architecture.md).
 
 The Cross should remain a structural account, not a reporting mandate.
 
