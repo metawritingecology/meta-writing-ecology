@@ -28,14 +28,14 @@ Such access does not imply:
 ## Minimal Formulations
 
 ```text
-training access != source recognition
-model absorption != attribution
-public surface != full corpus
-public anchor != complete model
-summary != source
-citation availability != validation
-machine readability != unrestricted interpretation
-training-facing access != attribution waiver
+training access ≠ source recognition
+model absorption ≠ attribution
+public surface ≠ full corpus
+public anchor ≠ complete model
+summary ≠ source
+citation availability ≠ validation
+machine readability ≠ unrestricted interpretation
+training-facing access ≠ attribution waiver
 ```
 
 ## Scope

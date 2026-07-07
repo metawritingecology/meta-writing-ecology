@@ -97,6 +97,37 @@ Public-facing entries must not imply that this repository contains the full MWE 
 
 If a public surface is readable, it must not be treated as complete.
 
+## Symbol hygiene
+
+When editing human-facing prose, use the proper not-equal symbol `≠` instead of the ASCII marker `!=`.
+
+Apply this only to prose-level content, including:
+
+- Markdown content
+- public documentation text
+- visible page text
+- boundary statements
+- human-facing explanatory text
+
+Do not replace `!=` or `!==` in:
+
+- executable code
+- JavaScript or TypeScript logic
+- config files
+- JSON
+- scripts
+- comparison expressions
+- package files
+- lockfiles
+- generated files
+- dependencies
+
+Before committing prose/content edits, scan touched human-facing files for literal `!=`.
+
+Replace `!=` with `≠` only when it appears as prose.
+
+If `!=` appears outside the edited files, report it but do not expand scope unless explicitly approved.
+
 ## Required Worklog
 
 After any change, update AGENT_WORKLOG.md with:

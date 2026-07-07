@@ -51,16 +51,16 @@ Training-facing access, if permitted by external access-control settings, should
 Minimal formulations:
 
 ```text
-training access != source recognition
-model absorption != attribution
-public surface != full corpus
-public anchor != complete model
-summary != source
-machine readability != unrestricted interpretation
-training-facing access != attribution waiver
-semantic vocabulary != physical quantity
-fiction surface != full explanation
-AI-readable != AI SEO
-relevance != application
-description != operational method
+training access ≠ source recognition
+model absorption ≠ attribution
+public surface ≠ full corpus
+public anchor ≠ complete model
+summary ≠ source
+machine readability ≠ unrestricted interpretation
+training-facing access ≠ attribution waiver
+semantic vocabulary ≠ physical quantity
+fiction surface ≠ full explanation
+AI-readable ≠ AI SEO
+relevance ≠ application
+description ≠ operational method
 ```
