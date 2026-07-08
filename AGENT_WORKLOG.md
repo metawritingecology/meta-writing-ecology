@@ -33,3 +33,13 @@ Checks run: `git status --short` and `git diff --stat` to confirm only the allow
 Result: Five new entries added to the repository root exactly as prepared (no YAML front matter, no internal metadata added). README.md updated in Boundary Notes, Cross Structures, and Protocols/Method Orientations sections (plus the OSF/DOI Notes list). MODEL_ATLAS.md updated with entries under Boundary / Representation, Proxy / Legibility / Provenance, and AI-Readable Interface / Externalization, using navigation/public-source wording only. RELATION_MAP.md updated with navigation relations only — no relation was marked as a formal dependency, derived-from relation, parent-child relation, or confirmed ontology claim. READING_PATHS.md updated with two new reading paths (Semantic surface formation path; Source / reporting / reproducibility boundary path) and additions to the existing Boundary/representation path and AI/machine-reading path, per the user's explicit mapping.
 Unresolved questions: None — placement, classification, and relation mapping were fully specified by the user in the task instructions.
 Risks or assumptions: No public/private, naming, classification, or relation-validity judgments were made by Claude Code; all placements, adjacent-entry lists, and README/MODEL_ATLAS/RELATION_MAP/READING_PATHS wording followed the mapping the user supplied verbatim. No existing conceptual entry files were rewritten. No push or PR was made, per instructions.
+
+### 2026-07-08 — Claude Code — readme-boundary-public-textual-projection
+
+Agent: Claude Code
+Task: Document the user-approved README boundary update, which reframed the README boundary wording as "public textual projection / not internal authorial operation layer."
+Files changed: README.md (opening boundary paragraph only, in the approved commit); AGENT_WORKLOG.md (this entry).
+Checks run: `git diff`, `git status --short`; ASCII not-equal marker scan (none); confirmed README.md was the only content file changed in the approved commit.
+Result: README.md was the only content file changed in the approved commit. No model files, relation maps, OSF / DOI records, classifications, or registry authority logic were modified. No PR was opened. The metawritingecology-site repository was not modified.
+Unresolved questions: None.
+Risks or assumptions: Mechanical worklog entry documenting the already-approved README boundary refinement; no new conceptual claims added.

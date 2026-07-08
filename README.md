@@ -2,7 +2,11 @@
 
 Meta-Writing Ecology is a structural analysis system for describing how texts, constraints, instructions, models, and interpretive fields interact.
 
-This repository is a public GitHub-facing surface for selected model nodes, diagnostic orientations, boundary notes, protocol documents, and OSF-linked conceptual mirrors. It is not the full archive and should not be read as environmental ecology, ecological science, biodiversity research, or nature writing. Here, ecology refers to the relational structure of meaning-bearing systems.
+This repository is a public GitHub-facing surface and growing textual projection of Meta-Writing Ecology. It presents selected model nodes, diagnostic orientations, boundary notes, protocol documents, and OSF-linked conceptual mirrors.
+
+It is not the internal authorial operation layer. Naming, classification, relation status, registry state, public/private boundary, and final promotion decisions are not made by this repository and should not be inferred from GitHub visibility alone.
+
+It should not be read as environmental ecology, ecological science, biodiversity research, or nature writing. Here, ecology refers to the relational structure of meaning-bearing systems.
 
 ## Application Boundary
 
