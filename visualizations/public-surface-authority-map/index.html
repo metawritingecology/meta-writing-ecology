@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Public Surface and Authority-Ceiling Map</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="page" id="app-root">
+  <header class="masthead">
+    <h1 id="page-title">Public Surface and Authority-Ceiling Map</h1>
+    <p class="subtitle" id="page-subtitle">
+      A visualization of selected public-document roles, source functions, and declared public authority ceilings.
+    </p>
+  </header>
+
+  <!-- Always-visible boundary banner: does not require any interaction. -->
+  <section class="boundary-banner" aria-label="Scope and authority boundary">
+    <ul id="boundary-statements">
+      <li>Selected public surface only.</li>
+      <li>Visual position does not indicate conceptual importance or internal authority.</li>
+      <li>Reference routing does not establish a confirmed conceptual relation.</li>
+      <li>Omission does not imply nonexistence.</li>
+    </ul>
+  </section>
+
+  <details class="scope-panel" open>
+    <summary>Scope and non-authority statement</summary>
+    <ul>
+      <li>27 selected public-document records are represented.</li>
+      <li>This is not the complete archive and not the internal Registry.</li>
+      <li>Inclusion does not imply priority.</li>
+      <li>Order does not imply hierarchy.</li>
+      <li>Density does not imply importance.</li>
+      <li>Reference edges are navigation-only; they are not confirmed conceptual relations.</li>
+      <li>Source files remain required for any conceptual claim.</li>
+    </ul>
+    <p class="scope-note">
+      The layout is categorical and deterministic. Column order, node position, spacing,
+      color, and edge density are presentation only and do not measure conceptual importance
+      or internal authority.
+    </p>
+  </details>
+
+  <section class="controls" aria-label="Map controls">
+    <div class="control">
+      <label for="group-by">Group by (public source function)</label>
+      <select id="group-by">
+        <option value="surface_role" selected>Surface role</option>
+        <option value="authority_ceiling">Authority ceiling</option>
+        <option value="public_surface_status">Public-surface status</option>
+      </select>
+    </div>
+
+    <div class="control">
+      <label for="search">Search name or path</label>
+      <input type="search" id="search" placeholder="Type to filter…" autocomplete="off" />
+    </div>
+
+    <div class="control">
+      <label for="filter-surface-role">Filter: surface role</label>
+      <select id="filter-surface-role"><option value="">All</option></select>
+    </div>
+
+    <div class="control">
+      <label for="filter-authority-ceiling">Filter: authority ceiling</label>
+      <select id="filter-authority-ceiling"><option value="">All</option></select>
+    </div>
+
+    <div class="control">
+      <label for="filter-public-status">Filter: public-surface status</label>
+      <select id="filter-public-status"><option value="">All</option></select>
+    </div>
+
+    <div class="control">
+      <label for="filter-classification">Filter: classification evidence</label>
+      <select id="filter-classification"><option value="">All</option></select>
+    </div>
+
+    <div class="control control-toggles">
+      <span class="toggle-heading">Explicit reference routing (navigation only)</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-edges" />
+        Show routing for the selected node
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-edges-global" />
+        Show all explicit routing (dense)
+      </label>
+    </div>
+
+    <div class="control control-actions">
+      <button type="button" id="reset">Reset view</button>
+    </div>
+  </section>
+
+  <p class="status-line" id="status-line" role="status" aria-live="polite"></p>
+
+  <p class="density-warning" id="density-warning" hidden>
+    Global routing shown: this is a dense navigation overlay. Edge count and visual density
+    do not indicate importance, authority, or confirmed relations.
+  </p>
+
+  <div class="map-wrap">
+    <section class="map-area" aria-label="Public-surface map">
+      <div id="map" class="map"></div>
+      <svg id="edge-layer" class="edge-layer" aria-hidden="true"></svg>
+    </section>
+
+    <aside class="detail-panel" id="detail-panel" aria-label="Document details" tabindex="-1">
+      <p class="detail-empty" id="detail-empty">
+        Select a document node to view its declared public metadata.
+      </p>
+      <div id="detail-content" hidden></div>
+    </aside>
+  </div>
+
+  <section class="legend" aria-label="Legend">
+    <h2>Legend</h2>
+    <div class="legend-groups" id="legend-groups"></div>
+    <div class="legend-edges">
+      <h3>Reference routing (navigation only)</h3>
+      <ul>
+        <li><span class="edge-swatch edge-boundary"></span> Boundary reference — navigation only</li>
+        <li><span class="edge-swatch edge-source-use"></span> Source-use reference — navigation only</li>
+      </ul>
+      <p class="legend-note">
+        Every edge is navigation-only reference routing. No edge is a confirmed conceptual
+        relation, derivation, or dependency. All nodes have equal visual area; color and
+        position are secondary cues only.
+      </p>
+    </div>
+  </section>
+
+  <section class="table-fallback" aria-label="Public metadata table fallback">
+    <h2>Public metadata table (all 27 records)</h2>
+    <p class="table-note">
+      This table is a public metadata fallback listing, not an authority ranking. Row order
+      is alphabetical by repository path and does not imply hierarchy.
+    </p>
+    <div class="table-scroll">
+      <table id="records-table">
+        <thead>
+          <tr>
+            <th scope="col">name</th>
+            <th scope="col">repository_path</th>
+            <th scope="col">surface_role</th>
+            <th scope="col">public_surface_status</th>
+            <th scope="col">authority_ceiling</th>
+            <th scope="col">classification_evidence</th>
+          </tr>
+        </thead>
+        <tbody id="records-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>
+      This visualization is a selected public-surface navigation interface. It is not the
+      internal Registry, a complete archive, a formal ontology, or an authoritative conceptual
+      relation graph.
+    </p>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

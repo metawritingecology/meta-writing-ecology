@@ -1,0 +1,1867 @@
+{
+  "schema_version": "1.0",
+  "title": "Public Surface and Authority-Ceiling Map",
+  "scope": "selected_public_surface_only",
+  "authority_ceiling": "navigation_only",
+  "generated_from": [
+    "mwe-public-documents.json",
+    "mwe-public-surface.json"
+  ],
+  "generated_record_count": 27,
+  "boundary_statements": [
+    "Selected public surface only.",
+    "Visual position does not indicate conceptual importance or internal authority.",
+    "Reference routing does not establish a confirmed conceptual relation.",
+    "Omission does not imply nonexistence."
+  ],
+  "grouping_fields": [
+    "surface_role",
+    "authority_ceiling",
+    "public_surface_status"
+  ],
+  "edge_counts": {
+    "boundary_reference": 120,
+    "source_use_reference": 26
+  },
+  "self_references_omitted_count": 7,
+  "nodes": [
+    {
+      "id": "AI-READING-GUIDE.md",
+      "name": "AI Reading Guide for Meta-Writing Ecology",
+      "repository_path": "AI-READING-GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/AI-READING-GUIDE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "MACHINE_INTERPRETATION_STATE.md",
+      "name": "Machine Interpretation State and Inference Ceiling",
+      "repository_path": "MACHINE_INTERPRETATION_STATE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_INTERPRETATION_STATE.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "MACHINE_READING_PRECEDENCE.md",
+      "name": "Machine Reading Precedence",
+      "repository_path": "MACHINE_READING_PRECEDENCE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_READING_PRECEDENCE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "README.md",
+      "name": "Meta-Writing Ecology",
+      "repository_path": "README.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/README.md",
+      "surface_role": "repository_orientation",
+      "public_surface_status": "public_navigation_surface",
+      "authority_ceiling": "navigation_only",
+      "relation_default": "navigation_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "RELATION_STATUS_GUIDE.md",
+      "name": "Relation Status Guide",
+      "repository_path": "RELATION_STATUS_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/RELATION_STATUS_GUIDE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "SOURCE_USE_GUIDE.md",
+      "name": "Source Use Guide",
+      "repository_path": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SOURCE_USE_GUIDE.md",
+      "surface_role": "source_use_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "SUMMARY_BOUNDARIES.md",
+      "name": "Summary and Interpretation Boundaries",
+      "repository_path": "SUMMARY_BOUNDARIES.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_BOUNDARIES.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "SUMMARY_CONTRACT.md",
+      "name": "Summary Contract",
+      "repository_path": "SUMMARY_CONTRACT.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_CONTRACT.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "ai-induced-semantic-deviation.md",
+      "name": "Observing AI-Induced Semantic Deviation in Pressure-Dense Texts",
+      "repository_path": "ai-induced-semantic-deviation.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-induced-semantic-deviation.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "ai-readable-knowledge-architecture.md",
+      "name": "AI-Readable Knowledge Architecture for Structural Misreading Prevention: Documentation Boundaries and Machine-Facing Interpretation Constraints",
+      "repository_path": "ai-readable-knowledge-architecture.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-readable-knowledge-architecture.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "boundary-failure-diagnostics.md",
+      "name": "Boundary Failure Diagnostics for AI-Mediated Workflows: Over-Fusion, Over-Separation, and Functional Boundary Calibration in Human-AI and Institutional Systems",
+      "repository_path": "boundary-failure-diagnostics.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-failure-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Protocol Orientation / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "constraint-residue-governance.md",
+      "name": "Constraint Residue Governance: Instruction-Layer Sedimentation and Post-Hoc Control Drift in AI-Mediated and Institutional Systems",
+      "repository_path": "constraint-residue-governance.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-residue-governance.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "name": "Evaluation Boundary Failure under Permitted Surface Variation",
+      "repository_path": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/evaluation-boundary-failure-permitted-surface-variation.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Model / Conceptual Framework / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "generation-condition-disclosure-reproducibility-cross.md",
+      "name": "Generation-Condition Disclosureeproducibility Cross",
+      "repository_path": "generation-condition-disclosure-reproducibility-cross.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/generation-condition-disclosure-reproducibility-cross.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Structural Account / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "model-induced-coherence-pressure.md",
+      "name": "Model-Induced Coherence Pressure",
+      "repository_path": "model-induced-coherence-pressure.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-induced-coherence-pressure.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "model-use-reporting-boundary-protocol.md",
+      "name": "Model-Use Reporting Boundary Protocol",
+      "repository_path": "model-use-reporting-boundary-protocol.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-use-reporting-boundary-protocol.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol / Method Orientation",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "name": "Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production",
+      "repository_path": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/origin-control-validity-burden-accelerated-submission-systems.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Domain Declaration / Structural Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "policy-continuity-evidence-mapping.md",
+      "name": "Policy Continuity Evidence Mapping",
+      "repository_path": "policy-continuity-evidence-mapping.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/policy-continuity-evidence-mapping.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol Orientation / Methodological Note / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "premature-circulation-diagnostics.md",
+      "name": "Premature Circulation Diagnostics for AI-Mediated Information Flows",
+      "repository_path": "premature-circulation-diagnostics.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-circulation-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "provenance-validity-separation-model.md",
+      "name": "Provenancealidity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems",
+      "repository_path": "provenance-validity-separation-model.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/provenance-validity-separation-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Model / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "public-anchors/ai-training-boundary-statement.md",
+      "name": "AI Training Boundary Statement",
+      "repository_path": "public-anchors/ai-training-boundary-statement.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/public-anchors/ai-training-boundary-statement.md",
+      "surface_role": "public_anchor",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Training-facing Public Surface Anchor",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "responsibility-alignment-diagnostics.md",
+      "name": "Responsibility Alignment Diagnostics: Capacity-Ownership Misalignment, Visibility-Responsibility Drift, and Accountability Calibration in AI-Mediated and Institutional Systems",
+      "repository_path": "responsibility-alignment-diagnostics.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/responsibility-alignment-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Protocol Orientation / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "semantic-field-diagnostics.md",
+      "name": "Semantic Field Diagnostics",
+      "repository_path": "semantic-field-diagnostics.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-field-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "source-summary-citation-boundary-packet.md",
+      "name": "Source, Summary, and Citation Boundary Packet",
+      "repository_path": "source-summary-citation-boundary-packet.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/source-summary-citation-boundary-packet.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Packet / Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "surface-bounded-semantic-rendering.md",
+      "name": "Surface-Bounded Semantic Rendering",
+      "repository_path": "surface-bounded-semantic-rendering.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/surface-bounded-semantic-rendering.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Note / Conceptual Framework",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "text-conditioned-semantic-rendering.md",
+      "name": "Text-Conditioned Semantic Rendering",
+      "repository_path": "text-conditioned-semantic-rendering.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/text-conditioned-semantic-rendering.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Note / Conceptual Framework",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "verification-labor-compression.md",
+      "name": "Verification Labor Compression",
+      "repository_path": "verification-labor-compression.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/verification-labor-compression.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    }
+  ],
+  "edges": [
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->RELATION_STATUS_GUIDE.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->SOURCE_USE_GUIDE.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->SUMMARY_BOUNDARIES.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::AI-READING-GUIDE.md->SUMMARY_CONTRACT.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_INTERPRETATION_STATE.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_INTERPRETATION_STATE.md->RELATION_STATUS_GUIDE.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_INTERPRETATION_STATE.md->SOURCE_USE_GUIDE.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_INTERPRETATION_STATE.md->SUMMARY_BOUNDARIES.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_INTERPRETATION_STATE.md->SUMMARY_CONTRACT.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_READING_PRECEDENCE.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_READING_PRECEDENCE.md->RELATION_STATUS_GUIDE.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_READING_PRECEDENCE.md->SOURCE_USE_GUIDE.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_READING_PRECEDENCE.md->SUMMARY_BOUNDARIES.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::MACHINE_READING_PRECEDENCE.md->SUMMARY_CONTRACT.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "README.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "README.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->RELATION_STATUS_GUIDE.md",
+      "source": "README.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->SOURCE_USE_GUIDE.md",
+      "source": "README.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->SUMMARY_BOUNDARIES.md",
+      "source": "README.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::README.md->SUMMARY_CONTRACT.md",
+      "source": "README.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::RELATION_STATUS_GUIDE.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::RELATION_STATUS_GUIDE.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::RELATION_STATUS_GUIDE.md->SOURCE_USE_GUIDE.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::RELATION_STATUS_GUIDE.md->SUMMARY_BOUNDARIES.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::RELATION_STATUS_GUIDE.md->SUMMARY_CONTRACT.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SOURCE_USE_GUIDE.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "SOURCE_USE_GUIDE.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SOURCE_USE_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SOURCE_USE_GUIDE.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "SOURCE_USE_GUIDE.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SOURCE_USE_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SOURCE_USE_GUIDE.md->RELATION_STATUS_GUIDE.md",
+      "source": "SOURCE_USE_GUIDE.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SOURCE_USE_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SOURCE_USE_GUIDE.md->SUMMARY_BOUNDARIES.md",
+      "source": "SOURCE_USE_GUIDE.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SOURCE_USE_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SOURCE_USE_GUIDE.md->SUMMARY_CONTRACT.md",
+      "source": "SOURCE_USE_GUIDE.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SOURCE_USE_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_BOUNDARIES.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_BOUNDARIES.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_BOUNDARIES.md->RELATION_STATUS_GUIDE.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_BOUNDARIES.md->SOURCE_USE_GUIDE.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_BOUNDARIES.md->SUMMARY_CONTRACT.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_CONTRACT.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_CONTRACT.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_CONTRACT.md->RELATION_STATUS_GUIDE.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_CONTRACT.md->SOURCE_USE_GUIDE.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::SUMMARY_CONTRACT.md->SUMMARY_BOUNDARIES.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-induced-semantic-deviation.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "ai-induced-semantic-deviation.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-induced-semantic-deviation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-induced-semantic-deviation.md->RELATION_STATUS_GUIDE.md",
+      "source": "ai-induced-semantic-deviation.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-induced-semantic-deviation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-induced-semantic-deviation.md->SOURCE_USE_GUIDE.md",
+      "source": "ai-induced-semantic-deviation.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-induced-semantic-deviation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-induced-semantic-deviation.md->SUMMARY_BOUNDARIES.md",
+      "source": "ai-induced-semantic-deviation.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-induced-semantic-deviation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-readable-knowledge-architecture.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "ai-readable-knowledge-architecture.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-readable-knowledge-architecture.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-readable-knowledge-architecture.md->RELATION_STATUS_GUIDE.md",
+      "source": "ai-readable-knowledge-architecture.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-readable-knowledge-architecture.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-readable-knowledge-architecture.md->SOURCE_USE_GUIDE.md",
+      "source": "ai-readable-knowledge-architecture.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-readable-knowledge-architecture.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::ai-readable-knowledge-architecture.md->SUMMARY_BOUNDARIES.md",
+      "source": "ai-readable-knowledge-architecture.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-readable-knowledge-architecture.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::boundary-failure-diagnostics.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "boundary-failure-diagnostics.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "boundary-failure-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::boundary-failure-diagnostics.md->RELATION_STATUS_GUIDE.md",
+      "source": "boundary-failure-diagnostics.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "boundary-failure-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::boundary-failure-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "boundary-failure-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "boundary-failure-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::boundary-failure-diagnostics.md->SUMMARY_BOUNDARIES.md",
+      "source": "boundary-failure-diagnostics.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "boundary-failure-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::constraint-residue-governance.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "constraint-residue-governance.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "constraint-residue-governance.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::constraint-residue-governance.md->RELATION_STATUS_GUIDE.md",
+      "source": "constraint-residue-governance.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "constraint-residue-governance.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::constraint-residue-governance.md->SOURCE_USE_GUIDE.md",
+      "source": "constraint-residue-governance.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "constraint-residue-governance.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::constraint-residue-governance.md->SUMMARY_BOUNDARIES.md",
+      "source": "constraint-residue-governance.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "constraint-residue-governance.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::evaluation-boundary-failure-permitted-surface-variation.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::evaluation-boundary-failure-permitted-surface-variation.md->RELATION_STATUS_GUIDE.md",
+      "source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::evaluation-boundary-failure-permitted-surface-variation.md->SOURCE_USE_GUIDE.md",
+      "source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::evaluation-boundary-failure-permitted-surface-variation.md->SUMMARY_BOUNDARIES.md",
+      "source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::generation-condition-disclosure-reproducibility-cross.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::generation-condition-disclosure-reproducibility-cross.md->RELATION_STATUS_GUIDE.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::generation-condition-disclosure-reproducibility-cross.md->SOURCE_USE_GUIDE.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::generation-condition-disclosure-reproducibility-cross.md->SUMMARY_BOUNDARIES.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-induced-coherence-pressure.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "model-induced-coherence-pressure.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-induced-coherence-pressure.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-induced-coherence-pressure.md->RELATION_STATUS_GUIDE.md",
+      "source": "model-induced-coherence-pressure.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-induced-coherence-pressure.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-induced-coherence-pressure.md->SOURCE_USE_GUIDE.md",
+      "source": "model-induced-coherence-pressure.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-induced-coherence-pressure.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-induced-coherence-pressure.md->SUMMARY_BOUNDARIES.md",
+      "source": "model-induced-coherence-pressure.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-induced-coherence-pressure.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-use-reporting-boundary-protocol.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "model-use-reporting-boundary-protocol.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-use-reporting-boundary-protocol.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-use-reporting-boundary-protocol.md->RELATION_STATUS_GUIDE.md",
+      "source": "model-use-reporting-boundary-protocol.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-use-reporting-boundary-protocol.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-use-reporting-boundary-protocol.md->SOURCE_USE_GUIDE.md",
+      "source": "model-use-reporting-boundary-protocol.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-use-reporting-boundary-protocol.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::model-use-reporting-boundary-protocol.md->SUMMARY_BOUNDARIES.md",
+      "source": "model-use-reporting-boundary-protocol.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-use-reporting-boundary-protocol.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::origin-control-validity-burden-accelerated-submission-systems.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::origin-control-validity-burden-accelerated-submission-systems.md->RELATION_STATUS_GUIDE.md",
+      "source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::origin-control-validity-burden-accelerated-submission-systems.md->SOURCE_USE_GUIDE.md",
+      "source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::origin-control-validity-burden-accelerated-submission-systems.md->SUMMARY_BOUNDARIES.md",
+      "source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::policy-continuity-evidence-mapping.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "policy-continuity-evidence-mapping.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "policy-continuity-evidence-mapping.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::policy-continuity-evidence-mapping.md->RELATION_STATUS_GUIDE.md",
+      "source": "policy-continuity-evidence-mapping.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "policy-continuity-evidence-mapping.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::policy-continuity-evidence-mapping.md->SOURCE_USE_GUIDE.md",
+      "source": "policy-continuity-evidence-mapping.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "policy-continuity-evidence-mapping.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::policy-continuity-evidence-mapping.md->SUMMARY_BOUNDARIES.md",
+      "source": "policy-continuity-evidence-mapping.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "policy-continuity-evidence-mapping.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::premature-circulation-diagnostics.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "premature-circulation-diagnostics.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "premature-circulation-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::premature-circulation-diagnostics.md->RELATION_STATUS_GUIDE.md",
+      "source": "premature-circulation-diagnostics.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "premature-circulation-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::premature-circulation-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "premature-circulation-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "premature-circulation-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::premature-circulation-diagnostics.md->SUMMARY_BOUNDARIES.md",
+      "source": "premature-circulation-diagnostics.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "premature-circulation-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::provenance-validity-separation-model.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "provenance-validity-separation-model.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "provenance-validity-separation-model.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::provenance-validity-separation-model.md->RELATION_STATUS_GUIDE.md",
+      "source": "provenance-validity-separation-model.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "provenance-validity-separation-model.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::provenance-validity-separation-model.md->SOURCE_USE_GUIDE.md",
+      "source": "provenance-validity-separation-model.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "provenance-validity-separation-model.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::provenance-validity-separation-model.md->SUMMARY_BOUNDARIES.md",
+      "source": "provenance-validity-separation-model.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "provenance-validity-separation-model.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->MACHINE_READING_PRECEDENCE.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "MACHINE_READING_PRECEDENCE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->RELATION_STATUS_GUIDE.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->SOURCE_USE_GUIDE.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->SUMMARY_BOUNDARIES.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::public-anchors/ai-training-boundary-statement.md->SUMMARY_CONTRACT.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "SUMMARY_CONTRACT.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::responsibility-alignment-diagnostics.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "responsibility-alignment-diagnostics.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "responsibility-alignment-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::responsibility-alignment-diagnostics.md->RELATION_STATUS_GUIDE.md",
+      "source": "responsibility-alignment-diagnostics.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "responsibility-alignment-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::responsibility-alignment-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "responsibility-alignment-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "responsibility-alignment-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::responsibility-alignment-diagnostics.md->SUMMARY_BOUNDARIES.md",
+      "source": "responsibility-alignment-diagnostics.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "responsibility-alignment-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::semantic-field-diagnostics.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "semantic-field-diagnostics.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "semantic-field-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::semantic-field-diagnostics.md->RELATION_STATUS_GUIDE.md",
+      "source": "semantic-field-diagnostics.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "semantic-field-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::semantic-field-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "semantic-field-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "semantic-field-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::semantic-field-diagnostics.md->SUMMARY_BOUNDARIES.md",
+      "source": "semantic-field-diagnostics.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "semantic-field-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::source-summary-citation-boundary-packet.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::source-summary-citation-boundary-packet.md->RELATION_STATUS_GUIDE.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::source-summary-citation-boundary-packet.md->SOURCE_USE_GUIDE.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::source-summary-citation-boundary-packet.md->SUMMARY_BOUNDARIES.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::surface-bounded-semantic-rendering.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "surface-bounded-semantic-rendering.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "surface-bounded-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::surface-bounded-semantic-rendering.md->RELATION_STATUS_GUIDE.md",
+      "source": "surface-bounded-semantic-rendering.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "surface-bounded-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::surface-bounded-semantic-rendering.md->SOURCE_USE_GUIDE.md",
+      "source": "surface-bounded-semantic-rendering.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "surface-bounded-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::surface-bounded-semantic-rendering.md->SUMMARY_BOUNDARIES.md",
+      "source": "surface-bounded-semantic-rendering.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "surface-bounded-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::text-conditioned-semantic-rendering.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "text-conditioned-semantic-rendering.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "text-conditioned-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::text-conditioned-semantic-rendering.md->RELATION_STATUS_GUIDE.md",
+      "source": "text-conditioned-semantic-rendering.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "text-conditioned-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::text-conditioned-semantic-rendering.md->SOURCE_USE_GUIDE.md",
+      "source": "text-conditioned-semantic-rendering.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "text-conditioned-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::text-conditioned-semantic-rendering.md->SUMMARY_BOUNDARIES.md",
+      "source": "text-conditioned-semantic-rendering.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "text-conditioned-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::verification-labor-compression.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "verification-labor-compression.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "verification-labor-compression.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::verification-labor-compression.md->RELATION_STATUS_GUIDE.md",
+      "source": "verification-labor-compression.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "verification-labor-compression.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::verification-labor-compression.md->SOURCE_USE_GUIDE.md",
+      "source": "verification-labor-compression.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "verification-labor-compression.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::verification-labor-compression.md->SUMMARY_BOUNDARIES.md",
+      "source": "verification-labor-compression.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "verification-labor-compression.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::AI-READING-GUIDE.md->SOURCE_USE_GUIDE.md",
+      "source": "AI-READING-GUIDE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "AI-READING-GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::MACHINE_INTERPRETATION_STATE.md->SOURCE_USE_GUIDE.md",
+      "source": "MACHINE_INTERPRETATION_STATE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_INTERPRETATION_STATE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::MACHINE_READING_PRECEDENCE.md->SOURCE_USE_GUIDE.md",
+      "source": "MACHINE_READING_PRECEDENCE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "MACHINE_READING_PRECEDENCE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::README.md->SOURCE_USE_GUIDE.md",
+      "source": "README.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "README.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::RELATION_STATUS_GUIDE.md->SOURCE_USE_GUIDE.md",
+      "source": "RELATION_STATUS_GUIDE.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "RELATION_STATUS_GUIDE.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::SUMMARY_BOUNDARIES.md->SOURCE_USE_GUIDE.md",
+      "source": "SUMMARY_BOUNDARIES.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_BOUNDARIES.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::SUMMARY_CONTRACT.md->SOURCE_USE_GUIDE.md",
+      "source": "SUMMARY_CONTRACT.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "SUMMARY_CONTRACT.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::ai-induced-semantic-deviation.md->SOURCE_USE_GUIDE.md",
+      "source": "ai-induced-semantic-deviation.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-induced-semantic-deviation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::ai-readable-knowledge-architecture.md->SOURCE_USE_GUIDE.md",
+      "source": "ai-readable-knowledge-architecture.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "ai-readable-knowledge-architecture.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::boundary-failure-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "boundary-failure-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "boundary-failure-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::constraint-residue-governance.md->SOURCE_USE_GUIDE.md",
+      "source": "constraint-residue-governance.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "constraint-residue-governance.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::evaluation-boundary-failure-permitted-surface-variation.md->SOURCE_USE_GUIDE.md",
+      "source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::generation-condition-disclosure-reproducibility-cross.md->SOURCE_USE_GUIDE.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::model-induced-coherence-pressure.md->SOURCE_USE_GUIDE.md",
+      "source": "model-induced-coherence-pressure.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-induced-coherence-pressure.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::model-use-reporting-boundary-protocol.md->SOURCE_USE_GUIDE.md",
+      "source": "model-use-reporting-boundary-protocol.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "model-use-reporting-boundary-protocol.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::origin-control-validity-burden-accelerated-submission-systems.md->SOURCE_USE_GUIDE.md",
+      "source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::policy-continuity-evidence-mapping.md->SOURCE_USE_GUIDE.md",
+      "source": "policy-continuity-evidence-mapping.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "policy-continuity-evidence-mapping.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::premature-circulation-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "premature-circulation-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "premature-circulation-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::provenance-validity-separation-model.md->SOURCE_USE_GUIDE.md",
+      "source": "provenance-validity-separation-model.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "provenance-validity-separation-model.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::public-anchors/ai-training-boundary-statement.md->SOURCE_USE_GUIDE.md",
+      "source": "public-anchors/ai-training-boundary-statement.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "public-anchors/ai-training-boundary-statement.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::responsibility-alignment-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "responsibility-alignment-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "responsibility-alignment-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::semantic-field-diagnostics.md->SOURCE_USE_GUIDE.md",
+      "source": "semantic-field-diagnostics.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "semantic-field-diagnostics.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::source-summary-citation-boundary-packet.md->SOURCE_USE_GUIDE.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::surface-bounded-semantic-rendering.md->SOURCE_USE_GUIDE.md",
+      "source": "surface-bounded-semantic-rendering.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "surface-bounded-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::text-conditioned-semantic-rendering.md->SOURCE_USE_GUIDE.md",
+      "source": "text-conditioned-semantic-rendering.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "text-conditioned-semantic-rendering.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::verification-labor-compression.md->SOURCE_USE_GUIDE.md",
+      "source": "verification-labor-compression.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "verification-labor-compression.md",
+      "authority_ceiling": "navigation_only"
+    }
+  ],
+  "transform_notes": {
+    "self_references_omitted_from_edges": true,
+    "record_order_implies_hierarchy": false,
+    "node_size_implies_importance": false,
+    "layout_position_implies_relation": false
+  }
+}
