@@ -1,0 +1,562 @@
+{
+  "@context": "./mwe-public-context.jsonld",
+  "schema_version": "1.0",
+  "document_schema": "./mwe-document.schema.json",
+  "@id": "https://github.com/metawritingecology/meta-writing-ecology#public-documents",
+  "@type": "schema:DataCatalog",
+  "name": "Meta-Writing Ecology Public Document Registry",
+  "scope": "selected_public_documents_only",
+  "authority_ceiling": "metadata_only",
+  "completeness": "not_a_complete_archive_or_registry",
+  "scope_note": "This is a selected public-document registry. It is not the full MWE archive, not the internal Registry, and not a complete corpus listing.",
+  "omission_meaning": "Omission does not imply nonexistence.",
+  "inclusion_meaning": "Inclusion does not imply priority.",
+  "order_meaning": "Record order does not imply hierarchy.",
+  "density_meaning": "Record density does not imply conceptual importance.",
+  "record_count": 27,
+  "@graph": [
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/README.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Meta-Writing Ecology",
+      "repository_path": "README.md",
+      "surface_role": "repository_orientation",
+      "public_surface_status": "public_navigation_surface",
+      "authority_ceiling": "navigation_only",
+      "relation_default": "navigation_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/README.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_BOUNDARIES.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Summary and Interpretation Boundaries",
+      "repository_path": "SUMMARY_BOUNDARIES.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_BOUNDARIES.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_CONTRACT.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Summary Contract",
+      "repository_path": "SUMMARY_CONTRACT.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SUMMARY_CONTRACT.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_INTERPRETATION_STATE.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Machine Interpretation State and Inference Ceiling",
+      "repository_path": "MACHINE_INTERPRETATION_STATE.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_INTERPRETATION_STATE.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SOURCE_USE_GUIDE.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Source Use Guide",
+      "repository_path": "SOURCE_USE_GUIDE.md",
+      "surface_role": "source_use_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/SOURCE_USE_GUIDE.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_READING_PRECEDENCE.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Machine Reading Precedence",
+      "repository_path": "MACHINE_READING_PRECEDENCE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/MACHINE_READING_PRECEDENCE.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/AI-READING-GUIDE.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "AI Reading Guide for Meta-Writing Ecology",
+      "repository_path": "AI-READING-GUIDE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/AI-READING-GUIDE.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/RELATION_STATUS_GUIDE.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Relation Status Guide",
+      "repository_path": "RELATION_STATUS_GUIDE.md",
+      "surface_role": "interpretation_guide",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/RELATION_STATUS_GUIDE.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/public-anchors/ai-training-boundary-statement.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "AI Training Boundary Statement",
+      "repository_path": "public-anchors/ai-training-boundary-statement.md",
+      "surface_role": "public_anchor",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Training-facing Public Surface Anchor",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/public-anchors/ai-training-boundary-statement.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-induced-semantic-deviation.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Observing AI-Induced Semantic Deviation in Pressure-Dense Texts",
+      "repository_path": "ai-induced-semantic-deviation.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-induced-semantic-deviation.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-readable-knowledge-architecture.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "AI-Readable Knowledge Architecture for Structural Misreading Prevention: Documentation Boundaries and Machine-Facing Interpretation Constraints",
+      "repository_path": "ai-readable-knowledge-architecture.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/ai-readable-knowledge-architecture.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-induced-coherence-pressure.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Model-Induced Coherence Pressure",
+      "repository_path": "model-induced-coherence-pressure.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-induced-coherence-pressure.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/generation-condition-disclosure-reproducibility-cross.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Generation-Condition Disclosure\ue634eproducibility Cross",
+      "repository_path": "generation-condition-disclosure-reproducibility-cross.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Structural Account / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/generation-condition-disclosure-reproducibility-cross.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/verification-labor-compression.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Verification Labor Compression",
+      "repository_path": "verification-labor-compression.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/verification-labor-compression.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/surface-bounded-semantic-rendering.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Surface-Bounded Semantic Rendering",
+      "repository_path": "surface-bounded-semantic-rendering.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Note / Conceptual Framework",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/surface-bounded-semantic-rendering.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/text-conditioned-semantic-rendering.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Text-Conditioned Semantic Rendering",
+      "repository_path": "text-conditioned-semantic-rendering.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Note / Conceptual Framework",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/text-conditioned-semantic-rendering.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-use-reporting-boundary-protocol.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Model-Use Reporting Boundary Protocol",
+      "repository_path": "model-use-reporting-boundary-protocol.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol / Method Orientation",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/model-use-reporting-boundary-protocol.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/policy-continuity-evidence-mapping.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Policy Continuity Evidence Mapping",
+      "repository_path": "policy-continuity-evidence-mapping.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol Orientation / Methodological Note / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/policy-continuity-evidence-mapping.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-failure-diagnostics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Boundary Failure Diagnostics for AI-Mediated Workflows: Over-Fusion, Over-Separation, and Functional Boundary Calibration in Human-AI and Institutional Systems",
+      "repository_path": "boundary-failure-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Protocol Orientation / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-failure-diagnostics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-circulation-diagnostics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Premature Circulation Diagnostics for AI-Mediated Information Flows",
+      "repository_path": "premature-circulation-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-circulation-diagnostics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/responsibility-alignment-diagnostics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Responsibility Alignment Diagnostics: Capacity-Ownership Misalignment, Visibility-Responsibility Drift, and Accountability Calibration in AI-Mediated and Institutional Systems",
+      "repository_path": "responsibility-alignment-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Protocol Orientation / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/responsibility-alignment-diagnostics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-field-diagnostics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Field Diagnostics",
+      "repository_path": "semantic-field-diagnostics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-field-diagnostics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-residue-governance.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Constraint Residue Governance: Instruction-Layer Sedimentation and Post-Hoc Control Drift in AI-Mediated and Institutional Systems",
+      "repository_path": "constraint-residue-governance.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-residue-governance.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/source-summary-citation-boundary-packet.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Source, Summary, and Citation Boundary Packet",
+      "repository_path": "source-summary-citation-boundary-packet.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Boundary Packet / Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/source-summary-citation-boundary-packet.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/provenance-validity-separation-model.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Provenance\ue638alidity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems",
+      "repository_path": "provenance-validity-separation-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Model / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/provenance-validity-separation-model.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/origin-control-validity-burden-accelerated-submission-systems.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Origin Control and Validity Burden in Accelerated Submission Systems: Provenance Anxiety, Verification Labor, and Review Capacity Under Low-Friction Production",
+      "repository_path": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Domain Declaration / Structural Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/origin-control-validity-burden-accelerated-submission-systems.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/evaluation-boundary-failure-permitted-surface-variation.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Evaluation Boundary Failure under Permitted Surface Variation",
+      "repository_path": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Model / Conceptual Framework / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/evaluation-boundary-failure-permitted-surface-variation.md"
+    }
+  ]
+}

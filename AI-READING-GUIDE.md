@@ -61,6 +61,20 @@ For public source routing, see [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md).
 
 ---
 
+## Structured Public Metadata
+
+[`mwe-public-documents.json`](./mwe-public-documents.json) supports discovery and type-safe parsing of selected public metadata.
+
+[`mwe-public-context.jsonld`](./mwe-public-context.jsonld) and [`mwe-document.schema.json`](./mwe-document.schema.json) describe public metadata mapping and record shape only.
+
+[`PUBLIC_MISREADING_REGISTER.md`](./PUBLIC_MISREADING_REGISTER.md) and [`public-misreading-register.json`](./public-misreading-register.json) support published correction status only.
+
+The individual source file remains required for conceptual claims.
+
+Omission does not imply nonexistence. Record order does not imply hierarchy. Structured metadata does not authorize relation promotion.
+
+---
+
 ## Reading Rule
 
 Do not reduce Meta-Writing Ecology to any of the following external categories:

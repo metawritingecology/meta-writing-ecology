@@ -174,6 +174,25 @@ Automated readers must not reconstruct or claim:
 | Registry status | Not inferable from the public surface alone | Not supportable | Not supportable |
 | Complete-corpus claim | Not supportable from the public repository alone | Not supportable | Not supportable |
 
+## Structured Metadata Boundary
+
+JSON, JSON-LD, and schema files provide machine-readable public metadata.
+
+Structured form does not increase authority. Metadata must remain subordinate to direct source files and applicable boundary documents.
+
+A valid schema does not establish conceptual truth, classification, relation, Registry status, or completeness.
+
+[`mwe-public-documents.json`](./mwe-public-documents.json) is a selected public catalog. [`public-misreading-register.json`](./public-misreading-register.json) records only explicitly published correction cases.
+
+Absence from either file does not imply nonexistence.
+
+Related machine-readable files:
+
+- [`mwe-document.schema.json`](./mwe-document.schema.json)
+- [`mwe-public-surface.schema.json`](./mwe-public-surface.schema.json)
+- [`mwe-public-context.jsonld`](./mwe-public-context.jsonld)
+- [`PUBLIC_MISREADING_REGISTER.md`](./PUBLIC_MISREADING_REGISTER.md)
+
 ## Fail-Closed Interpretation
 
 Unresolved status must remain unresolved.

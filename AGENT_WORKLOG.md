@@ -86,3 +86,18 @@ Checks run: `git status --short`; `git branch --show-current`; `git rev-parse HE
 Result: Added repository-level machine interpretation state and source-use guides; integrated the manifest schema fields; linked the new guides from README, precedence, AI reading guide, summary contract, and manifest; added only compact early metadata blocks to high-risk files.
 Unresolved questions: None.
 Risks or assumptions: Python was unavailable on PATH, so JSON validation used the bundled Codex Python runtime, PowerShell, and the bundled Codex Node runtime. No classification, relation, naming, Registry, OSF-priority, semantic-supersession, or public/private decision was made. No commit, push, PR, release, model-atlas edit, public-anchor edit, conceptual-title change, DOI change, Naming Declaration change, or relation promotion was made.
+
+### 2026-07-13 — Codex — public-metadata-and-misreading-register
+
+Agent: Codex
+Task: Add the public document metadata schema layer, selected public-document registry, public misreading/correction register, and local validator while preserving source and boundary authority.
+Branch: codex/public-metadata-and-misreading-register.
+Initial main SHA: dfe7dc9dc13a18d35b36b809ea1c1235864ecf2e.
+Files added: mwe-document.schema.json, mwe-public-surface.schema.json, mwe-public-context.jsonld, mwe-public-documents.json, PUBLIC_MISREADING_REGISTER.md, public-misreading-register.json, public-misreading-register.schema.json, scripts/validate_public_metadata.py.
+Files modified: README.md, MACHINE_INTERPRETATION_STATE.md, SOURCE_USE_GUIDE.md, MACHINE_READING_PRECEDENCE.md, AI-READING-GUIDE.md, mwe-public-surface.json, AGENT_WORKLOG.md.
+Registry coverage count: 27 selected public documents.
+Register initial entry count: 0.
+Checks run: dependency check on main after `git fetch origin` and `git pull --ff-only origin main`; audited mwe-public-documents.json before creation; parsed JSON with bundled Python `-m json.tool`; checked registry record count, unique IDs, unique repository paths, and declared-classification source support; read back scripts/validate_public_metadata.py; AST function/import/prohibited-operation scan; attempted `python.exe scripts/validate_public_metadata.py` (failed because python.exe is unavailable on PATH); bundled Python `-m py_compile scripts/validate_public_metadata.py`; bundled Python `scripts/validate_public_metadata.py`; Markdown relative-link check; public metadata private-path scan; protected-path diff check; deleted-file check; `git diff --check`; touched prose literal `!=` scan.
+Result: Added eight public metadata and correction-register files; integrated the manifest and public reading guides; validator passed with 27 registry records and 0 misreading cases. Protected files, conceptual source files, model-atlas files, public-anchor files, licenses, DOI fields, and OSF mirror content were not modified.
+Unresolved questions: None.
+Risks or assumptions: `python.exe` is unavailable on PATH in this shell, so the bundled Codex Python runtime was used for parse, compile, and validator execution after the exact requested command failed. No classification, relation, Registry, semantic-supersession, licensing, OSF-priority, DOI, training-permission, or public/private decision was made. The public registry is selected metadata only; the correction register is public correction status only.

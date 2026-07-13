@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/mwe-document.schema.json",
+  "title": "Meta-Writing Ecology Public Document Metadata Record",
+  "description": "Validates the shape of one public-document metadata record only. It does not validate conceptual truth, empirical validity, internal Registry status, formal classification, formal relations, or completeness of the MWE corpus.",
+  "type": "object",
+  "required": [
+    "@id",
+    "@type",
+    "name",
+    "repository_path",
+    "surface_role",
+    "public_surface_status",
+    "authority_ceiling",
+    "relation_default",
+    "classification_evidence",
+    "boundary_references",
+    "source_use_reference"
+  ],
+  "properties": {
+    "@id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "@type": {
+      "type": "string",
+      "enum": [
+        "schema:CreativeWork",
+        "schema:DigitalDocument"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "surface_role": {
+      "type": "string",
+      "enum": [
+        "concept_node",
+        "boundary_document",
+        "interpretation_guide",
+        "source_use_guide",
+        "repository_orientation",
+        "public_anchor",
+        "navigation_surface",
+        "manifest",
+        "correction_register",
+        "schema",
+        "validation_tool"
+      ]
+    },
+    "public_surface_status": {
+      "type": "string",
+      "enum": [
+        "selected_external_node",
+        "public_boundary_document",
+        "public_navigation_surface",
+        "public_metadata_artifact"
+      ]
+    },
+    "authority_ceiling": {
+      "type": "string",
+      "enum": [
+        "public_file_claim_only",
+        "repository_boundary_only",
+        "navigation_only",
+        "public_correction_only",
+        "metadata_only"
+      ]
+    },
+    "relation_default": {
+      "type": "string",
+      "enum": [
+        "adjacency_only",
+        "navigation_only",
+        "not_applicable"
+      ]
+    },
+    "classification_evidence": {
+      "type": "string",
+      "enum": [
+        "explicit_in_file",
+        "not_asserted"
+      ]
+    },
+    "boundary_references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_use_reference": {
+      "type": "string",
+      "const": "SOURCE_USE_GUIDE.md"
+    },
+    "publicly_declared_classification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "canonical_public_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "doi": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "license_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "usage_info": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "date_created": {
+      "type": "string"
+    },
+    "date_modified": {
+      "type": "string"
+    },
+    "source_commit": {
+      "type": "string"
+    },
+    "osf_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "publicly_declared_classification"
+        ]
+      },
+      "then": {
+        "properties": {
+          "classification_evidence": {
+            "const": "explicit_in_file"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "classification_evidence": {
+            "const": "not_asserted"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "publicly_declared_classification"
+          ]
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

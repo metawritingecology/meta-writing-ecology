@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/public-misreading-register.schema.json",
+  "title": "Meta-Writing Ecology Public Misreading Register Schema",
+  "description": "Validates public correction-register structure only. It does not infer third-party intent, platform-wide behavior, internal MWE Registry status, legal liability, private use, training use, or prevalence.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "register_status",
+    "scope",
+    "authority_ceiling",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "string"
+    },
+    "register_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "archived"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "const": "public_interpretation_corrections_only"
+    },
+    "authority_ceiling": {
+      "type": "string",
+      "const": "public_correction_only"
+    },
+    "register_document": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/register_entry"
+      },
+      "default": []
+    }
+  },
+  "$defs": {
+    "register_entry": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "status",
+        "date_observed",
+        "date_updated",
+        "affected_sources",
+        "misreading_type",
+        "misreading_summary",
+        "correction",
+        "evidence_urls",
+        "authority_level",
+        "authorial_confirmation",
+        "does_not_establish"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^MWE-MR-[0-9]{4}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "corrected",
+            "unresolved",
+            "withdrawn"
+          ]
+        },
+        "date_observed": {
+          "type": "string"
+        },
+        "date_updated": {
+          "type": "string"
+        },
+        "affected_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "misreading_type": {
+          "type": "string",
+          "enum": [
+            "classification_expansion",
+            "relation_promotion",
+            "registry_inference",
+            "source_summary_substitution",
+            "navigation_as_authority",
+            "temporal_supersession",
+            "cross_surface_equivalence",
+            "empirical_validation_inference",
+            "training_permission_inference",
+            "completeness_inference",
+            "other"
+          ]
+        },
+        "misreading_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "correction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^https?://"
+          },
+          "uniqueItems": true
+        },
+        "authority_level": {
+          "type": "string",
+          "const": "public_correction_only"
+        },
+        "authorial_confirmation": {
+          "type": "boolean",
+          "const": true
+        },
+        "does_not_establish": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "third_party_intent",
+              "platform_wide_behavior",
+              "internal_registry_status",
+              "legal_liability",
+              "legal_infringement",
+              "private_use",
+              "training_use",
+              "complete_frequency_or_prevalence"
+            ]
+          },
+          "minItems": 4,
+          "uniqueItems": true,
+          "allOf": [
+            {
+              "contains": {
+                "const": "third_party_intent"
+              }
+            },
+            {
+              "contains": {
+                "const": "platform_wide_behavior"
+              }
+            },
+            {
+              "contains": {
+                "const": "internal_registry_status"
+              }
+            },
+            {
+              "contains": {
+                "const": "legal_liability"
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "observed",
+                  "corrected",
+                  "unresolved"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_urls": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

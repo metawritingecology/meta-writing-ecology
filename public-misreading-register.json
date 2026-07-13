@@ -1,0 +1,9 @@
+{
+  "$schema": "./public-misreading-register.schema.json",
+  "schema_version": "1.0",
+  "register_status": "active",
+  "scope": "public_interpretation_corrections_only",
+  "authority_ceiling": "public_correction_only",
+  "register_document": "PUBLIC_MISREADING_REGISTER.md",
+  "entries": []
+}
