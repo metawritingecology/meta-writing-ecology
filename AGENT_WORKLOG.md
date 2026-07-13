@@ -43,3 +43,33 @@ Checks run: `git diff`, `git status --short`; ASCII not-equal marker scan (none)
 Result: README.md was the only content file changed in the approved commit. No model files, relation maps, OSF / DOI records, classifications, or registry authority logic were modified. No PR was opened. The metawritingecology-site repository was not modified.
 Unresolved questions: None.
 Risks or assumptions: Mechanical worklog entry documenting the already-approved README boundary refinement; no new conceptual claims added.
+
+### 2026-07-13 — Codex — reading-path-boundary-routing
+
+Agent: Codex
+Task: Update reading paths so SUMMARY_BOUNDARIES.md is routed as a boundary/orientation layer without adding it to MODEL_ATLAS.md content, and remove numeric ordering from reading path headings because paths are not sequential reading instructions.
+Files changed: model-atlas/READING_PATHS.md, AGENT_WORKLOG.md
+Checks run: `python3` scripted edit; `git diff -- model-atlas/READING_PATHS.md`; `sed -n` review of AI-READING-GUIDE.md, SUMMARY_BOUNDARIES.md, public-anchors/ai-training-boundary-statement.md, and public-anchors/PUBLIC_ANCHOR_SCHEMA.md; local Markdown link check script; ASCII not-equal marker scan on touched human-facing files; `git diff --check`; `git status --short`.
+Result: SUMMARY_BOUNDARIES.md was added to the first-time, AI/machine-reading, minimal, and dedicated summary/interpretation boundary paths. Reading path headings were made thematic rather than numbered. MODEL_ATLAS.md and RELATION_MAP.md were not changed.
+Unresolved questions: None.
+Risks or assumptions: SUMMARY_BOUNDARIES.md is treated as equal-to-or-higher-than atlas orientation rather than atlas content, per user instruction. No candidate/navigation relations were promoted and no conceptual model content was rewritten.
+
+### 2026-07-13 — Codex — machine-reading-precedence-file
+
+Agent: Codex
+Task: Add a machine-reading precedence file and link it from public navigation surfaces per user approval.
+Files changed: MACHINE_READING_PRECEDENCE.md (new), README.md, model-atlas/READING_PATHS.md, AGENT_WORKLOG.md
+Checks run: local Markdown link check script; ASCII not-equal marker scan on touched human-facing files; `git diff --check`; `git status --short`.
+Result: MACHINE_READING_PRECEDENCE.md was added as a public boundary guide. README.md and READING_PATHS.md now link to the new file, and READING_PATHS.md states that paths are thematic routes rather than required sequence, priority order, dependency chain, or ontology.
+Unresolved questions: None.
+Risks or assumptions: The new file is a boundary guide and does not promote candidate/navigation relations, expand the public corpus, or alter MODEL_ATLAS.md / RELATION_MAP.md content.
+
+### 2026-07-13 — Codex — machine-reading-boundary-files
+
+Agent: Codex
+Task: Add user-approved machine-reading boundary files for relation status, summary constraints, and public-surface manifest.
+Files changed: RELATION_STATUS_GUIDE.md (new), SUMMARY_CONTRACT.md (new), mwe-public-surface.json (new), README.md, MACHINE_READING_PRECEDENCE.md, model-atlas/READING_PATHS.md, AGENT_WORKLOG.md
+Checks run: JSON validation; local Markdown link check script; ASCII not-equal marker scan on touched human-facing files; `git diff --check`; `git status --short`.
+Result: Added the three approved files and linked them from public navigation surfaces.
+Unresolved questions: None.
+Risks or assumptions: The new files are public boundary and interpretation guides only; they do not confirm relations, expand the public corpus, or alter MODEL_ATLAS.md / RELATION_MAP.md content.

@@ -1,0 +1,40 @@
+{
+  "name": "Meta-Writing Ecology Public Surface",
+  "repository_status": "public_github_facing_surface",
+  "is_full_archive": false,
+  "is_complete_registry": false,
+  "is_internal_authority_layer": false,
+  "is_complete_methodology": false,
+  "authority_boundary": {
+    "github_visibility_does_not_imply": [
+      "internal_registry_status",
+      "complete_corpus_inclusion",
+      "public_private_boundary_decision",
+      "formal_relation_confirmation",
+      "ontology_claim",
+      "model_promotion",
+      "methodological_completeness"
+    ]
+  },
+  "primary_boundary_files": [
+    "SUMMARY_BOUNDARIES.md",
+    "SUMMARY_CONTRACT.md",
+    "MACHINE_READING_PRECEDENCE.md",
+    "AI-READING-GUIDE.md",
+    "RELATION_STATUS_GUIDE.md",
+    "public-anchors/ai-training-boundary-statement.md"
+  ],
+  "navigation_files": [
+    "model-atlas/READING_PATHS.md",
+    "model-atlas/RELATION_MAP.md",
+    "model-atlas/MODEL_ATLAS.md"
+  ],
+  "interpretation_defaults": {
+    "reading_paths": "thematic_routes_not_required_sequence",
+    "relation_map": "navigation_adjacency_not_confirmed_relation",
+    "public_anchors": "source_visible_orientation_not_complete_model",
+    "summary": "summary_not_source",
+    "machine_readability": "not_unrestricted_interpretation"
+  },
+  "non_expansion_rule": "This manifest does not expand the public corpus, confirm relations, expose private materials, or replace authorial review."
+}

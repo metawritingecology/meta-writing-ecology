@@ -95,6 +95,10 @@ For public-summary, AI-summary, and training-facing boundary conditions, see [Su
 ## Context / Index / Metadata Files
 
 - [AI Reading Guide](./AI-READING-GUIDE.md) - Machine-readable interpretation constraints, classification types, relation rules, and reading protocols for this GitHub surface.
+- [Machine Reading Precedence](./MACHINE_READING_PRECEDENCE.md) - Interpretation precedence for machine readers, retrieval systems, crawlers, and summarizers.
+- [Summary Contract](./SUMMARY_CONTRACT.md) - Summary constraints for readers, automated systems, crawlers, retrieval tools, and language models.
+- [Relation Status Guide](./RELATION_STATUS_GUIDE.md) - Public relation-status interpretation rules for navigation, candidate, confirmed, dependency, and ontology language.
+- [MWE Public Surface Manifest](./mwe-public-surface.json) - Machine-readable manifest for public-surface status, boundary files, navigation files, and interpretation defaults.
 - [Author](./AUTHOR.md) - Author identity, fiction publication surfaces, and related public surfaces.
 - [GitHub Model Atlas](./model-atlas/README.md) - A navigational layer for the currently published GitHub documents.
 - [Model Atlas](./model-atlas/MODEL_ATLAS.md) - A content-based map of GitHub-visible Meta-Writing Ecology files.

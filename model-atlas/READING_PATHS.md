@@ -2,9 +2,12 @@
 
 This file provides entry routes through the current GitHub-visible corpus.
 
-## 1. First-time reader path
+These paths are thematic routes, not a required sequence, priority order, dependency chain, or ontology.
+
+## First-time reader path
 
 - [README.md](../README.md)
+- [SUMMARY_BOUNDARIES.md](../SUMMARY_BOUNDARIES.md)
 - [AI-READING-GUIDE.md](../AI-READING-GUIDE.md)
 - [semantic-physics.md](../semantic-physics.md)
 - [semantic-pressure.md](../semantic-pressure.md)
@@ -14,9 +17,10 @@ This file provides entry routes through the current GitHub-visible corpus.
 
 Purpose: establish what this GitHub layer is, then move through semantic field dynamics, misreading, proxy substitution, and responsibility drift.
 
-## 2. AI / machine-reading path
+## AI / machine-reading path
 
 - [README.md](../README.md)
+- [SUMMARY_BOUNDARIES.md](../SUMMARY_BOUNDARIES.md)
 - [AI-READING-GUIDE.md](../AI-READING-GUIDE.md)
 - [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
 - [observer-representation-boundary.md](../observer-representation-boundary.md)
@@ -30,7 +34,7 @@ Purpose: establish what this GitHub layer is, then move through semantic field d
 
 Purpose: reduce machine-facing misreading by clarifying documentation boundaries, observer limits, the provenance-validity gap, false legibility, proxy substitution, circulation-before-recognition, source custody, model-use reporting, and generation-condition reproducibility pressure.
 
-## 3. Semantic field foundations path
+## Semantic field foundations path
 
 - [cultural-curvature-unified-field.md](../cultural-curvature-unified-field.md)
 - [semantic-physics.md](../semantic-physics.md)
@@ -44,7 +48,7 @@ Purpose: reduce machine-facing misreading by clarifying documentation boundaries
 
 Purpose: understand the field-dynamic vocabulary of pressure, curvature, propagation, field-level transmission, and collapse.
 
-## 4. Boundary / representation path
+## Boundary / representation path
 
 - [observer-representation-boundary.md](../observer-representation-boundary.md)
 - [boundary-engineering.md](../boundary-engineering.md)
@@ -69,7 +73,7 @@ Purpose: understand how systems preserve, lose, over-fuse, over-separate, or mis
 
 Purpose: understand how permitted surfaces, premature readability, boundary design, proxy substitution, responsibility alignment, and provenance-validity separation affect evaluation robustness.
 
-## 5. Proxy / legibility / provenance / recognition path
+## Proxy / legibility / provenance / recognition path
 
 - [false-legibility.md](../false-legibility.md)
 - [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
@@ -80,7 +84,7 @@ Purpose: understand how permitted surfaces, premature readability, boundary desi
 
 Purpose: track how readable surfaces, traceable origins, proxies, drifting references, and AI-mediated deviations produce structural misrecognition.
 
-## 5.1 Provenance / validity path
+## Provenance / validity path
 
 - [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
 - [origin-control-validity-burden-accelerated-submission-systems.md](../origin-control-validity-burden-accelerated-submission-systems.md)
@@ -92,7 +96,7 @@ Purpose: track how readable surfaces, traceable origins, proxies, drifting refer
 
 Purpose: distinguish origin traceability from validity, semantic adequacy, claim support, circulation readiness, downstream responsibility, and hidden verification cost.
 
-## 6. Circulation / coherence risk path
+## Circulation / coherence risk path
 
 - [premature-coherence.md](../premature-coherence.md)
 - [model-induced-coherence-pressure.md](../model-induced-coherence-pressure.md)
@@ -103,7 +107,7 @@ Purpose: distinguish origin traceability from validity, semantic adequacy, claim
 
 Purpose: identify when coherence, movement, recognition, and verification occur in the wrong order.
 
-## 7. Constraint / residue / governance path
+## Constraint / residue / governance path
 
 - [constraint-displacement.md](../constraint-displacement.md)
 - [constraint-residue-accumulation-model.md](../constraint-residue-accumulation-model.md)
@@ -112,7 +116,7 @@ Purpose: identify when coherence, movement, recognition, and verification occur 
 
 Purpose: understand how constraints move after capability expansion, how failure traces sediment into rules, and how high-integrity architectures manage closure.
 
-## 8. Responsibility / burden path
+## Responsibility / burden path
 
 - [responsibility-alignment-model.md](../responsibility-alignment-model.md)
 - [responsibility-alignment-diagnostics.md](../responsibility-alignment-diagnostics.md)
@@ -123,7 +127,7 @@ Purpose: understand how constraints move after capability expansion, how failure
 
 Purpose: track where responsibility, cost, burden, visibility, residual support dependency, and hidden verification labor accumulate.
 
-## 9. Externalized identity / infrastructure path
+## Externalized identity / infrastructure path
 
 - [semantic-cyberpunk-condition.md](../semantic-cyberpunk-condition.md)
 - [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
@@ -164,9 +168,23 @@ Purpose: understand how textual structures condition readable semantic surfaces,
 
 Purpose: understand how source custody, model-use reporting, generation conditions, provenance-validity separation, AI-readable documentation, and verification labor interact under public-facing knowledge conditions.
 
-## 10. Minimal orientation path
+## Summary / interpretation boundary path
 
 - [README.md](../README.md)
+- [SUMMARY_BOUNDARIES.md](../SUMMARY_BOUNDARIES.md)
+- [SUMMARY_CONTRACT.md](../SUMMARY_CONTRACT.md)
+- [MACHINE_READING_PRECEDENCE.md](../MACHINE_READING_PRECEDENCE.md)
+- [RELATION_STATUS_GUIDE.md](../RELATION_STATUS_GUIDE.md)
+- [AI-READING-GUIDE.md](../AI-READING-GUIDE.md)
+- [source-summary-citation-boundary-packet.md](../source-summary-citation-boundary-packet.md)
+- [public-anchors/ai-training-boundary-statement.md](../public-anchors/ai-training-boundary-statement.md)
+
+Purpose: establish public-summary, AI-summary, training-facing, citation, and interpretation boundaries before treating any visible surface as model, source, or corpus content.
+
+## Minimal orientation path
+
+- [README.md](../README.md)
+- [SUMMARY_BOUNDARIES.md](../SUMMARY_BOUNDARIES.md)
 - [AI-READING-GUIDE.md](../AI-READING-GUIDE.md)
 - [semantic-physics.md](../semantic-physics.md)
 - [false-legibility.md](../false-legibility.md)
