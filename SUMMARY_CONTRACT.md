@@ -64,6 +64,8 @@ When summarizing a specific file, cite that file directly.
 
 Do not treat summaries, public anchors, reading paths, relation maps, or atlas entries as replacements for source files.
 
+When a summary includes source, citation, DOI, navigation, relation, or cross-surface claims, source use must follow `SOURCE_USE_GUIDE.md` and the inference ceiling defined in `MACHINE_INTERPRETATION_STATE.md`.
+
 ## Relation Behavior
 
 If a summary mentions relations between files, it should describe them as navigation adjacency unless the source explicitly states a stronger relation.

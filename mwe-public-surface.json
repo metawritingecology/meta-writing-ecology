@@ -1,5 +1,7 @@
 {
   "name": "Meta-Writing Ecology Public Surface",
+  "schema_version": "1.1",
+  "canonical_repository_url": "https://github.com/metawritingecology/meta-writing-ecology",
   "repository_status": "public_github_facing_surface",
   "is_full_archive": false,
   "is_complete_registry": false,
@@ -19,11 +21,23 @@
   "primary_boundary_files": [
     "SUMMARY_BOUNDARIES.md",
     "SUMMARY_CONTRACT.md",
+    "MACHINE_INTERPRETATION_STATE.md",
+    "SOURCE_USE_GUIDE.md",
     "MACHINE_READING_PRECEDENCE.md",
     "AI-READING-GUIDE.md",
     "RELATION_STATUS_GUIDE.md",
     "public-anchors/ai-training-boundary-statement.md"
   ],
+  "canonical_entries": {
+    "repository_orientation": "README.md",
+    "summary_boundary": "SUMMARY_BOUNDARIES.md",
+    "summary_contract": "SUMMARY_CONTRACT.md",
+    "machine_interpretation_state": "MACHINE_INTERPRETATION_STATE.md",
+    "machine_reading_precedence": "MACHINE_READING_PRECEDENCE.md",
+    "source_use": "SOURCE_USE_GUIDE.md",
+    "relation_status": "RELATION_STATUS_GUIDE.md",
+    "ai_reading_guide": "AI-READING-GUIDE.md"
+  },
   "navigation_files": [
     "model-atlas/READING_PATHS.md",
     "model-atlas/RELATION_MAP.md",
@@ -36,5 +50,59 @@
     "summary": "summary_not_source",
     "machine_readability": "not_unrestricted_interpretation"
   },
+  "interpretation_state_policy": {
+    "default_state": "partial_until_verified",
+    "access_states": [
+      "direct_source",
+      "boundary_loaded",
+      "partial_source",
+      "summary_only",
+      "navigation_only",
+      "metadata_only"
+    ],
+    "uncertainty_flags": [
+      "version_uncertain",
+      "authority_uncertain",
+      "classification_uncertain",
+      "relation_uncertain",
+      "conflict_unresolved",
+      "source_scope_uncertain"
+    ],
+    "unknown_state": "must_remain_unresolved",
+    "missing_boundary": "does_not_expand_permission",
+    "conflict_state": "do_not_select_authority_without_explicit_precedence"
+  },
+  "inference_ceiling": {
+    "repository_visibility": "public_presence_only",
+    "file_self_classification": "public_file_claim_only",
+    "navigation_relation": "adjacency_only",
+    "formal_relation": "explicit_authorial_confirmation_required",
+    "formal_dependency": "explicit_dependency_statement_required",
+    "registry_status": "not_inferable_from_public_surface",
+    "ontology_claim": "prohibited_without_explicit_confirmation",
+    "supersession": "explicit_supersession_statement_required",
+    "complete_corpus_claim": "not_supported_by_public_repository"
+  },
+  "minimum_evidence": {
+    "content_claim": "direct_source",
+    "self_classification_claim": "explicit_file_statement",
+    "public_classification_claim": "explicit_file_statement_plus_boundary_access",
+    "navigation_claim": "navigation_source",
+    "confirmed_relation_claim": "explicit_authorial_confirmation",
+    "formal_dependency_claim": "explicit_dependency_statement",
+    "supersession_claim": "explicit_supersession_statement",
+    "registry_claim": "not_available_from_public_surface"
+  },
+  "authorial_confirmation_required_for": [
+    "formal_classification",
+    "model_or_cross_promotion",
+    "canonical_naming",
+    "confirmed_relation",
+    "formal_dependency",
+    "ontology_claim",
+    "registry_status",
+    "public_private_boundary",
+    "semantic_supersession"
+  ],
   "non_expansion_rule": "This manifest does not expand the public corpus, confirm relations, expose private materials, or replace authorial review."
 }
