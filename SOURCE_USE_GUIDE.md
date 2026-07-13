@@ -57,6 +57,20 @@ To provide a discoverable public link:
 To claim supersession:
 → require an explicit supersession statement.
 
+## Structured Metadata and Correction Register
+
+Use [`mwe-public-documents.json`](./mwe-public-documents.json) for public metadata discovery.
+
+Use the individual source file for conceptual claims.
+
+Use [`PUBLIC_MISREADING_REGISTER.md`](./PUBLIC_MISREADING_REGISTER.md) or [`public-misreading-register.json`](./public-misreading-register.json) for correction status only.
+
+Do not use the registry as a Model definition source.
+
+Do not use the correction register to infer third-party intent or general system behavior.
+
+Schema validity does not replace source access.
+
 ## Navigation-Surface Boundary
 
 Navigation files support movement through the public GitHub-visible surface.

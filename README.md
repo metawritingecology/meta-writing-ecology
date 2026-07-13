@@ -20,6 +20,17 @@ References to AI-mediated systems, institutions, documentation, governance, narr
 > Automated readers should identify their source-access state and inference ceiling before classifying, relating, summarizing, or citing repository materials.
 > See [`MACHINE_INTERPRETATION_STATE.md`](./MACHINE_INTERPRETATION_STATE.md), [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md), and [`mwe-public-surface.json`](./mwe-public-surface.json).
 
+## Machine-Readable Public Metadata
+
+- Public document registry: [`mwe-public-documents.json`](./mwe-public-documents.json)
+- JSON-LD context: [`mwe-public-context.jsonld`](./mwe-public-context.jsonld)
+- Public-surface schema: [`mwe-public-surface.schema.json`](./mwe-public-surface.schema.json)
+- Document schema: [`mwe-document.schema.json`](./mwe-document.schema.json)
+- Public correction register: [`PUBLIC_MISREADING_REGISTER.md`](./PUBLIC_MISREADING_REGISTER.md)
+- Machine-readable correction data: [`public-misreading-register.json`](./public-misreading-register.json)
+
+These files describe selected public metadata and correction status. They do not constitute the internal Registry, complete archive, formal ontology, or automatic relation authority.
+
 ## Foundational / Field Architecture
 
 - [Cultural Curvature Unified Field — Foundational Architecture](./cultural-curvature-unified-field.md) - A curvature-based architecture for modeling civilizational field dynamics.

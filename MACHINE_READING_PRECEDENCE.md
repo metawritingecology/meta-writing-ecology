@@ -20,6 +20,13 @@ AI-READING-GUIDE.md
 README.md
 RELATION_STATUS_GUIDE.md
 mwe-public-surface.json
+mwe-public-documents.json
+mwe-public-context.jsonld
+mwe-document.schema.json
+mwe-public-surface.schema.json
+PUBLIC_MISREADING_REGISTER.md
+public-misreading-register.json
+public-misreading-register.schema.json
 model-atlas/READING_PATHS.md
 model-atlas/RELATION_MAP.md
 model-atlas/MODEL_ATLAS.md
@@ -34,6 +41,10 @@ This order is not a reading sequence. It is an interpretation boundary order.
 `SOURCE_USE_GUIDE.md` governs public source routing across individual files, summaries, navigation surfaces, OSF links, public anchors, and fiction surfaces.
 
 Neither file creates classification, relation, Registry, ontology, or authority status.
+
+The public metadata files are subordinate machine-readable companions. Schemas validate public metadata structure. The public-document registry is a metadata and discovery surface. The correction register is a downstream public-correction surface.
+
+Neither registry nor schema outranks the individual source file for conceptual content. Neither can establish internal Registry status or formal relations.
 
 ## Interpretation Rules
 

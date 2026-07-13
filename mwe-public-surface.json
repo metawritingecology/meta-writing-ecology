@@ -1,6 +1,7 @@
 {
+  "$schema": "./mwe-public-surface.schema.json",
   "name": "Meta-Writing Ecology Public Surface",
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "canonical_repository_url": "https://github.com/metawritingecology/meta-writing-ecology",
   "repository_status": "public_github_facing_surface",
   "is_full_archive": false,
@@ -36,7 +37,13 @@
     "machine_reading_precedence": "MACHINE_READING_PRECEDENCE.md",
     "source_use": "SOURCE_USE_GUIDE.md",
     "relation_status": "RELATION_STATUS_GUIDE.md",
-    "ai_reading_guide": "AI-READING-GUIDE.md"
+    "ai_reading_guide": "AI-READING-GUIDE.md",
+    "public_document_registry": "mwe-public-documents.json",
+    "public_document_schema": "mwe-document.schema.json",
+    "public_metadata_context": "mwe-public-context.jsonld",
+    "public_surface_schema": "mwe-public-surface.schema.json",
+    "public_misreading_register": "public-misreading-register.json",
+    "public_misreading_register_schema": "public-misreading-register.schema.json"
   },
   "navigation_files": [
     "model-atlas/READING_PATHS.md",
@@ -104,5 +111,41 @@
     "public_private_boundary",
     "semantic_supersession"
   ],
+  "machine_readable_artifacts": {
+    "document_registry": "mwe-public-documents.json",
+    "document_schema": "mwe-document.schema.json",
+    "public_surface_schema": "mwe-public-surface.schema.json",
+    "jsonld_context": "mwe-public-context.jsonld",
+    "misreading_register": "public-misreading-register.json",
+    "misreading_register_schema": "public-misreading-register.schema.json",
+    "validator": "scripts/validate_public_metadata.py"
+  },
+  "public_document_registry": {
+    "scope": "selected_public_documents_only",
+    "authority_ceiling": "metadata_only",
+    "complete_archive": false,
+    "internal_registry": false,
+    "omission_implies_nonexistence": false,
+    "inclusion_implies_priority": false,
+    "record_order_implies_hierarchy": false
+  },
+  "public_misreading_register": {
+    "scope": "public_interpretation_corrections_only",
+    "authority_ceiling": "public_correction_only",
+    "third_party_intent_inference": "prohibited",
+    "platform_wide_inference": "prohibited",
+    "absence_of_entry": "does_not_imply_absence_of_misreading"
+  },
+  "metadata_validation": {
+    "validator": "scripts/validate_public_metadata.py",
+    "validation_scope": "structure_references_and_public_metadata_only",
+    "does_not_validate": [
+      "conceptual_truth",
+      "empirical_validity",
+      "internal_registry_status",
+      "formal_relation_status",
+      "corpus_completeness"
+    ]
+  },
   "non_expansion_rule": "This manifest does not expand the public corpus, confirm relations, expose private materials, or replace authorial review."
 }
