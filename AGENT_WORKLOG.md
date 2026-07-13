@@ -73,3 +73,16 @@ Checks run: JSON validation; local Markdown link check script; ASCII not-equal m
 Result: Added the three approved files and linked them from public navigation surfaces.
 Unresolved questions: None.
 Risks or assumptions: The new files are public boundary and interpretation guides only; they do not confirm relations, expand the public corpus, or alter MODEL_ATLAS.md / RELATION_MAP.md content.
+
+### 2026-07-13 — Codex — machine-interpretation-state-integration
+
+Agent: Codex
+Task: Add the approved machine interpretation state, inference ceiling, source-use routing, manifest integration, and selective early public-surface metadata for high-risk files.
+Branch and initial HEAD: main at 5dd848ce1a49edf6ef44ce32a7fa36ceb5c84a2b.
+Files added: MACHINE_INTERPRETATION_STATE.md, SOURCE_USE_GUIDE.md.
+Files changed: README.md, MACHINE_READING_PRECEDENCE.md, AI-READING-GUIDE.md, SUMMARY_CONTRACT.md, mwe-public-surface.json, AGENT_WORKLOG.md, ai-induced-semantic-deviation.md, ai-readable-knowledge-architecture.md, model-induced-coherence-pressure.md, generation-condition-disclosure-reproducibility-cross.md, verification-labor-compression.md, surface-bounded-semantic-rendering.md, text-conditioned-semantic-rendering.md, model-use-reporting-boundary-protocol.md, policy-continuity-evidence-mapping.md, boundary-failure-diagnostics.md, premature-circulation-diagnostics.md, responsibility-alignment-diagnostics.md, semantic-field-diagnostics.md, constraint-residue-governance.md, source-summary-citation-boundary-packet.md, provenance-validity-separation-model.md, origin-control-validity-burden-accelerated-submission-systems.md, evaluation-boundary-failure-permitted-surface-variation.md.
+Files audited but unchanged: None; all 18 listed high-risk files lacked equivalent early canonical machine-interpretation/source-use boundary links within the first 60 lines.
+Checks run: `git status --short`; `git branch --show-current`; `git rev-parse HEAD`; complete read of required boundary/governance files; first-80-line and final boundary/naming-section audit of all 18 high-risk files; `git diff --check`; attempted `python -m json.tool mwe-public-surface.json` and `py -m json.tool mwe-public-surface.json` (Python unavailable on PATH); bundled Python `-m json.tool`; PowerShell `ConvertFrom-Json`; bundled Node JSON parse; canonical-entry existence check; duplicate JSON key scan; Markdown relative-link check; required cross-link check; touched Markdown literal `!=` scan; `git diff --name-only -- model-atlas public-anchors`; `git diff --summary`; high-risk `git diff --unified=0` review.
+Result: Added repository-level machine interpretation state and source-use guides; integrated the manifest schema fields; linked the new guides from README, precedence, AI reading guide, summary contract, and manifest; added only compact early metadata blocks to high-risk files.
+Unresolved questions: None.
+Risks or assumptions: Python was unavailable on PATH, so JSON validation used the bundled Codex Python runtime, PowerShell, and the bundled Codex Node runtime. No classification, relation, naming, Registry, OSF-priority, semantic-supersession, or public/private decision was made. No commit, push, PR, release, model-atlas edit, public-anchor edit, conceptual-title change, DOI change, Naming Declaration change, or relation promotion was made.

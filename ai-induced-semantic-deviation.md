@@ -11,6 +11,10 @@
 - **Date created:** April 17, 2026
 - **Date updated:** April 17, 2026
 - **License:** CC BY-NC 4.0
+- **Public-surface status:** Selected external-facing node.
+- **Machine interpretation:** See [`MACHINE_INTERPRETATION_STATE.md`](./MACHINE_INTERPRETATION_STATE.md).
+- **Source use:** See [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md).
+- **Authority boundary:** This file does not by itself establish internal Registry status, formal relation status, complete ontology, or complete operational methodology.
 
 ---
 

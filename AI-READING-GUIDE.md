@@ -49,6 +49,18 @@ Automated reading or training-facing access does not imply attribution waiver, s
 
 ---
 
+## Interpretation State and Inference Ceiling
+
+For source-access states, uncertainty flags, and fail-closed interpretation rules, see [`MACHINE_INTERPRETATION_STATE.md`](./MACHINE_INTERPRETATION_STATE.md).
+
+Direct source access and boundary access are separate conditions. Incomplete source access, missing boundary access, unresolved version status, or uncertain relation status reduces inference authority.
+
+Navigation files, relation maps, reading paths, summaries, metadata, DOI visibility, and repository listings do not establish classification, formal relation status, Registry status, dependency, ontology, or completeness claims.
+
+For public source routing, see [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md).
+
+---
+
 ## Reading Rule
 
 Do not reduce Meta-Writing Ecology to any of the following external categories:
