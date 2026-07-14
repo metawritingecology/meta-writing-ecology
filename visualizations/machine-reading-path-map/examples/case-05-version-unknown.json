@@ -1,0 +1,24 @@
+{
+  "case_id": "case-05",
+  "title": "Version unknown",
+  "input": {
+    "source_access_state": "direct_source",
+    "boundary_loaded": true,
+    "classification_evidence": "none",
+    "relation_evidence": "none",
+    "version_evidence": "unknown"
+  },
+  "expected": {
+    "maximum_claim_scope": "file_self_description",
+    "result_state": "unresolved",
+    "must_include_flags": [
+      "version_uncertain"
+    ],
+    "must_block": [
+      "Semantic supersession without an explicit supersession statement or authorial confirmation."
+    ],
+    "must_include_language": [
+      "Version precedence could not be determined from the accessed materials."
+    ]
+  }
+}

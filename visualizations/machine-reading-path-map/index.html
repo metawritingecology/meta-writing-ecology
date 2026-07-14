@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Machine Reading Path and Inference-State Map</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="page" id="app-root">
+  <header class="masthead">
+    <h1 id="page-title">Machine Reading Path and Inference-State Map</h1>
+    <p class="subtitle">
+      A step-by-step simulator of how public-source reading rules execute: what was accessed,
+      what boundary material was loaded, what claims are supported or blocked, what limitation
+      language is required, and which public source rule supports each decision.
+    </p>
+    <ul class="badges" aria-label="Prototype status">
+      <li class="badge">Draft</li>
+      <li class="badge">Public-source-only reference implementation</li>
+      <li class="badge">Local prototype</li>
+      <li class="badge">Not a search interface</li>
+    </ul>
+  </header>
+
+  <!-- Persistent boundary statements: visible without any interaction. -->
+  <section class="boundary-banner" aria-label="Scope and non-authority boundary">
+    <h2>What this is and is not</h2>
+    <ul id="non-authority">
+      <!-- Non-authority statements are injected from the JSON model, but these
+           two remain hard-coded so they show even if data loading fails. -->
+      <li>This is a public-source-only reference implementation of reading boundaries.</li>
+      <li>It does not represent third-party AI internal reasoning, a chain of thought, a confidence or truth score, the internal Registry, a complete MWE policy, a formal ontology, or an automatic authority system.</li>
+    </ul>
+    <p style="margin:8px 0 0">
+      <strong>Unresolved</strong> means insufficient public evidence, not system failure or falsehood.
+      <strong>Authorial confirmation required</strong> is an authority boundary, not a confidence score or a machine deficiency.
+    </p>
+  </section>
+
+  <div class="load-error" id="load-error" role="alert"></div>
+
+  <noscript>
+    <div class="boundary-banner" role="alert">
+      <h2>JavaScript is required for the interactive simulator</h2>
+      <p>
+        This prototype computes results in the browser from a local JSON rule model.
+        With JavaScript disabled, the interactive diagram and result panels do not run.
+        The boundary statements above still apply. To run the simulator, enable JavaScript
+        and serve this directory over HTTP as described in <code>README.md</code>. You can
+        also read the rule model directly in
+        <code>machine-reading-state-machine.json</code> and the six
+        <code>examples/</code> cases.
+      </p>
+    </div>
+  </noscript>
+
+  <p id="app-loading">Loading the rule model…</p>
+
+  <div id="app-body" hidden>
+    <p class="hint" id="d3-status" aria-live="polite"></p>
+
+    <div class="layout">
+      <!-- LEFT: inputs -->
+      <section class="panel" aria-labelledby="inputs-h">
+        <h2 id="inputs-h">Inputs</h2>
+        <p class="hint">Select the actual access and evidence state. This is a rule simulator, not a document or keyword search.</p>
+
+        <fieldset>
+          <legend>Source access state</legend>
+          <p class="field-note">Exactly one primary access state.</p>
+          <div id="access-group"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Boundary loaded</legend>
+          <p class="field-note">Separate from source access. <code>false</code> never increases permission.</p>
+          <div id="boundary-group"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Classification evidence</legend>
+          <label class="sr-only" for="classification-select">Classification evidence</label>
+          <select id="classification-select"></select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Relation evidence</legend>
+          <label class="sr-only" for="relation-select">Relation evidence</label>
+          <select id="relation-select"></select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Version evidence</legend>
+          <label class="sr-only" for="version-select">Version evidence</label>
+          <select id="version-select"></select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Example cases</legend>
+          <div class="examples" id="examples"></div>
+        </fieldset>
+
+        <div class="btn-row">
+          <button type="button" id="reset-btn">Reset to defaults</button>
+        </div>
+      </section>
+
+      <!-- CENTER: state path -->
+      <section class="panel" aria-labelledby="path-h">
+        <h2 id="path-h">State path</h2>
+        <p class="hint">
+          Access → Boundary → Classification → Relation → Version → Conflict → Output.
+          The diagram shows rule execution order only; position is not conceptual authority
+          or importance. Nodes are keyboard-focusable.
+        </p>
+        <p class="scroll-hint" id="scroll-hint">
+          The stage path may scroll horizontally on narrower layouts. The complete result is
+          also available in the textual path and result panels.
+        </p>
+        <div class="diagram-wrap" tabindex="0" role="group"
+             aria-label="Stage path diagram, horizontally scrollable" aria-describedby="scroll-hint stage-info">
+          <div id="diagram" aria-describedby="stage-info"></div>
+        </div>
+        <p id="stage-info" class="hint" aria-live="polite">Focus or select a stage to read what it evaluates.</p>
+        <div id="path-textual" class="path-textual"></div>
+      </section>
+
+      <!-- RIGHT: result -->
+      <section class="panel" aria-labelledby="result-h" aria-live="polite">
+        <h2 id="result-h">Result</h2>
+
+        <div id="result-state" class="result-state"></div>
+        <p id="scope-line" class="scope-line"></p>
+
+        <div class="result-block">
+          <h3>Allowed claims</h3>
+          <ul class="tokens" id="allowed-list"></ul>
+        </div>
+
+        <div class="result-block">
+          <h3>Blocked claims</h3>
+          <ul class="tokens" id="blocked-list"></ul>
+        </div>
+
+        <div class="result-block">
+          <h3>Required limitation language</h3>
+          <ul class="tokens" id="limitation-list"></ul>
+        </div>
+
+        <div class="result-block">
+          <h3>Derived uncertainty flags</h3>
+          <ul class="flags" id="flags-list"></ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Source-rule details -->
+    <section class="panel source-rules" aria-labelledby="sr-h" style="margin-top:16px">
+      <h2 id="sr-h">Source rules used</h2>
+      <p class="hint">
+        Each decision cites a public source file plus an exact section heading or JSON pointer.
+        These are grounding references, not conceptual summaries of the source documents.
+      </p>
+      <div id="source-rules"></div>
+    </section>
+
+    <!-- Textual fallback: always present, screen-reader friendly, and a
+         complete record of the current result independent of the diagram. -->
+    <section class="panel text-summary" aria-labelledby="ts-h">
+      <h2 id="ts-h">Text summary (fallback)</h2>
+      <p class="hint">A complete text record of the current inputs and result, usable without the diagram.</p>
+      <pre id="text-summary-pre"></pre>
+    </section>
+  </div>
+
+  <footer class="note">
+    <p>
+      Machine Reading Path and Inference-State Map — draft, public-source-only reference implementation.
+      Semantics are defined once in <code>machine-reading-state-machine.json</code> and executed identically
+      by this page and by <code>scripts/validate_machine_reading_state_machine.py</code>. This prototype does
+      not confirm classification, relation, semantic supersession, Registry status, or public/private status;
+      those are authorial-authority decisions. Missing information is not automatically reconstructed.
+    </p>
+  </footer>
+</main>
+
+<!-- D3 v7.9.0, one pinned CDN import. If unavailable, the page falls back to a
+     plain-DOM diagram and full text results; nothing essential requires D3. -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

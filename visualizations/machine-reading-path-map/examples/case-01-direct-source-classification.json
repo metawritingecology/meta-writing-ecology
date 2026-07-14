@@ -1,0 +1,24 @@
+{
+  "case_id": "case-01",
+  "title": "Direct source with explicit classification",
+  "input": {
+    "source_access_state": "direct_source",
+    "boundary_loaded": true,
+    "classification_evidence": "explicit_file_statement",
+    "relation_evidence": "none",
+    "version_evidence": "no_explicit_supersession_statement"
+  },
+  "expected": {
+    "maximum_claim_scope": "public_surface_classification",
+    "result_state": "bounded_output",
+    "must_block": [
+      "Confirmed relation without explicit applicable authorial confirmation.",
+      "Formal dependency without an explicit dependency statement.",
+      "Semantic supersession without an explicit supersession statement or authorial confirmation.",
+      "Internal Registry status."
+    ],
+    "must_include_language": [
+      "The file describes itself as X; internal Registry status was not established."
+    ]
+  }
+}

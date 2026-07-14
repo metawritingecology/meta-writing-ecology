@@ -1,0 +1,18 @@
+{
+  "case_id": "case-04",
+  "title": "Summary only",
+  "input": {
+    "source_access_state": "summary_only",
+    "boundary_loaded": true,
+    "classification_evidence": "none",
+    "relation_evidence": "none",
+    "version_evidence": "no_explicit_supersession_statement"
+  },
+  "expected": {
+    "maximum_claim_scope": "summary_surface_description_only",
+    "result_state": "unresolved",
+    "must_include_language": [
+      "The individual source file was not directly accessed."
+    ]
+  }
+}
