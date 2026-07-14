@@ -1,0 +1,24 @@
+{
+  "case_id": "case-03",
+  "title": "Navigation only",
+  "input": {
+    "source_access_state": "navigation_only",
+    "boundary_loaded": true,
+    "classification_evidence": "none",
+    "relation_evidence": "navigation_only",
+    "version_evidence": "no_explicit_supersession_statement"
+  },
+  "expected": {
+    "maximum_claim_scope": "navigation_adjacency_only",
+    "result_state": "bounded_output",
+    "must_block": [
+      "Parent/child relation.",
+      "Formal dependency.",
+      "Confirmed relation.",
+      "Ontology claim."
+    ],
+    "must_include_language": [
+      "The available evidence supports public adjacency only."
+    ]
+  }
+}

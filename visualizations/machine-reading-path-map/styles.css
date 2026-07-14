@@ -1,0 +1,229 @@
+/*
+ * Machine Reading Path and Inference-State Map — prototype styles.
+ *
+ * Visual-semantics contract enforced here:
+ * - Stage and terminal nodes have equal visual weight; nothing is sized by
+ *   authority, correctness, or confidence.
+ * - Layout is a deterministic left-to-right rule-execution flow, not a
+ *   force-directed graph and not a conceptual hierarchy.
+ * - Status is encoded with shape, border style, and text as well as color, so
+ *   the diagram is legible without color perception.
+ * - Persistent boundary statements stay visible without interaction.
+ */
+
+:root {
+  --bg: #f7f7f5;
+  --panel: #ffffff;
+  --ink: #1a1a1a;
+  --muted: #565656;
+  --line: #c9c9c4;
+  --line-strong: #6b6b66;
+  --accent: #274b8f;
+  --active: #1f5c3d;
+  --active-bg: #e6f2ea;
+  --warn: #7a4b13;
+  --warn-bg: #f6ecdc;
+  --block-bg: #f3e7e7;
+  --block-ink: #5f2020;
+  --allow-bg: #e6f0e9;
+  --allow-ink: #1f4d33;
+  --node-bg: #eef1f6;
+  --banner-bg: #efece3;
+  --focus: #b8360a;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16171a;
+    --panel: #1f2125;
+    --ink: #ececec;
+    --muted: #b3b3b3;
+    --line: #3a3d43;
+    --line-strong: #8b8f97;
+    --accent: #8fb2ff;
+    --active: #7fd7a6;
+    --active-bg: #17301f;
+    --warn: #e6b877;
+    --warn-bg: #322616;
+    --block-bg: #35201f;
+    --block-ink: #f0b8b8;
+    --allow-bg: #16301f;
+    --allow-ink: #a9e2bf;
+    --node-bg: #262a31;
+    --banner-bg: #24272d;
+    --focus: #ffb27a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.page { max-width: 1280px; margin: 0 auto; padding: 20px 18px 48px; }
+
+a { color: var(--accent); }
+
+.masthead h1 { font-size: 1.5rem; margin: 0 0 4px; }
+.subtitle { color: var(--muted); margin: 0 0 10px; max-width: 70ch; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+.badge {
+  font-size: 0.72rem; letter-spacing: 0.02em; text-transform: uppercase;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px; color: var(--muted);
+}
+
+/* Always-visible boundary banner. */
+.boundary-banner {
+  background: var(--banner-bg); border: 1px solid var(--line);
+  border-left: 5px solid var(--line-strong);
+  border-radius: var(--radius); padding: 10px 14px; margin: 0 0 16px;
+}
+.boundary-banner h2 { font-size: 0.85rem; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+.boundary-banner ul { margin: 0; padding-left: 20px; }
+.boundary-banner li { margin: 2px 0; }
+
+.load-error {
+  display: none; background: var(--warn-bg); border: 1px solid var(--warn);
+  border-radius: var(--radius); padding: 10px 14px; margin: 0 0 16px; color: var(--warn);
+}
+.load-error.show { display: block; }
+
+.layout {
+  display: grid; grid-template-columns: 300px minmax(0, 1fr) 360px; gap: 16px; align-items: start;
+}
+@media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px 14px 16px;
+}
+.panel > h2 { font-size: 1rem; margin: 0 0 4px; }
+.panel .hint { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
+
+/* Controls */
+fieldset { border: 1px solid var(--line); border-radius: var(--radius); margin: 0 0 12px; padding: 8px 10px 10px; }
+legend { font-weight: 600; font-size: 0.9rem; padding: 0 4px; }
+.field-note { color: var(--muted); font-size: 0.78rem; margin: 2px 0 6px; }
+.radio { display: block; margin: 3px 0; }
+.radio input { margin-right: 7px; }
+.radio .val-desc { display: block; color: var(--muted); font-size: 0.76rem; margin: 0 0 2px 24px; }
+
+select {
+  width: 100%; padding: 6px 8px; border: 1px solid var(--line-strong); border-radius: 6px;
+  background: var(--panel); color: var(--ink); font: inherit;
+}
+
+.examples { display: flex; flex-direction: column; gap: 6px; }
+button {
+  font: inherit; cursor: pointer; border: 1px solid var(--line-strong); border-radius: 6px;
+  background: var(--node-bg); color: var(--ink); padding: 7px 10px; text-align: left;
+}
+button:hover { border-color: var(--accent); }
+.btn-row { display: flex; gap: 8px; margin-top: 10px; }
+.btn-row button { text-align: center; flex: 1; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Center: state path */
+.scroll-hint {
+  margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;
+  border-left: 3px solid var(--line); padding-left: 8px;
+}
+.diagram-wrap { overflow-x: auto; }
+.diagram-wrap:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+svg.flow { display: block; width: 100%; height: auto; min-width: 640px; }
+
+.node rect, .node-fallback {
+  fill: var(--node-bg); stroke: var(--line-strong); stroke-width: 1.5;
+}
+.node text { fill: var(--ink); font-size: 12px; }
+.node .stage-sub { fill: var(--muted); font-size: 10px; }
+.node.active rect { stroke: var(--active); stroke-width: 3; fill: var(--active-bg); }
+.node.passed rect { stroke: var(--line-strong); stroke-width: 2; }
+
+/* Terminal node border styles are distinct by shape/stroke, not color alone. */
+.term.output rect { stroke-dasharray: none; }
+.term.unresolved rect { stroke-dasharray: 6 4; }
+.term.authorial rect { stroke-dasharray: 2 3; stroke-width: 2.5; }
+.term.prohibited rect { stroke-dasharray: 1 4; }
+.term.active.output rect { stroke: var(--active); fill: var(--active-bg); }
+.term.active.unresolved rect { stroke: var(--warn); fill: var(--warn-bg); }
+.term.active.authorial rect { stroke: var(--warn); fill: var(--warn-bg); }
+.term.inactive rect { opacity: 0.5; }
+.term.inactive text { opacity: 0.7; }
+
+.edge { fill: none; stroke: var(--line); stroke-width: 1.4; }
+.edge.active { stroke: var(--active); stroke-width: 2.6; }
+.edge-label { fill: var(--muted); font-size: 9px; }
+
+.node[tabindex] { cursor: pointer; }
+
+.path-textual { margin: 12px 0 0; padding: 10px 12px; background: var(--node-bg); border-radius: 6px; }
+.path-textual ol { margin: 6px 0 0; padding-left: 20px; }
+.path-textual .tstep { color: var(--muted); font-size: 0.85rem; }
+
+/* Right: result */
+.result-state {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line-strong); margin: 0 0 12px;
+}
+.result-state .rs-label { font-weight: 700; font-size: 1.05rem; }
+.result-state.state-bounded_output { background: var(--allow-bg); border-color: var(--active); }
+.result-state.state-unresolved { background: var(--warn-bg); border-color: var(--warn); }
+.result-state.state-requires_authorial_confirmation { background: var(--warn-bg); border-color: var(--warn); }
+.result-state .rs-meaning { color: var(--muted); font-size: 0.82rem; flex-basis: 100%; }
+
+.scope-line { margin: 0 0 12px; }
+.scope-line .scope-id {
+  display: inline-block; font-weight: 600; padding: 2px 8px; border: 1px solid var(--line-strong);
+  border-radius: 6px; background: var(--node-bg);
+}
+
+.result-block { margin: 0 0 12px; }
+.result-block h3 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); margin: 0 0 5px; }
+ul.tokens { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+ul.tokens li { padding: 5px 8px; border-radius: 5px; font-size: 0.86rem; border-left: 4px solid transparent; }
+ul.tokens li.allow { background: var(--allow-bg); color: var(--allow-ink); border-left-color: var(--active); }
+ul.tokens li.block { background: var(--block-bg); color: var(--block-ink); border-left-color: var(--focus); }
+ul.tokens li.block::before { content: "\2717\00a0"; font-weight: 700; }
+ul.tokens li.allow::before { content: "\2713\00a0"; font-weight: 700; }
+ul.tokens li.limitation { background: var(--warn-bg); color: var(--warn); border-left-color: var(--warn); }
+ul.flags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+ul.flags li { font-size: 0.78rem; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 9px; background: var(--node-bg); }
+ul.flags li[data-on="false"] { opacity: 0.4; }
+.empty-note { color: var(--muted); font-size: 0.84rem; font-style: italic; }
+
+/* Source-rule details */
+.source-rules details { border: 1px solid var(--line); border-radius: 6px; margin: 0 0 6px; }
+.source-rules summary { padding: 7px 10px; cursor: pointer; font-weight: 600; }
+.source-rules .sr-body { padding: 0 12px 10px; }
+.source-rules dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; }
+.source-rules dt { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.source-rules dd { margin: 0; font-size: 0.88rem; }
+.source-rules code { background: var(--node-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.85em; }
+
+.text-summary { margin-top: 16px; }
+.text-summary pre {
+  white-space: pre-wrap; word-break: break-word; background: var(--node-bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 12px; font-size: 0.82rem;
+}
+
+footer.note { margin-top: 22px; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-top: 12px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .node rect, .edge, .term rect { transition: stroke 0.15s ease, fill 0.15s ease, opacity 0.15s ease; }
+}

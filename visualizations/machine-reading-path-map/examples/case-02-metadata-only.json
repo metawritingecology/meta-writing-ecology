@@ -1,0 +1,24 @@
+{
+  "case_id": "case-02",
+  "title": "Metadata only",
+  "input": {
+    "source_access_state": "metadata_only",
+    "boundary_loaded": true,
+    "classification_evidence": "none",
+    "relation_evidence": "none",
+    "version_evidence": "unknown"
+  },
+  "expected": {
+    "maximum_claim_scope": "public_presence_only",
+    "result_state": "unresolved",
+    "must_block": [
+      "Conceptual summary.",
+      "Formal classification.",
+      "Formal relation."
+    ],
+    "must_include_flags": [
+      "source_scope_uncertain",
+      "version_uncertain"
+    ]
+  }
+}

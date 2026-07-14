@@ -1,0 +1,25 @@
+{
+  "case_id": "case-06",
+  "title": "Classification conflict",
+  "input": {
+    "source_access_state": "direct_source",
+    "boundary_loaded": true,
+    "classification_evidence": "conflicting",
+    "relation_evidence": "none",
+    "version_evidence": "no_explicit_supersession_statement"
+  },
+  "expected": {
+    "maximum_claim_scope": "file_self_description",
+    "result_state": "requires_authorial_confirmation",
+    "must_include_flags": [
+      "classification_uncertain",
+      "conflict_unresolved"
+    ],
+    "must_block": [
+      "Formal classification without authorial confirmation."
+    ],
+    "must_include_language": [
+      "Conflicting public evidence requires authorial confirmation."
+    ]
+  }
+}

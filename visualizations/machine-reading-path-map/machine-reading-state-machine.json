@@ -1,0 +1,1547 @@
+{
+  "schema_version": "1.0",
+  "title": "Machine Reading Path and Inference-State Map",
+  "status": "draft",
+  "scope": "public_source_only_reference_implementation",
+  "non_authority_statements": [
+    "This is a public-source-only reference implementation.",
+    "It does not represent third-party AI internal reasoning.",
+    "It is not the internal Registry.",
+    "It is not a complete MWE policy, ontology, archive, or authority map.",
+    "It does not confirm classification, relation, semantic supersession, or public/private status.",
+    "Missing information is not automatically reconstructed."
+  ],
+  "approved_public_sources": [
+    "MACHINE_INTERPRETATION_STATE.md",
+    "MACHINE_READING_PRECEDENCE.md",
+    "SOURCE_USE_GUIDE.md",
+    "SUMMARY_BOUNDARIES.md",
+    "SUMMARY_CONTRACT.md",
+    "RELATION_STATUS_GUIDE.md",
+    "AI-READING-GUIDE.md",
+    "mwe-public-surface.json"
+  ],
+  "approved_public_sources_note": "Semantic grounding is limited to these eight public boundary/interpretation files. AGENTS.md, CLAUDE.md, and README.md are followed as repository-operation instructions only and are not semantic sources for this state machine.",
+  "evaluation": {
+    "summary": "One declarative rule source consumed by both the frontend and the validator. A generic table interpreter walks the transitions to derive the state path and result state, then applies the claim-scope-selection, uncertainty-derivation, and required-language rules. It contains no domain constants of its own.",
+    "fixed_pseudo_inputs": {
+      "reconstruction_requested": false,
+      "confirmed_relation_requested": false,
+      "supersession_authority_required": false
+    },
+    "guard_language": {
+      "always": "{\"always\": true} is always true.",
+      "field_equals": "{\"field\": F, \"equals\": V} is true when input[F] == V.",
+      "field_in": "{\"field\": F, \"in\": [..]} is true when input[F] is in the list.",
+      "all": "{\"all\": [g, ..]} is true when every sub-guard is true.",
+      "any": "{\"any\": [g, ..]} is true when some sub-guard is true.",
+      "not": "{\"not\": g} inverts the sub-guard."
+    },
+    "transition_walk": "Start at stage 'start'. At each step, first check 'any'-from transitions in array order, then transitions whose 'from' equals the current stage in array order; take the first whose guard passes. Stop on a terminal stage. The terminal stage maps to the result state via result_states[].from_stage.",
+    "claim_scope_selection": "Evaluate claim_scope_selection rules in array order. The first matching rule sets the maximum claim scope; every matching rule contributes its scope to the supported set. allowed_claims is the union of the supported scopes' 'supports'; blocked_claims is the union of universally_blocked_claims and the supported scopes' 'blocks', minus anything already allowed.",
+    "uncertainty_derivation": "Union the produces_flags of every uncertainty_derivation rule whose guard passes, ordered by the uncertainty_flags enum.",
+    "required_language": "Collect the phrase of every required_language rule whose guard passes, in rule array order."
+  },
+  "input_definitions": {
+    "source_access_state": {
+      "exclusive": true,
+      "default": "direct_source",
+      "values": [
+        "direct_source",
+        "partial_source",
+        "summary_only",
+        "navigation_only",
+        "metadata_only"
+      ],
+      "descriptions": {
+        "direct_source": "The relevant individual public source file was directly accessed.",
+        "partial_source": "Only part of the relevant individual source file was accessed.",
+        "summary_only": "Only a summary, abstract, guide, anchor, snippet, or condensation was accessed.",
+        "navigation_only": "Only an atlas, reading path, relation map, index, or navigation surface was accessed.",
+        "metadata_only": "Only titles, paths, manifest fields, repository listings, DOI records, or other metadata were accessed."
+      },
+      "source_rule_ids": [
+        "SR001",
+        "SR002"
+      ]
+    },
+    "boundary_loaded": {
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "note": "Separate boolean; not mutually exclusive with source access. false must never increase permission.",
+      "source_rule_ids": [
+        "SR023",
+        "SR019"
+      ]
+    },
+    "classification_evidence": {
+      "default": "none",
+      "values": [
+        "explicit_file_statement",
+        "none",
+        "conflicting"
+      ],
+      "descriptions": {
+        "explicit_file_statement": "May support description of the file's public self-classification.",
+        "none": "Not explicitly asserted in the accessed public materials.",
+        "conflicting": "Conflicting classification evidence; not automatically resolved."
+      },
+      "source_rule_ids": [
+        "SR010",
+        "SR013",
+        "SR024"
+      ]
+    },
+    "relation_evidence": {
+      "default": "none",
+      "values": [
+        "explicit_authorial_confirmation",
+        "explicit_public_relation_statement",
+        "navigation_only",
+        "none",
+        "conflicting"
+      ],
+      "descriptions": {
+        "explicit_authorial_confirmation": "May support description of a confirmed public relation only when the source explicitly carries applicable authorial confirmation.",
+        "explicit_public_relation_statement": "May support description that a public source states a relation; it does not automatically become a confirmed relation.",
+        "navigation_only": "Supports public navigation adjacency only.",
+        "none": "No relation claim may be created.",
+        "conflicting": "Conflicting relation evidence; not automatically resolved."
+      },
+      "source_rule_ids": [
+        "SR007",
+        "SR008",
+        "SR009",
+        "SR027"
+      ]
+    },
+    "version_evidence": {
+      "default": "no_explicit_supersession_statement",
+      "values": [
+        "explicit_supersession_statement",
+        "no_explicit_supersession_statement",
+        "unknown",
+        "conflicting"
+      ],
+      "descriptions": {
+        "explicit_supersession_statement": "May describe only the explicit statement present in the applicable public source.",
+        "no_explicit_supersession_statement": "Blocks semantic-supersession claims but does not by itself force unresolved.",
+        "unknown": "Produces version uncertainty and unresolved status.",
+        "conflicting": "Produces version uncertainty and requires authorial confirmation."
+      },
+      "source_rule_ids": [
+        "SR016",
+        "SR017",
+        "SR020"
+      ]
+    },
+    "_fixed_pseudo_inputs": {
+      "note": "Not user-selectable in this first prototype. Reserved for defined blocked categories and authority-sensitive requests; always false here.",
+      "reconstruction_requested": false,
+      "confirmed_relation_requested": false,
+      "supersession_authority_required": false
+    }
+  },
+  "uncertainty_flags": [
+    {
+      "id": "version_uncertain",
+      "label": "Version uncertain"
+    },
+    {
+      "id": "authority_uncertain",
+      "label": "Authority uncertain"
+    },
+    {
+      "id": "classification_uncertain",
+      "label": "Classification uncertain"
+    },
+    {
+      "id": "relation_uncertain",
+      "label": "Relation uncertain"
+    },
+    {
+      "id": "conflict_unresolved",
+      "label": "Conflict unresolved"
+    },
+    {
+      "id": "source_scope_uncertain",
+      "label": "Source scope uncertain"
+    }
+  ],
+  "claim_scopes": [
+    {
+      "id": "public_presence_only",
+      "label": "Public presence only",
+      "requires": "metadata_only access",
+      "supports": [
+        "Public file or record presence.",
+        "Directly visible metadata fields.",
+        "Repository-path or public-record statements."
+      ],
+      "blocks": [
+        "Conceptual summary.",
+        "Formal classification.",
+        "Formal relation.",
+        "Registry claim.",
+        "Complete-corpus claim."
+      ],
+      "source_rule_ids": [
+        "SR012",
+        "SR006",
+        "SR005"
+      ]
+    },
+    {
+      "id": "summary_surface_description_only",
+      "label": "Summary-surface description only",
+      "requires": "summary_only access",
+      "supports": [
+        "Description of the accessed summary surface.",
+        "Statement that only a summary was accessed."
+      ],
+      "blocks": [
+        "Treating the summary as the individual source.",
+        "Full source-content claims.",
+        "Formal classification.",
+        "Formal relation.",
+        "Semantic supersession."
+      ],
+      "source_rule_ids": [
+        "SR003",
+        "SR004",
+        "SR002"
+      ]
+    },
+    {
+      "id": "partial_source_description_only",
+      "label": "Partial-source description only",
+      "requires": "partial_source access",
+      "supports": [
+        "Description of the actually accessed passage."
+      ],
+      "blocks": [
+        "Claiming complete-file access.",
+        "Generalizing the passage into the whole file."
+      ],
+      "source_rule_ids": [
+        "SR001",
+        "SR018"
+      ]
+    },
+    {
+      "id": "navigation_adjacency_only",
+      "label": "Navigation adjacency only",
+      "requires": "navigation_only access",
+      "supports": [
+        "Description of public navigation adjacency.",
+        "Description of reading-path placement."
+      ],
+      "blocks": [
+        "Parent/child relation.",
+        "Derived-from relation.",
+        "Formal dependency.",
+        "Confirmed relation.",
+        "Ontology claim."
+      ],
+      "source_rule_ids": [
+        "SR007",
+        "SR008",
+        "SR009",
+        "SR025"
+      ]
+    },
+    {
+      "id": "file_self_description",
+      "label": "File self-description",
+      "requires": "direct_source access",
+      "supports": [
+        "Describing explicit statements in the individual source file.",
+        "Saying that the file describes itself in a certain way."
+      ],
+      "blocks": [
+        "Internal Registry confirmation.",
+        "System-wide authority claims.",
+        "Complete-corpus claims."
+      ],
+      "source_rule_ids": [
+        "SR011"
+      ]
+    },
+    {
+      "id": "public_surface_classification",
+      "label": "Public-surface classification",
+      "requires": "direct_source access plus explicit_file_statement plus boundary_loaded",
+      "supports": [
+        "In the current public surface, this file is explicitly marked as X."
+      ],
+      "blocks": [
+        "Internal Registry status.",
+        "Formal promotion.",
+        "Canonical naming.",
+        "System-wide classification."
+      ],
+      "source_rule_ids": [
+        "SR010",
+        "SR023",
+        "SR022",
+        "SR024"
+      ]
+    },
+    {
+      "id": "explicit_public_relation_description",
+      "label": "Explicit public-relation description",
+      "requires": "direct_source access plus explicit_public_relation_statement or explicit_authorial_confirmation",
+      "supports": [
+        "Description of the exact relation statement present in the public source."
+      ],
+      "blocks": [
+        "Internal Registry relation status.",
+        "Formal dependency without an explicit dependency statement.",
+        "Ontology claim."
+      ],
+      "note": "Only explicit_authorial_confirmation may be described as confirmed, and only within the explicit public scope of the source.",
+      "source_rule_ids": [
+        "SR009",
+        "SR027",
+        "SR013"
+      ]
+    },
+    {
+      "id": "authorial_confirmation_required",
+      "label": "Authorial confirmation required",
+      "requires": "an authority-sensitive or conflicting condition",
+      "supports": [
+        "Describing that the decision requires authorial confirmation."
+      ],
+      "blocks": [
+        "Formal classification.",
+        "Model or Cross promotion.",
+        "Canonical naming.",
+        "Confirmed relation without explicit applicable confirmation.",
+        "Formal dependency.",
+        "Ontology claim.",
+        "Internal Registry status.",
+        "Public/private status.",
+        "Semantic supersession where public evidence is missing or conflicting."
+      ],
+      "source_rule_ids": [
+        "SR013",
+        "SR014",
+        "SR021",
+        "SR027"
+      ]
+    },
+    {
+      "id": "prohibited_reconstruction",
+      "label": "Prohibited reconstruction",
+      "requires": "an explicit complete-reconstruction request (not selectable in this prototype)",
+      "supports": [],
+      "blocks": [
+        "Complete MWE ontology.",
+        "Complete internal Registry.",
+        "Complete archive.",
+        "Unpublished private entries.",
+        "Complete Model or Cross hierarchy.",
+        "Hidden authority map."
+      ],
+      "source_rule_ids": [
+        "SR015",
+        "SR028",
+        "SR029"
+      ]
+    }
+  ],
+  "result_states": [
+    {
+      "id": "bounded_output",
+      "from_stage": "output_bounded",
+      "label": "Bounded output",
+      "meaning": "The selected inputs permit a clearly bounded public-source claim and no higher-precedence condition applies."
+    },
+    {
+      "id": "unresolved",
+      "from_stage": "unresolved",
+      "label": "Unresolved",
+      "meaning": "Public evidence is insufficient for the displayed claim scope. Unresolved means insufficient public evidence, not system failure or falsehood."
+    },
+    {
+      "id": "requires_authorial_confirmation",
+      "from_stage": "authorial_confirmation_required",
+      "label": "Requires authorial confirmation",
+      "meaning": "An authority boundary was reached. Authorial confirmation is an authority boundary, not a confidence score or a machine deficiency."
+    },
+    {
+      "id": "prohibited_reconstruction",
+      "from_stage": "prohibited_reconstruction",
+      "label": "Prohibited reconstruction",
+      "meaning": "A complete-reconstruction request is a defined blocked category. It is not a reachable terminal state from the five simulator inputs."
+    }
+  ],
+  "universally_blocked_claims": [
+    "Reconstruction of the complete MWE ontology.",
+    "Reconstruction of the complete internal Registry.",
+    "Reconstruction of the complete archive or working corpus.",
+    "Disclosure of unpublished private entries.",
+    "Reconstruction of the complete Model or Cross hierarchy.",
+    "Reconstruction of a hidden authority map.",
+    "Internal Registry status.",
+    "Confirmed relation without explicit applicable authorial confirmation.",
+    "Formal classification without authorial confirmation.",
+    "Formal dependency without an explicit dependency statement.",
+    "Ontology claim without authorial confirmation.",
+    "Public/private status decision.",
+    "Semantic supersession without an explicit supersession statement or authorial confirmation."
+  ],
+  "required_limitation_phrases": [
+    "The individual source file was not directly accessed.",
+    "The source was only partially accessed.",
+    "This claim is based on navigation metadata rather than the individual source file.",
+    "The available evidence supports public adjacency only.",
+    "No confirmed formal relation was identified in the accessed public materials.",
+    "Classification was not explicitly asserted in the accessed public materials.",
+    "The file describes itself as X; internal Registry status was not established.",
+    "Version precedence could not be determined from the accessed materials.",
+    "No explicit semantic-supersession statement was identified.",
+    "Conflicting public evidence requires authorial confirmation."
+  ],
+  "source_rules": [
+    {
+      "id": "SR001",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Source-Access States",
+      "supports": "Distinguishing direct_source, partial_source, summary_only, navigation_only, and metadata_only as descriptions of what was actually accessed.",
+      "does_not_establish": "That partial or non-direct access is equivalent to complete source access."
+    },
+    {
+      "id": "SR002",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Evidence-to-Claim Matrix",
+      "supports": "File-content claims require direct source access; summary_only and navigation_only support public-presence wording only.",
+      "does_not_establish": "Content, classification, relation, Registry, or completeness claims from summary, navigation, or metadata access."
+    },
+    {
+      "id": "SR003",
+      "file": "SUMMARY_CONTRACT.md",
+      "section_heading": "Citation Behavior",
+      "supports": "Citing the file directly and treating summaries, anchors, reading paths, relation maps, and atlas entries as non-replacements for source files.",
+      "does_not_establish": "Full source-content claims from a summary surface."
+    },
+    {
+      "id": "SR004",
+      "file": "SOURCE_USE_GUIDE.md",
+      "section_heading": "Prohibited Substitutions",
+      "supports": "The non-substitution constraints: summary is not source, relation map is not a confirmed-relation source, reading path is not conceptual dependency, retrieval is not grounding.",
+      "does_not_establish": "Substitution of navigation, metadata, or summary access for source access or relation authority."
+    },
+    {
+      "id": "SR005",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Structured Metadata Boundary",
+      "supports": "Treating metadata as subordinate to source files; a valid schema does not establish conceptual truth, classification, relation, Registry status, or completeness.",
+      "does_not_establish": "Conceptual content or authority derived from metadata form."
+    },
+    {
+      "id": "SR006",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/public_document_registry/authority_ceiling",
+      "supports": "The public document registry declares an authority ceiling of metadata_only.",
+      "does_not_establish": "Conceptual content, priority, or hierarchy from registry presence."
+    },
+    {
+      "id": "SR007",
+      "file": "RELATION_STATUS_GUIDE.md",
+      "section_heading": "Navigation Relation",
+      "supports": "Describing navigation adjacency that helps readers move between adjacent public files.",
+      "does_not_establish": "A confirmed relation, formal dependency, or ontology claim."
+    },
+    {
+      "id": "SR008",
+      "file": "RELATION_STATUS_GUIDE.md",
+      "section_heading": "Machine-Reading Rule",
+      "supports": "Defaulting to the weakest relation compatible with the public text and treating unconfirmed relations as navigation-only.",
+      "does_not_establish": "Any relation stronger than navigation without explicit confirmation."
+    },
+    {
+      "id": "SR009",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 3 - Relation Claim",
+      "supports": "Relation claims that rest on an explicit relation statement from an authorized public source.",
+      "does_not_establish": "Relation from navigation, co-occurrence, keyword overlap, file proximity, shared reading paths, semantic similarity, or relation-map adjacency."
+    },
+    {
+      "id": "SR010",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 2 - Public-Surface Classification",
+      "supports": "Public-surface classification wording when an explicit classification statement in the source file plus applicable boundary access is present.",
+      "does_not_establish": "Internal Registry status, or that the public classification represents the complete system."
+    },
+    {
+      "id": "SR011",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 1 - File Self-Description",
+      "supports": "File self-description wording such as 'The file describes...' when the relevant file was directly accessed.",
+      "does_not_establish": "Formal MWE confirmation, internal Registry establishment, or system-wide requirement."
+    },
+    {
+      "id": "SR012",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 0 - Public Presence",
+      "supports": "Statements that a file, title, DOI, or repository entry is publicly visible, or that a term occurs in a public surface.",
+      "does_not_establish": "Formal classification, internal Registry status, complete-corpus claims, or formal relations."
+    },
+    {
+      "id": "SR013",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 4 - Authority-Sensitive Claim",
+      "supports": "Describing the absence of confirmation and listing which claims require explicit authorial confirmation.",
+      "does_not_establish": "Manufactured confirmation of classification, relation, dependency, ontology, Registry, public/private status, or supersession."
+    },
+    {
+      "id": "SR014",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/authorial_confirmation_required_for",
+      "supports": "The enumerated set of decisions that require authorial confirmation.",
+      "does_not_establish": "Any of those decisions from public-surface evidence alone."
+    },
+    {
+      "id": "SR015",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Level 5 - Prohibited Automatic Reconstruction",
+      "supports": "Identifying reconstruction of the complete ontology, hierarchy, Registry, archive, or private entries as prohibited.",
+      "does_not_establish": "Any reconstructed ontology, hierarchy, Registry, archive, or private entry."
+    },
+    {
+      "id": "SR016",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Temporal Non-Authority",
+      "supports": "That chronological precedence is not semantic precedence, and supersession holds only when explicitly stated or authorially confirmed.",
+      "does_not_establish": "Semantic supersession from a newer timestamp, commit, upload, registration, or publication date."
+    },
+    {
+      "id": "SR017",
+      "file": "SOURCE_USE_GUIDE.md",
+      "section_heading": "GitHub/OSF Surface Relation",
+      "supports": "That supersession requires an explicit supersession statement or authorial confirmation.",
+      "does_not_establish": "Automatic replacement of one public surface by another."
+    },
+    {
+      "id": "SR018",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Fail-Closed Interpretation",
+      "supports": "That unknown remains unknown, absence of evidence does not expand permission, unresolved conflict does not become latest-file-wins, and partial retrieval is not complete access.",
+      "does_not_establish": "Expanded inference permission from missing or partial evidence."
+    },
+    {
+      "id": "SR019",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/interpretation_state_policy/missing_boundary",
+      "supports": "That a missing boundary does not expand permission.",
+      "does_not_establish": "Increased permission from an unread boundary."
+    },
+    {
+      "id": "SR020",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/interpretation_state_policy/unknown_state",
+      "supports": "That an unknown state must remain unresolved.",
+      "does_not_establish": "Resolution of an unknown state by inference."
+    },
+    {
+      "id": "SR021",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/interpretation_state_policy/conflict_state",
+      "supports": "That authority must not be selected in a conflict without explicit precedence.",
+      "does_not_establish": "Automatic resolution of conflicting public evidence."
+    },
+    {
+      "id": "SR022",
+      "file": "MACHINE_READING_PRECEDENCE.md",
+      "section_heading": "Interpretation Rules",
+      "supports": "That source-access state and boundary-access state should be represented before classification, relation, summary, citation, or authority-sensitive claims.",
+      "does_not_establish": "Any classification, relation, or authority claim from ordering alone."
+    },
+    {
+      "id": "SR023",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Source-Access States",
+      "supports": "That boundary_loaded means the applicable canonical boundary and precedence files were read.",
+      "does_not_establish": "That the complete repository or internal corpus was read, or that internal Registry status is known."
+    },
+    {
+      "id": "SR024",
+      "file": "AI-READING-GUIDE.md",
+      "section_heading": "Classification Types",
+      "supports": "Describing the public classification vocabulary (Model, Cross, Log, Protocol, Draft) as interpretive types.",
+      "does_not_establish": "Automatic assignment of a classification type to a file."
+    },
+    {
+      "id": "SR025",
+      "file": "AI-READING-GUIDE.md",
+      "section_heading": "Model Relation Rule",
+      "supports": "Treating a reference from one model to another as adjacency unless the text explicitly states otherwise.",
+      "does_not_establish": "Derivation, dependency, or merger inferred from adjacency."
+    },
+    {
+      "id": "SR026",
+      "file": "MACHINE_INTERPRETATION_STATE.md",
+      "section_heading": "Required Uncertainty Language",
+      "supports": "The standardized limitation phrasings for uncertain access, relation, classification, and version states.",
+      "does_not_establish": "Any claim beyond the phrased limitation."
+    },
+    {
+      "id": "SR027",
+      "file": "RELATION_STATUS_GUIDE.md",
+      "section_heading": "Confirmed Relation",
+      "supports": "That a confirmed relation exists only when explicitly marked or approved by the authorial authority layer.",
+      "does_not_establish": "A confirmed relation from file proximity, shared vocabulary, reading-path placement, relation-map adjacency, anchor co-occurrence, or GitHub visibility."
+    },
+    {
+      "id": "SR028",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/is_full_archive",
+      "supports": "That the public repository is not the full archive (and, per adjacent flags, not the complete registry, internal authority layer, or complete methodology).",
+      "does_not_establish": "Completeness of corpus, registry, methodology, or authority."
+    },
+    {
+      "id": "SR029",
+      "file": "mwe-public-surface.json",
+      "json_pointer": "/non_expansion_rule",
+      "supports": "That the manifest does not expand the public corpus, confirm relations, expose private materials, or replace authorial review.",
+      "does_not_establish": "An expanded corpus, confirmed relations, or disclosure of private material."
+    }
+  ],
+  "rules": [
+    {
+      "id": "CS1",
+      "type": "claim_scope_selection",
+      "order": 1,
+      "when": {
+        "field": "source_access_state",
+        "equals": "metadata_only"
+      },
+      "produces_claim_scope": "public_presence_only",
+      "source_rule_ids": [
+        "SR012",
+        "SR006",
+        "SR005"
+      ],
+      "description": "metadata_only access yields public-presence-only as the maximum claim scope."
+    },
+    {
+      "id": "CS2",
+      "type": "claim_scope_selection",
+      "order": 2,
+      "when": {
+        "field": "source_access_state",
+        "equals": "summary_only"
+      },
+      "produces_claim_scope": "summary_surface_description_only",
+      "source_rule_ids": [
+        "SR003",
+        "SR004",
+        "SR002"
+      ],
+      "description": "summary_only access yields summary-surface-description-only."
+    },
+    {
+      "id": "CS3",
+      "type": "claim_scope_selection",
+      "order": 3,
+      "when": {
+        "field": "source_access_state",
+        "equals": "partial_source"
+      },
+      "produces_claim_scope": "partial_source_description_only",
+      "source_rule_ids": [
+        "SR001",
+        "SR018"
+      ],
+      "description": "partial_source access yields partial-source-description-only."
+    },
+    {
+      "id": "CS4",
+      "type": "claim_scope_selection",
+      "order": 4,
+      "when": {
+        "field": "source_access_state",
+        "equals": "navigation_only"
+      },
+      "produces_claim_scope": "navigation_adjacency_only",
+      "source_rule_ids": [
+        "SR007",
+        "SR008",
+        "SR009",
+        "SR025"
+      ],
+      "description": "navigation_only access yields navigation-adjacency-only."
+    },
+    {
+      "id": "CS5",
+      "type": "claim_scope_selection",
+      "order": 5,
+      "when": {
+        "all": [
+          {
+            "field": "source_access_state",
+            "equals": "direct_source"
+          },
+          {
+            "field": "classification_evidence",
+            "equals": "explicit_file_statement"
+          },
+          {
+            "field": "boundary_loaded",
+            "equals": true
+          }
+        ]
+      },
+      "produces_claim_scope": "public_surface_classification",
+      "source_rule_ids": [
+        "SR010",
+        "SR023",
+        "SR022",
+        "SR024"
+      ],
+      "description": "direct_source with an explicit file classification statement and boundary access yields public-surface classification."
+    },
+    {
+      "id": "CS6",
+      "type": "claim_scope_selection",
+      "order": 6,
+      "when": {
+        "all": [
+          {
+            "field": "source_access_state",
+            "equals": "direct_source"
+          },
+          {
+            "field": "relation_evidence",
+            "equals": "explicit_public_relation_statement"
+          }
+        ]
+      },
+      "produces_claim_scope": "explicit_public_relation_description",
+      "source_rule_ids": [
+        "SR009",
+        "SR027"
+      ],
+      "description": "direct_source with an explicit public relation statement yields explicit public-relation description."
+    },
+    {
+      "id": "CS7",
+      "type": "claim_scope_selection",
+      "order": 7,
+      "when": {
+        "all": [
+          {
+            "field": "source_access_state",
+            "equals": "direct_source"
+          },
+          {
+            "field": "relation_evidence",
+            "equals": "explicit_authorial_confirmation"
+          }
+        ]
+      },
+      "produces_claim_scope": "explicit_public_relation_description",
+      "source_rule_ids": [
+        "SR027",
+        "SR013"
+      ],
+      "description": "direct_source with explicit authorial confirmation yields explicit public-relation description (may be described as confirmed within the explicit public scope)."
+    },
+    {
+      "id": "CS8",
+      "type": "claim_scope_selection",
+      "order": 8,
+      "when": {
+        "field": "source_access_state",
+        "equals": "direct_source"
+      },
+      "produces_claim_scope": "file_self_description",
+      "source_rule_ids": [
+        "SR011"
+      ],
+      "description": "direct_source without a higher supported scope yields file self-description."
+    },
+    {
+      "id": "UF1",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "source_access_state",
+        "equals": "partial_source"
+      },
+      "produces_flags": [
+        "source_scope_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR018",
+        "SR001"
+      ],
+      "description": "partial_source produces source_scope_uncertain."
+    },
+    {
+      "id": "UF2",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "source_access_state",
+        "equals": "summary_only"
+      },
+      "produces_flags": [
+        "source_scope_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR003",
+        "SR004"
+      ],
+      "description": "summary_only produces source_scope_uncertain."
+    },
+    {
+      "id": "UF3",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "source_access_state",
+        "equals": "metadata_only"
+      },
+      "produces_flags": [
+        "source_scope_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR005",
+        "SR006"
+      ],
+      "description": "metadata_only produces source_scope_uncertain."
+    },
+    {
+      "id": "UF4",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "classification_evidence",
+        "equals": "none"
+      },
+      "produces_flags": [
+        "classification_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR010",
+        "SR013"
+      ],
+      "description": "classification none produces classification_uncertain."
+    },
+    {
+      "id": "UF5",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "classification_evidence",
+        "equals": "conflicting"
+      },
+      "produces_flags": [
+        "classification_uncertain",
+        "conflict_unresolved"
+      ],
+      "source_rule_ids": [
+        "SR021",
+        "SR013"
+      ],
+      "description": "classification conflicting produces classification_uncertain and conflict_unresolved."
+    },
+    {
+      "id": "UF6",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "relation_evidence",
+        "equals": "none"
+      },
+      "produces_flags": [
+        "relation_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR009",
+        "SR008"
+      ],
+      "description": "relation none produces relation_uncertain."
+    },
+    {
+      "id": "UF7",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "relation_evidence",
+        "equals": "navigation_only"
+      },
+      "produces_flags": [
+        "relation_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR007",
+        "SR008"
+      ],
+      "description": "relation navigation_only produces relation_uncertain."
+    },
+    {
+      "id": "UF8",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "relation_evidence",
+        "equals": "conflicting"
+      },
+      "produces_flags": [
+        "relation_uncertain",
+        "conflict_unresolved"
+      ],
+      "source_rule_ids": [
+        "SR021",
+        "SR027"
+      ],
+      "description": "relation conflicting produces relation_uncertain and conflict_unresolved."
+    },
+    {
+      "id": "UF9",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "version_evidence",
+        "equals": "unknown"
+      },
+      "produces_flags": [
+        "version_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR016",
+        "SR020"
+      ],
+      "description": "version unknown produces version_uncertain."
+    },
+    {
+      "id": "UF10",
+      "type": "uncertainty_derivation",
+      "when": {
+        "field": "version_evidence",
+        "equals": "conflicting"
+      },
+      "produces_flags": [
+        "version_uncertain",
+        "conflict_unresolved"
+      ],
+      "source_rule_ids": [
+        "SR016",
+        "SR021"
+      ],
+      "description": "version conflicting produces version_uncertain and conflict_unresolved."
+    },
+    {
+      "id": "UF11",
+      "type": "uncertainty_derivation",
+      "when": {
+        "any": [
+          {
+            "field": "classification_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "relation_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "version_evidence",
+            "equals": "conflicting"
+          }
+        ]
+      },
+      "produces_flags": [
+        "authority_uncertain"
+      ],
+      "source_rule_ids": [
+        "SR013",
+        "SR021",
+        "SR014"
+      ],
+      "description": "When conflicting evidence means applicable authority cannot be determined, authority_uncertain is produced."
+    },
+    {
+      "id": "RL1",
+      "type": "required_language",
+      "when": {
+        "field": "source_access_state",
+        "in": [
+          "summary_only",
+          "navigation_only",
+          "metadata_only"
+        ]
+      },
+      "phrase": "The individual source file was not directly accessed.",
+      "source_rule_ids": [
+        "SR026",
+        "SR002"
+      ],
+      "description": "Non-file access states must state that the individual source file was not directly accessed."
+    },
+    {
+      "id": "RL2",
+      "type": "required_language",
+      "when": {
+        "field": "source_access_state",
+        "equals": "partial_source"
+      },
+      "phrase": "The source was only partially accessed.",
+      "source_rule_ids": [
+        "SR026",
+        "SR001"
+      ],
+      "description": "partial_source must state that the source was only partially accessed."
+    },
+    {
+      "id": "RL3",
+      "type": "required_language",
+      "when": {
+        "field": "source_access_state",
+        "equals": "navigation_only"
+      },
+      "phrase": "This claim is based on navigation metadata rather than the individual source file.",
+      "source_rule_ids": [
+        "SR026",
+        "SR004"
+      ],
+      "description": "navigation_only must state that the claim is based on navigation metadata."
+    },
+    {
+      "id": "RL4",
+      "type": "required_language",
+      "when": {
+        "any": [
+          {
+            "field": "relation_evidence",
+            "equals": "navigation_only"
+          },
+          {
+            "field": "source_access_state",
+            "equals": "navigation_only"
+          }
+        ]
+      },
+      "phrase": "The available evidence supports public adjacency only.",
+      "source_rule_ids": [
+        "SR026",
+        "SR007"
+      ],
+      "description": "Navigation-only relation or access supports public adjacency only."
+    },
+    {
+      "id": "RL5",
+      "type": "required_language",
+      "when": {
+        "field": "relation_evidence",
+        "in": [
+          "none",
+          "navigation_only"
+        ]
+      },
+      "phrase": "No confirmed formal relation was identified in the accessed public materials.",
+      "source_rule_ids": [
+        "SR026",
+        "SR027"
+      ],
+      "description": "Relation none or navigation-only means no confirmed formal relation was identified."
+    },
+    {
+      "id": "RL6",
+      "type": "required_language",
+      "when": {
+        "field": "classification_evidence",
+        "equals": "none"
+      },
+      "phrase": "Classification was not explicitly asserted in the accessed public materials.",
+      "source_rule_ids": [
+        "SR026",
+        "SR010"
+      ],
+      "description": "Classification none must state that classification was not explicitly asserted."
+    },
+    {
+      "id": "RL7",
+      "type": "required_language",
+      "when": {
+        "all": [
+          {
+            "field": "source_access_state",
+            "equals": "direct_source"
+          },
+          {
+            "field": "classification_evidence",
+            "equals": "explicit_file_statement"
+          },
+          {
+            "field": "boundary_loaded",
+            "equals": true
+          }
+        ]
+      },
+      "phrase": "The file describes itself as X; internal Registry status was not established.",
+      "source_rule_ids": [
+        "SR026",
+        "SR010"
+      ],
+      "description": "Public-surface classification must add that internal Registry status was not established."
+    },
+    {
+      "id": "RL8",
+      "type": "required_language",
+      "when": {
+        "field": "version_evidence",
+        "equals": "unknown"
+      },
+      "phrase": "Version precedence could not be determined from the accessed materials.",
+      "source_rule_ids": [
+        "SR026",
+        "SR016"
+      ],
+      "description": "version unknown must state that version precedence could not be determined."
+    },
+    {
+      "id": "RL9",
+      "type": "required_language",
+      "when": {
+        "field": "version_evidence",
+        "equals": "no_explicit_supersession_statement"
+      },
+      "phrase": "No explicit semantic-supersession statement was identified.",
+      "source_rule_ids": [
+        "SR026",
+        "SR017"
+      ],
+      "description": "no_explicit_supersession_statement must state that no explicit semantic-supersession statement was identified."
+    },
+    {
+      "id": "RL10",
+      "type": "required_language",
+      "when": {
+        "any": [
+          {
+            "field": "classification_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "relation_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "version_evidence",
+            "equals": "conflicting"
+          }
+        ]
+      },
+      "phrase": "Conflicting public evidence requires authorial confirmation.",
+      "source_rule_ids": [
+        "SR026",
+        "SR021"
+      ],
+      "description": "Any conflicting evidence must state that conflicting public evidence requires authorial confirmation."
+    }
+  ],
+  "stages": [
+    {
+      "id": "start",
+      "label": "Start",
+      "kind": "start",
+      "column": 0,
+      "description": "Inputs selected; no claim resolved yet."
+    },
+    {
+      "id": "access_resolved",
+      "label": "Access",
+      "kind": "resolution",
+      "column": 1,
+      "description": "Source-access state evaluated."
+    },
+    {
+      "id": "boundary_resolved",
+      "label": "Boundary",
+      "kind": "resolution",
+      "column": 2,
+      "description": "Boundary-loaded state evaluated."
+    },
+    {
+      "id": "classification_resolved",
+      "label": "Classification",
+      "kind": "resolution",
+      "column": 3,
+      "description": "Classification evidence evaluated."
+    },
+    {
+      "id": "relation_resolved",
+      "label": "Relation",
+      "kind": "resolution",
+      "column": 4,
+      "description": "Relation evidence evaluated."
+    },
+    {
+      "id": "version_resolved",
+      "label": "Version",
+      "kind": "resolution",
+      "column": 5,
+      "description": "Version evidence evaluated."
+    },
+    {
+      "id": "conflict_resolved",
+      "label": "Conflict",
+      "kind": "resolution",
+      "column": 6,
+      "description": "Remaining conflict and source-scope sufficiency evaluated."
+    },
+    {
+      "id": "output_bounded",
+      "label": "Bounded output",
+      "kind": "terminal",
+      "column": 7,
+      "row": 0,
+      "description": "A bounded public-source claim can be produced."
+    },
+    {
+      "id": "unresolved",
+      "label": "Unresolved",
+      "kind": "terminal",
+      "column": 7,
+      "row": 1,
+      "description": "Insufficient public evidence for the displayed claim scope."
+    },
+    {
+      "id": "authorial_confirmation_required",
+      "label": "Authorial confirmation required",
+      "kind": "terminal",
+      "column": 7,
+      "row": 2,
+      "description": "An authority boundary was reached."
+    },
+    {
+      "id": "prohibited_reconstruction",
+      "label": "Prohibited reconstruction",
+      "kind": "terminal",
+      "column": 7,
+      "row": 3,
+      "description": "Defined blocked category; not reachable from the five simulator inputs."
+    }
+  ],
+  "transitions": [
+    {
+      "id": "T001",
+      "from": "start",
+      "to": "access_resolved",
+      "condition": "Source access selected.",
+      "guard": {
+        "always": true
+      },
+      "effect": "Record the source-access state before any classification, relation, or authority claim.",
+      "supported_claim_scope": "public_presence_only",
+      "source_rule_ids": [
+        "SR022",
+        "SR001"
+      ]
+    },
+    {
+      "id": "T002",
+      "from": "access_resolved",
+      "to": "boundary_resolved",
+      "condition": "Boundary state evaluated.",
+      "guard": {
+        "always": true
+      },
+      "effect": "Record whether applicable boundary and precedence material was loaded; missing boundary never expands permission.",
+      "supported_claim_scope": "public_presence_only",
+      "source_rule_ids": [
+        "SR022",
+        "SR023",
+        "SR019"
+      ]
+    },
+    {
+      "id": "T003",
+      "from": "boundary_resolved",
+      "to": "classification_resolved",
+      "condition": "Classification evidence evaluated.",
+      "guard": {
+        "always": true
+      },
+      "effect": "Evaluate the explicit classification evidence available in the accessed materials.",
+      "supported_claim_scope": "file_self_description",
+      "source_rule_ids": [
+        "SR022",
+        "SR024"
+      ]
+    },
+    {
+      "id": "T004",
+      "from": "classification_resolved",
+      "to": "authorial_confirmation_required",
+      "condition": "Conflicting classification requires an authority decision.",
+      "guard": {
+        "field": "classification_evidence",
+        "equals": "conflicting"
+      },
+      "effect": "Do not auto-resolve conflicting classification; route to authorial confirmation.",
+      "supported_claim_scope": "authorial_confirmation_required",
+      "source_rule_ids": [
+        "SR021",
+        "SR013",
+        "SR014"
+      ]
+    },
+    {
+      "id": "T005",
+      "from": "classification_resolved",
+      "to": "relation_resolved",
+      "condition": "No classification conflict requiring an authorial decision.",
+      "guard": {
+        "not": {
+          "field": "classification_evidence",
+          "equals": "conflicting"
+        }
+      },
+      "effect": "Continue to relation evaluation; classification none blocks classification claims only.",
+      "supported_claim_scope": "public_surface_classification",
+      "source_rule_ids": [
+        "SR022",
+        "SR010"
+      ]
+    },
+    {
+      "id": "T006",
+      "from": "relation_resolved",
+      "to": "authorial_confirmation_required",
+      "condition": "Conflicting relation or an unauthorized confirmed-relation request.",
+      "guard": {
+        "any": [
+          {
+            "field": "relation_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "confirmed_relation_requested",
+            "equals": true
+          }
+        ]
+      },
+      "effect": "Do not auto-resolve conflicting relation or manufacture a confirmed relation; route to authorial confirmation.",
+      "supported_claim_scope": "authorial_confirmation_required",
+      "source_rule_ids": [
+        "SR021",
+        "SR027",
+        "SR013"
+      ]
+    },
+    {
+      "id": "T007",
+      "from": "relation_resolved",
+      "to": "version_resolved",
+      "condition": "No relation conflict requiring an authorial decision.",
+      "guard": {
+        "all": [
+          {
+            "not": {
+              "field": "relation_evidence",
+              "equals": "conflicting"
+            }
+          },
+          {
+            "not": {
+              "field": "confirmed_relation_requested",
+              "equals": true
+            }
+          }
+        ]
+      },
+      "effect": "Continue to version evaluation; relation none or navigation-only blocks relation claims only.",
+      "supported_claim_scope": "explicit_public_relation_description",
+      "source_rule_ids": [
+        "SR008",
+        "SR009",
+        "SR025"
+      ]
+    },
+    {
+      "id": "T008",
+      "from": "version_resolved",
+      "to": "unresolved",
+      "condition": "Version evidence unknown.",
+      "guard": {
+        "field": "version_evidence",
+        "equals": "unknown"
+      },
+      "effect": "Unknown version precedence remains unresolved; supersession stays blocked.",
+      "supported_claim_scope": "file_self_description",
+      "source_rule_ids": [
+        "SR020",
+        "SR018",
+        "SR016"
+      ]
+    },
+    {
+      "id": "T009",
+      "from": "version_resolved",
+      "to": "authorial_confirmation_required",
+      "condition": "Version evidence conflicting or semantic-supersession authority required.",
+      "guard": {
+        "any": [
+          {
+            "field": "version_evidence",
+            "equals": "conflicting"
+          },
+          {
+            "field": "supersession_authority_required",
+            "equals": true
+          }
+        ]
+      },
+      "effect": "Conflicting version evidence or a required supersession decision routes to authorial confirmation.",
+      "supported_claim_scope": "authorial_confirmation_required",
+      "source_rule_ids": [
+        "SR016",
+        "SR017",
+        "SR021",
+        "SR013"
+      ]
+    },
+    {
+      "id": "T010",
+      "from": "version_resolved",
+      "to": "conflict_resolved",
+      "condition": "Version state does not require terminal escalation.",
+      "guard": {
+        "all": [
+          {
+            "not": {
+              "field": "version_evidence",
+              "equals": "unknown"
+            }
+          },
+          {
+            "not": {
+              "field": "version_evidence",
+              "equals": "conflicting"
+            }
+          },
+          {
+            "not": {
+              "field": "supersession_authority_required",
+              "equals": true
+            }
+          }
+        ]
+      },
+      "effect": "A present-or-absent explicit supersession statement is describable; supersession claims otherwise stay blocked.",
+      "supported_claim_scope": "file_self_description",
+      "source_rule_ids": [
+        "SR016",
+        "SR018"
+      ]
+    },
+    {
+      "id": "T011",
+      "from": "conflict_resolved",
+      "to": "unresolved",
+      "condition": "Incomplete source scope requires unresolved.",
+      "guard": {
+        "field": "source_access_state",
+        "in": [
+          "partial_source",
+          "summary_only",
+          "metadata_only"
+        ]
+      },
+      "effect": "Partial, summary, or metadata access is insufficient source scope; remain unresolved.",
+      "supported_claim_scope": "summary_surface_description_only",
+      "source_rule_ids": [
+        "SR018",
+        "SR002",
+        "SR003",
+        "SR005"
+      ]
+    },
+    {
+      "id": "T012",
+      "from": "conflict_resolved",
+      "to": "authorial_confirmation_required",
+      "condition": "Remaining authority-sensitive conflict.",
+      "guard": {
+        "any": [
+          {
+            "field": "confirmed_relation_requested",
+            "equals": true
+          },
+          {
+            "field": "supersession_authority_required",
+            "equals": true
+          }
+        ]
+      },
+      "effect": "Any remaining authority-sensitive request routes to authorial confirmation.",
+      "supported_claim_scope": "authorial_confirmation_required",
+      "source_rule_ids": [
+        "SR013",
+        "SR014"
+      ]
+    },
+    {
+      "id": "T013",
+      "from": "conflict_resolved",
+      "to": "output_bounded",
+      "condition": "Bounded output can be produced.",
+      "guard": {
+        "all": [
+          {
+            "not": {
+              "field": "source_access_state",
+              "in": [
+                "partial_source",
+                "summary_only",
+                "metadata_only"
+              ]
+            }
+          },
+          {
+            "not": {
+              "field": "confirmed_relation_requested",
+              "equals": true
+            }
+          },
+          {
+            "not": {
+              "field": "supersession_authority_required",
+              "equals": true
+            }
+          }
+        ]
+      },
+      "effect": "Produce a bounded public-source claim at the computed maximum claim scope.",
+      "supported_claim_scope": "file_self_description",
+      "source_rule_ids": [
+        "SR018",
+        "SR011"
+      ]
+    },
+    {
+      "id": "T014",
+      "from": "any",
+      "to": "prohibited_reconstruction",
+      "condition": "Complete ontology, Registry, archive, or private-corpus reconstruction requested.",
+      "guard": {
+        "field": "reconstruction_requested",
+        "equals": true
+      },
+      "effect": "A complete-reconstruction request is a defined blocked category and is not selectable in this prototype.",
+      "supported_claim_scope": "prohibited_reconstruction",
+      "source_rule_ids": [
+        "SR015",
+        "SR028",
+        "SR029"
+      ]
+    }
+  ],
+  "test_case_references": [
+    "examples/case-01-direct-source-classification.json",
+    "examples/case-02-metadata-only.json",
+    "examples/case-03-navigation-only.json",
+    "examples/case-04-summary-only.json",
+    "examples/case-05-version-unknown.json",
+    "examples/case-06-classification-conflict.json"
+  ]
+}
