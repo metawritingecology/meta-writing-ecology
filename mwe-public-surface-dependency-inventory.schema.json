@@ -57,7 +57,7 @@
           "path": {
             "type": "string",
             "minLength": 1,
-            "pattern": "^(?!/)(?!.*\\.\\.)(?!.*\\\\)[^\\\\]+$",
+            "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\.\\.)(?!.*\\\\)[^\\\\]+$",
             "description": "Repository-relative forward-slash path under the source root. No absolute paths, no leading slash, no parent traversal, no backslashes."
           },
           "byte_length": {

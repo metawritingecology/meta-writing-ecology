@@ -44,7 +44,7 @@ import importlib.util
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 
@@ -191,10 +191,22 @@ def append_error(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def is_repository_relative_path(value: Any) -> bool:
+    """Return whether value is a platform-independent repository-relative path."""
+    return (
+        isinstance(value, str)
+        and bool(value)
+        and not value.startswith("/")
+        and "\\" not in value
+        and not PureWindowsPath(value).drive
+        and ".." not in PurePosixPath(value).parts
+    )
+
+
 def resolve_repo_path(relative_path: str) -> Path | None:
-    candidate = Path(relative_path)
-    if candidate.is_absolute():
+    if not is_repository_relative_path(relative_path):
         return None
+    candidate = Path(relative_path)
     resolved = (_ACTIVE_ROOT / candidate).resolve()
     try:
         resolved.relative_to(_ACTIVE_ROOT)
@@ -619,7 +631,7 @@ def validate_inventory_structure(inventory: Any, errors: list[str]) -> bool:
         if not isinstance(path, str) or not path:
             append_error(errors, f"inventory file {index}: path must be a non-empty string")
         else:
-            if path.startswith("/") or "\\" in path or ".." in Path(path).parts or Path(path).is_absolute():
+            if not is_repository_relative_path(path):
                 append_error(errors, f"{path}: path must be repository-relative forward-slash form")
         byte_length = item["byte_length"]
         if not isinstance(byte_length, int) or isinstance(byte_length, bool) or byte_length < 0:

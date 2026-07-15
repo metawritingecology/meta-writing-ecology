@@ -50,7 +50,7 @@ import argparse
 import hashlib
 import json
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 
@@ -112,6 +112,18 @@ def fail(message: str) -> "NoReturn":  # type: ignore[name-defined]
     sys.exit(1)
 
 
+def is_repository_relative_path(value: Any) -> bool:
+    """Return whether value is a platform-independent repository-relative path."""
+    return (
+        isinstance(value, str)
+        and bool(value)
+        and not value.startswith("/")
+        and "\\" not in value
+        and not PureWindowsPath(value).drive
+        and ".." not in PurePosixPath(value).parts
+    )
+
+
 def resolve_under_root(root_resolved: Path, relative_path: str) -> Path | None:
     """Resolve a root-relative path, rejecting absolute paths, traversal, and
     symlink/reparse-point escape.
@@ -120,9 +132,9 @@ def resolve_under_root(root_resolved: Path, relative_path: str) -> Path | None:
     (following symlinks). If the real resolved path is not contained within the
     resolved root, the access is rejected (fail closed).
     """
-    candidate = Path(relative_path)
-    if candidate.is_absolute():
+    if not is_repository_relative_path(relative_path):
         return None
+    candidate = Path(relative_path)
     resolved = (root_resolved / candidate).resolve()
     try:
         resolved.relative_to(root_resolved)

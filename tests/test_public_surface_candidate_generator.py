@@ -31,6 +31,7 @@ import importlib.util
 import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -516,6 +517,12 @@ class PathResolutionUnitTests(BaseCase):
     def test_absolute_input_rejected(self):
         self.assertIsNone(builder.resolve_under_root(self.root, "/etc/passwd"))
 
+    def test_drive_absolute_input_rejected_on_current_host(self):
+        self.assertIsNone(builder.resolve_under_root(self.root, "C:/x"))
+
+    def test_drive_relative_input_rejected_on_current_host(self):
+        self.assertIsNone(builder.resolve_under_root(self.root, "C:relative"))
+
     def test_inside_path_accepted(self):
         resolved = builder.resolve_under_root(self.root, "inside.md")
         self.assertIsNotNone(resolved)
@@ -559,6 +566,19 @@ class InventorySchemaUnitTests(BaseCase):
         errors = []
         self.assertTrue(validator.validate_inventory_structure(self._valid_inventory(), errors))
         self.assertEqual(errors, [])
+
+    def _assert_inventory_path_rejected(self, path):
+        inventory = self._valid_inventory()
+        inventory["files"][0]["path"] = path
+        errors = []
+        validator.validate_inventory_structure(inventory, errors)
+        self.assertTrue(any("repository-relative" in error for error in errors), errors)
+
+    def test_rejects_drive_absolute_inventory_path_on_current_host(self):
+        self._assert_inventory_path_rejected("C:/x")
+
+    def test_rejects_drive_relative_inventory_path_on_current_host(self):
+        self._assert_inventory_path_rejected("C:relative")
 
     def test_rejects_unknown_top_field(self):
         inv = self._valid_inventory()
@@ -628,6 +648,16 @@ class SchemaFileAndHygieneTests(BaseCase):
         self.assertFalse(schema["additionalProperties"])
         item = schema["properties"]["files"]["items"]
         self.assertFalse(item["additionalProperties"])
+        path_pattern = item["properties"]["path"]["pattern"]
+        self.assertEqual(path_pattern, r"^(?!/)(?![A-Za-z]:)(?!.*\.\.)(?!.*\\)[^\\]+$")
+        for rejected in ("C:/x", "C:relative", "/absolute", "../escape", r"directory\file.json"):
+            self.assertIsNone(re.fullmatch(path_pattern, rejected), rejected)
+        for accepted in (
+            "mwe-public-documents.json",
+            "scripts/validate_public_metadata.py",
+            "directory/file.json",
+        ):
+            self.assertIsNotNone(re.fullmatch(path_pattern, accepted), accepted)
         self.assertEqual(item["properties"]["sha256"]["pattern"], "^[0-9a-f]{64}$")
         self.assertEqual(item["properties"]["git_blob_sha1"]["pattern"], "^[0-9a-f]{40}$")
         self.assertEqual(
