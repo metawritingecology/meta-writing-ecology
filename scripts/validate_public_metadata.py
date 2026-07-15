@@ -4,19 +4,90 @@
 This validator checks JSON shape, references, enum use, selected registry
 coverage, and public correction-register constraints. It is not conceptual,
 empirical, Registry, relation, ontology, or corpus-completeness authority.
+
+Three invocation modes:
+
+1. Default (backward-compatible) mode
+       python scripts/validate_public_metadata.py
+   Validates the public metadata in the generator/repository root. Behavior is
+   unchanged from prior releases.
+
+2. Isolated preflight mode
+       python <generator-root>/scripts/validate_public_metadata.py \
+         --source-root <detached-source-checkout> --mode preflight
+   Runs the existing public-metadata and source-boundary validation directly
+   against an explicit source root. No inventory is required (generation has
+   not occurred). Performs no writes and generates/repairs nothing.
+
+3. Isolated inventory-verification mode
+       python <generator-root>/scripts/validate_public_metadata.py \
+         --source-root <detached-source-checkout> --mode verify-inventory \
+         --inventory <isolated-inventory-file>
+   Performs all applicable existing metadata validation against the source
+   root, then validates the supplied dependency-inventory schema, recomputes
+   every listed source-file identity against the source root, and confirms the
+   inventory paths and read purposes agree with the source root. Rejects
+   missing, extra, duplicated, escaped, or identity-mismatched entries.
+   Performs no writes.
+
+Source-tree Python files are treated only as data. This validator never
+imports or executes any module discovered under the source root; the only
+generator-local module it loads is the companion builder from the generator
+root, used to enumerate the expected dependency set.
 """
 
 from __future__ import annotations
 
+import argparse
+import hashlib
+import importlib.util
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_RESOLVED = ROOT.resolve()
+
+GENERATOR_ROOT_RESOLVED = ROOT_RESOLVED
+
+# Root that source-relative paths resolve against. Default mode uses the
+# generator/repository root; isolated modes point it at the explicit
+# --source-root. It is only ever set to an explicitly resolved directory.
+_ACTIVE_ROOT: Path = ROOT_RESOLVED
+
+VALID_MODES = ("preflight", "verify-inventory")
+
+INVENTORY_SCHEMA_FILE = "mwe-public-surface-dependency-inventory.schema.json"
+EXPECTED_INVENTORY_SCHEMA_VERSION = "1.0"
+EXPECTED_SOURCE_REPOSITORY = "metawritingecology/meta-writing-ecology"
+INVENTORY_TOP_LEVEL_KEYS = {
+    "inventory_schema_version",
+    "source_repository",
+    "interface_version",
+    "dependency_count",
+    "aggregate_sha256",
+    "files",
+}
+INVENTORY_ITEM_KEYS = {
+    "path",
+    "byte_length",
+    "sha256",
+    "git_blob_sha1",
+    "read_purposes",
+}
+INVENTORY_READ_PURPOSES = {
+    "direct_input",
+    "scope_context",
+    "registry_referenced_document",
+    "classification_evidence",
+    "reference_existence_check",
+    "schema",
+}
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+GIT_BLOB_RE = re.compile(r"^[0-9a-f]{40}$")
 
 JSON_FILES = [
     "mwe-public-surface.json",
@@ -120,13 +191,25 @@ def append_error(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def is_repository_relative_path(value: Any) -> bool:
+    """Return whether value is a platform-independent repository-relative path."""
+    return (
+        isinstance(value, str)
+        and bool(value)
+        and not value.startswith("/")
+        and "\\" not in value
+        and not PureWindowsPath(value).drive
+        and ".." not in PurePosixPath(value).parts
+    )
+
+
 def resolve_repo_path(relative_path: str) -> Path | None:
-    candidate = Path(relative_path)
-    if candidate.is_absolute():
+    if not is_repository_relative_path(relative_path):
         return None
-    resolved = (ROOT / candidate).resolve()
+    candidate = Path(relative_path)
+    resolved = (_ACTIVE_ROOT / candidate).resolve()
     try:
-        resolved.relative_to(ROOT_RESOLVED)
+        resolved.relative_to(_ACTIVE_ROOT)
     except ValueError:
         return None
     return resolved
@@ -458,8 +541,304 @@ def validate_public_metadata() -> int:
     return 0
 
 
-def main() -> int:
-    return validate_public_metadata()
+def git_blob_sha1(data: bytes) -> str:
+    """Compute the Git blob object id for raw bytes without invoking Git."""
+    header = b"blob " + str(len(data)).encode("ascii") + b"\x00"
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def _load_generator_builder_module() -> Any:
+    """Load the companion builder module from the generator root only.
+
+    The module is loaded by absolute path from the generator root so the import
+    can never resolve to a same-named module under the source root. No
+    source-tree Python is imported or executed.
+    """
+    builder_path = GENERATOR_ROOT_RESOLVED / "scripts" / "build_public_surface_authority_map.py"
+    spec = importlib.util.spec_from_file_location("_generator_builder", builder_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load generator builder module")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def validate_inventory_structure(inventory: Any, errors: list[str]) -> bool:
+    """Enforce the dependency-inventory schema (unknown fields, digest form,
+    ordering, and purpose vocabulary). Returns True when structurally valid."""
+    if not isinstance(inventory, dict):
+        append_error(errors, "inventory: top-level value must be an object")
+        return False
+
+    keys = set(inventory)
+    unknown = sorted(keys - INVENTORY_TOP_LEVEL_KEYS)
+    if unknown:
+        append_error(errors, f"inventory: unknown top-level fields {unknown}")
+    missing = sorted(INVENTORY_TOP_LEVEL_KEYS - keys)
+    if missing:
+        append_error(errors, f"inventory: missing top-level fields {missing}")
+    if missing:
+        return False
+
+    if inventory.get("inventory_schema_version") != EXPECTED_INVENTORY_SCHEMA_VERSION:
+        append_error(
+            errors,
+            f"inventory: inventory_schema_version must be {EXPECTED_INVENTORY_SCHEMA_VERSION!r}",
+        )
+    if inventory.get("source_repository") != EXPECTED_SOURCE_REPOSITORY:
+        append_error(
+            errors,
+            f"inventory: source_repository must be {EXPECTED_SOURCE_REPOSITORY!r}",
+        )
+    if not isinstance(inventory.get("interface_version"), str):
+        append_error(errors, "inventory: interface_version must be a string")
+
+    aggregate = inventory.get("aggregate_sha256")
+    if not isinstance(aggregate, str) or not SHA256_RE.match(aggregate):
+        append_error(errors, "inventory: aggregate_sha256 must be a lowercase 64-hex string")
+
+    files = inventory.get("files")
+    if not isinstance(files, list):
+        append_error(errors, "inventory: files must be a list")
+        return False
+    if not files:
+        append_error(errors, "inventory: files must not be empty")
+
+    dependency_count = inventory.get("dependency_count")
+    if dependency_count != len(files):
+        append_error(
+            errors,
+            f"inventory: dependency_count {dependency_count!r} != number of files {len(files)}",
+        )
+
+    structurally_valid = True
+    for index, item in enumerate(files, start=1):
+        if not isinstance(item, dict):
+            append_error(errors, f"inventory file {index}: must be an object")
+            structurally_valid = False
+            continue
+        item_keys = set(item)
+        unknown_item = sorted(item_keys - INVENTORY_ITEM_KEYS)
+        if unknown_item:
+            append_error(errors, f"inventory file {index}: unknown fields {unknown_item}")
+        missing_item = sorted(INVENTORY_ITEM_KEYS - item_keys)
+        if missing_item:
+            append_error(errors, f"inventory file {index}: missing fields {missing_item}")
+            structurally_valid = False
+            continue
+
+        path = item["path"]
+        if not isinstance(path, str) or not path:
+            append_error(errors, f"inventory file {index}: path must be a non-empty string")
+        else:
+            if not is_repository_relative_path(path):
+                append_error(errors, f"{path}: path must be repository-relative forward-slash form")
+        byte_length = item["byte_length"]
+        if not isinstance(byte_length, int) or isinstance(byte_length, bool) or byte_length < 0:
+            append_error(errors, f"{path}: byte_length must be a non-negative integer")
+        sha256 = item["sha256"]
+        if not isinstance(sha256, str) or not SHA256_RE.match(sha256):
+            append_error(errors, f"{path}: sha256 must be a lowercase 64-hex string")
+        git_blob = item["git_blob_sha1"]
+        if not isinstance(git_blob, str) or not GIT_BLOB_RE.match(git_blob):
+            append_error(errors, f"{path}: git_blob_sha1 must be a lowercase 40-hex string")
+        purposes = item["read_purposes"]
+        if not isinstance(purposes, list) or not purposes:
+            append_error(errors, f"{path}: read_purposes must be a non-empty list")
+        else:
+            invalid = sorted(set(str(p) for p in purposes) - INVENTORY_READ_PURPOSES)
+            if invalid:
+                append_error(errors, f"{path}: invalid read_purposes {invalid}")
+            if purposes != sorted(set(purposes)):
+                append_error(errors, f"{path}: read_purposes must be unique and sorted")
+
+    paths = [item.get("path") for item in files if isinstance(item, dict)]
+    if paths != sorted(p for p in paths if isinstance(p, str)):
+        append_error(errors, "inventory: files must be sorted by path")
+    string_paths = [p for p in paths if isinstance(p, str)]
+    if len(string_paths) != len(set(string_paths)):
+        append_error(errors, "inventory: duplicate file paths")
+
+    if structurally_valid and isinstance(aggregate, str):
+        material = "".join(f"{item['path']}:{item['sha256']}\n" for item in files)
+        recomputed = hashlib.sha256(material.encode("utf-8")).hexdigest()
+        if recomputed != aggregate:
+            append_error(errors, "inventory: aggregate_sha256 does not match recomputed value")
+
+    return structurally_valid
+
+
+def verify_inventory_against_source(inventory: dict[str, Any], errors: list[str]) -> None:
+    """Recompute every listed identity against the source root and confirm the
+    inventory paths and purposes agree with the independently enumerated set."""
+    files = inventory.get("files")
+    if not isinstance(files, list):
+        return
+
+    # Recompute identity for every listed path (resolved under the source root).
+    for item in files:
+        if not isinstance(item, dict):
+            continue
+        path = item.get("path")
+        if not isinstance(path, str) or not path:
+            continue
+        resolved = resolve_repo_path(path)
+        if resolved is None:
+            append_error(errors, f"{path}: inventory path escapes source root")
+            continue
+        if not resolved.is_file():
+            append_error(errors, f"{path}: inventory path does not exist under source root")
+            continue
+        data = resolved.read_bytes()
+        if item.get("byte_length") != len(data):
+            append_error(errors, f"{path}: byte_length does not match source")
+        if item.get("sha256") != hashlib.sha256(data).hexdigest():
+            append_error(errors, f"{path}: sha256 does not match source")
+        if item.get("git_blob_sha1") != git_blob_sha1(data):
+            append_error(errors, f"{path}: git_blob_sha1 does not match source")
+
+    # Independently enumerate the expected dependency set from the source
+    # metadata using the generator-root builder, and compare paths + purposes.
+    try:
+        builder = _load_generator_builder_module()
+        expected = builder.collect_read_purposes(_ACTIVE_ROOT)
+    except SystemExit:
+        append_error(errors, "inventory: could not enumerate expected dependencies from source root")
+        return
+    expected_purposes = {path: sorted(purposes) for path, purposes in expected.items()}
+
+    listed = {
+        item["path"]: item.get("read_purposes")
+        for item in files
+        if isinstance(item, dict) and isinstance(item.get("path"), str)
+    }
+
+    missing_paths = sorted(set(expected_purposes) - set(listed))
+    extra_paths = sorted(set(listed) - set(expected_purposes))
+    if missing_paths:
+        append_error(errors, f"inventory: missing expected dependency paths {missing_paths}")
+    if extra_paths:
+        append_error(errors, f"inventory: unexpected dependency paths {extra_paths}")
+
+    for path in sorted(set(listed) & set(expected_purposes)):
+        if listed[path] != expected_purposes[path]:
+            append_error(
+                errors,
+                f"{path}: read_purposes {listed[path]} do not match expected {expected_purposes[path]}",
+            )
+
+
+def read_inventory_file(inventory_path: str, errors: list[str]) -> Any:
+    """Read the caller-provided isolated inventory file (never written)."""
+    path = Path(inventory_path)
+    if not path.is_file():
+        append_error(errors, f"{inventory_path}: inventory file does not exist")
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        append_error(errors, f"{inventory_path}: invalid JSON at line {exc.lineno}: {exc.msg}")
+        return None
+
+
+def run_isolated(source_root: str, mode: str, inventory_path: str | None) -> int:
+    global _ACTIVE_ROOT
+    source_root_resolved = Path(source_root).resolve()
+    if not source_root_resolved.is_dir():
+        print(f"validate_public_metadata: error: --source-root does not exist or is not a directory", file=sys.stderr)
+        return 1
+    _ACTIVE_ROOT = source_root_resolved
+
+    # All modes first run the existing public-metadata / source-boundary checks.
+    metadata_rc = validate_public_metadata()
+    if metadata_rc != 0:
+        return metadata_rc
+
+    if mode == "preflight":
+        print("Preflight validation passed (existing metadata and source-boundary rules).")
+        print(f"- source root: {source_root_resolved}")
+        return 0
+
+    # verify-inventory mode.
+    errors: list[str] = []
+    inventory = read_inventory_file(inventory_path, errors)  # type: ignore[arg-type]
+    if inventory is not None:
+        structurally_valid = validate_inventory_structure(inventory, errors)
+        if structurally_valid:
+            verify_inventory_against_source(inventory, errors)
+
+    if errors:
+        print("Inventory verification failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
+
+    print("Inventory verification passed.")
+    print(f"- source root: {source_root_resolved}")
+    print(f"- inventory dependencies: {inventory['dependency_count']}")
+    print(f"- aggregate_sha256: {inventory['aggregate_sha256']}")
+    return 0
+
+
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="validate_public_metadata.py",
+        description=(
+            "Validate MWE public metadata. With no arguments, validates the "
+            "generator/repository root (default mode). With --source-root and "
+            "--mode, validates an explicit detached source checkout in either "
+            "preflight or verify-inventory mode. Performs no writes in any mode."
+        ),
+    )
+    parser.add_argument(
+        "--source-root",
+        metavar="DIR",
+        help="Explicit detached source checkout to validate. Enables isolated mode.",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=VALID_MODES,
+        help=(
+            "preflight: validate existing metadata and source-boundary rules "
+            "against the source root (no inventory). verify-inventory: also "
+            "validate and cross-check the supplied dependency inventory."
+        ),
+    )
+    parser.add_argument(
+        "--inventory",
+        metavar="FILE",
+        help="Isolated dependency-inventory file. Required in verify-inventory mode.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(list(sys.argv[1:] if argv is None else argv))
+
+    if args.source_root is None and args.mode is None and args.inventory is None:
+        return validate_public_metadata()
+
+    if args.source_root is None:
+        print("validate_public_metadata: error: isolated mode requires --source-root", file=sys.stderr)
+        return 2
+    if args.mode is None:
+        print("validate_public_metadata: error: isolated mode requires --mode", file=sys.stderr)
+        return 2
+
+    if args.mode == "verify-inventory" and args.inventory is None:
+        print(
+            "validate_public_metadata: error: verify-inventory mode requires --inventory",
+            file=sys.stderr,
+        )
+        return 2
+    if args.mode == "preflight" and args.inventory is not None:
+        print(
+            "validate_public_metadata: error: --inventory is not permitted in preflight mode",
+            file=sys.stderr,
+        )
+        return 2
+
+    return run_isolated(args.source_root, args.mode, args.inventory)
 
 
 if __name__ == "__main__":

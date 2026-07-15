@@ -1,0 +1,26 @@
+{
+  "$schema": "./mwe-public-surface.schema.json",
+  "name": "Synthetic Fixture Public Surface",
+  "schema_version": "1.0",
+  "canonical_entries": {
+    "boundary_a": "doc-a.md",
+    "public_document_registry": "mwe-public-documents.json",
+    "public_document_schema": "mwe-document.schema.json",
+    "public_metadata_context": "mwe-public-context.jsonld",
+    "public_surface_schema": "mwe-public-surface.schema.json",
+    "public_misreading_register": "public-misreading-register.json",
+    "public_misreading_register_schema": "public-misreading-register.schema.json"
+  },
+  "machine_readable_artifacts": {
+    "document_registry": "mwe-public-documents.json",
+    "document_schema": "mwe-document.schema.json",
+    "public_surface_schema": "mwe-public-surface.schema.json",
+    "jsonld_context": "mwe-public-context.jsonld",
+    "misreading_register": "public-misreading-register.json",
+    "misreading_register_schema": "public-misreading-register.schema.json",
+    "validator": "scripts/validate_public_metadata.py"
+  },
+  "public_document_registry": {
+    "scope": "selected_public_documents_only"
+  }
+}
