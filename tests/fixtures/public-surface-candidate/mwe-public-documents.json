@@ -1,0 +1,61 @@
+{
+  "@context": "./mwe-public-context.jsonld",
+  "schema_version": "1.0",
+  "document_schema": "./mwe-document.schema.json",
+  "@id": "https://example.invalid/fixture#public-documents",
+  "@type": "schema:DataCatalog",
+  "name": "Synthetic Fixture Registry",
+  "scope": "selected_public_documents_only",
+  "authority_ceiling": "metadata_only",
+  "completeness": "not_a_complete_archive_or_registry",
+  "record_count": 3,
+  "@graph": [
+    {
+      "@id": "https://example.invalid/fixture/doc-a.md#m",
+      "@type": "schema:DigitalDocument",
+      "name": "Fixture Boundary Doc A",
+      "repository_path": "doc-a.md",
+      "surface_role": "boundary_document",
+      "public_surface_status": "public_boundary_document",
+      "authority_ceiling": "repository_boundary_only",
+      "relation_default": "not_applicable",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [],
+      "source_use_reference": "doc-a.md",
+      "canonical_public_url": "https://example.invalid/fixture/doc-a.md"
+    },
+    {
+      "@id": "https://example.invalid/fixture/doc-b.md#m",
+      "@type": "schema:CreativeWork",
+      "name": "Fixture Concept Doc B",
+      "repository_path": "doc-b.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Fixture Note / Synthetic Declaration",
+      "boundary_references": [
+        "doc-a.md"
+      ],
+      "source_use_reference": "doc-a.md",
+      "canonical_public_url": "https://example.invalid/fixture/doc-b.md"
+    },
+    {
+      "@id": "https://example.invalid/fixture/doc-c.md#m",
+      "@type": "schema:CreativeWork",
+      "name": "Fixture Concept Doc C",
+      "repository_path": "doc-c.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "doc-a.md"
+      ],
+      "source_use_reference": "doc-a.md",
+      "canonical_public_url": "https://example.invalid/fixture/doc-c.md"
+    }
+  ]
+}

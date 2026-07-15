@@ -1,0 +1,5 @@
+{
+  "$schema": "./public-misreading-register.schema.json",
+  "register_document": "PUBLIC_MISREADING_REGISTER.md",
+  "entries": []
+}

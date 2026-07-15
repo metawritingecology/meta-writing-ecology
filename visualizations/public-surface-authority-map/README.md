@@ -156,3 +156,87 @@ twice produces no diff in `data.json`.
   CDN is required for the D3-enhanced path; core rendering, metadata, and the
   table fallback still work if the CDN is unavailable. No D3 bundle is vendored
   into the repository.
+
+## 14. Isolated candidate mode (source/generator separation)
+
+The builder and validator also support an isolated candidate mode that reads
+every input from an explicit, detached source checkout. This lets an
+independently reviewed generator checkout process a separately pinned content
+checkout without binding content to the code's own location. It exists for
+auditable, reproducible candidate generation; it changes no map semantics and
+carries no additional authority.
+
+Two immutable inputs are kept separate:
+
+- the **source root** supplies content and metadata;
+- the **generator root** supplies the executable transformation and validation.
+
+Approval of one never approves the other. This mode never falls back to
+generator-root content.
+
+Builder (writes an isolated snapshot and a dependency inventory outside both
+roots):
+
+```
+python <generator-root>/scripts/build_public_surface_authority_map.py \
+  --source-root <detached-source-checkout> \
+  --output <isolated-output-file> \
+  --inventory-output <isolated-inventory-file>
+```
+
+- `--source-root` is mandatory in isolated mode and is resolved explicitly. It
+  is never inferred from `__file__`, the current working directory, the output
+  path, Git state, or environment variables.
+- Every source read resolves under the source root; absolute paths, parent
+  traversal, and symlink/reparse-point escape fail closed.
+- `--output` and `--inventory-output` must resolve outside both the source root
+  and the generator root. Neither root is modified.
+- Output bytes are UTF-8 with LF newlines and one final LF; two runs are
+  byte-identical.
+
+Validator (no writes in any mode):
+
+```
+# Preflight: existing metadata and source-boundary rules against the source root
+python <generator-root>/scripts/validate_public_metadata.py \
+  --source-root <detached-source-checkout> --mode preflight
+
+# Inventory verification: existing validation plus inventory schema, identity
+# recomputation, and path/purpose cross-check against the source root
+python <generator-root>/scripts/validate_public_metadata.py \
+  --source-root <detached-source-checkout> --mode verify-inventory \
+  --inventory <isolated-inventory-file>
+```
+
+The default local commands in sections 11–12 remain fully backward-compatible.
+
+Source-tree Python files are treated only as data. Neither tool imports or
+executes any module discovered under the source root.
+
+## 15. Dependency inventory
+
+In isolated mode the builder emits a deterministic dependency inventory
+(`mwe-public-surface-dependency-inventory.schema.json`) recording every source
+file the builder or the validator reads, opens, hashes, or checks for existence
+in candidate mode, with the exact read purpose(s) for each path:
+
+- `direct_input` — parsed as the registry that produces the map;
+- `scope_context` — parsed to confirm the selected-document scope;
+- `registry_referenced_document` — a selected registry `repository_path`;
+- `classification_evidence` — first source lines read to confirm a declared
+  public classification;
+- `reference_existence_check` — existence verified because a metadata field
+  (boundary reference, source-use reference, manifest artifact, canonical
+  entry, `@context`, `document_schema`, or register document) points to it;
+- `schema` — validated as a JSON Schema.
+
+Each entry records the repository-relative path, byte length, lowercase SHA-256,
+and Git blob id. The inventory contains only stable facts. It never contains
+timestamps, absolute paths, host or user names, run IDs, other volatile run
+evidence, or generator (executable transformation) identity. A source file that
+happens to share a path with the validator is recorded only as an existence
+check, never as generator identity.
+
+The inventory is a mechanical provenance record. It asserts nothing about
+conceptual classification, relations, public/private status, Registry status, or
+candidate acceptance, and adding it activates nothing.

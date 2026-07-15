@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/mwe-public-surface-dependency-inventory.schema.json",
+  "title": "MWE Public-Surface Dependency Inventory",
+  "description": "Deterministic, identity-bearing record of every source file the public-surface authority-map builder or its companion validator reads, opens, hashes, or checks for existence in isolated candidate mode. Mechanical provenance only: it defines the read-dependency contract, not conceptual classification, relation, public/private, or Registry status, and it never records generator (executable transformation) identity. It contains only stable facts; volatile run evidence (timestamps, runtime, host, run IDs) is excluded by contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "inventory_schema_version",
+    "source_repository",
+    "interface_version",
+    "dependency_count",
+    "aggregate_sha256",
+    "files"
+  ],
+  "properties": {
+    "inventory_schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Version of this inventory contract."
+    },
+    "source_repository": {
+      "type": "string",
+      "const": "metawritingecology/meta-writing-ecology",
+      "description": "Stable source repository identifier fixed by this contract."
+    },
+    "interface_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "Version of the --source-root/--output/--inventory-output builder interface that produced this inventory."
+    },
+    "dependency_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of entries in files; must equal the length of files."
+    },
+    "aggregate_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase SHA-256 over the deterministic concatenation of 'path:sha256\\n' for every entry in files order."
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Source dependency entries, sorted ascending by path, one per unique path.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "byte_length",
+          "sha256",
+          "git_blob_sha1",
+          "read_purposes"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*\\.\\.)(?!.*\\\\)[^\\\\]+$",
+            "description": "Repository-relative forward-slash path under the source root. No absolute paths, no leading slash, no parent traversal, no backslashes."
+          },
+          "byte_length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Exact byte length of the source file."
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "Lowercase SHA-256 of the source file bytes."
+          },
+          "git_blob_sha1": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$",
+            "description": "Git blob object id (SHA-1 of 'blob <len>\\0' + bytes) of the source file."
+          },
+          "read_purposes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "description": "Sorted, unique set of read purposes actually observed for this path in candidate mode.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "direct_input",
+                "scope_context",
+                "registry_referenced_document",
+                "classification_evidence",
+                "reference_existence_check",
+                "schema"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
