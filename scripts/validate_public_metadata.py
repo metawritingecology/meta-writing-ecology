@@ -133,6 +133,9 @@ EXPECTED_REGISTRY_PATHS = [
     "provenance-validity-separation-model.md",
     "origin-control-validity-burden-accelerated-submission-systems.md",
     "evaluation-boundary-failure-permitted-surface-variation.md",
+    "delegated-execution-retained-answerability.md",
+    "structural-fidelity-use-validity-boundary.md",
+    "llm-condition-research-result-boundary.md",
 ]
 
 REQUIRED_DOES_NOT_ESTABLISH = {
@@ -312,8 +315,8 @@ def validate_document_registry(
         append_error(errors, "mwe-public-documents.json: @graph must be a list")
         return
 
-    if len(records) != 27:
-        append_error(errors, f"mwe-public-documents.json: expected 27 records, found {len(records)}")
+    if len(records) != 30:
+        append_error(errors, f"mwe-public-documents.json: expected 30 records, found {len(records)}")
 
     for referenced_key in ("@context", "document_schema"):
         referenced_path = registry.get(referenced_key)

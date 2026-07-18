@@ -93,6 +93,17 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 - **Minimal formulation:** Policy Continuity Evidence Mapping describes the condition under which evidence from multi-year policy systems is organized for planning transition through traceability, maturity classification, content-loss control, and human judgment.
 
 
+### [LLM-Condition / Research-Result Boundary](../llm-condition-research-result-boundary.md)
+
+- **File:** `llm-condition-research-result-boundary.md`
+
+- **Type:** Protocol-Facing Boundary Note
+
+- **Declared function:** A protocol-facing boundary note for keeping model execution conditions attached to research results that depend materially on large language model participation.
+
+- **Minimal formulation:** LLM-Condition / Research-Result Boundary describes the condition in which a research result produced with, through, or about a large language model is interpreted without preserving the execution conditions under which that result was generated. Most compressed: the output is not the method; the model condition is part of the evidence.
+
+
 ## Semantic Field Foundations
 
 Foundational semantic-field models: pressure, curvature, propagation, virology, collapse, zero-field, and cultural curvature.
@@ -308,6 +319,17 @@ Boundary, observability, representation, segmentation, integration, and failure 
 - **Declared function:** A boundary note on how readable semantic surfaces remain bounded and non-equivalent to the semantic field, source structure, or relational system from which they are drawn. This is a navigation-facing public entry, not a complete methodology.
 
 - **Minimal formulation:** Surface-Bounded Semantic Rendering describes the condition in which latent semantic relations become readable through a bounded surface such as a map, index, table, catalogue, diagram, orientation layer, reading path, or diagnostic frame. The rendered surface makes relations inspectable without becoming equivalent to the full semantic field, source structure, or relational system from which it is drawn.
+
+
+### [Structural Fidelity / Use-Validity Boundary](../structural-fidelity-use-validity-boundary.md)
+
+- **File:** `structural-fidelity-use-validity-boundary.md`
+
+- **Type:** Cross-Supporting Boundary Note
+
+- **Declared function:** A boundary note for distinguishing resemblance to a source from validated adequacy for inference, comparison, prediction, intervention, evaluation, or decision.
+
+- **Minimal formulation:** Structural Fidelity / Use-Validity Boundary describes the condition in which a synthetic, simulated, transformed, compressed, or proxy representation preserves visible features of a source system while failing to preserve the structure required for a specific downstream use. Most compressed: looking structurally similar is not the same as being valid for use.
 
 
 ## Proxy / Legibility / Provenance
@@ -570,4 +592,15 @@ Models and Cross structures about responsibility alignment, burden distribution,
 - **Declared function:** Hidden human review, downstream validation burden, and output acceleration in AI mediated workflows.
 
 - **Minimal formulation:** Verification Labor Compression describes the condition in which AI mediated output acceleration reduces visible production labor while the human or downstream labor required for validation, correction, alignment, integration, accountability, and acceptance becomes hidden, concentrated, displaced, or temporally compressed. The model begins from the distinction: and: and: In compressed form: Most compressed: Diagnostic question:
+
+
+### [Delegated Execution / Retained Answerability](../delegated-execution-retained-answerability.md)
+
+- **File:** `delegated-execution-retained-answerability.md`
+
+- **Type:** Cross-Supporting Boundary Note
+
+- **Declared function:** A boundary note for examining systems in which visible task performance moves to a delegated actor while judgment, verification, and answerability remain attached to another node.
+
+- **Minimal formulation:** Delegated Execution / Retained Answerability describes the condition in which a system, tool, process, or external actor performs part of the visible execution of a task while answerability remains attached to another node. Most compressed: execution can move without answerability moving.
 

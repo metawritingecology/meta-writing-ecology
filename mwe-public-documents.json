@@ -13,7 +13,7 @@
   "inclusion_meaning": "Inclusion does not imply priority.",
   "order_meaning": "Record order does not imply hierarchy.",
   "density_meaning": "Record density does not imply conceptual importance.",
-  "record_count": 27,
+  "record_count": 30,
   "@graph": [
     {
       "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/README.md#public-document-metadata",
@@ -557,6 +557,69 @@
       ],
       "source_use_reference": "SOURCE_USE_GUIDE.md",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/evaluation-boundary-failure-permitted-surface-variation.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/delegated-execution-retained-answerability.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Delegated Execution / Retained Answerability",
+      "repository_path": "delegated-execution-retained-answerability.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross-Supporting Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/delegated-execution-retained-answerability.md",
+      "doi": "https://doi.org/10.17605/OSF.IO/6M95U"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/structural-fidelity-use-validity-boundary.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Structural Fidelity / Use-Validity Boundary",
+      "repository_path": "structural-fidelity-use-validity-boundary.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross-Supporting Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/structural-fidelity-use-validity-boundary.md",
+      "doi": "https://doi.org/10.17605/OSF.IO/BU4KT"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/llm-condition-research-result-boundary.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "LLM-Condition / Research-Result Boundary",
+      "repository_path": "llm-condition-research-result-boundary.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol-Facing Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/llm-condition-research-result-boundary.md",
+      "doi": "https://doi.org/10.17605/OSF.IO/47PXB"
     }
   ]
 }

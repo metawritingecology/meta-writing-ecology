@@ -12,16 +12,36 @@ preflight / verify-inventory modes of the public-metadata validator:
 - deterministic snapshot and inventory bytes;
 - dependency-inventory schema, coverage, ordering, and identity recomputation;
 - source-root Python import isolation (no execution of source-tree modules);
-- full production integration identity (exactly 83,727 bytes);
+- default-mode working-tree identity (exactly 92,901 bytes / 30 records);
+- pinned-commit historical identity (exactly 83,727 bytes / 27 records);
 - source-root and generator-root no-write proofs on success and failure.
+
+Two evaluation contexts, deliberately decoupled so each is validated against its
+own state (no working-tree overlay is ever introduced into the pinned checkout):
+
+* DefaultModeTests validate the CURRENT working tree in place. The working tree
+  carries the 30-record public registry, so its production identity is the
+  EXPECTED_* constants below (30 records / 161 edges / 39 inventory items).
+
+* IntegrationTests reconstruct and validate a FIXED HISTORICAL commit
+  (INTEGRATION_SHA) hermetically, using that commit's OWN builder and validator
+  extracted alongside its content. The pinned commit carries a 27-record
+  registry together with its own isolated-mode tooling, so its known output is
+  the INTEGRATION_EXPECTED_* constants below (27 records / 146 edges / 36
+  inventory items). The builder/validator are run from a clean generator extract
+  of the pinned commit, never from the working tree, so the pinned commit's own
+  record-count expectation (27) governs the build rather than the working tree's
+  current expectation (30). This preserves the integration test's purpose —
+  verifying that a fixed historical repository state can be reconstructed and
+  validated consistently — without repointing INTEGRATION_SHA to a non-existent
+  commit and without overlaying working-tree content.
 
 Two fixture levels are used:
 
 A. A checked-in minimal synthetic fixture (tests/fixtures/public-surface-candidate)
    for CLI, isolation, inventory, and import-isolation unit tests.
-B. A full production integration source, materialised at test time from the
-   approved known-output commit 18491105f0bc0451e0bf99eaa78c39f69c7cb57c into a
-   temporary directory (never committed).
+B. A full production integration source (and its own generator), materialised at
+   test time from the pinned commit into temporary directories (never committed).
 """
 
 from __future__ import annotations
@@ -44,14 +64,31 @@ from pathlib import Path
 GENERATOR_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = GENERATOR_ROOT / "scripts"
 FIXTURE = GENERATOR_ROOT / "tests" / "fixtures" / "public-surface-candidate"
-INTEGRATION_SHA = "18491105f0bc0451e0bf99eaa78c39f69c7cb57c"
+# Pinned historical commit reconstructed and validated by IntegrationTests using
+# its own tooling. This is an existing commit that carries a 27-record registry
+# together with the isolated-mode builder/validator (its own EXPECTED_RECORD_COUNT
+# is 27), so IntegrationTests stay hermetic to it without any working-tree overlay.
+INTEGRATION_SHA = "89550fea8317e535f9569461e71fec8d46e9ad8e"
 
-EXPECTED_DATA_BYTES = 83727
-EXPECTED_DATA_SHA256 = "82f7f74b98a9b3b94a9ed0b12a394f1db2d9b5d256f700d311061c1353f4ef1e"
-EXPECTED_DATA_BLOB = "aa25de9c60b0c0bcb2f8fec1f82bafc135e1f10b"
-EXPECTED_NODES = 27
-EXPECTED_EDGES = 146
-EXPECTED_INVENTORY_COUNT = 36
+# Default-mode / working-tree identity (current 30-record public registry).
+# Used by DefaultModeTests, which build the tracked data.json in place.
+EXPECTED_DATA_BYTES = 92901
+EXPECTED_DATA_SHA256 = "7cdc5441cb31b55427b0e4a2e271e5cc835f57b6668a7b7513240015c51bf33e"
+EXPECTED_DATA_BLOB = "3f5278fe2e097a9b3d3758db893c1cb49fc3e73a"
+EXPECTED_NODES = 30
+EXPECTED_EDGES = 161
+EXPECTED_INVENTORY_COUNT = 39
+
+# Pinned-commit historical identity (27-record registry at INTEGRATION_SHA),
+# produced by that commit's own builder. Used by IntegrationTests only. These are
+# intentionally distinct from the working-tree constants above: the integration
+# test evaluates the pinned state against itself, not against the working tree.
+INTEGRATION_EXPECTED_DATA_BYTES = 83727
+INTEGRATION_EXPECTED_DATA_SHA256 = "82f7f74b98a9b3b94a9ed0b12a394f1db2d9b5d256f700d311061c1353f4ef1e"
+INTEGRATION_EXPECTED_DATA_BLOB = "aa25de9c60b0c0bcb2f8fec1f82bafc135e1f10b"
+INTEGRATION_EXPECTED_NODES = 27
+INTEGRATION_EXPECTED_EDGES = 146
+INTEGRATION_EXPECTED_INVENTORY_COUNT = 36
 
 ALL_PURPOSES = {
     "direct_input",
@@ -78,6 +115,12 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def git_blob_sha1_bytes(data: bytes) -> str:
+    """Compute Git blob identity without depending on either builder module."""
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
 def tree_digest(root: Path) -> str:
     """Order-independent digest of a directory tree (paths + content)."""
     entries = []
@@ -99,14 +142,25 @@ def isolated_env() -> dict:
     return env
 
 
-def run_cli(script: str, args, cwd: Path):
+def run_cli_from(scripts_dir: Path, script: str, args, cwd: Path):
+    """Run a builder/validator script from an explicit scripts directory.
+
+    Lets IntegrationTests invoke the pinned commit's OWN tooling (extracted into a
+    clean generator directory) rather than the working-tree scripts, keeping the
+    integration build hermetic to INTEGRATION_SHA and governed by that commit's
+    record-count expectation.
+    """
     return subprocess.run(
-        [sys.executable, str(SCRIPTS / script), *args],
+        [sys.executable, str(scripts_dir / script), *args],
         cwd=str(cwd),
         env=isolated_env(),
         capture_output=True,
         text=True,
     )
+
+
+def run_cli(script: str, args, cwd: Path):
+    return run_cli_from(SCRIPTS, script, args, cwd)
 
 
 class BaseCase(unittest.TestCase):
@@ -153,6 +207,11 @@ class DefaultModeTests(BaseCase):
             produced = data_path.read_bytes()
             self.assertEqual(len(produced), EXPECTED_DATA_BYTES)
             self.assertEqual(sha256_bytes(produced), EXPECTED_DATA_SHA256)
+            parsed = json.loads(produced)
+            self.assertEqual(len(parsed["nodes"]), EXPECTED_NODES)
+            self.assertEqual(len(parsed["edges"]), EXPECTED_EDGES)
+            inventory = builder.build_dependency_inventory(GENERATOR_ROOT.resolve())
+            self.assertEqual(inventory["dependency_count"], EXPECTED_INVENTORY_COUNT)
             self.assertEqual(produced, original, "default builder changed tracked data.json")
         finally:
             data_path.write_bytes(original)
@@ -167,15 +226,25 @@ class IntegrationTests(BaseCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # Source content and generator tooling are both materialised from the
+        # pinned commit, into SEPARATE directories. The generator is a clean
+        # extract (never the source under test), which keeps source/generator
+        # separation intact and lets the import-isolation test poison the source
+        # without touching the generator that actually runs.
         cls.src = cls._tmp / "prod-source"
         materialise_integration_source(cls.src)
+        cls.gen = cls._tmp / "prod-generator"
+        materialise_integration_source(cls.gen)
+        cls.gen_scripts = cls.gen / "scripts"
 
-    def _build(self, out_dir: Path):
+    def _build(self, out_dir: Path, source_root: Path | None = None):
+        source = self.src if source_root is None else source_root
         out = out_dir / "data.json"
         inv = out_dir / "inventory.json"
-        result = run_cli(
+        result = run_cli_from(
+            self.gen_scripts,
             "build_public_surface_authority_map.py",
-            ["--source-root", str(self.src), "--output", str(out), "--inventory-output", str(inv)],
+            ["--source-root", str(source), "--output", str(out), "--inventory-output", str(inv)],
             cwd=self._cwd,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -184,14 +253,14 @@ class IntegrationTests(BaseCase):
     def test_integration_exact_identity(self):
         out, inv = self._build(self.out_dir())
         data = out.read_bytes()
-        self.assertEqual(len(data), EXPECTED_DATA_BYTES)
-        self.assertEqual(sha256_bytes(data), EXPECTED_DATA_SHA256)
-        self.assertEqual(builder.git_blob_sha1(data), EXPECTED_DATA_BLOB)
+        self.assertEqual(len(data), INTEGRATION_EXPECTED_DATA_BYTES)
+        self.assertEqual(sha256_bytes(data), INTEGRATION_EXPECTED_DATA_SHA256)
+        self.assertEqual(git_blob_sha1_bytes(data), INTEGRATION_EXPECTED_DATA_BLOB)
         parsed = json.loads(data)
-        self.assertEqual(len(parsed["nodes"]), EXPECTED_NODES)
-        self.assertEqual(len(parsed["edges"]), EXPECTED_EDGES)
+        self.assertEqual(len(parsed["nodes"]), INTEGRATION_EXPECTED_NODES)
+        self.assertEqual(len(parsed["edges"]), INTEGRATION_EXPECTED_EDGES)
         inventory = json.loads(inv.read_text("utf-8"))
-        self.assertEqual(inventory["dependency_count"], EXPECTED_INVENTORY_COUNT)
+        self.assertEqual(inventory["dependency_count"], INTEGRATION_EXPECTED_INVENTORY_COUNT)
 
     def test_two_runs_byte_identical(self):
         a_out, a_inv = self._build(self.out_dir())
@@ -205,6 +274,7 @@ class IntegrationTests(BaseCase):
         for produced in (out, inv):
             resolved = produced.resolve()
             self.assertFalse(str(resolved).startswith(str(self.src.resolve())))
+            self.assertFalse(str(resolved).startswith(str(self.gen.resolve())))
             self.assertFalse(str(resolved).startswith(str(GENERATOR_ROOT.resolve())))
             self.assertTrue(produced.is_file())
 
@@ -214,10 +284,15 @@ class IntegrationTests(BaseCase):
         self.assertEqual(before, tree_digest(self.src))
 
     def test_generator_root_unchanged_after_run(self):
+        # The generator that actually runs is the pinned extract (cls.gen); a
+        # successful isolated build must not modify it. The working-tree scripts
+        # are also confirmed untouched (the run never invokes them).
         watched = [
+            self.gen / "scripts" / "build_public_surface_authority_map.py",
+            self.gen / "scripts" / "validate_public_metadata.py",
+            self.gen / "visualizations" / "public-surface-authority-map" / "data.json",
             SCRIPTS / "build_public_surface_authority_map.py",
             SCRIPTS / "validate_public_metadata.py",
-            GENERATOR_ROOT / "visualizations" / "public-surface-authority-map" / "data.json",
         ]
         before = {p: p.read_bytes() for p in watched}
         self._build(self.out_dir())
@@ -226,27 +301,21 @@ class IntegrationTests(BaseCase):
 
     def test_content_derived_from_source(self):
         # Modify a node name only in the source; the output must reflect it and
-        # therefore differ from the generator-root production data.json.
+        # therefore differ from the pinned known-output identity.
         src2 = self._tmp / "prod-source-modified"
         shutil.copytree(self.src, src2)
         docs_path = src2 / "mwe-public-documents.json"
         docs = json.loads(docs_path.read_text("utf-8"))
         docs["@graph"][0]["name"] = "SOURCE-DERIVED-MARKER"
         docs_path.write_text(json.dumps(docs, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        out = self.out_dir() / "data.json"
-        inv = self.out_dir() / "inventory.json"
-        result = run_cli(
-            "build_public_surface_authority_map.py",
-            ["--source-root", str(src2), "--output", str(out), "--inventory-output", str(inv)],
-            cwd=self._cwd,
-        )
-        self.assertEqual(result.returncode, 0, result.stderr)
+        out, _ = self._build(self.out_dir(), source_root=src2)
         produced = out.read_text("utf-8")
         self.assertIn("SOURCE-DERIVED-MARKER", produced)
-        self.assertNotEqual(sha256_bytes(out.read_bytes()), EXPECTED_DATA_SHA256)
+        self.assertNotEqual(sha256_bytes(out.read_bytes()), INTEGRATION_EXPECTED_DATA_SHA256)
 
     def test_preflight_passes_without_inventory(self):
-        result = run_cli(
+        result = run_cli_from(
+            self.gen_scripts,
             "validate_public_metadata.py",
             ["--source-root", str(self.src), "--mode", "preflight"],
             cwd=self._cwd,
@@ -255,7 +324,8 @@ class IntegrationTests(BaseCase):
 
     def test_verify_inventory_passes(self):
         out, inv = self._build(self.out_dir())
-        result = run_cli(
+        result = run_cli_from(
+            self.gen_scripts,
             "validate_public_metadata.py",
             ["--source-root", str(self.src), "--mode", "verify-inventory", "--inventory", str(inv)],
             cwd=self._cwd,
@@ -263,7 +333,8 @@ class IntegrationTests(BaseCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_verify_inventory_requires_inventory(self):
-        result = run_cli(
+        result = run_cli_from(
+            self.gen_scripts,
             "validate_public_metadata.py",
             ["--source-root", str(self.src), "--mode", "verify-inventory"],
             cwd=self._cwd,
@@ -279,7 +350,8 @@ class IntegrationTests(BaseCase):
             mutate(data)
             path = self.out_dir() / "tampered.json"
             path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-            result = run_cli(
+            result = run_cli_from(
+                self.gen_scripts,
                 "validate_public_metadata.py",
                 ["--source-root", str(self.src), "--mode", "verify-inventory", "--inventory", str(path)],
                 cwd=self._cwd,
@@ -333,7 +405,7 @@ class IntegrationTests(BaseCase):
             data = (self.src / f["path"]).read_bytes()
             self.assertEqual(f["byte_length"], len(data))
             self.assertEqual(f["sha256"], sha256_bytes(data))
-            self.assertEqual(f["git_blob_sha1"], builder.git_blob_sha1(data))
+            self.assertEqual(f["git_blob_sha1"], git_blob_sha1_bytes(data))
             universe |= set(f["read_purposes"])
         self.assertEqual(universe, ALL_PURPOSES)
 
@@ -379,15 +451,20 @@ class IntegrationTests(BaseCase):
         )
         out = self.out_dir() / "data.json"
         inv = self.out_dir() / "inventory.json"
-        build = run_cli(
+        # The generator is the clean pinned extract (self.gen_scripts); the source
+        # is the poisoned copy. A correct run never executes the poisoned source
+        # Python, proving the source root is never placed on sys.path.
+        build = run_cli_from(
+            self.gen_scripts,
             "build_public_surface_authority_map.py",
             ["--source-root", str(poisoned), "--output", str(out), "--inventory-output", str(inv)],
             cwd=self._cwd,
         )
         self.assertEqual(build.returncode, 0, build.stderr)
         self.assertNotIn("RuntimeError", build.stderr)
-        self.assertEqual(len(out.read_bytes()), EXPECTED_DATA_BYTES)
-        verify = run_cli(
+        self.assertEqual(len(out.read_bytes()), INTEGRATION_EXPECTED_DATA_BYTES)
+        verify = run_cli_from(
+            self.gen_scripts,
             "validate_public_metadata.py",
             ["--source-root", str(poisoned), "--mode", "verify-inventory", "--inventory", str(inv)],
             cwd=self._cwd,

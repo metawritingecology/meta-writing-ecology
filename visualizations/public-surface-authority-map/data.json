@@ -7,7 +7,7 @@
     "mwe-public-documents.json",
     "mwe-public-surface.json"
   ],
-  "generated_record_count": 27,
+  "generated_record_count": 30,
   "boundary_statements": [
     "Selected public surface only.",
     "Visual position does not indicate conceptual importance or internal authority.",
@@ -20,8 +20,8 @@
     "public_surface_status"
   ],
   "edge_counts": {
-    "boundary_reference": 120,
-    "source_use_reference": 26
+    "boundary_reference": 132,
+    "source_use_reference": 29
   },
   "self_references_omitted_count": 7,
   "nodes": [
@@ -259,6 +259,25 @@
       "source_use_reference": "SOURCE_USE_GUIDE.md"
     },
     {
+      "id": "delegated-execution-retained-answerability.md",
+      "name": "Delegated Execution / Retained Answerability",
+      "repository_path": "delegated-execution-retained-answerability.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/delegated-execution-retained-answerability.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross-Supporting Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
       "id": "evaluation-boundary-failure-permitted-surface-variation.md",
       "name": "Evaluation Boundary Failure under Permitted Surface Variation",
       "repository_path": "evaluation-boundary-failure-permitted-surface-variation.md",
@@ -288,6 +307,25 @@
       "relation_default": "adjacency_only",
       "classification_evidence": "explicit_in_file",
       "publicly_declared_classification": "Cross / Structural Account / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "llm-condition-research-result-boundary.md",
+      "name": "LLM-Condition / Research-Result Boundary",
+      "repository_path": "llm-condition-research-result-boundary.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/llm-condition-research-result-boundary.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Protocol-Facing Boundary Note",
       "boundary_references": [
         "SUMMARY_BOUNDARIES.md",
         "MACHINE_INTERPRETATION_STATE.md",
@@ -477,6 +515,25 @@
       "relation_default": "adjacency_only",
       "classification_evidence": "explicit_in_file",
       "publicly_declared_classification": "Boundary Packet / Boundary Note",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md"
+    },
+    {
+      "id": "structural-fidelity-use-validity-boundary.md",
+      "name": "Structural Fidelity / Use-Validity Boundary",
+      "repository_path": "structural-fidelity-use-validity-boundary.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/structural-fidelity-use-validity-boundary.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross-Supporting Boundary Note",
       "boundary_references": [
         "SUMMARY_BOUNDARIES.md",
         "MACHINE_INTERPRETATION_STATE.md",
@@ -1066,6 +1123,42 @@
       "authority_ceiling": "navigation_only"
     },
     {
+      "id": "boundary_reference::delegated-execution-retained-answerability.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "delegated-execution-retained-answerability.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "delegated-execution-retained-answerability.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::delegated-execution-retained-answerability.md->RELATION_STATUS_GUIDE.md",
+      "source": "delegated-execution-retained-answerability.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "delegated-execution-retained-answerability.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::delegated-execution-retained-answerability.md->SOURCE_USE_GUIDE.md",
+      "source": "delegated-execution-retained-answerability.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "delegated-execution-retained-answerability.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::delegated-execution-retained-answerability.md->SUMMARY_BOUNDARIES.md",
+      "source": "delegated-execution-retained-answerability.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "delegated-execution-retained-answerability.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
       "id": "boundary_reference::evaluation-boundary-failure-permitted-surface-variation.md->MACHINE_INTERPRETATION_STATE.md",
       "source": "evaluation-boundary-failure-permitted-surface-variation.md",
       "target": "MACHINE_INTERPRETATION_STATE.md",
@@ -1135,6 +1228,42 @@
       "relation_type": "boundary_reference",
       "relation_status": "navigation_only",
       "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::llm-condition-research-result-boundary.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "llm-condition-research-result-boundary.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "llm-condition-research-result-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::llm-condition-research-result-boundary.md->RELATION_STATUS_GUIDE.md",
+      "source": "llm-condition-research-result-boundary.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "llm-condition-research-result-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::llm-condition-research-result-boundary.md->SOURCE_USE_GUIDE.md",
+      "source": "llm-condition-research-result-boundary.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "llm-condition-research-result-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::llm-condition-research-result-boundary.md->SUMMARY_BOUNDARIES.md",
+      "source": "llm-condition-research-result-boundary.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "llm-condition-research-result-boundary.md",
       "authority_ceiling": "navigation_only"
     },
     {
@@ -1516,6 +1645,42 @@
       "authority_ceiling": "navigation_only"
     },
     {
+      "id": "boundary_reference::structural-fidelity-use-validity-boundary.md->MACHINE_INTERPRETATION_STATE.md",
+      "source": "structural-fidelity-use-validity-boundary.md",
+      "target": "MACHINE_INTERPRETATION_STATE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "structural-fidelity-use-validity-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::structural-fidelity-use-validity-boundary.md->RELATION_STATUS_GUIDE.md",
+      "source": "structural-fidelity-use-validity-boundary.md",
+      "target": "RELATION_STATUS_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "structural-fidelity-use-validity-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::structural-fidelity-use-validity-boundary.md->SOURCE_USE_GUIDE.md",
+      "source": "structural-fidelity-use-validity-boundary.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "structural-fidelity-use-validity-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "boundary_reference::structural-fidelity-use-validity-boundary.md->SUMMARY_BOUNDARIES.md",
+      "source": "structural-fidelity-use-validity-boundary.md",
+      "target": "SUMMARY_BOUNDARIES.md",
+      "relation_type": "boundary_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "structural-fidelity-use-validity-boundary.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
       "id": "boundary_reference::surface-bounded-semantic-rendering.md->MACHINE_INTERPRETATION_STATE.md",
       "source": "surface-bounded-semantic-rendering.md",
       "target": "MACHINE_INTERPRETATION_STATE.md",
@@ -1723,6 +1888,15 @@
       "authority_ceiling": "navigation_only"
     },
     {
+      "id": "source_use_reference::delegated-execution-retained-answerability.md->SOURCE_USE_GUIDE.md",
+      "source": "delegated-execution-retained-answerability.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "delegated-execution-retained-answerability.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
       "id": "source_use_reference::evaluation-boundary-failure-permitted-surface-variation.md->SOURCE_USE_GUIDE.md",
       "source": "evaluation-boundary-failure-permitted-surface-variation.md",
       "target": "SOURCE_USE_GUIDE.md",
@@ -1738,6 +1912,15 @@
       "relation_type": "source_use_reference",
       "relation_status": "navigation_only",
       "evidence_source": "generation-condition-disclosure-reproducibility-cross.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::llm-condition-research-result-boundary.md->SOURCE_USE_GUIDE.md",
+      "source": "llm-condition-research-result-boundary.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "llm-condition-research-result-boundary.md",
       "authority_ceiling": "navigation_only"
     },
     {
@@ -1828,6 +2011,15 @@
       "relation_type": "source_use_reference",
       "relation_status": "navigation_only",
       "evidence_source": "source-summary-citation-boundary-packet.md",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_use_reference::structural-fidelity-use-validity-boundary.md->SOURCE_USE_GUIDE.md",
+      "source": "structural-fidelity-use-validity-boundary.md",
+      "target": "SOURCE_USE_GUIDE.md",
+      "relation_type": "source_use_reference",
+      "relation_status": "navigation_only",
+      "evidence_source": "structural-fidelity-use-validity-boundary.md",
       "authority_ceiling": "navigation_only"
     },
     {
