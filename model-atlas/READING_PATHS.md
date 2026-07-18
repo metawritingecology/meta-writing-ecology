@@ -58,8 +58,9 @@ Purpose: understand the field-dynamic vocabulary of pressure, curvature, propaga
 - [boundary-failure-diagnostics.md](../boundary-failure-diagnostics.md)
 - [text-conditioned-semantic-rendering.md](../text-conditioned-semantic-rendering.md)
 - [surface-bounded-semantic-rendering.md](../surface-bounded-semantic-rendering.md)
+- [structural-fidelity-use-validity-boundary.md](../structural-fidelity-use-validity-boundary.md)
 
-Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries.
+Purpose: understand how systems preserve, lose, over-fuse, over-separate, or miscalibrate boundaries, including the distinction between representation resemblance and validated use-validity.
 
 ## Evaluation / boundary robustness path
 
@@ -70,8 +71,9 @@ Purpose: understand how systems preserve, lose, over-fuse, over-separate, or mis
 - [responsibility-alignment-model.md](../responsibility-alignment-model.md)
 - [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
 - [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
+- [structural-fidelity-use-validity-boundary.md](../structural-fidelity-use-validity-boundary.md)
 
-Purpose: understand how permitted surfaces, premature readability, boundary design, proxy substitution, responsibility alignment, and provenance-validity separation affect evaluation robustness.
+Purpose: understand how permitted surfaces, premature readability, boundary design, proxy substitution, responsibility alignment, provenance-validity separation, and validated fitness for downstream use affect evaluation robustness.
 
 ## Proxy / legibility / provenance / recognition path
 
@@ -93,8 +95,9 @@ Purpose: track how readable surfaces, traceable origins, proxies, drifting refer
 - [premature-circulation-model.md](../premature-circulation-model.md)
 - [responsibility-alignment-model.md](../responsibility-alignment-model.md)
 - [cost-visibility-redistribution.md](../cost-visibility-redistribution.md)
+- [structural-fidelity-use-validity-boundary.md](../structural-fidelity-use-validity-boundary.md)
 
-Purpose: distinguish origin traceability from validity, semantic adequacy, claim support, circulation readiness, downstream responsibility, and hidden verification cost.
+Purpose: distinguish origin traceability from validity, semantic adequacy, claim support, circulation readiness, downstream responsibility, hidden verification cost, and the distinction between structural resemblance and task-specific use-validity.
 
 ## Circulation / coherence risk path
 
@@ -124,8 +127,9 @@ Purpose: understand how constraints move after capability expansion, how failure
 - [cost-visibility-redistribution.md](../cost-visibility-redistribution.md)
 - [external-lifeline-collapse-under-residual-infrastructure-cross.md](../external-lifeline-collapse-under-residual-infrastructure-cross.md)
 - [verification-labor-compression.md](../verification-labor-compression.md)
+- [delegated-execution-retained-answerability.md](../delegated-execution-retained-answerability.md)
 
-Purpose: track where responsibility, cost, burden, visibility, residual support dependency, and hidden verification labor accumulate.
+Purpose: track where responsibility, cost, burden, visibility, residual support dependency, and hidden verification labor accumulate, and where visible execution is delegated while retained answerability stays attached to a receiving node.
 
 ## Externalized identity / infrastructure path
 
@@ -144,8 +148,9 @@ Purpose: understand machine-readable selfhood, externalized cognition, search/pl
 - [policy-continuity-evidence-mapping.md](../policy-continuity-evidence-mapping.md)
 - [constraint-residue-governance.md](../constraint-residue-governance.md)
 - [verification-labor-compression.md](../verification-labor-compression.md)
+- [llm-condition-research-result-boundary.md](../llm-condition-research-result-boundary.md)
 
-Purpose: understand public-facing methodological orientations for documentation structure, policy continuity evidence, governance residue, and verification labor.
+Purpose: understand public-facing methodological orientations for documentation structure, policy continuity evidence, governance residue, verification labor, and LLM execution-condition reporting boundaries.
 
 ## Semantic surface formation path
 
@@ -165,8 +170,9 @@ Purpose: understand how textual structures condition readable semantic surfaces,
 - [provenance-validity-separation-model.md](../provenance-validity-separation-model.md)
 - [ai-readable-knowledge-architecture.md](../ai-readable-knowledge-architecture.md)
 - [verification-labor-compression.md](../verification-labor-compression.md)
+- [llm-condition-research-result-boundary.md](../llm-condition-research-result-boundary.md)
 
-Purpose: understand how source custody, model-use reporting, generation conditions, provenance-validity separation, AI-readable documentation, and verification labor interact under public-facing knowledge conditions.
+Purpose: understand how source custody, model-use reporting, generation conditions, provenance-validity separation, AI-readable documentation, verification labor, and the attachment of model execution conditions to LLM-mediated research results interact under public-facing knowledge conditions.
 
 ## Summary / interpretation boundary path
 

@@ -62,7 +62,7 @@ SURFACE_FILE = "mwe-public-surface.json"
 MISREADING_REGISTER_FILE = "public-misreading-register.json"
 OUTPUT_FILE = "visualizations/public-surface-authority-map/data.json"
 
-EXPECTED_RECORD_COUNT = 27
+EXPECTED_RECORD_COUNT = 30
 
 # Provenance-inventory contract identities. These are stable facts fixed by the
 # inventory schema/contract, not volatile run data.
@@ -251,7 +251,7 @@ def build_edges(
             for target in targets:
                 if not isinstance(target, str):
                     continue
-                # Only route between the 27 registry records.
+                # Only route between the 30 registry records.
                 if target not in node_ids:
                     continue
                 if target == source:

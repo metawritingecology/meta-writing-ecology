@@ -76,6 +76,7 @@ These files describe selected public metadata and correction status. They do not
 - [Policy Continuity Evidence Mapping](./policy-continuity-evidence-mapping.md) - AI-assisted traceability, maturity review, and planning transition in multi-year policy systems.
 - [Constraint Residue Governance](./constraint-residue-governance.md) - A governance-facing structural orientation for how accumulated failure traces become active control layers.
 - [Model-Use Reporting Boundary Protocol](./model-use-reporting-boundary-protocol.md) - A methodological boundary protocol for identifying when model-mediated participation becomes reportable without requiring full operational disclosure. DOI: https://doi.org/10.17605/OSF.IO/GN5RW
+- [LLM-Condition / Research-Result Boundary](./llm-condition-research-result-boundary.md) - A Protocol-Facing Boundary Note on keeping model execution conditions attached to research results that depend materially on LLM participation. DOI: https://doi.org/10.17605/OSF.IO/47PXB
 
 ## Diagnostics
 
@@ -94,6 +95,8 @@ These files describe selected public metadata and correction status. They do not
 - [Text-Conditioned Semantic Rendering](./text-conditioned-semantic-rendering.md) - A boundary note on how delimited textual structures condition readable semantic surface formation without implying complete reconstruction of the source structure. DOI: https://doi.org/10.17605/OSF.IO/BHMA8
 - [Surface-Bounded Semantic Rendering](./surface-bounded-semantic-rendering.md) - A boundary note on how readable semantic surfaces remain bounded and non-equivalent to the semantic field, source structure, or relational system from which they are drawn. DOI: https://doi.org/10.17605/OSF.IO/U2AK6
 - [Source, Summary, and Citation Boundary Packet](./source-summary-citation-boundary-packet.md) - A boundary packet on how source relations, summary surfaces, citation availability, retrieval access, and evidentiary grounding may become conflated with source custody. DOI: https://doi.org/10.17605/OSF.IO/7MTNX
+- [Delegated Execution / Retained Answerability](./delegated-execution-retained-answerability.md) - A boundary note on the structural separation between delegated execution and retained judgment, verification, acceptance, and answerability. DOI: https://doi.org/10.17605/OSF.IO/6M95U
+- [Structural Fidelity / Use-Validity Boundary](./structural-fidelity-use-validity-boundary.md) - A boundary note on the non-equivalence between representation resemblance and validated fitness for downstream use. DOI: https://doi.org/10.17605/OSF.IO/BU4KT
 
 ## Source Navigation
 
@@ -132,3 +135,6 @@ Most linked model and protocol files include their OSF project or registration i
 - Source, Summary, and Citation Boundary Packet DOI: https://doi.org/10.17605/OSF.IO/7MTNX
 - Generation-Condition Disclosure–Reproducibility Cross DOI: https://doi.org/10.17605/OSF.IO/KMREA
 - Model-Use Reporting Boundary Protocol DOI: https://doi.org/10.17605/OSF.IO/GN5RW
+- Delegated Execution / Retained Answerability DOI: https://doi.org/10.17605/OSF.IO/6M95U
+- Structural Fidelity / Use-Validity Boundary DOI: https://doi.org/10.17605/OSF.IO/BU4KT
+- LLM-Condition / Research-Result Boundary DOI: https://doi.org/10.17605/OSF.IO/47PXB

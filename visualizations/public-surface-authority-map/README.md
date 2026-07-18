@@ -12,7 +12,7 @@ inferring authority, hierarchy, or conceptual relations.
 
 ## 2. Scope
 
-Selected public surface only. This interface represents 27 selected
+Selected public surface only. This interface represents 30 selected
 public-document records. It is **not** the internal Registry, **not** a complete
 archive, **not** a formal ontology, and **not** an authoritative conceptual
 relation graph. Inclusion does not imply priority; omission does not imply
@@ -33,11 +33,11 @@ No conceptual Markdown, filename inference, or semantic similarity is used.
 no network, no Git, no installs) reads the two approved inputs and writes
 `data.json` in this directory. It:
 
-- requires exactly 27 records with unique IDs and repository paths;
+- requires exactly 30 records with unique IDs and repository paths;
 - requires every repository path to exist inside the repository;
 - copies node metadata verbatim (no punctuation/Unicode/title repair);
 - emits edges only from the explicit `boundary_references` and
-  `source_use_reference` fields, and only between the 27 records;
+  `source_use_reference` fields, and only between the 30 records;
 - omits self-reference edges and records the omission count;
 - marks every edge `relation_status: navigation_only` and
   `authority_ceiling: navigation_only`;
@@ -101,7 +101,7 @@ labeled "Filtered from current view", never "does not exist".
 - Color is always paired with a glyph and text label (no color-only meaning).
 - Essential information is available in the detail panel and the table fallback,
   not hover-only.
-- A textual table fallback lists all 27 records
+- A textual table fallback lists all 30 records
   (`name`, `repository_path`, `surface_role`, `public_surface_status`,
   `authority_ceiling`, `classification_evidence`).
 - `prefers-reduced-motion` disables transitions; `prefers-color-scheme`
