@@ -5,7 +5,7 @@
   "scope": "field_level_evidence_provenance_only",
   "authority_ceiling": "metadata_only",
   "scope_note": "This file records, for each public-document record, where each metadata value came from. It records provenance only. It does not establish internal Registry status, formal classification, confirmed relation status, ontology membership, conceptual priority, or authoritative-copy identity.",
-  "record_count": 30,
+  "record_count": 59,
   "records": [
     {
       "repository_path": "README.md",
@@ -483,6 +483,470 @@
         "authority_ceiling": "source_declared",
         "relation_default": "registry_policy",
         "classification": "source_declared",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "AUTHOR.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-cyberpunk-condition.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "cultural-curvature-unified-field.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "irreversibility-conditions.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-curvature-dynamics.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-curvature.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-physics.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-pressure.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-propagation-mechanics.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "semantic-virology.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "zero-field.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "boundary-engineering.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "boundary-failure.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "boundary-integration-failure.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "boundary-role-segmentation-model.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "observer-representation-boundary.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "false-legibility.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "proxy-substitution.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "premature-circulation-model.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "premature-coherence.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "reality-consistency.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "reference-drift.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "constraint-displacement.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "constraint-residue-accumulation-model.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "high-integrity-system-architecture.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "benefit-burden-allocation-regimes.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "cost-visibility-redistribution.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "source_declared",
+        "boundary_references": "registry_policy",
+        "source_use_reference": "schema_const"
+      }
+    },
+    {
+      "repository_path": "responsibility-alignment-model.md",
+      "field_evidence": {
+        "inclusion": "inventory_declared",
+        "name": "source_h1",
+        "repository_path": "mechanical",
+        "canonical_public_url": "mechanical",
+        "surface_role": "registry_policy",
+        "public_surface_status": "registry_policy",
+        "authority_ceiling": "registry_policy",
+        "relation_default": "registry_policy",
+        "classification": "not_asserted",
         "boundary_references": "registry_policy",
         "source_use_reference": "schema_const"
       }
