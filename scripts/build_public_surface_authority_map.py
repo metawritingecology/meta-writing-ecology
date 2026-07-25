@@ -39,8 +39,9 @@ Three invocation modes:
    output path, under its own expected record count (EXPANDED_RECORD_COUNT). The
    output path is mandatory; omitting it emits EXPANDED_TARGET_REQUIRES_OUTPUT.
    An output that resolves to the historical artifact is rejected before
-   anything is written, with the token HISTORICAL_OUTPUT_PATH_COLLISION. No
-   expanded output path is ever selected implicitly.
+   anything is written, with the token HISTORICAL_OUTPUT_PATH_COLLISION;
+   collision detection covers relative, absolute, parent-traversing, symlinked
+   and hard-linked aliases. No expanded output path is ever selected implicitly.
 
 3. Isolated candidate mode
        python <generator-root>/scripts/build_public_surface_authority_map.py \
@@ -642,7 +643,18 @@ def run_historical(artifact_path: Path | None = None) -> int:
             f"{HISTORICAL_OUTPUT_FILE}: tracked historical artifact does not exist"
         )
 
-    mismatches = historical_identity_mismatches(path.read_bytes())
+    try:
+        data = path.read_bytes()
+    except OSError as exc:
+        # A file that exists but cannot be read (permissions, I/O error, a
+        # dangling mount) must fail closed with the stable token, not with a
+        # traceback. The artifact is only ever opened for reading.
+        fail(
+            f"{FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH}: "
+            f"{HISTORICAL_OUTPUT_FILE}: unable to read tracked historical artifact: {exc}"
+        )
+
+    mismatches = historical_identity_mismatches(data)
     if mismatches:
         for mismatch in mismatches:
             print(f"build_public_surface_authority_map: {mismatch}", file=sys.stderr)
@@ -676,16 +688,40 @@ def resolve_expanded_output(path_str: str) -> Path:
     """Resolve an expanded-target output path, failing closed on any alias of
     the frozen historical artifact.
 
-    Resolved paths are compared, never raw strings, so a relative path, an
-    absolute path, a parent-traversing path, and a symlink alias all collapse to
-    the same real location and are rejected identically. This runs before any
-    generation or record-count processing, so a collision can never reach a
-    write.
+    Two independent checks, because path resolution alone is not sufficient:
+
+    1. Resolved-path equality. Resolved paths are compared, never raw strings,
+       so a relative path, an absolute path, a parent-traversing path and a
+       symlink alias all collapse to the same real location.
+    2. Same-file identity for an output path that already exists. A hard link
+       is a distinct pathname that resolves to itself yet shares an inode with
+       the artifact; writing through it would mutate the artifact. samefile
+       compares device and inode, so it catches that case.
+
+    If the candidate exists but its identity cannot be established, the run
+    fails closed: an alias that cannot be ruled out is never allowed to reach a
+    write. Both checks run before any generation or record-count processing, so
+    a collision can never reach the live registry, a parent-directory creation
+    or an open.
     """
     output_resolved = Path(path_str).resolve()
-    if output_resolved == historical_artifact_path():
+    historical = historical_artifact_path()
+
+    collision = output_resolved == historical
+    reason = "resolves to"
+    if not collision and output_resolved.exists():
+        try:
+            collision = output_resolved.samefile(historical)
+        except OSError:
+            collision = True
+            reason = "cannot be distinguished from"
+        else:
+            if collision:
+                reason = "is a hard link to"
+
+    if collision:
         fail(
-            f"{FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION}: --output resolves to the frozen "
+            f"{FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION}: --output {reason} the frozen "
             f"historical artifact ({HISTORICAL_OUTPUT_FILE}); the expanded target must "
             "write to a distinct path"
         )

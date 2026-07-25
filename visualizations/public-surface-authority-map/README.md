@@ -275,12 +275,27 @@ regeneration request. The pinned values are never updated to accommodate an
 unexpected file. Three stable failure tokens are emitted on standard error:
 
 - `HISTORICAL_ARTIFACT_IDENTITY_MISMATCH` — the tracked artifact does not match
-  its pinned identity, or is missing or unreadable.
-- `HISTORICAL_OUTPUT_PATH_COLLISION` — an expanded output resolves to the
-  historical artifact path. Resolved paths are compared, never raw strings, so
-  relative, absolute, parent-traversing (`..`) and symlinked aliases are all
-  rejected identically, before any generation or record-count processing can
-  write anything.
+  its pinned identity, or is missing, or cannot be read. A file that exists but
+  cannot be opened for reading (permissions, I/O error) fails closed with this
+  token rather than raising.
+- `HISTORICAL_OUTPUT_PATH_COLLISION` — an expanded output is an alias of the
+  historical artifact. Collision detection covers five alias forms:
+
+  ```
+  relative path
+  absolute path
+  parent traversal
+  symlink alias
+  hard-link alias
+  ```
+
+  Resolved paths are compared, never raw strings, which covers the first four.
+  Resolved-path equality is supplemented by same-file identity checking (device
+  and inode) for an output path that already exists, which covers a hard link —
+  a distinct pathname that resolves to itself yet shares an inode with the
+  artifact. An output whose identity cannot be established fails closed. Both
+  checks run before any generation or record-count processing, so a collision
+  never reaches the live registry, a directory creation or an open.
 - `EXPANDED_TARGET_REQUIRES_OUTPUT` — the expanded target was invoked without an
   explicit `--output`.
 
@@ -315,8 +330,10 @@ dependency-inventory items  39
 The first eight structural values are checked directly against the artifact
 bytes at every verification. The dependency-inventory count is a provenance fact
 of the pinned source commit rather than a property of the artifact bytes, so it
-is pinned and reported by the verify-only mode and asserted by the reconstruction
-tests, not recomputed from current registry state.
+is pinned and reported by the verify-only mode and proven only by the pinned
+reconstruction below. It is never recomputed from current registry state:
+verification reads the artifact and nothing else, so it stays correct as the
+live registry changes.
 
 **Reconstruction.** Git history plus the isolated candidate mode already
 reproduce the artifact byte for byte, which is why no duplicate frozen registry
