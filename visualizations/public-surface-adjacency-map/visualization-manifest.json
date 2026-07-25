@@ -1,0 +1,483 @@
+{
+  "$schema": "./visualization-manifest.schema.json",
+  "manifest_version": "1.0",
+  "describes": "../../mwe-public-documents.json",
+  "scope": "expanded_public_surface_visualization_membership",
+  "authority_ceiling": "visualization_membership_and_rendering_policy_only",
+  "source_commit": "933274af9693d6d1d9fac36819aafdf56f9ab81d",
+  "record_count": 59,
+  "records": [
+    {
+      "repository_path": "README.md",
+      "visualization_membership": "included",
+      "visualization_role": "orientation",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "SUMMARY_BOUNDARIES.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "SUMMARY_CONTRACT.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "MACHINE_INTERPRETATION_STATE.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "SOURCE_USE_GUIDE.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "MACHINE_READING_PRECEDENCE.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "AI-READING-GUIDE.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "RELATION_STATUS_GUIDE.md",
+      "visualization_membership": "included",
+      "visualization_role": "boundary",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "public-anchors/ai-training-boundary-statement.md",
+      "visualization_membership": "included",
+      "visualization_role": "anchor",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "ai-induced-semantic-deviation.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "ai-readable-knowledge-architecture.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "model-induced-coherence-pressure.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "generation-condition-disclosure-reproducibility-cross.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "verification-labor-compression.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "surface-bounded-semantic-rendering.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "text-conditioned-semantic-rendering.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "model-use-reporting-boundary-protocol.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "policy-continuity-evidence-mapping.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "boundary-failure-diagnostics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "premature-circulation-diagnostics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "responsibility-alignment-diagnostics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "semantic-field-diagnostics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "constraint-residue-governance.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "source-summary-citation-boundary-packet.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "provenance-validity-separation-model.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "origin-control-validity-burden-accelerated-submission-systems.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "evaluation-boundary-failure-permitted-surface-variation.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "delegated-execution-retained-answerability.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "structural-fidelity-use-validity-boundary.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "llm-condition-research-result-boundary.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "AUTHOR.md",
+      "visualization_membership": "included",
+      "visualization_role": "orientation",
+      "display_label_source": "registry_name",
+      "grouping_source": "visualization_role",
+      "relation_evidence_ceiling": "none"
+    },
+    {
+      "repository_path": "semantic-cyberpunk-condition.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "cultural-curvature-unified-field.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "irreversibility-conditions.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-curvature-dynamics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-curvature.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-physics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-pressure.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-propagation-mechanics.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "semantic-virology.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "zero-field.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "boundary-engineering.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "boundary-failure.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "boundary-integration-failure.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "boundary-role-segmentation-model.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "observer-representation-boundary.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "false-legibility.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "proxy-substitution.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "premature-circulation-model.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "premature-coherence.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "reality-consistency.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "reference-drift.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "constraint-displacement.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "constraint-residue-accumulation-model.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "high-integrity-system-architecture.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "benefit-burden-allocation-regimes.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "cost-visibility-redistribution.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "navigation_adjacency"
+    },
+    {
+      "repository_path": "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    },
+    {
+      "repository_path": "responsibility-alignment-model.md",
+      "visualization_membership": "included",
+      "visualization_role": "concept",
+      "display_label_source": "registry_name",
+      "grouping_source": "model_atlas_field",
+      "relation_evidence_ceiling": "source_named_adjacency"
+    }
+  ]
+}
