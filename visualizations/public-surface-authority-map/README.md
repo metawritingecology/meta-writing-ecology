@@ -30,8 +30,10 @@ No conceptual Markdown, filename inference, or semantic similarity is used.
 ## 4. Transformation process
 
 `scripts/build_public_surface_authority_map.py` (Python standard library only,
-no network, no Git, no installs) reads the two approved inputs and writes
-`data.json` in this directory. It:
+no network, no Git, no installs) reads the two approved inputs to produce the
+`data.json` tracked in this directory. In-place regeneration of that file is now
+retired and the builder no longer writes it; see section 16. The transformation
+that produced it:
 
 - requires exactly 30 records with unique IDs and repository paths;
 - requires every repository path to exist inside the repository;
@@ -125,13 +127,18 @@ the internal Registry, a complete archive, a formal ontology, or an
 authoritative conceptual relation graph. The layout is categorical and
 deterministic; it is not a measurement of conceptual importance.
 
-## 11. Rebuild command
+## 11. Verification command
 
 ```
 python scripts/build_public_surface_authority_map.py
 ```
 
 (Use `python3` if `python` is not on PATH.) Run from the repository root.
+
+This is a verify-only command. It reads the tracked `data.json`, recomputes its
+byte length, SHA-256 and Git blob identity, inspects its structural invariants,
+compares every value with the pinned historical specification, and writes
+nothing. It is no longer a rebuild command; see section 16.
 
 ## 12. Validation commands
 
@@ -140,8 +147,9 @@ python scripts/validate_public_metadata.py
 python scripts/build_public_surface_authority_map.py
 ```
 
-The builder fails non-zero on invalid input and is deterministic: running it
-twice produces no diff in `data.json`.
+Neither command writes `data.json`. The builder fails non-zero on invalid input;
+in isolated candidate mode it remains deterministic, so two runs against the
+same source root produce byte-identical output.
 
 ## 13. Known limitations
 
@@ -208,7 +216,8 @@ python <generator-root>/scripts/validate_public_metadata.py \
   --inventory <isolated-inventory-file>
 ```
 
-The default local commands in sections 11–12 remain fully backward-compatible.
+Isolated candidate mode is unchanged. The local commands in sections 11–12 are
+verify-only; see section 16.
 
 Source-tree Python files are treated only as data. Neither tool imports or
 executes any module discovered under the source root.
@@ -240,3 +249,109 @@ check, never as generator identity.
 The inventory is a mechanical provenance record. It asserts nothing about
 conceptual classification, relations, public/private status, Registry status, or
 candidate acceptance, and adding it activates nothing.
+
+## 16. Historical artifact
+
+This directory contains a **frozen historical artifact**: the 30-record
+`data.json` snapshot. It is immutable. In-place regeneration of its output path
+is retired, and no live-registry generation can overwrite it.
+
+**Verify-only invocation.** Both of these read the tracked artifact, recompute
+its identity, check its structural invariants against the pinned specification
+below, and write nothing:
+
+```
+python scripts/build_public_surface_authority_map.py
+python scripts/build_public_surface_authority_map.py --target historical
+```
+
+Neither opens the artifact for writing, replaces it temporarily, restores it
+after a run, alters its modification time, or creates any file beside it. An
+explicit historical target is not permitted to regenerate the artifact and
+accepts no output-bearing flag.
+
+**Fail-closed behaviour.** A historical identity mismatch is a failure, not a
+regeneration request. The pinned values are never updated to accommodate an
+unexpected file. Three stable failure tokens are emitted on standard error:
+
+- `HISTORICAL_ARTIFACT_IDENTITY_MISMATCH` — the tracked artifact does not match
+  its pinned identity, or is missing, or cannot be read. A file that exists but
+  cannot be opened for reading (permissions, I/O error) fails closed with this
+  token rather than raising.
+- `HISTORICAL_OUTPUT_PATH_COLLISION` — an expanded output is an alias of the
+  historical artifact. Collision detection covers five alias forms:
+
+  ```
+  relative path
+  absolute path
+  parent traversal
+  symlink alias
+  hard-link alias
+  ```
+
+  Resolved paths are compared, never raw strings, which covers the first four.
+  Resolved-path equality is supplemented by same-file identity checking (device
+  and inode) for an output path that already exists, which covers a hard link —
+  a distinct pathname that resolves to itself yet shares an inode with the
+  artifact. An output whose identity cannot be established fails closed. Both
+  checks run before any generation or record-count processing, so a collision
+  never reaches the live registry, a directory creation or an open.
+- `EXPANDED_TARGET_REQUIRES_OUTPUT` — the expanded target was invoked without an
+  explicit `--output`.
+
+**Expanded generation.** Expanded output is a separate target with its own
+expected record count and no implicit path:
+
+```
+python scripts/build_public_surface_authority_map.py \
+  --target expanded --output <path>
+```
+
+`--output` is mandatory and must resolve to a path distinct from the historical
+artifact. No expanded artifact is produced, committed or retained at this phase;
+the expanded target is prepared here and generation is deferred to a later
+authorized visualization phase.
+
+**Pinned historical identity.** The nine invariants of the frozen artifact:
+
+```
+source commit               3219fa03149b4bf1a229f059b4912b632028422b
+byte length                 92903
+SHA-256                     3b1e5993a52cbce340b85472fea1ae5ea6f921cf8f7751d2d635edc7b17216ea
+Git blob                    2d59c4fdd07a2a9ddfad94e2e214a2d1c84912af
+nodes                       30
+edges                       161
+boundary-reference edges    132
+source-use-reference edges  29
+self-references omitted     7
+dependency-inventory items  39
+```
+
+The first eight structural values are checked directly against the artifact
+bytes at every verification. The dependency-inventory count is a provenance fact
+of the pinned source commit rather than a property of the artifact bytes, so it
+is pinned and reported by the verify-only mode and proven only by the pinned
+reconstruction below. It is never recomputed from current registry state:
+verification reads the artifact and nothing else, so it stays correct as the
+live registry changes.
+
+**Reconstruction.** Git history plus the isolated candidate mode already
+reproduce the artifact byte for byte, which is why no duplicate frozen registry
+is kept. Reconstruct from the pinned source commit with clean temporary
+directories:
+
+```bash
+git archive 3219fa03149b4bf1a229f059b4912b632028422b | (mkdir -p /tmp/mwe-src && tar -x -C /tmp/mwe-src)
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/build_public_surface_authority_map.py \
+  --source-root /tmp/mwe-src \
+  --output /tmp/mwe-out/data.json \
+  --inventory-output /tmp/mwe-out/inventory.json
+# expect: 92903 bytes, sha256 3b1e5993…, blob 2d59c4fd…, 30 nodes, 161 edges, 39 inventory deps
+```
+
+The reconstruction reads the pinned source commit, never the live registry and
+never current `main`.
+
+This section records generator behaviour and artifact identity only. It makes no
+classification, relation, Registry-status, visualization-membership or
+public/private determination.
