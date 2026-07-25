@@ -2,8 +2,16 @@
 """Validate public metadata structure for the MWE public repository.
 
 This validator checks JSON shape, references, enum use, selected registry
-coverage, and public correction-register constraints. It is not conceptual,
-empirical, Registry, relation, ontology, or corpus-completeness authority.
+coverage, per-field evidence provenance, and public correction-register
+constraints. It is not conceptual, empirical, Registry, relation, ontology, or
+corpus-completeness authority.
+
+The evidence checks confirm that mwe-public-document-evidence.json covers the
+public-document registry one-to-one, that every recorded evidence value is drawn
+from the closed vocabulary in PUBLIC_DOCUMENT_REGISTRY_POLICY.md, and that every
+source-derived claim is supported by the source file while every registry-policy
+claim corresponds to the absence of such a declaration. The manifest records
+provenance only; it establishes no classification and no relation.
 
 Three invocation modes:
 
@@ -89,6 +97,25 @@ INVENTORY_READ_PURPOSES = {
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 GIT_BLOB_RE = re.compile(r"^[0-9a-f]{40}$")
 
+
+def source_declaration_pattern(key: str) -> "re.Pattern[str]":
+    """Match a literal `Key:` header declaration in any attested header style.
+
+    Three styles carry the same declaration in this repository: a bare
+    `Key: value` line, a bold list item `- **Key:** value`, and an indented list
+    item `* Key: value`. All three are literal declarations. Running prose that
+    merely mentions the phrase is not a declaration and must not match.
+    """
+    return re.compile(r"^\s*(?:[-*]\s*)?(?:\*\*)?" + re.escape(key) + r":(?:\*\*)?\s", re.M)
+
+
+CLASSIFICATION_DECLARATION_RE = source_declaration_pattern("Classification")
+PUBLIC_SURFACE_STATUS_DECLARATION_RE = source_declaration_pattern("Public-surface status")
+DISPLAY_TITLE_DECLARATION_RE = re.compile(
+    r"^\s*(?:[-*]\s*)?(?:\*\*)?OSF (?:Project|Registration):(?:\*\*)?\s+(.+?)\s*$", re.M
+)
+H1_RE = re.compile(r"^# (.+?)\s*$", re.M)
+
 JSON_FILES = [
     "mwe-public-surface.json",
     "mwe-public-documents.json",
@@ -97,13 +124,64 @@ JSON_FILES = [
     "mwe-document.schema.json",
     "mwe-public-surface.schema.json",
     "public-misreading-register.schema.json",
+    "mwe-public-document-evidence.json",
+    "mwe-public-document-evidence.schema.json",
 ]
 
 SCHEMA_FILES = [
     "mwe-document.schema.json",
     "mwe-public-surface.schema.json",
     "public-misreading-register.schema.json",
+    "mwe-public-document-evidence.schema.json",
 ]
+
+CANONICAL_URL_PREFIX = "https://github.com/metawritingecology/meta-writing-ecology/blob/main/"
+
+EVIDENCE_FILE = "mwe-public-document-evidence.json"
+EVIDENCE_SCHEMA_FILE = "mwe-public-document-evidence.schema.json"
+EXPECTED_EVIDENCE_SCHEMA_VERSION = "1.0"
+EXPECTED_EVIDENCE_DESCRIBES = "./mwe-public-documents.json"
+EXPECTED_EVIDENCE_SCOPE = "field_level_evidence_provenance_only"
+EXPECTED_EVIDENCE_AUTHORITY_CEILING = "metadata_only"
+
+EVIDENCE_TOP_LEVEL_KEYS = {
+    "$schema",
+    "evidence_schema_version",
+    "describes",
+    "scope",
+    "authority_ceiling",
+    "scope_note",
+    "record_count",
+    "records",
+}
+
+# The eleven tracked fields, in manifest order.
+EVIDENCE_TRACKED_FIELDS = [
+    "inclusion",
+    "name",
+    "repository_path",
+    "canonical_public_url",
+    "surface_role",
+    "public_surface_status",
+    "authority_ceiling",
+    "relation_default",
+    "classification",
+    "boundary_references",
+    "source_use_reference",
+]
+
+# Closed evidence vocabulary (see PUBLIC_DOCUMENT_REGISTRY_POLICY.md).
+EVIDENCE_VALUES = {
+    "source_declared",
+    "source_h1",
+    "source_declared_display_title",
+    "inventory_declared",
+    "mechanical",
+    "registry_policy",
+    "schema_const",
+    "not_asserted",
+    "user_decision",
+}
 
 EXPECTED_REGISTRY_PATHS = [
     "README.md",
@@ -404,6 +482,285 @@ def validate_document_registry(
         append_error(errors, f"mwe-public-documents.json: unexpected registry paths {extra_paths}")
 
 
+def validate_evidence_schema_file(evidence_schema: dict[str, Any], errors: list[str]) -> None:
+    """Confirm the evidence schema file still declares the contract this validator
+    enforces, so the schema and the validator cannot drift apart."""
+    if evidence_schema.get("additionalProperties") is not False:
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: top level must set additionalProperties false")
+
+    required = set(evidence_schema.get("required", []))
+    missing = sorted(EVIDENCE_TOP_LEVEL_KEYS - required)
+    if missing:
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: required must include {missing}")
+
+    defs = evidence_schema.get("$defs")
+    if not isinstance(defs, dict):
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: missing $defs")
+        return
+
+    value_enum = defs.get("evidenceValue", {})
+    if set(value_enum.get("enum", [])) != EVIDENCE_VALUES:
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: evidenceValue enum is not the closed vocabulary")
+
+    record_def = defs.get("evidenceRecord", {})
+    if record_def.get("additionalProperties") is not False:
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: evidenceRecord must set additionalProperties false")
+    if set(record_def.get("required", [])) != {"repository_path", "field_evidence"}:
+        append_error(
+            errors,
+            f"{EVIDENCE_SCHEMA_FILE}: evidenceRecord must require repository_path and field_evidence",
+        )
+
+    field_def = defs.get("fieldEvidence", {})
+    if field_def.get("additionalProperties") is not False:
+        append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: fieldEvidence must set additionalProperties false")
+    if set(field_def.get("required", [])) != set(EVIDENCE_TRACKED_FIELDS):
+        append_error(
+            errors,
+            f"{EVIDENCE_SCHEMA_FILE}: fieldEvidence must require exactly the eleven tracked fields",
+        )
+
+    # No classification or relation value may live in the evidence manifest.
+    for prohibited in ("publicly_declared_classification", "classification_evidence"):
+        if prohibited in field_def.get("properties", {}):
+            append_error(errors, f"{EVIDENCE_SCHEMA_FILE}: fieldEvidence must not declare {prohibited}")
+
+
+def validate_evidence_manifest(
+    evidence: dict[str, Any],
+    evidence_schema: dict[str, Any],
+    registry: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Validate the per-field evidence manifest against the registry and the
+    source files.
+
+    This checks provenance bookkeeping only. It confirms that every recorded
+    evidence value is drawn from the closed vocabulary, that coverage of the
+    registry is exactly one-to-one, and that every source-derived claim is
+    actually supported by the file on disk while every registry-policy claim
+    corresponds to the absence of such a declaration. It confirms no
+    classification, no relation, and no Registry status.
+    """
+    validate_evidence_schema_file(evidence_schema, errors)
+
+    keys = set(evidence)
+    unknown = sorted(keys - EVIDENCE_TOP_LEVEL_KEYS)
+    if unknown:
+        append_error(errors, f"{EVIDENCE_FILE}: unknown top-level fields {unknown}")
+    missing = sorted(EVIDENCE_TOP_LEVEL_KEYS - keys)
+    if missing:
+        append_error(errors, f"{EVIDENCE_FILE}: missing top-level fields {missing}")
+        return
+
+    if evidence.get("evidence_schema_version") != EXPECTED_EVIDENCE_SCHEMA_VERSION:
+        append_error(
+            errors,
+            f"{EVIDENCE_FILE}: evidence_schema_version must be {EXPECTED_EVIDENCE_SCHEMA_VERSION!r}",
+        )
+    if evidence.get("describes") != EXPECTED_EVIDENCE_DESCRIBES:
+        append_error(errors, f"{EVIDENCE_FILE}: describes must be {EXPECTED_EVIDENCE_DESCRIBES!r}")
+    else:
+        repo_file_exists(EXPECTED_EVIDENCE_DESCRIBES.removeprefix("./"), errors)
+    if evidence.get("scope") != EXPECTED_EVIDENCE_SCOPE:
+        append_error(errors, f"{EVIDENCE_FILE}: scope must be {EXPECTED_EVIDENCE_SCOPE!r}")
+    if evidence.get("authority_ceiling") != EXPECTED_EVIDENCE_AUTHORITY_CEILING:
+        append_error(
+            errors,
+            f"{EVIDENCE_FILE}: authority_ceiling must be {EXPECTED_EVIDENCE_AUTHORITY_CEILING!r}",
+        )
+    if not isinstance(evidence.get("scope_note"), str) or not evidence["scope_note"]:
+        append_error(errors, f"{EVIDENCE_FILE}: scope_note must be a non-empty string")
+
+    schema_reference = evidence.get("$schema")
+    if schema_reference != f"./{EVIDENCE_SCHEMA_FILE}":
+        append_error(errors, f"{EVIDENCE_FILE}: $schema must reference ./{EVIDENCE_SCHEMA_FILE}")
+    elif isinstance(schema_reference, str):
+        repo_file_exists(schema_reference.removeprefix("./"), errors)
+
+    entries = evidence.get("records")
+    if not isinstance(entries, list):
+        append_error(errors, f"{EVIDENCE_FILE}: records must be a list")
+        return
+
+    declared_count = evidence.get("record_count")
+    if declared_count != len(entries):
+        append_error(
+            errors,
+            f"{EVIDENCE_FILE}: record_count {declared_count!r} does not equal "
+            f"number of records {len(entries)}",
+        )
+
+    registry_records = registry.get("@graph")
+    if not isinstance(registry_records, list):
+        append_error(errors, f"{EVIDENCE_FILE}: cannot compare coverage, registry @graph is invalid")
+        return
+    registry_paths = [
+        record.get("repository_path")
+        for record in registry_records
+        if isinstance(record, dict) and isinstance(record.get("repository_path"), str)
+    ]
+    registry_by_path = {
+        record["repository_path"]: record
+        for record in registry_records
+        if isinstance(record, dict) and isinstance(record.get("repository_path"), str)
+    }
+
+    evidence_paths: list[str] = []
+    for index, entry in enumerate(entries, start=1):
+        if not isinstance(entry, dict):
+            append_error(errors, f"{EVIDENCE_FILE}: evidence entry {index} must be an object")
+            continue
+
+        unknown_entry = sorted(set(entry) - {"repository_path", "field_evidence"})
+        if unknown_entry:
+            append_error(errors, f"evidence entry {index}: unknown fields {unknown_entry}")
+
+        path = entry.get("repository_path")
+        if not isinstance(path, str) or not path:
+            append_error(errors, f"evidence entry {index}: repository_path must be a non-empty string")
+            continue
+        evidence_paths.append(path)
+
+        field_evidence = entry.get("field_evidence")
+        if not isinstance(field_evidence, dict):
+            append_error(errors, f"{path}: field_evidence must be an object")
+            continue
+
+        missing_fields = sorted(set(EVIDENCE_TRACKED_FIELDS) - set(field_evidence))
+        if missing_fields:
+            append_error(errors, f"{path}: evidence missing tracked fields {missing_fields}")
+        extra_fields = sorted(set(field_evidence) - set(EVIDENCE_TRACKED_FIELDS))
+        if extra_fields:
+            append_error(errors, f"{path}: evidence declares untracked fields {extra_fields}")
+
+        for field, value in field_evidence.items():
+            if value not in EVIDENCE_VALUES:
+                append_error(errors, f"{path}: evidence value {value!r} for {field} is outside the closed vocabulary")
+
+        if path not in registry_by_path:
+            # Coverage error is reported below; no source cross-check is possible.
+            continue
+
+        validate_evidence_against_source(path, registry_by_path[path], field_evidence, errors)
+
+    if len(evidence_paths) != len(set(evidence_paths)):
+        append_error(errors, f"{EVIDENCE_FILE}: duplicate repository_path values")
+
+    missing_paths = sorted(set(registry_paths) - set(evidence_paths))
+    extra_paths = sorted(set(evidence_paths) - set(registry_paths))
+    if missing_paths:
+        append_error(errors, f"{EVIDENCE_FILE}: missing evidence for registry paths {missing_paths}")
+    if extra_paths:
+        append_error(errors, f"{EVIDENCE_FILE}: evidence for non-registry paths {extra_paths}")
+
+    if evidence_paths and registry_paths and evidence_paths != registry_paths:
+        append_error(errors, f"{EVIDENCE_FILE}: evidence records must follow registry order")
+
+
+def validate_evidence_against_source(
+    path: str,
+    record: dict[str, Any],
+    field_evidence: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Confirm each source-derived evidence claim against the source file, and
+    confirm each registry-policy claim corresponds to an absent declaration."""
+    source_text = read_repo_text(path, errors)
+    if source_text is None:
+        return
+
+    has_public_surface_block = bool(PUBLIC_SURFACE_STATUS_DECLARATION_RE.search(source_text))
+    has_classification = bool(CLASSIFICATION_DECLARATION_RE.search(source_text))
+
+    # public_surface_status: source_declared if and only if the file declares it.
+    status_evidence = field_evidence.get("public_surface_status")
+    if status_evidence == "source_declared" and not has_public_surface_block:
+        append_error(
+            errors,
+            f"{path}: public_surface_status recorded as source_declared but the source "
+            "declares no 'Public-surface status:' line",
+        )
+    if status_evidence == "registry_policy" and has_public_surface_block:
+        append_error(
+            errors,
+            f"{path}: public_surface_status recorded as registry_policy but the source "
+            "declares a 'Public-surface status:' line",
+        )
+
+    # authority_ceiling tracks the same source block as public_surface_status.
+    ceiling_evidence = field_evidence.get("authority_ceiling")
+    if ceiling_evidence != status_evidence:
+        append_error(
+            errors,
+            f"{path}: authority_ceiling evidence {ceiling_evidence!r} does not match "
+            f"public_surface_status evidence {status_evidence!r}; both track the same "
+            "source public-surface block",
+        )
+
+    # classification fail-closed, in both directions.
+    classification_evidence = field_evidence.get("classification")
+    if classification_evidence == "source_declared" and not has_classification:
+        append_error(
+            errors,
+            f"{path}: classification recorded as source_declared but the source declares "
+            "no literal 'Classification:' line",
+        )
+    if classification_evidence == "not_asserted" and has_classification:
+        append_error(
+            errors,
+            f"{path}: classification recorded as not_asserted but the source declares a "
+            "literal 'Classification:' line",
+        )
+    # The manifest must agree with the registry's own fail-closed field.
+    registry_explicit = record.get("classification_evidence") == "explicit_in_file"
+    if registry_explicit != (classification_evidence == "source_declared"):
+        append_error(
+            errors,
+            f"{path}: evidence classification {classification_evidence!r} disagrees with "
+            f"registry classification_evidence {record.get('classification_evidence')!r}",
+        )
+
+    # name: the recorded naming basis must actually produce the registry name.
+    name_evidence = field_evidence.get("name")
+    registry_name = record.get("name")
+    h1_match = H1_RE.search(source_text)
+    h1 = h1_match.group(1) if h1_match else None
+    declared_titles = [m.group(1) for m in DISPLAY_TITLE_DECLARATION_RE.finditer(source_text)]
+    if name_evidence == "source_h1" and registry_name != h1:
+        append_error(
+            errors,
+            f"{path}: name recorded as source_h1 but the registry name does not match the source H1",
+        )
+    if name_evidence == "source_declared_display_title" and registry_name not in declared_titles:
+        append_error(
+            errors,
+            f"{path}: name recorded as source_declared_display_title but the registry name "
+            "matches no declared display title in the source",
+        )
+
+    # Mechanical fields must actually be mechanically derivable.
+    if field_evidence.get("repository_path") == "mechanical" and record.get("repository_path") != path:
+        append_error(errors, f"{path}: evidence entry path does not match the registry record path")
+    if field_evidence.get("canonical_public_url") == "mechanical":
+        expected_url = CANONICAL_URL_PREFIX + path
+        if record.get("canonical_public_url") != expected_url:
+            append_error(
+                errors,
+                f"{path}: canonical_public_url recorded as mechanical but the registry value "
+                "is not the derived URL",
+            )
+
+    # schema_const must match the schema constant it claims.
+    if field_evidence.get("source_use_reference") == "schema_const":
+        if record.get("source_use_reference") != "SOURCE_USE_GUIDE.md":
+            append_error(
+                errors,
+                f"{path}: source_use_reference recorded as schema_const but the registry value "
+                "is not the schema constant",
+            )
+
+
 def validate_misreading_register(register: dict[str, Any], errors: list[str]) -> None:
     if register.get("scope") != "public_interpretation_corrections_only":
         append_error(errors, "public-misreading-register.json: invalid scope")
@@ -513,11 +870,18 @@ def validate_public_metadata() -> int:
         registry = loaded["mwe-public-documents.json"]
         document_schema = loaded["mwe-document.schema.json"]
         misreading_register = loaded["public-misreading-register.json"]
+        evidence = loaded[EVIDENCE_FILE]
+        evidence_schema = loaded[EVIDENCE_SCHEMA_FILE]
 
         if isinstance(registry, dict) and isinstance(document_schema, dict):
             validate_document_registry(registry, document_schema, errors)
         else:
             append_error(errors, "mwe-public-documents.json or mwe-document.schema.json has invalid structure")
+
+        if isinstance(evidence, dict) and isinstance(evidence_schema, dict) and isinstance(registry, dict):
+            validate_evidence_manifest(evidence, evidence_schema, registry, errors)
+        else:
+            append_error(errors, f"{EVIDENCE_FILE} or {EVIDENCE_SCHEMA_FILE} has invalid structure")
 
         if isinstance(misreading_register, dict):
             validate_misreading_register(misreading_register, errors)
@@ -536,9 +900,11 @@ def validate_public_metadata() -> int:
         return 1
 
     registry_count = len(loaded["mwe-public-documents.json"].get("@graph", []))
+    evidence_count = len(loaded[EVIDENCE_FILE].get("records", []))
     case_count = len(loaded["public-misreading-register.json"].get("entries", []))
     print("Public metadata validation passed.")
     print(f"- registry records: {registry_count}")
+    print(f"- evidence records: {evidence_count}")
     print(f"- misreading register cases: {case_count}")
     print("- scope: structure, references, and public metadata only")
     return 0
