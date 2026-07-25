@@ -298,7 +298,7 @@
     },
     {
       "id": "generation-condition-disclosure-reproducibility-cross.md",
-      "name": "Generation-Condition Disclosureeproducibility Cross",
+      "name": "Generation-Condition Disclosure–Reproducibility Cross",
       "repository_path": "generation-condition-disclosure-reproducibility-cross.md",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/generation-condition-disclosure-reproducibility-cross.md",
       "surface_role": "concept_node",
@@ -429,7 +429,7 @@
     },
     {
       "id": "provenance-validity-separation-model.md",
-      "name": "Provenancealidity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems",
+      "name": "Provenance–Validity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems",
       "repository_path": "provenance-validity-separation-model.md",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/provenance-validity-separation-model.md",
       "surface_role": "concept_node",
