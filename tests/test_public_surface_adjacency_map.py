@@ -113,8 +113,60 @@ EXPECTED_CEILING_DISTRIBUTION = {
 }
 
 EXPECTED_DEPENDENCY_COUNT = 64
+# The aggregate is a live hash over the working-tree dependency set, not a value
+# recorded in any frozen artifact. S1 normalized 28 concept source headers after
+# the pinned P5 base, so the live aggregate moved while the tracked P5 dataset
+# and manifest stayed byte-identical. The P5-base value is kept below so the
+# pre-S1 provenance identity remains stated rather than lost.
 EXPECTED_DEPENDENCY_AGGREGATE = (
+    "7967eeab06f55e3ed649f7cea1391259947f404881f096b86bd15499223d737f"
+)
+EXPECTED_DEPENDENCY_AGGREGATE_AT_P5_BASE = (
     "a89f1aefd341778f89e7b1e810ed760ddb7de7ff30564bda93fdaeb7a451918f"
+)
+
+# S1 source-header normalization: the exact block and the exact 28 targets. The
+# compatibility guards below allow this change and nothing else.
+S1_BLOCK_LINES = (
+    "- **Public-surface status:** Selected external-facing node.",
+    "- **Machine interpretation:** See "
+    "[`MACHINE_INTERPRETATION_STATE.md`](./MACHINE_INTERPRETATION_STATE.md).",
+    "- **Source use:** See [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md).",
+    "- **Authority boundary:** This file does not by itself establish internal "
+    "Registry status, formal relation status, complete ontology, or complete "
+    "operational methodology.",
+)
+S1_NORMALIZED_TARGETS = frozenset(
+    {
+        "semantic-cyberpunk-condition.md",
+        "cultural-curvature-unified-field.md",
+        "irreversibility-conditions.md",
+        "semantic-curvature-dynamics.md",
+        "semantic-curvature.md",
+        "semantic-physics.md",
+        "semantic-pressure.md",
+        "semantic-propagation-mechanics.md",
+        "semantic-virology.md",
+        "zero-field.md",
+        "boundary-engineering.md",
+        "boundary-failure.md",
+        "boundary-integration-failure.md",
+        "boundary-role-segmentation-model.md",
+        "observer-representation-boundary.md",
+        "false-legibility.md",
+        "proxy-substitution.md",
+        "premature-circulation-model.md",
+        "premature-coherence.md",
+        "reality-consistency.md",
+        "reference-drift.md",
+        "constraint-displacement.md",
+        "constraint-residue-accumulation-model.md",
+        "high-integrity-system-architecture.md",
+        "benefit-burden-allocation-regimes.md",
+        "cost-visibility-redistribution.md",
+        "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+        "responsibility-alignment-model.md",
+    }
 )
 
 EXPECTED_FIELD_DISTRIBUTION = {
@@ -1436,10 +1488,30 @@ class CompatibilityGuardTests(BaseCase):
             self.assertIn(record["surface_role"], builder.VISUALIZATION_ROLE_BY_SURFACE_ROLE)
             self.assertNotEqual(entry["visualization_role"], record["surface_role"])
 
+    def _diff_names(self, *pathspecs):
+        result = subprocess.run(
+            ["git", "diff", "--name-only", EXPANDED_SOURCE_COMMIT, "--", *pathspecs],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0:
+            self.skipTest("git is unavailable or the P5 base commit is not present")
+        return sorted(name for name in result.stdout.split("\n") if name)
+
+    def _text_at_p5_base(self, relative_path):
+        result = subprocess.run(
+            ["git", "show", f"{EXPANDED_SOURCE_COMMIT}:{relative_path}"],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+        )
+        if result.returncode != 0:
+            self.skipTest(f"{relative_path} is not available at the P5 base commit")
+        return result.stdout.decode("utf-8")
+
     def test_protected_files_are_unchanged_from_the_p5_base(self):
         protected = [
             "mwe-public-documents.json",
-            "mwe-public-document-evidence.json",
             "visualizations/public-surface-authority-map/data.json",
             "visualizations/public-surface-authority-map/README.md",
             "model-atlas/MODEL_ATLAS.md",
@@ -1448,35 +1520,64 @@ class CompatibilityGuardTests(BaseCase):
             "README.md",
             "AUTHOR.md",
         ]
-        result = subprocess.run(
-            ["git", "diff", "--name-only", EXPANDED_SOURCE_COMMIT, "--", *protected],
-            cwd=str(REPO_ROOT),
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode != 0:
-            self.skipTest("git is unavailable or the P5 base commit is not present")
-        self.assertEqual(result.stdout.strip(), "")
+        # mwe-public-document-evidence.json is deliberately not in this list: S1
+        # changed its provenance after the P5 base. The next test pins exactly
+        # what changed there, so nothing is merely exempted.
+        self.assertNotIn("mwe-public-document-evidence.json", protected)
+        self.assertEqual(self._diff_names(*protected), [])
 
-    def test_no_source_markdown_changed_from_the_p5_base(self):
-        result = subprocess.run(
-            [
-                "git",
-                "diff",
-                "--name-only",
-                EXPANDED_SOURCE_COMMIT,
-                "--",
-                "*.md",
-                ":!AGENT_WORKLOG.md",
-                ":!visualizations/public-surface-adjacency-map/README.md",
-            ],
-            cwd=str(REPO_ROOT),
-            capture_output=True,
-            text=True,
+    def test_evidence_changed_only_by_the_s1_provenance_flip(self):
+        # The evidence manifest is the one protected file S1 touches, and it may
+        # differ from the P5 base only by public_surface_status and
+        # authority_ceiling moving to source_declared on the 28 S1 targets.
+        base = json.loads(self._text_at_p5_base("mwe-public-document-evidence.json"))
+        current = load_json(REPO_ROOT / "mwe-public-document-evidence.json")
+        self.assertEqual(
+            {key: value for key, value in base.items() if key != "records"},
+            {key: value for key, value in current.items() if key != "records"},
         )
-        if result.returncode != 0:
-            self.skipTest("git is unavailable or the P5 base commit is not present")
-        self.assertEqual(result.stdout.strip(), "")
+        self.assertEqual(len(base["records"]), len(current["records"]))
+        changed = set()
+        for before, after in zip(base["records"], current["records"]):
+            path = before["repository_path"]
+            self.assertEqual(path, after["repository_path"])
+            for field, value in before["field_evidence"].items():
+                if after["field_evidence"][field] == value:
+                    continue
+                changed.add((path, field))
+                self.assertIn(field, {"public_surface_status", "authority_ceiling"})
+                self.assertEqual(value, "registry_policy")
+                self.assertEqual(after["field_evidence"][field], "source_declared")
+        self.assertEqual(
+            changed,
+            {
+                (path, field)
+                for path in S1_NORMALIZED_TARGETS
+                for field in ("public_surface_status", "authority_ceiling")
+            },
+        )
+
+    def test_source_markdown_changed_only_by_the_s1_header_block(self):
+        # S1 normalized 28 concept headers after the pinned P5 base. Every other
+        # source markdown file must still be byte-identical to that base, and
+        # each normalized file must differ by the four inserted lines alone.
+        changed = self._diff_names(
+            "*.md",
+            ":!AGENT_WORKLOG.md",
+            ":!visualizations/public-surface-adjacency-map/README.md",
+        )
+        self.assertEqual(set(changed), S1_NORMALIZED_TARGETS)
+        block = "\n".join(S1_BLOCK_LINES)
+        for path in changed:
+            with self.subTest(path=path):
+                current = (REPO_ROOT / path).read_text(encoding="utf-8")
+                self.assertEqual(current.count(block), 1)
+                # Removing the inserted block restores the P5-base bytes exactly:
+                # no existing line was moved, rewritten or reflowed.
+                self.assertEqual(
+                    current.replace(block + "\n", "", 1),
+                    self._text_at_p5_base(path),
+                )
 
 
 # Tracked identity constants. These are recomputed from the generated dataset
@@ -1854,6 +1955,12 @@ class ExpandedDependencyProvenanceTests(BaseCase):
     def test_inventory_count_and_aggregate_are_deterministic(self):
         self.assertEqual(self.inventory["dependency_count"], EXPECTED_DEPENDENCY_COUNT)
         self.assertEqual(self.inventory["aggregate_sha256"], EXPECTED_DEPENDENCY_AGGREGATE)
+        # S1 moved the live aggregate off its P5-base value. The two must stay
+        # distinct: if they coincided again, a source header would have been
+        # reverted or the pin would have been silently restored.
+        self.assertNotEqual(
+            EXPECTED_DEPENDENCY_AGGREGATE, EXPECTED_DEPENDENCY_AGGREGATE_AT_P5_BASE
+        )
         manifest_bytes = MANIFEST_PATH.read_bytes()
         _, _, again = builder.assemble_adjacency_data(
             REPO_ROOT,

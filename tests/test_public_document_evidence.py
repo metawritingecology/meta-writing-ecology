@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phase 3A P1/P3 tests: public-document registry contract and evidence contract.
+"""Phase 3A P1/P3/S1 tests: public-document registry contract and evidence contract.
 
 Standard-library unittest only (no third-party dependency). These tests cover the
 selected public-document registry at its P3 size of 59 records and the per-field
@@ -23,7 +23,11 @@ evidence manifest that accompanies it:
 - mechanical field construction and role/status cluster consistency across all 59;
 - classification remains fail-closed, 16 explicit_in_file and 43 not_asserted;
 - the JSON-LD context and the document schema already cover every term used;
-- the frozen historical dataset remains byte-identical.
+- the frozen historical dataset remains byte-identical;
+- the S1 source-header normalization: the 28 P3 concept additions now carry the
+  exact four-line public-surface block, AUTHOR.md does not, and the resulting
+  evidence distribution is 49 source_declared and 10 registry_policy for both
+  public_surface_status and authority_ceiling.
 
 The manifest records provenance only. Nothing here confirms or changes
 classification, relation status, internal Registry status, ontology membership,
@@ -74,6 +78,76 @@ P3_BASE_COMMIT = "7a5e5fe59203cc7de6e70c3d4080bbf3b92c9008"
 EXPECTED_EXPLICIT_IN_FILE = 16
 EXPECTED_NOT_ASSERTED = 43
 EXPECTED_CLASSIFICATION_LINE_SEARCH_LINES = 80
+
+# S1 state. The optional, terminal source-header normalization inserted the exact
+# four-line public-surface block into the 28 P3 concept additions. It changed the
+# provenance of two evidence fields only; every registry value stayed as it was.
+EXPECTED_SOURCE_DECLARED_STATUS = 49
+EXPECTED_REGISTRY_POLICY_STATUS = 10
+
+# The exact block, in order. Any drift in punctuation, capitalization, link
+# target or wording fails the normalized-source assertion below.
+SOURCE_PUBLIC_SURFACE_BLOCK = (
+    "- **Public-surface status:** Selected external-facing node.",
+    "- **Machine interpretation:** See "
+    "[`MACHINE_INTERPRETATION_STATE.md`](./MACHINE_INTERPRETATION_STATE.md).",
+    "- **Source use:** See [`SOURCE_USE_GUIDE.md`](./SOURCE_USE_GUIDE.md).",
+    "- **Authority boundary:** This file does not by itself establish internal "
+    "Registry status, formal relation status, complete ontology, or complete "
+    "operational methodology.",
+)
+
+# The exact S1 target set: the 28 files normalized by S1, stated literally so the
+# target set is proved rather than recomputed from the same data it should match.
+S1_NORMALIZED_TARGETS = frozenset(
+    {
+        "semantic-cyberpunk-condition.md",
+        "cultural-curvature-unified-field.md",
+        "irreversibility-conditions.md",
+        "semantic-curvature-dynamics.md",
+        "semantic-curvature.md",
+        "semantic-physics.md",
+        "semantic-pressure.md",
+        "semantic-propagation-mechanics.md",
+        "semantic-virology.md",
+        "zero-field.md",
+        "boundary-engineering.md",
+        "boundary-failure.md",
+        "boundary-integration-failure.md",
+        "boundary-role-segmentation-model.md",
+        "observer-representation-boundary.md",
+        "false-legibility.md",
+        "proxy-substitution.md",
+        "premature-circulation-model.md",
+        "premature-coherence.md",
+        "reality-consistency.md",
+        "reference-drift.md",
+        "constraint-displacement.md",
+        "constraint-residue-accumulation-model.md",
+        "high-integrity-system-architecture.md",
+        "benefit-burden-allocation-regimes.md",
+        "cost-visibility-redistribution.md",
+        "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+        "responsibility-alignment-model.md",
+    }
+)
+
+# The commit S1 was based on: the state after P3/P5/P6, before any header was
+# normalized. The S1 proofs read the registry and the evidence manifest at this
+# commit through Git rather than comparing the working tree with itself.
+S1_BASE_COMMIT = "814997119e543c8d39f312687f2b4b2ffc45da67"
+
+# Three concept files declared the same four-line block before S1 in the attested
+# indented `*` header style, each with its own established Authority boundary
+# wording. They were already source_declared, they are not S1 targets, and S1
+# rewrote no existing header, so they keep their own form.
+PRE_S1_VARIANT_STYLE_CONCEPT_FILES = frozenset(
+    {
+        "delegated-execution-retained-answerability.md",
+        "structural-fidelity-use-validity-boundary.md",
+        "llm-condition-research-result-boundary.md",
+    }
+)
 
 # The sole classified addition. Its literal is already present in the registry
 # via generation-condition-disclosure-reproducibility-cross.md, so the expansion
@@ -345,7 +419,9 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     validator.PUBLIC_SURFACE_STATUS_DECLARATION_RE,
                 )
             checked += 1
-        self.assertEqual(checked, 21)
+        # After S1 this is every concept node: the 21 already normalized before
+        # S1 plus the 28 files S1 normalized.
+        self.assertEqual(checked, EXPECTED_SOURCE_DECLARED_STATUS)
 
     def test_public_surface_status_registry_policy_means_absent_in_the_file(self):
         checked = 0
@@ -358,10 +434,10 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     validator.PUBLIC_SURFACE_STATUS_DECLARATION_RE.search(self.source_text(path))
                 )
             checked += 1
-        # 9 pre-expansion records plus the 29 additions: none of the 29 source
-        # files declares any part of the public-surface block (P3 performs no
-        # source-header normalization; that is the optional S1 phase).
-        self.assertEqual(checked, 38)
+        # After S1 the remainder is exactly the 10 non-concept records: the 9
+        # pre-expansion non-concept records plus AUTHOR.md, which is repository
+        # orientation rather than a concept node and was excluded from S1.
+        self.assertEqual(checked, EXPECTED_REGISTRY_POLICY_STATUS)
 
     def test_authority_ceiling_tracks_the_same_source_block(self):
         for entry in self.evidence_records:
@@ -492,6 +568,184 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
         self.assertIsNotNone(pattern.search("- **Classification:** Model / Domain Declaration\n"))
         self.assertIsNotNone(pattern.search("  * Classification: Cross-Supporting Boundary Note\n"))
         self.assertIsNotNone(pattern.search("Classification: Training-facing Public Surface Anchor\n"))
+
+
+class S1SourceNormalizationTests(EvidenceManifestBaseCase):
+    """The optional, terminal S1 source-header normalization.
+
+    S1 inserted the exact four-line public-surface block into the 28 P3 concept
+    additions and flipped two evidence fields from registry_policy to
+    source_declared. It changed no registry value, no classification, no
+    relation status and no ordering.
+    """
+
+    def concept_paths(self):
+        return [
+            record["repository_path"]
+            for record in self.registry_records
+            if record["surface_role"] == "concept_node"
+        ]
+
+    def non_concept_paths(self):
+        return [
+            record["repository_path"]
+            for record in self.registry_records
+            if record["surface_role"] != "concept_node"
+        ]
+
+    def test_the_s1_target_set_is_exactly_the_p3_concept_additions(self):
+        additions = set(self.registry_paths[ORIGINAL_RECORD_COUNT:])
+        self.assertEqual(len(additions), ADDITION_COUNT)
+        self.assertEqual(S1_NORMALIZED_TARGETS, additions - {ORIENTATION_ADDITION})
+        self.assertEqual(len(S1_NORMALIZED_TARGETS), ADDITION_COUNT - 1)
+        self.assertEqual(len(S1_NORMALIZED_TARGETS), 28)
+
+    def test_author_md_is_registered_but_excluded_from_s1(self):
+        self.assertIn(ORIENTATION_ADDITION, self.registry_paths)
+        self.assertNotIn(ORIENTATION_ADDITION, S1_NORMALIZED_TARGETS)
+        self.assertNotIn(ORIENTATION_ADDITION, self.concept_paths())
+        # It is repository orientation, so its source carries no block and its
+        # evidence stays registry_policy.
+        self.assertIsNone(
+            validator.PUBLIC_SURFACE_STATUS_DECLARATION_RE.search(
+                self.source_text(ORIENTATION_ADDITION)
+            )
+        )
+        evidence = self.field_evidence(ORIENTATION_ADDITION)
+        self.assertEqual(evidence["public_surface_status"], "registry_policy")
+        self.assertEqual(evidence["authority_ceiling"], "registry_policy")
+
+    def test_every_s1_target_carries_the_exact_block_exactly_once(self):
+        block = "\n".join(SOURCE_PUBLIC_SURFACE_BLOCK)
+        for path in sorted(S1_NORMALIZED_TARGETS):
+            with self.subTest(path=path):
+                self.assertEqual(self.source_text(path).count(block), 1)
+
+    def test_every_concept_node_declares_the_full_four_line_block(self):
+        # All 49 concept nodes declare the block. The 46 files in the bold list
+        # style carry it byte-for-byte; the three pre-S1 files in the attested
+        # indented style carry the same four declarations contiguously, in the
+        # same order, with their own established wording. S1 normalized its 28
+        # targets only and rewrote no pre-existing header.
+        block = "\n".join(SOURCE_PUBLIC_SURFACE_BLOCK)
+        keys = (
+            "Public-surface status",
+            "Machine interpretation",
+            "Source use",
+            "Authority boundary",
+        )
+        exact = 0
+        variant = 0
+        concept_paths = self.concept_paths()
+        self.assertEqual(len(concept_paths), EXPECTED_SOURCE_DECLARED_STATUS)
+        for path in concept_paths:
+            text = self.source_text(path)
+            with self.subTest(path=path):
+                lines = text.split("\n")
+                positions = []
+                for key in keys:
+                    pattern = validator.source_declaration_pattern(key)
+                    matched = [i for i, line in enumerate(lines) if pattern.match(line)]
+                    self.assertEqual(len(matched), 1, f"{key} must be declared once")
+                    positions.append(matched[0])
+                # Contiguous and in the canonical order.
+                self.assertEqual(
+                    positions, list(range(positions[0], positions[0] + len(keys)))
+                )
+                if text.count(block) == 1:
+                    exact += 1
+                else:
+                    self.assertIn(path, PRE_S1_VARIANT_STYLE_CONCEPT_FILES)
+                    variant += 1
+        self.assertEqual(variant, len(PRE_S1_VARIANT_STYLE_CONCEPT_FILES))
+        self.assertEqual(exact, EXPECTED_SOURCE_DECLARED_STATUS - variant)
+        self.assertEqual(exact, 46)
+
+    def test_every_concept_node_is_source_declared_on_both_fields(self):
+        for path in self.concept_paths():
+            with self.subTest(path=path):
+                evidence = self.field_evidence(path)
+                self.assertEqual(evidence["public_surface_status"], "source_declared")
+                self.assertEqual(evidence["authority_ceiling"], "source_declared")
+
+    def test_the_ten_non_concept_records_remain_registry_policy(self):
+        non_concept = self.non_concept_paths()
+        self.assertEqual(len(non_concept), EXPECTED_REGISTRY_POLICY_STATUS)
+        for path in non_concept:
+            with self.subTest(path=path):
+                evidence = self.field_evidence(path)
+                self.assertEqual(evidence["public_surface_status"], "registry_policy")
+                self.assertEqual(evidence["authority_ceiling"], "registry_policy")
+                self.assertIsNone(
+                    validator.PUBLIC_SURFACE_STATUS_DECLARATION_RE.search(
+                        self.source_text(path)
+                    )
+                )
+
+    def test_the_final_distribution_is_forty_nine_over_ten(self):
+        for field in ("public_surface_status", "authority_ceiling"):
+            values = [entry["field_evidence"][field] for entry in self.evidence_records]
+            with self.subTest(field=field):
+                self.assertEqual(
+                    values.count("source_declared"), EXPECTED_SOURCE_DECLARED_STATUS
+                )
+                self.assertEqual(
+                    values.count("registry_policy"), EXPECTED_REGISTRY_POLICY_STATUS
+                )
+                self.assertEqual(len(values), EXPECTED_EVIDENCE_RECORD_COUNT)
+
+    def test_s1_changed_the_registry_not_at_all(self):
+        base = read_json_at_commit(S1_BASE_COMMIT, "mwe-public-documents.json")
+        self.assertEqual(canonical(self.registry), canonical(base))
+
+    def test_s1_changed_only_two_evidence_fields_on_the_twenty_eight_targets(self):
+        base_records = read_json_at_commit(
+            S1_BASE_COMMIT, "mwe-public-document-evidence.json"
+        )["records"]
+        self.assertEqual(len(base_records), len(self.evidence_records))
+        changed = set()
+        for before, after in zip(base_records, self.evidence_records):
+            path = before["repository_path"]
+            with self.subTest(path=path):
+                # Order is unchanged, record for record.
+                self.assertEqual(path, after["repository_path"])
+                for field in validator.EVIDENCE_TRACKED_FIELDS:
+                    if before["field_evidence"][field] == after["field_evidence"][field]:
+                        continue
+                    changed.add((path, field))
+                    self.assertIn(
+                        field, {"public_surface_status", "authority_ceiling"}
+                    )
+                    self.assertEqual(before["field_evidence"][field], "registry_policy")
+                    self.assertEqual(after["field_evidence"][field], "source_declared")
+        self.assertEqual(
+            changed,
+            {
+                (path, field)
+                for path in S1_NORMALIZED_TARGETS
+                for field in ("public_surface_status", "authority_ceiling")
+            },
+        )
+
+    def test_s1_changed_no_classification_evidence(self):
+        base_records = read_json_at_commit(
+            S1_BASE_COMMIT, "mwe-public-document-evidence.json"
+        )["records"]
+        for before, after in zip(base_records, self.evidence_records):
+            with self.subTest(path=before["repository_path"]):
+                self.assertEqual(
+                    before["field_evidence"]["classification"],
+                    after["field_evidence"]["classification"],
+                )
+
+    def test_s1_left_the_concept_registry_triple_untouched(self):
+        for record in self.registry_records:
+            if record["surface_role"] != "concept_node":
+                continue
+            with self.subTest(path=record["repository_path"]):
+                self.assertEqual(record["public_surface_status"], "selected_external_node")
+                self.assertEqual(record["authority_ceiling"], "public_file_claim_only")
+                self.assertEqual(record["relation_default"], "adjacency_only")
 
 
 class RegistryContractTests(EvidenceManifestBaseCase):
