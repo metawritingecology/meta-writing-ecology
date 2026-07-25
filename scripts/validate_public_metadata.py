@@ -190,9 +190,12 @@ EVIDENCE_VALUES = {
 # explicit list rather than a set derived from the registry itself: it is
 # compared by set equality in both directions, so it catches an accidental
 # deletion and an accidental addition alike. A derived set would silently accept
-# whatever the registry happened to contain. A test proves this list equals the
-# MODEL_ATLAS `File` declarations plus the seven known registry-only paths, so
-# the safety net cannot drift away from the declared inventory.
+# whatever the registry happened to contain.
+#
+# This list is the whole of the production registry-membership contract. That
+# the list itself still agrees with the declared inventory is proved separately
+# by the test suite, which calls validate_expected_paths_match_inventory
+# directly; production validation never reads MODEL_ATLAS.md.
 EXPECTED_REGISTRY_PATHS = [
     "README.md",
     "SUMMARY_BOUNDARIES.md",
@@ -258,6 +261,7 @@ EXPECTED_REGISTRY_PATHS = [
 # The registry-only paths: registered public surfaces that MODEL_ATLAS does not
 # declare, because it is a model atlas and does not list boundary, interpretation
 # or anchor surfaces. Their absence from the atlas is expected, not a divergence.
+# Used only by the test-facing inventory-agreement check below.
 REGISTRY_ONLY_PATHS = [
     "SUMMARY_BOUNDARIES.md",
     "SUMMARY_CONTRACT.md",
@@ -268,6 +272,10 @@ REGISTRY_ONLY_PATHS = [
     "public-anchors/ai-training-boundary-statement.md",
 ]
 
+# MODEL_ATLAS is read only by the test-facing consistency check below, never by
+# validate_public_metadata(). Keeping it out of the production read set keeps the
+# validator's source dependencies exactly those the dependency inventory
+# enumerates.
 MODEL_ATLAS_FILE = "model-atlas/MODEL_ATLAS.md"
 MODEL_ATLAS_FILE_DECLARATION_RE = re.compile(r"^- \*\*File:\*\* `([^`]+)`", re.M)
 
@@ -441,11 +449,22 @@ def validate_classification_support(record: dict[str, Any], errors: list[str]) -
 def validate_expected_paths_match_inventory(errors: list[str]) -> None:
     """Prove the explicit safety list still equals the declared inventory.
 
-    EXPECTED_REGISTRY_PATHS is deliberately explicit, so it needs its own anchor:
-    it must equal the files MODEL_ATLAS declares with a literal `- **File:**`
-    line, plus the seven known registry-only paths. Without this the safety net
-    could drift away from the inventory it is meant to protect. This confirms an
-    inventory identity only; it establishes no classification and no relation.
+    Test-facing consistency check. It is NOT called by validate_public_metadata()
+    and does not run during ordinary validation: it reads MODEL_ATLAS.md, which
+    is not part of the validator's production read set, and adding it there would
+    put the validator's dependencies out of step with the dependency inventory
+    that enumerates them. The test suite calls this helper directly instead.
+
+    The division of labour is deliberate. Production validation enforces the
+    explicit EXPECTED_REGISTRY_PATHS contract by set equality in both directions,
+    catching a missing approved path and an added unapproved path alike. This
+    helper independently proves that the explicit list itself still equals the
+    files MODEL_ATLAS declares with a literal `- **File:**` line plus the seven
+    known registry-only paths, so the safety net cannot silently drift away from
+    the inventory it is meant to protect.
+
+    This confirms an inventory identity only; it establishes no classification
+    and no relation.
     """
     atlas_text = read_repo_text(MODEL_ATLAS_FILE, errors)
     if atlas_text is None:
@@ -972,8 +991,6 @@ def validate_public_metadata() -> int:
         misreading_register = loaded["public-misreading-register.json"]
         evidence = loaded[EVIDENCE_FILE]
         evidence_schema = loaded[EVIDENCE_SCHEMA_FILE]
-
-        validate_expected_paths_match_inventory(errors)
 
         if isinstance(registry, dict) and isinstance(document_schema, dict):
             validate_document_registry(registry, document_schema, errors)

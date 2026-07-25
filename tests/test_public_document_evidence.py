@@ -32,14 +32,17 @@ conceptual priority, or authoritative-copy identity.
 
 from __future__ import annotations
 
+import contextlib
 import copy
 import hashlib
 import importlib.util
+import io
 import json
 import re
 import subprocess
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -660,9 +663,59 @@ class CandidateSetTests(EvidenceManifestBaseCase):
         self.assertEqual(set(validator.REGISTRY_ONLY_PATHS), REGISTRY_ONLY_PATHS)
 
     def test_validator_reports_no_inventory_drift(self):
+        # The inventory-union proof, invoked directly. This is the only place
+        # MODEL_ATLAS.md is read for this purpose: the helper is test-facing and
+        # validate_public_metadata() does not call it.
         errors: list[str] = []
         validator.validate_expected_paths_match_inventory(errors)
         self.assertEqual(errors, [])
+
+    def test_default_validator_does_not_read_model_atlas(self):
+        # Production validation must not acquire a source dependency the P2
+        # dependency inventory does not enumerate. MODEL_ATLAS.md is outside the
+        # validator's production read set, and this proves it by construction
+        # rather than by inspection: any read of that path during an ordinary
+        # validation run fails the test.
+        original = validator.read_repo_text
+
+        def guarded(relative_path, errors):
+            if relative_path == validator.MODEL_ATLAS_FILE:
+                raise AssertionError("production validator must not read MODEL_ATLAS.md")
+            return original(relative_path, errors)
+
+        with mock.patch.object(validator, "read_repo_text", side_effect=guarded), \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(validator.validate_public_metadata(), 0)
+
+    def test_production_validation_still_enforces_the_explicit_path_contract(self):
+        # Removing the MODEL_ATLAS call must not weaken the production contract:
+        # the explicit list is still compared by set equality in both directions.
+        registry = copy.deepcopy(self.registry)
+        document_schema = read_json(ROOT / "mwe-document.schema.json")
+
+        missing = copy.deepcopy(registry)
+        dropped = missing["@graph"].pop()
+        missing["record_count"] = len(missing["@graph"])
+        errors: list[str] = []
+        validator.validate_document_registry(missing, document_schema, errors)
+        self.assertTrue(
+            any("missing expected paths" in error for error in errors),
+            f"dropping {dropped['repository_path']} was not caught: {errors}",
+        )
+
+        added = copy.deepcopy(registry)
+        extra = copy.deepcopy(added["@graph"][-1])
+        extra["repository_path"] = "AGENTS.md"
+        extra["canonical_public_url"] = validator.CANONICAL_URL_PREFIX + "AGENTS.md"
+        extra["@id"] = extra["canonical_public_url"] + "#public-document-metadata"
+        added["@graph"].append(extra)
+        added["record_count"] = len(added["@graph"])
+        errors = []
+        validator.validate_document_registry(added, document_schema, errors)
+        self.assertTrue(
+            any("unexpected registry paths" in error for error in errors),
+            f"an unapproved path was not caught: {errors}",
+        )
 
 
 class OriginalThirtyUnchangedTests(EvidenceManifestBaseCase):
