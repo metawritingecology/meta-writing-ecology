@@ -186,6 +186,13 @@ EVIDENCE_VALUES = {
     "user_decision",
 }
 
+# The exact approved registry membership, in registry order. This stays an
+# explicit list rather than a set derived from the registry itself: it is
+# compared by set equality in both directions, so it catches an accidental
+# deletion and an accidental addition alike. A derived set would silently accept
+# whatever the registry happened to contain. A test proves this list equals the
+# MODEL_ATLAS `File` declarations plus the seven known registry-only paths, so
+# the safety net cannot drift away from the declared inventory.
 EXPECTED_REGISTRY_PATHS = [
     "README.md",
     "SUMMARY_BOUNDARIES.md",
@@ -217,7 +224,37 @@ EXPECTED_REGISTRY_PATHS = [
     "delegated-execution-retained-answerability.md",
     "structural-fidelity-use-validity-boundary.md",
     "llm-condition-research-result-boundary.md",
+    "AUTHOR.md",
+    "semantic-cyberpunk-condition.md",
+    "cultural-curvature-unified-field.md",
+    "irreversibility-conditions.md",
+    "semantic-curvature-dynamics.md",
+    "semantic-curvature.md",
+    "semantic-physics.md",
+    "semantic-pressure.md",
+    "semantic-propagation-mechanics.md",
+    "semantic-virology.md",
+    "zero-field.md",
+    "boundary-engineering.md",
+    "boundary-failure.md",
+    "boundary-integration-failure.md",
+    "boundary-role-segmentation-model.md",
+    "observer-representation-boundary.md",
+    "false-legibility.md",
+    "proxy-substitution.md",
+    "premature-circulation-model.md",
+    "premature-coherence.md",
+    "reality-consistency.md",
+    "reference-drift.md",
+    "constraint-displacement.md",
+    "constraint-residue-accumulation-model.md",
+    "high-integrity-system-architecture.md",
+    "benefit-burden-allocation-regimes.md",
+    "cost-visibility-redistribution.md",
+    "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+    "responsibility-alignment-model.md",
 ]
+
 
 REQUIRED_DOES_NOT_ESTABLISH = {
     "third_party_intent",
@@ -396,8 +433,17 @@ def validate_document_registry(
         append_error(errors, "mwe-public-documents.json: @graph must be a list")
         return
 
-    if len(records) != 30:
-        append_error(errors, f"mwe-public-documents.json: expected 30 records, found {len(records)}")
+    # The declared count is checked against the actual @graph length rather than
+    # against a fixed number, so the registry can grow without the gate becoming
+    # a second place that has to be edited in step with the records. The exact
+    # approved membership is enforced separately by EXPECTED_REGISTRY_PATHS.
+    declared_count = registry.get("record_count")
+    if declared_count != len(records):
+        append_error(
+            errors,
+            f"mwe-public-documents.json: declared record_count {declared_count!r} does not equal "
+            f"@graph length {len(records)}",
+        )
 
     for referenced_key in ("@context", "document_schema"):
         referenced_path = registry.get(referenced_key)
