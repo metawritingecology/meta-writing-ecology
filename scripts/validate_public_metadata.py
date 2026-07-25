@@ -186,6 +186,16 @@ EVIDENCE_VALUES = {
     "user_decision",
 }
 
+# The exact approved registry membership, in registry order. This stays an
+# explicit list rather than a set derived from the registry itself: it is
+# compared by set equality in both directions, so it catches an accidental
+# deletion and an accidental addition alike. A derived set would silently accept
+# whatever the registry happened to contain.
+#
+# This list is the whole of the production registry-membership contract. That
+# the list itself still agrees with the declared inventory is proved separately
+# by the test suite, which calls validate_expected_paths_match_inventory
+# directly; production validation never reads MODEL_ATLAS.md.
 EXPECTED_REGISTRY_PATHS = [
     "README.md",
     "SUMMARY_BOUNDARIES.md",
@@ -217,7 +227,57 @@ EXPECTED_REGISTRY_PATHS = [
     "delegated-execution-retained-answerability.md",
     "structural-fidelity-use-validity-boundary.md",
     "llm-condition-research-result-boundary.md",
+    "AUTHOR.md",
+    "semantic-cyberpunk-condition.md",
+    "cultural-curvature-unified-field.md",
+    "irreversibility-conditions.md",
+    "semantic-curvature-dynamics.md",
+    "semantic-curvature.md",
+    "semantic-physics.md",
+    "semantic-pressure.md",
+    "semantic-propagation-mechanics.md",
+    "semantic-virology.md",
+    "zero-field.md",
+    "boundary-engineering.md",
+    "boundary-failure.md",
+    "boundary-integration-failure.md",
+    "boundary-role-segmentation-model.md",
+    "observer-representation-boundary.md",
+    "false-legibility.md",
+    "proxy-substitution.md",
+    "premature-circulation-model.md",
+    "premature-coherence.md",
+    "reality-consistency.md",
+    "reference-drift.md",
+    "constraint-displacement.md",
+    "constraint-residue-accumulation-model.md",
+    "high-integrity-system-architecture.md",
+    "benefit-burden-allocation-regimes.md",
+    "cost-visibility-redistribution.md",
+    "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+    "responsibility-alignment-model.md",
 ]
+
+# The registry-only paths: registered public surfaces that MODEL_ATLAS does not
+# declare, because it is a model atlas and does not list boundary, interpretation
+# or anchor surfaces. Their absence from the atlas is expected, not a divergence.
+# Used only by the test-facing inventory-agreement check below.
+REGISTRY_ONLY_PATHS = [
+    "SUMMARY_BOUNDARIES.md",
+    "SUMMARY_CONTRACT.md",
+    "MACHINE_INTERPRETATION_STATE.md",
+    "SOURCE_USE_GUIDE.md",
+    "MACHINE_READING_PRECEDENCE.md",
+    "RELATION_STATUS_GUIDE.md",
+    "public-anchors/ai-training-boundary-statement.md",
+]
+
+# MODEL_ATLAS is read only by the test-facing consistency check below, never by
+# validate_public_metadata(). Keeping it out of the production read set keeps the
+# validator's source dependencies exactly those the dependency inventory
+# enumerates.
+MODEL_ATLAS_FILE = "model-atlas/MODEL_ATLAS.md"
+MODEL_ATLAS_FILE_DECLARATION_RE = re.compile(r"^- \*\*File:\*\* `([^`]+)`", re.M)
 
 REQUIRED_DOES_NOT_ESTABLISH = {
     "third_party_intent",
@@ -386,6 +446,52 @@ def validate_classification_support(record: dict[str, Any], errors: list[str]) -
         )
 
 
+def validate_expected_paths_match_inventory(errors: list[str]) -> None:
+    """Prove the explicit safety list still equals the declared inventory.
+
+    Test-facing consistency check. It is NOT called by validate_public_metadata()
+    and does not run during ordinary validation: it reads MODEL_ATLAS.md, which
+    is not part of the validator's production read set, and adding it there would
+    put the validator's dependencies out of step with the dependency inventory
+    that enumerates them. The test suite calls this helper directly instead.
+
+    The division of labour is deliberate. Production validation enforces the
+    explicit EXPECTED_REGISTRY_PATHS contract by set equality in both directions,
+    catching a missing approved path and an added unapproved path alike. This
+    helper independently proves that the explicit list itself still equals the
+    files MODEL_ATLAS declares with a literal `- **File:**` line plus the seven
+    known registry-only paths, so the safety net cannot silently drift away from
+    the inventory it is meant to protect.
+
+    This confirms an inventory identity only; it establishes no classification
+    and no relation.
+    """
+    atlas_text = read_repo_text(MODEL_ATLAS_FILE, errors)
+    if atlas_text is None:
+        return
+
+    declared = set(MODEL_ATLAS_FILE_DECLARATION_RE.findall(atlas_text))
+    expected_union = declared | set(REGISTRY_ONLY_PATHS)
+    listed = set(EXPECTED_REGISTRY_PATHS)
+
+    if len(EXPECTED_REGISTRY_PATHS) != len(listed):
+        append_error(errors, "validator: EXPECTED_REGISTRY_PATHS contains duplicate paths")
+
+    missing = sorted(expected_union - listed)
+    unexpected = sorted(listed - expected_union)
+    if missing:
+        append_error(
+            errors,
+            f"validator: EXPECTED_REGISTRY_PATHS is missing declared inventory paths {missing}",
+        )
+    if unexpected:
+        append_error(
+            errors,
+            "validator: EXPECTED_REGISTRY_PATHS contains paths that are neither "
+            f"MODEL_ATLAS-declared nor known registry-only paths {unexpected}",
+        )
+
+
 def validate_document_registry(
     registry: dict[str, Any],
     document_schema: dict[str, Any],
@@ -396,8 +502,17 @@ def validate_document_registry(
         append_error(errors, "mwe-public-documents.json: @graph must be a list")
         return
 
-    if len(records) != 30:
-        append_error(errors, f"mwe-public-documents.json: expected 30 records, found {len(records)}")
+    # The declared count is checked against the actual @graph length rather than
+    # against a fixed number, so the registry can grow without the gate becoming
+    # a second place that has to be edited in step with the records. The exact
+    # approved membership is enforced separately by EXPECTED_REGISTRY_PATHS.
+    declared_count = registry.get("record_count")
+    if declared_count != len(records):
+        append_error(
+            errors,
+            f"mwe-public-documents.json: declared record_count {declared_count!r} does not equal "
+            f"@graph length {len(records)}",
+        )
 
     for referenced_key in ("@context", "document_schema"):
         referenced_path = registry.get(referenced_key)

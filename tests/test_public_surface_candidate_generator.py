@@ -102,6 +102,11 @@ HISTORICAL_DATA_PATH = GENERATOR_ROOT / "visualizations" / "public-surface-autho
 # implicit output path. No expanded artifact is produced by these tests.
 EXPANDED_RECORD_COUNT = 59
 
+# The pre-expansion registry size. After P3 the live registry carries 59 records,
+# so the expanded target's record-count protection is proved against an isolated
+# synthetic source of this size rather than against the live registry.
+HISTORICAL_RECORD_COUNT_FIXTURE = 30
+
 # Stable failure tokens emitted by the builder.
 FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH = "HISTORICAL_ARTIFACT_IDENTITY_MISMATCH"
 FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION = "HISTORICAL_OUTPUT_PATH_COLLISION"
@@ -676,6 +681,49 @@ class ExpandedTargetTests(BaseCase):
         data = HISTORICAL_DATA_PATH.read_bytes()
         return data, stat.st_mtime_ns
 
+    def _thirty_record_generator_root(self, name: str) -> Path:
+        """Build an isolated generator root carrying a deliberate 30-record registry.
+
+        The expanded target's record-count protection used to be provable against
+        the live registry, because the live registry held 30 records. P3 expands
+        it to 59, so that assumption is stale. The contract itself is unchanged
+        and is proved here against an isolated historical-shape source instead:
+        a synthetic 30-record registry, outside the repository, that the expanded
+        target must refuse because it expects 59.
+
+        Nothing here reads or writes the live registry, and no expanded artifact
+        is produced. The temporary root is removed with the class temp directory.
+        """
+        root = self.out_dir() / name
+        (root / "scripts").mkdir(parents=True)
+        shutil.copy2(SCRIPTS / "build_public_surface_authority_map.py", root / "scripts")
+
+        # A clearly synthetic fixture standing in for the pre-expansion registry
+        # shape: the count is what the target checks, not the record contents.
+        fixture_records = [
+            {"repository_path": f"fixture-record-{index:02d}.md"}
+            for index in range(1, HISTORICAL_RECORD_COUNT_FIXTURE + 1)
+        ]
+        (root / "mwe-public-documents.json").write_text(
+            json.dumps(
+                {
+                    "record_count": HISTORICAL_RECORD_COUNT_FIXTURE,
+                    "@graph": fixture_records,
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        # Read-only copies: the surface manifest is loaded for scope
+        # confirmation, and the artifact copy lets the path-collision guard
+        # establish identity instead of failing closed on a missing artifact.
+        shutil.copy2(GENERATOR_ROOT / "mwe-public-surface.json", root)
+        artifact_dir = root / "visualizations" / "public-surface-authority-map"
+        artifact_dir.mkdir(parents=True)
+        shutil.copy2(HISTORICAL_DATA_PATH, artifact_dir / "data.json")
+        return root
+
     def test_missing_output_emits_failure_token(self):
         before = self._snapshot()
         result = run_cli(
@@ -686,20 +734,36 @@ class ExpandedTargetTests(BaseCase):
         self.assertEqual(before, self._snapshot())
 
     def test_expanded_expects_fifty_nine_records(self):
-        # The live registry currently carries 30 records. The expanded target
-        # must stop on its own record-count protection rather than accept the
-        # historical count as a valid expanded dataset.
+        # The expanded target must stop on its own record-count protection
+        # rather than accept a 30-record source as a valid expanded dataset.
+        # Proved against an isolated 30-record source, not the live registry.
+        before = self._snapshot()
+        root = self._thirty_record_generator_root("thirty-record-source")
         out = self.out_dir() / "expanded.json"
-        result = run_cli(
+        result = run_cli_from(
+            root / "scripts",
             "build_public_surface_authority_map.py",
             ["--target", "expanded", "--output", str(out)],
-            cwd=GENERATOR_ROOT,
+            cwd=self._cwd,
         )
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(str(EXPANDED_RECORD_COUNT), result.stderr)
+        self.assertIn(str(HISTORICAL_RECORD_COUNT_FIXTURE), result.stderr)
         self.assertFalse(out.exists(), "expanded target left an artifact behind")
         self.assertEqual(builder.EXPANDED_RECORD_COUNT, EXPANDED_RECORD_COUNT)
         self.assertNotEqual(builder.EXPANDED_RECORD_COUNT, builder.HISTORICAL_RECORD_COUNT)
+        # The live registry was neither read for this nor written to, and the
+        # frozen artifact is untouched.
+        self.assertEqual(before, self._snapshot())
+
+    def test_expanded_count_guard_at_the_assembly_helper(self):
+        # The same contract at unit level: the assembly helper refuses a
+        # 30-record source under the expanded count. No output path is involved,
+        # so no expanded artifact can be produced even transiently.
+        root = self._thirty_record_generator_root("thirty-record-helper-source")
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()) as err:
+            builder.assemble_map_data(root.resolve(), builder.EXPANDED_RECORD_COUNT)
+        self.assertIn(str(EXPANDED_RECORD_COUNT), err.getvalue())
 
     def _assert_collision_rejected(self, output_arg, cwd):
         before_bytes, before_mtime_ns = self._snapshot()
@@ -809,12 +873,16 @@ class ExpandedTargetTests(BaseCase):
     def test_ordinary_existing_output_is_not_a_collision(self):
         # The same-file check must not reject an unrelated file that merely
         # exists: such a path proceeds and stops on the record-count guard.
+        # Run against the isolated 30-record source so the guard is observed
+        # without generating an expanded dataset from the live 59-record registry.
+        root = self._thirty_record_generator_root("thirty-record-collision-source")
         existing = self.out_dir() / "unrelated.json"
         existing.write_text("{}\n", encoding="utf-8")
-        result = run_cli(
+        result = run_cli_from(
+            root / "scripts",
             "build_public_surface_authority_map.py",
             ["--target", "expanded", "--output", str(existing)],
-            cwd=GENERATOR_ROOT,
+            cwd=self._cwd,
         )
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn(FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION, result.stderr)

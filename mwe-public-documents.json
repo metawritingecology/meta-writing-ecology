@@ -8,12 +8,12 @@
   "scope": "selected_public_documents_only",
   "authority_ceiling": "metadata_only",
   "completeness": "not_a_complete_archive_or_registry",
-  "scope_note": "This is a selected public-document registry. It is not the full MWE archive, not the internal Registry, and not a complete corpus listing.",
+  "scope_note": "This is a selected public-document registry. It is not the full MWE archive, not the internal Registry, and not a complete corpus listing. Inclusion records public-document selection only; it does not establish internal Registry status, formal classification, conceptual priority, confirmed relation status, ontology membership, or authoritative-copy identity. Some metadata values, including surface role, public-surface status, authority ceiling, relation default, and boundary references, are assigned by registry policy rather than copied from the source document; per-field provenance is recorded in mwe-public-document-evidence.json. This registry is not a visualization-node manifest.",
   "omission_meaning": "Omission does not imply nonexistence.",
   "inclusion_meaning": "Inclusion does not imply priority.",
   "order_meaning": "Record order does not imply hierarchy.",
   "density_meaning": "Record density does not imply conceptual importance.",
-  "record_count": 30,
+  "record_count": 59,
   "@graph": [
     {
       "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/README.md#public-document-metadata",
@@ -620,6 +620,560 @@
       "source_use_reference": "SOURCE_USE_GUIDE.md",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/llm-condition-research-result-boundary.md",
       "doi": "https://doi.org/10.17605/OSF.IO/47PXB"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/AUTHOR.md#public-document-metadata",
+      "@type": "schema:DigitalDocument",
+      "name": "Author",
+      "repository_path": "AUTHOR.md",
+      "surface_role": "repository_orientation",
+      "public_surface_status": "public_navigation_surface",
+      "authority_ceiling": "navigation_only",
+      "relation_default": "navigation_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "SUMMARY_CONTRACT.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "MACHINE_READING_PRECEDENCE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/AUTHOR.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-cyberpunk-condition.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Cyberpunk Condition: Infrastructural Identity, Externalized Cognition, and Machine-Readable Selfhood",
+      "repository_path": "semantic-cyberpunk-condition.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-cyberpunk-condition.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/cultural-curvature-unified-field.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Cultural Curvature Unified Field — Foundational Architecture",
+      "repository_path": "cultural-curvature-unified-field.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/cultural-curvature-unified-field.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/irreversibility-conditions.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Irreversibility Conditions in Semantic Collapse",
+      "repository_path": "irreversibility-conditions.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/irreversibility-conditions.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-curvature-dynamics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Curvature Dynamics: Migration, Growth, Dominance, and Delayed Cohesion in Meaning-Bearing Systems",
+      "repository_path": "semantic-curvature-dynamics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-curvature-dynamics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-curvature.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Curvature as a Measure of Interpretive Load",
+      "repository_path": "semantic-curvature.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-curvature.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-physics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Physics: Field Dynamics of Meaning Systems",
+      "repository_path": "semantic-physics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-physics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-pressure.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Pressure: Compression, Localization, and Collapse in Meaning-Bearing Systems",
+      "repository_path": "semantic-pressure.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-pressure.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-propagation-mechanics.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Propagation Mechanics",
+      "repository_path": "semantic-propagation-mechanics.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-propagation-mechanics.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-virology.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Semantic Virology: A Structural Framework for Field-Level Semantic Transmission",
+      "repository_path": "semantic-virology.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/semantic-virology.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/zero-field.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Zero-Field: Extremism, Collapse, and the Structural Consequences of Semantic Null States",
+      "repository_path": "zero-field.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/zero-field.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-engineering.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Boundary Engineering in High-Stakes Institutions",
+      "repository_path": "boundary-engineering.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-engineering.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-failure.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Boundary Failure: Non-Entry, Irreversibility, and Structural Lock-in in Coherent Systems",
+      "repository_path": "boundary-failure.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-failure.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-integration-failure.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Boundary Integration Failure: Role-Merge Overload, Instruction-Field Collapse, and Functional Permeability Loss in Multi-Layer Systems",
+      "repository_path": "boundary-integration-failure.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-integration-failure.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-role-segmentation-model.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Boundary-Role Segmentation Model: Segment-Limited Coherence, Contradiction Immunity, and Local Authority Preservation in Role-Bound Systems",
+      "repository_path": "boundary-role-segmentation-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/boundary-role-segmentation-model.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/observer-representation-boundary.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Observer–Representation Boundary: Visibility, Recognition, and Structural Limits of Observation",
+      "repository_path": "observer-representation-boundary.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/observer-representation-boundary.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/false-legibility.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "False Legibility Model: Surface Readability, Premature Recognition, and Structural Misrecognition in AI-Mediated Environments",
+      "repository_path": "false-legibility.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/false-legibility.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/proxy-substitution.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Proxy Substitution as a Structural Governance Failure",
+      "repository_path": "proxy-substitution.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/proxy-substitution.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-circulation-model.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Premature Circulation Model: Pre-Recognized Objects, Verification Lag, and Downstream Correction in AI-Mediated Information Flows",
+      "repository_path": "premature-circulation-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-circulation-model.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-coherence.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Premature Coherence as Systemic Risk",
+      "repository_path": "premature-coherence.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/premature-coherence.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/reality-consistency.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments",
+      "repository_path": "reality-consistency.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/reality-consistency.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/reference-drift.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Calibration Without Failure: Reference Drift in High-Precision Decision Systems",
+      "repository_path": "reference-drift.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/reference-drift.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-displacement.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Constraint Displacement after Capability Expansion",
+      "repository_path": "constraint-displacement.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-displacement.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-residue-accumulation-model.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Constraint Residue Accumulation Model: Failure Traces, Post-Hoc Restrictions, and Instruction-Layer Sedimentation in AI-Mediated and Institutional Control Systems",
+      "repository_path": "constraint-residue-accumulation-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/constraint-residue-accumulation-model.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/high-integrity-system-architecture.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "High-Integrity System Architecture for Closed Functional Worlds",
+      "repository_path": "high-integrity-system-architecture.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/high-integrity-system-architecture.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/benefit-burden-allocation-regimes.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Benefit–Burden Allocation Regimes: Structural Distribution of Advantage, Burden, and Absorption Across Multi-Node Systems",
+      "repository_path": "benefit-burden-allocation-regimes.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/benefit-burden-allocation-regimes.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/cost-visibility-redistribution.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Cost Visibility and Redistribution Model: Perceived Cost, Structural Externalization, and Default Lock-In in AI-Mediated and Infrastructural Systems",
+      "repository_path": "cost-visibility-redistribution.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/cost-visibility-redistribution.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/external-lifeline-collapse-under-residual-infrastructure-cross.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "External Lifeline Collapse under Residual Infrastructure Cross",
+      "repository_path": "external-lifeline-collapse-under-residual-infrastructure-cross.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "explicit_in_file",
+      "publicly_declared_classification": "Cross / Structural Account / Domain Declaration",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/external-lifeline-collapse-under-residual-infrastructure-cross.md"
+    },
+    {
+      "@id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/responsibility-alignment-model.md#public-document-metadata",
+      "@type": "schema:CreativeWork",
+      "name": "Responsibility Alignment Model: Ownership, Capacity, and Accountability Calibration in AI-Mediated and Institutional Systems",
+      "repository_path": "responsibility-alignment-model.md",
+      "surface_role": "concept_node",
+      "public_surface_status": "selected_external_node",
+      "authority_ceiling": "public_file_claim_only",
+      "relation_default": "adjacency_only",
+      "classification_evidence": "not_asserted",
+      "boundary_references": [
+        "SUMMARY_BOUNDARIES.md",
+        "MACHINE_INTERPRETATION_STATE.md",
+        "SOURCE_USE_GUIDE.md",
+        "RELATION_STATUS_GUIDE.md"
+      ],
+      "source_use_reference": "SOURCE_USE_GUIDE.md",
+      "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/responsibility-alignment-model.md"
     }
   ]
 }

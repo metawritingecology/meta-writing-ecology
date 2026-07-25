@@ -1,43 +1,48 @@
 #!/usr/bin/env python3
-"""Phase 3A P1 tests: public-document registry policy and evidence contract.
+"""Phase 3A P1/P3 tests: public-document registry contract and evidence contract.
 
 Standard-library unittest only (no third-party dependency). These tests cover the
-per-field evidence manifest that accompanies the selected public-document
-registry:
+selected public-document registry at its P3 size of 59 records and the per-field
+evidence manifest that accompanies it:
 
 - exact one-to-one coverage between the registry and the evidence manifest
   (no missing registry path, no evidence entry for a non-registry path, no
   duplicate path, registry order preserved);
-- the declared record_count agrees with the number of entries;
+- the declared record_count agrees with the number of entries, on both files;
 - all eleven tracked fields are present on every entry;
 - every recorded value belongs to the closed nine-value evidence vocabulary;
 - every source-derived claim is supported by the source file on disk, and every
   registry-policy claim corresponds to the absence of that declaration, in both
   directions, for public-surface status and for classification;
 - inclusion evidence agrees with the MODEL_ATLAS File inventory;
-- the registry envelope and record set are unchanged by this phase;
+- the exact candidate set: the registry is the union of the pre-expansion
+  registry and the MODEL_ATLAS File inventory, and the 29 appended records are
+  exactly the pre-expansion difference, in MODEL_ATLAS declaration order;
+- the original 30 registry records and the original 30 evidence entries are
+  byte-identical to their form at the P3 base commit;
+- mechanical field construction and role/status cluster consistency across all 59;
+- classification remains fail-closed, 16 explicit_in_file and 43 not_asserted;
+- the JSON-LD context and the document schema already cover every term used;
 - the frozen historical dataset remains byte-identical.
 
 The manifest records provenance only. Nothing here confirms or changes
 classification, relation status, internal Registry status, ontology membership,
 conceptual priority, or authoritative-copy identity.
-
-Byte-level proof that mwe-public-documents.json is unchanged against a specific
-base commit is a repository-diff check, not a unit test; these tests pin the
-registry's envelope, count and exact path set instead, which is what a phase that
-must not touch the registry can assert without pinning bytes a later authorized
-phase is expected to change.
 """
 
 from __future__ import annotations
 
+import contextlib
 import copy
 import hashlib
 import importlib.util
+import io
 import json
 import re
+import subprocess
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,9 +55,111 @@ POLICY_FILE = ROOT / "PUBLIC_DOCUMENT_REGISTRY_POLICY.md"
 MODEL_ATLAS_FILE = ROOT / "model-atlas" / "MODEL_ATLAS.md"
 HISTORICAL_DATA_FILE = ROOT / "visualizations" / "public-surface-authority-map" / "data.json"
 
-# Registry state this phase must not change.
-EXPECTED_REGISTRY_RECORD_COUNT = 30
-EXPECTED_EVIDENCE_RECORD_COUNT = 30
+# Registry state after the P3 expansion.
+EXPECTED_REGISTRY_RECORD_COUNT = 59
+EXPECTED_EVIDENCE_RECORD_COUNT = 59
+
+# The pre-expansion registry: the first 30 records and the first 30 evidence
+# entries must survive P3 unchanged, in their original order and positions.
+ORIGINAL_RECORD_COUNT = 30
+ADDITION_COUNT = 29
+
+# The commit P3 was based on (the merge commit of the P2 pull request). The
+# original-30 proof reads the two files at this commit through Git rather than
+# comparing the working tree with itself.
+P3_BASE_COMMIT = "7a5e5fe59203cc7de6e70c3d4080bbf3b92c9008"
+
+# Post-expansion distributions, all recomputed from the sources by the tests
+# below rather than assumed. Stated as constants so a silent drift fails loudly.
+EXPECTED_EXPLICIT_IN_FILE = 16
+EXPECTED_NOT_ASSERTED = 43
+EXPECTED_CLASSIFICATION_LINE_SEARCH_LINES = 80
+
+# The sole classified addition. Its literal is already present in the registry
+# via generation-condition-disclosure-reproducibility-cross.md, so the expansion
+# introduces no new classification literal.
+SOLE_CLASSIFIED_ADDITION = (
+    "external-lifeline-collapse-under-residual-infrastructure-cross.md"
+)
+SOLE_CLASSIFIED_ADDITION_LITERAL = "Cross / Structural Account / Domain Declaration"
+
+# AUTHOR.md is registered as repository orientation. It is not a concept node and
+# must not enter the semantic concept layer merely because it is registered.
+ORIENTATION_ADDITION = "AUTHOR.md"
+
+# The two set corrections that must survive into the executed expansion.
+REQUIRED_ADDITION = "cultural-curvature-unified-field.md"
+NOT_AN_ADDITION = "constraint-residue-governance.md"
+
+# The two attested boundary-reference clusters.
+CONCEPT_BOUNDARY_REFERENCES = [
+    "SUMMARY_BOUNDARIES.md",
+    "MACHINE_INTERPRETATION_STATE.md",
+    "SOURCE_USE_GUIDE.md",
+    "RELATION_STATUS_GUIDE.md",
+]
+ORIENTATION_BOUNDARY_REFERENCES = [
+    "SUMMARY_BOUNDARIES.md",
+    "SUMMARY_CONTRACT.md",
+    "MACHINE_INTERPRETATION_STATE.md",
+    "SOURCE_USE_GUIDE.md",
+    "MACHINE_READING_PRECEDENCE.md",
+    "RELATION_STATUS_GUIDE.md",
+]
+
+# The attested status clusters: the triple is a strict function of surface_role.
+# No crossover exists in the registry, and P3 introduces no new cluster.
+STATUS_CLUSTERS = {
+    "concept_node": (
+        "schema:CreativeWork",
+        "selected_external_node",
+        "public_file_claim_only",
+        "adjacency_only",
+    ),
+    "repository_orientation": (
+        "schema:DigitalDocument",
+        "public_navigation_surface",
+        "navigation_only",
+        "navigation_only",
+    ),
+    "boundary_document": (
+        "schema:DigitalDocument",
+        "public_boundary_document",
+        "repository_boundary_only",
+        "not_applicable",
+    ),
+    "interpretation_guide": (
+        "schema:DigitalDocument",
+        "public_boundary_document",
+        "repository_boundary_only",
+        "not_applicable",
+    ),
+    "source_use_guide": (
+        "schema:DigitalDocument",
+        "public_boundary_document",
+        "repository_boundary_only",
+        "not_applicable",
+    ),
+    "public_anchor": (
+        "schema:DigitalDocument",
+        "public_boundary_document",
+        "repository_boundary_only",
+        "not_applicable",
+    ),
+}
+
+EXPECTED_SCOPE_NOTE = (
+    "This is a selected public-document registry. It is not the full MWE archive, "
+    "not the internal Registry, and not a complete corpus listing. Inclusion records "
+    "public-document selection only; it does not establish internal Registry status, "
+    "formal classification, conceptual priority, confirmed relation status, ontology "
+    "membership, or authoritative-copy identity. Some metadata values, including "
+    "surface role, public-surface status, authority ceiling, relation default, and "
+    "boundary references, are assigned by registry policy rather than copied from the "
+    "source document; per-field provenance is recorded in "
+    "mwe-public-document-evidence.json. This registry is not a visualization-node "
+    "manifest."
+)
 
 # The seven registry-only paths (R - A): MODEL_ATLAS is a model atlas and does not
 # list boundary, interpretation or anchor surfaces.
@@ -117,7 +224,7 @@ class EvidenceManifestBaseCase(unittest.TestCase):
 
 
 class ManifestStructureTests(EvidenceManifestBaseCase):
-    def test_record_count_is_thirty_and_matches_entries(self):
+    def test_record_count_is_fifty_nine_and_matches_entries(self):
         self.assertEqual(self.evidence["record_count"], EXPECTED_EVIDENCE_RECORD_COUNT)
         self.assertEqual(len(self.evidence_records), EXPECTED_EVIDENCE_RECORD_COUNT)
         self.assertEqual(self.evidence["record_count"], len(self.evidence_records))
@@ -251,7 +358,10 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     validator.PUBLIC_SURFACE_STATUS_DECLARATION_RE.search(self.source_text(path))
                 )
             checked += 1
-        self.assertEqual(checked, 9)
+        # 9 pre-expansion records plus the 29 additions: none of the 29 source
+        # files declares any part of the public-surface block (P3 performs no
+        # source-header normalization; that is the optional S1 phase).
+        self.assertEqual(checked, 38)
 
     def test_authority_ceiling_tracks_the_same_source_block(self):
         for entry in self.evidence_records:
@@ -272,7 +382,7 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     self.source_text(path), validator.CLASSIFICATION_DECLARATION_RE
                 )
             checked += 1
-        self.assertEqual(checked, 15)
+        self.assertEqual(checked, EXPECTED_EXPLICIT_IN_FILE)
 
     def test_classification_not_asserted_means_no_literal_declaration(self):
         checked = 0
@@ -285,7 +395,7 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     validator.CLASSIFICATION_DECLARATION_RE.search(self.source_text(path))
                 )
             checked += 1
-        self.assertEqual(checked, 15)
+        self.assertEqual(checked, EXPECTED_NOT_ASSERTED)
 
     def test_classification_evidence_agrees_with_the_registry_fail_closed_field(self):
         for record in self.registry_records:
@@ -321,7 +431,9 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     display_title_count += 1
                 else:
                     self.fail(f"{path}: unexpected name evidence {recorded!r}")
-        self.assertEqual(h1_count, 27)
+        # 27 pre-expansion H1 names plus all 29 additions. The shortened-title
+        # exception describes three existing records only; no addition uses it.
+        self.assertEqual(h1_count, 56)
         self.assertEqual(display_title_count, 3)
 
     def test_inclusion_evidence_agrees_with_the_model_atlas_inventory(self):
@@ -342,7 +454,9 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
                     registry_policy += 1
                 else:
                     self.fail(f"{path}: unexpected inclusion evidence {recorded!r}")
-        self.assertEqual(inventory_declared, 23)
+        # 23 pre-expansion intersection records plus the 29 additions, all of
+        # which are MODEL_ATLAS-declared by construction (they are A - R).
+        self.assertEqual(inventory_declared, 52)
         self.assertEqual(registry_policy, 7)
         self.assertEqual(set(self.registry_paths) - inventory, REGISTRY_ONLY_PATHS)
 
@@ -380,25 +494,67 @@ class SourceAgreementTests(EvidenceManifestBaseCase):
         self.assertIsNotNone(pattern.search("Classification: Training-facing Public Surface Anchor\n"))
 
 
-class RegistryUnchangedTests(EvidenceManifestBaseCase):
-    def test_registry_count_and_path_set_unchanged(self):
+class RegistryContractTests(EvidenceManifestBaseCase):
+    def test_registry_count_and_path_set(self):
         self.assertEqual(self.registry["record_count"], EXPECTED_REGISTRY_RECORD_COUNT)
         self.assertEqual(len(self.registry_records), EXPECTED_REGISTRY_RECORD_COUNT)
+        self.assertEqual(self.registry["record_count"], len(self.registry_records))
         self.assertEqual(
             set(self.registry_paths), set(validator.EXPECTED_REGISTRY_PATHS)
         )
         self.assertEqual(self.registry_paths, list(validator.EXPECTED_REGISTRY_PATHS))
 
-    def test_registry_envelope_unchanged(self):
+    def test_registry_paths_and_ids_are_distinct(self):
+        ids = [record["@id"] for record in self.registry_records]
+        self.assertEqual(len(self.registry_paths), len(set(self.registry_paths)))
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(len(set(ids)), EXPECTED_REGISTRY_RECORD_COUNT)
+
+    def test_every_registered_source_file_exists(self):
+        for path in self.registry_paths:
+            with self.subTest(path=path):
+                self.assertTrue((ROOT / path).is_file(), f"{path} is not a regular file")
+
+    def test_registry_envelope_apart_from_count_and_scope_note_is_unchanged(self):
         self.assertEqual(self.registry["scope"], "selected_public_documents_only")
         self.assertEqual(self.registry["authority_ceiling"], "metadata_only")
         self.assertEqual(self.registry["completeness"], "not_a_complete_archive_or_registry")
         self.assertEqual(self.registry["schema_version"], "1.0")
+        self.assertEqual(self.registry["@context"], "./mwe-public-context.jsonld")
+        self.assertEqual(self.registry["document_schema"], "./mwe-document.schema.json")
+        self.assertEqual(self.registry["@type"], "schema:DataCatalog")
+        self.assertEqual(self.registry["omission_meaning"], "Omission does not imply nonexistence.")
+        self.assertEqual(self.registry["inclusion_meaning"], "Inclusion does not imply priority.")
+        self.assertEqual(self.registry["order_meaning"], "Record order does not imply hierarchy.")
         self.assertEqual(
-            self.registry["scope_note"],
-            "This is a selected public-document registry. It is not the full MWE "
-            "archive, not the internal Registry, and not a complete corpus listing.",
+            self.registry["density_meaning"],
+            "Record density does not imply conceptual importance.",
         )
+
+    def test_revised_scope_note_states_every_required_boundary(self):
+        note = self.registry["scope_note"]
+        self.assertEqual(note, EXPECTED_SCOPE_NOTE)
+        # It opens with the previous note verbatim and adds the required
+        # boundaries. No ASCII not-equal marker may appear in this prose.
+        self.assertTrue(
+            note.startswith(
+                "This is a selected public-document registry. It is not the full MWE "
+                "archive, not the internal Registry, and not a complete corpus listing."
+            )
+        )
+        self.assertNotIn("!=", note)
+        for required in (
+            "does not establish internal Registry status",
+            "formal classification",
+            "conceptual priority",
+            "confirmed relation status",
+            "ontology membership",
+            "authoritative-copy identity",
+            "assigned by registry policy",
+            "mwe-public-document-evidence.json",
+            "not a visualization-node manifest",
+        ):
+            self.assertIn(required, note)
 
     def test_registry_records_carry_no_evidence_fields(self):
         for record in self.registry_records:
@@ -424,6 +580,431 @@ class RegistryUnchangedTests(EvidenceManifestBaseCase):
         parsed = json.loads(data)
         self.assertEqual(len(parsed["nodes"]), snapshot_identity.EXPECTED_NODES)
         self.assertEqual(len(parsed["edges"]), snapshot_identity.EXPECTED_EDGES)
+
+
+def read_json_at_commit(commit: str, relative_path: str):
+    """Read a tracked file as it stood at a commit, through Git.
+
+    This is deliberately not a working-tree read: the original-30 proof must
+    compare HEAD against a different source, never against itself.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "show", f"{commit}:{relative_path}"],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise unittest.SkipTest(
+            f"{commit}:{relative_path} is not available locally: "
+            + result.stderr.decode("utf-8", "replace")
+        )
+    return json.loads(result.stdout.decode("utf-8"))
+
+
+def canonical(value) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=False)
+
+
+class CandidateSetTests(EvidenceManifestBaseCase):
+    """The registry is exactly R union A, and the additions are exactly A - R.
+
+    R is the pre-expansion registry read at the P3 base commit; A is the set of
+    files MODEL_ATLAS declares with a literal `- **File:**` line. This is an
+    inventory identity only. It confirms no classification and no relation.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        base_registry = read_json_at_commit(P3_BASE_COMMIT, "mwe-public-documents.json")
+        cls.base_paths = [record["repository_path"] for record in base_registry["@graph"]]
+        atlas = MODEL_ATLAS_FILE.read_text(encoding="utf-8")
+        cls.inventory = list(dict.fromkeys(MODEL_ATLAS_FILE_DECLARATION_RE.findall(atlas)))
+
+    def test_pre_expansion_registry_is_the_thirty_record_state(self):
+        self.assertEqual(len(self.base_paths), ORIGINAL_RECORD_COUNT)
+
+    def test_set_identity_reproduces(self):
+        r = set(self.base_paths)
+        a = set(self.inventory)
+        self.assertEqual(len(r), 30)
+        self.assertEqual(len(a), 52)
+        self.assertEqual(len(r & a), 23)
+        self.assertEqual(len(r | a), 59)
+        self.assertEqual(len(a - r), ADDITION_COUNT)
+        self.assertEqual(len(r - a), 7)
+        self.assertEqual(r - a, REGISTRY_ONLY_PATHS)
+
+    def test_registry_is_exactly_the_union(self):
+        self.assertEqual(set(self.registry_paths), set(self.base_paths) | set(self.inventory))
+
+    def test_appended_paths_are_exactly_the_pre_expansion_difference(self):
+        appended = self.registry_paths[ORIGINAL_RECORD_COUNT:]
+        expected = [p for p in self.inventory if p not in set(self.base_paths)]
+        self.assertEqual(len(appended), ADDITION_COUNT)
+        # Order matters: the additions follow MODEL_ATLAS declaration order.
+        self.assertEqual(appended, expected)
+
+    def test_both_required_set_corrections_hold(self):
+        appended = self.registry_paths[ORIGINAL_RECORD_COUNT:]
+        self.assertIn(REQUIRED_ADDITION, appended)
+        # Already registry record #23 before the expansion, so it is in R and A
+        # and cannot be an addition.
+        self.assertIn(NOT_AN_ADDITION, self.base_paths)
+        self.assertNotIn(NOT_AN_ADDITION, appended)
+
+    def test_expected_registry_paths_equals_inventory_plus_registry_only(self):
+        self.assertEqual(
+            set(validator.EXPECTED_REGISTRY_PATHS),
+            set(self.inventory) | REGISTRY_ONLY_PATHS,
+        )
+        self.assertEqual(
+            len(validator.EXPECTED_REGISTRY_PATHS), EXPECTED_REGISTRY_RECORD_COUNT
+        )
+        self.assertEqual(set(validator.REGISTRY_ONLY_PATHS), REGISTRY_ONLY_PATHS)
+
+    def test_validator_reports_no_inventory_drift(self):
+        # The inventory-union proof, invoked directly. This is the only place
+        # MODEL_ATLAS.md is read for this purpose: the helper is test-facing and
+        # validate_public_metadata() does not call it.
+        errors: list[str] = []
+        validator.validate_expected_paths_match_inventory(errors)
+        self.assertEqual(errors, [])
+
+    def test_default_validator_does_not_read_model_atlas(self):
+        # Production validation must not acquire a source dependency the P2
+        # dependency inventory does not enumerate. MODEL_ATLAS.md is outside the
+        # validator's production read set, and this proves it by construction
+        # rather than by inspection: any read of that path during an ordinary
+        # validation run fails the test.
+        original = validator.read_repo_text
+
+        def guarded(relative_path, errors):
+            if relative_path == validator.MODEL_ATLAS_FILE:
+                raise AssertionError("production validator must not read MODEL_ATLAS.md")
+            return original(relative_path, errors)
+
+        with mock.patch.object(validator, "read_repo_text", side_effect=guarded), \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(validator.validate_public_metadata(), 0)
+
+    def test_production_validation_still_enforces_the_explicit_path_contract(self):
+        # Removing the MODEL_ATLAS call must not weaken the production contract:
+        # the explicit list is still compared by set equality in both directions.
+        registry = copy.deepcopy(self.registry)
+        document_schema = read_json(ROOT / "mwe-document.schema.json")
+
+        missing = copy.deepcopy(registry)
+        dropped = missing["@graph"].pop()
+        missing["record_count"] = len(missing["@graph"])
+        errors: list[str] = []
+        validator.validate_document_registry(missing, document_schema, errors)
+        self.assertTrue(
+            any("missing expected paths" in error for error in errors),
+            f"dropping {dropped['repository_path']} was not caught: {errors}",
+        )
+
+        added = copy.deepcopy(registry)
+        extra = copy.deepcopy(added["@graph"][-1])
+        extra["repository_path"] = "AGENTS.md"
+        extra["canonical_public_url"] = validator.CANONICAL_URL_PREFIX + "AGENTS.md"
+        extra["@id"] = extra["canonical_public_url"] + "#public-document-metadata"
+        added["@graph"].append(extra)
+        added["record_count"] = len(added["@graph"])
+        errors = []
+        validator.validate_document_registry(added, document_schema, errors)
+        self.assertTrue(
+            any("unexpected registry paths" in error for error in errors),
+            f"an unapproved path was not caught: {errors}",
+        )
+
+
+class OriginalThirtyUnchangedTests(EvidenceManifestBaseCase):
+    """The pre-expansion records and evidence entries survive P3 untouched."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.base_registry = read_json_at_commit(P3_BASE_COMMIT, "mwe-public-documents.json")
+        cls.base_evidence = read_json_at_commit(
+            P3_BASE_COMMIT, "mwe-public-document-evidence.json"
+        )
+
+    def test_base_commit_really_is_the_pre_expansion_state(self):
+        # Without this the comparisons below could pass by comparing HEAD with
+        # itself if the base reference ever pointed at an expanded commit.
+        self.assertEqual(self.base_registry["record_count"], ORIGINAL_RECORD_COUNT)
+        self.assertEqual(len(self.base_registry["@graph"]), ORIGINAL_RECORD_COUNT)
+        self.assertEqual(self.base_evidence["record_count"], ORIGINAL_RECORD_COUNT)
+        self.assertEqual(len(self.base_evidence["records"]), ORIGINAL_RECORD_COUNT)
+        self.assertNotEqual(len(self.registry_records), ORIGINAL_RECORD_COUNT)
+
+    def test_first_thirty_registry_records_are_byte_identical(self):
+        self.assertEqual(
+            canonical(self.registry_records[:ORIGINAL_RECORD_COUNT]),
+            canonical(self.base_registry["@graph"]),
+        )
+
+    def test_first_thirty_evidence_entries_are_byte_identical(self):
+        self.assertEqual(
+            canonical(self.evidence_records[:ORIGINAL_RECORD_COUNT]),
+            canonical(self.base_evidence["records"]),
+        )
+
+    def test_original_records_keep_their_positions(self):
+        base_paths = [r["repository_path"] for r in self.base_registry["@graph"]]
+        self.assertEqual(self.registry_paths[:ORIGINAL_RECORD_COUNT], base_paths)
+        for index, path in enumerate(base_paths):
+            with self.subTest(position=index + 1, path=path):
+                self.assertEqual(self.registry_records[index]["repository_path"], path)
+
+    def test_additions_occupy_positions_thirty_one_to_fifty_nine(self):
+        self.assertEqual(
+            len(self.registry_records) - ORIGINAL_RECORD_COUNT, ADDITION_COUNT
+        )
+        self.assertEqual(
+            self.evidence_paths[ORIGINAL_RECORD_COUNT:],
+            self.registry_paths[ORIGINAL_RECORD_COUNT:],
+        )
+
+
+class AdditionConstructionTests(EvidenceManifestBaseCase):
+    """Field construction across all 59, and the approved shape of the 29."""
+
+    def additions(self):
+        return self.registry_records[ORIGINAL_RECORD_COUNT:]
+
+    def test_ids_and_urls_are_mechanically_derived(self):
+        for record in self.registry_records:
+            path = record["repository_path"]
+            with self.subTest(path=path):
+                url = validator.CANONICAL_URL_PREFIX + path
+                self.assertEqual(record["canonical_public_url"], url)
+                self.assertEqual(record["@id"], url + "#public-document-metadata")
+                self.assertEqual(record["source_use_reference"], "SOURCE_USE_GUIDE.md")
+
+    def test_role_status_clusters_are_internally_valid(self):
+        for record in self.registry_records:
+            role = record["surface_role"]
+            with self.subTest(path=record["repository_path"], role=role):
+                self.assertIn(role, STATUS_CLUSTERS)
+                self.assertEqual(
+                    (
+                        record["@type"],
+                        record["public_surface_status"],
+                        record["authority_ceiling"],
+                        record["relation_default"],
+                    ),
+                    STATUS_CLUSTERS[role],
+                )
+
+    def test_boundary_reference_clusters_match_policy(self):
+        for record in self.registry_records:
+            expected = (
+                CONCEPT_BOUNDARY_REFERENCES
+                if record["surface_role"] == "concept_node"
+                else ORIENTATION_BOUNDARY_REFERENCES
+            )
+            with self.subTest(path=record["repository_path"]):
+                self.assertEqual(record["boundary_references"], expected)
+
+    def test_no_new_surface_role_or_classification_literal_is_introduced(self):
+        base = read_json_at_commit(P3_BASE_COMMIT, "mwe-public-documents.json")["@graph"]
+        base_roles = {record["surface_role"] for record in base}
+        base_literals = {
+            record["publicly_declared_classification"]
+            for record in base
+            if "publicly_declared_classification" in record
+        }
+        roles = {record["surface_role"] for record in self.registry_records}
+        literals = {
+            record["publicly_declared_classification"]
+            for record in self.registry_records
+            if "publicly_declared_classification" in record
+        }
+        self.assertEqual(roles, base_roles)
+        self.assertEqual(literals, base_literals)
+        self.assertEqual(len(literals), 12)
+
+    def test_author_md_uses_the_approved_orientation_treatment(self):
+        record = next(
+            r for r in self.additions() if r["repository_path"] == ORIENTATION_ADDITION
+        )
+        self.assertEqual(self.registry_paths[ORIGINAL_RECORD_COUNT], ORIENTATION_ADDITION)
+        self.assertEqual(record["@type"], "schema:DigitalDocument")
+        self.assertEqual(record["name"], "Author")
+        self.assertEqual(record["surface_role"], "repository_orientation")
+        self.assertEqual(record["public_surface_status"], "public_navigation_surface")
+        self.assertEqual(record["authority_ceiling"], "navigation_only")
+        self.assertEqual(record["relation_default"], "navigation_only")
+        self.assertEqual(record["classification_evidence"], "not_asserted")
+        self.assertEqual(record["boundary_references"], ORIENTATION_BOUNDARY_REFERENCES)
+        self.assertNotIn("publicly_declared_classification", record)
+        # It is registered, but it is not a concept node.
+        self.assertNotEqual(record["surface_role"], "concept_node")
+
+    def test_the_other_twenty_eight_additions_use_the_concept_treatment(self):
+        concepts = [
+            r for r in self.additions() if r["repository_path"] != ORIENTATION_ADDITION
+        ]
+        self.assertEqual(len(concepts), 28)
+        for record in concepts:
+            with self.subTest(path=record["repository_path"]):
+                self.assertEqual(record["surface_role"], "concept_node")
+                self.assertEqual(record["@type"], "schema:CreativeWork")
+                self.assertEqual(record["public_surface_status"], "selected_external_node")
+                self.assertEqual(record["authority_ceiling"], "public_file_claim_only")
+                self.assertEqual(record["relation_default"], "adjacency_only")
+                self.assertEqual(record["boundary_references"], CONCEPT_BOUNDARY_REFERENCES)
+
+    def test_additions_carry_no_optional_metadata(self):
+        # P3 adds no DOI, version, license, date, OSF URL, abstract, source
+        # commit or notes. Historical incompleteness is not repaired here.
+        prohibited = {
+            "doi",
+            "version",
+            "license",
+            "date",
+            "datePublished",
+            "publication_date",
+            "osf_url",
+            "abstract",
+            "source_commit",
+            "notes",
+        }
+        for record in self.additions():
+            with self.subTest(path=record["repository_path"]):
+                self.assertEqual(set(record) & prohibited, set())
+
+    def test_additions_use_only_the_attested_field_set(self):
+        allowed = {
+            "@id",
+            "@type",
+            "name",
+            "repository_path",
+            "surface_role",
+            "public_surface_status",
+            "authority_ceiling",
+            "relation_default",
+            "classification_evidence",
+            "publicly_declared_classification",
+            "boundary_references",
+            "source_use_reference",
+            "canonical_public_url",
+        }
+        for record in self.additions():
+            with self.subTest(path=record["repository_path"]):
+                self.assertTrue(set(record) <= allowed, f"unexpected fields {set(record) - allowed}")
+
+    def test_addition_names_are_the_verbatim_source_h1(self):
+        for record in self.additions():
+            path = record["repository_path"]
+            with self.subTest(path=path):
+                h1 = validator.H1_RE.search(self.source_text(path))
+                self.assertIsNotNone(h1)
+                self.assertEqual(record["name"], h1.group(1))
+                self.assertEqual(self.field_evidence(path)["name"], "source_h1")
+
+
+class ClassificationFailClosedTests(EvidenceManifestBaseCase):
+    def test_split_is_sixteen_and_forty_three(self):
+        explicit = [
+            r for r in self.registry_records if r["classification_evidence"] == "explicit_in_file"
+        ]
+        not_asserted = [
+            r for r in self.registry_records if r["classification_evidence"] == "not_asserted"
+        ]
+        self.assertEqual(len(explicit), EXPECTED_EXPLICIT_IN_FILE)
+        self.assertEqual(len(not_asserted), EXPECTED_NOT_ASSERTED)
+        self.assertEqual(len(explicit) + len(not_asserted), EXPECTED_REGISTRY_RECORD_COUNT)
+
+    def test_every_explicit_literal_appears_within_the_first_eighty_lines(self):
+        for record in self.registry_records:
+            if record["classification_evidence"] != "explicit_in_file":
+                continue
+            path = record["repository_path"]
+            with self.subTest(path=path):
+                head = "\n".join(
+                    self.source_text(path).splitlines()[
+                        :EXPECTED_CLASSIFICATION_LINE_SEARCH_LINES
+                    ]
+                )
+                self.assertIn(record["publicly_declared_classification"], head)
+
+    def test_not_asserted_records_declare_no_classification(self):
+        for record in self.registry_records:
+            if record["classification_evidence"] != "not_asserted":
+                continue
+            path = record["repository_path"]
+            with self.subTest(path=path):
+                self.assertNotIn("publicly_declared_classification", record)
+                self.assertIsNone(
+                    validator.CLASSIFICATION_DECLARATION_RE.search(self.source_text(path))
+                )
+
+    def test_only_one_addition_is_classified(self):
+        classified = [
+            r["repository_path"]
+            for r in self.registry_records[ORIGINAL_RECORD_COUNT:]
+            if r["classification_evidence"] == "explicit_in_file"
+        ]
+        self.assertEqual(classified, [SOLE_CLASSIFIED_ADDITION])
+
+    def test_the_classified_addition_matches_its_source_byte_for_byte(self):
+        record = next(
+            r
+            for r in self.registry_records
+            if r["repository_path"] == SOLE_CLASSIFIED_ADDITION
+        )
+        self.assertEqual(
+            record["publicly_declared_classification"], SOLE_CLASSIFIED_ADDITION_LITERAL
+        )
+        lines = self.source_text(SOLE_CLASSIFIED_ADDITION).splitlines()
+        self.assertEqual(
+            lines[7], f"- **Classification:** {SOLE_CLASSIFIED_ADDITION_LITERAL}"
+        )
+        self.assertEqual(
+            self.field_evidence(SOLE_CLASSIFIED_ADDITION)["classification"],
+            "source_declared",
+        )
+
+
+class ContextAndSchemaCoverageTests(EvidenceManifestBaseCase):
+    """The existing context and schema already cover the 59 records.
+
+    P3 changes neither. If a new term were required the phase would stop rather
+    than widen either file.
+    """
+
+    def test_jsonld_context_defines_every_term_used(self):
+        context = read_json(ROOT / "mwe-public-context.jsonld")["@context"]
+        used = set()
+        for record in self.registry_records:
+            used |= set(record)
+        undefined = sorted(t for t in used if not t.startswith("@") and t not in context)
+        self.assertEqual(undefined, [])
+
+    def test_document_schema_allows_every_field_used(self):
+        document_schema = read_json(ROOT / "mwe-document.schema.json")
+        properties = set(document_schema["properties"])
+        self.assertIs(document_schema.get("additionalProperties"), False)
+        for record in self.registry_records:
+            with self.subTest(path=record["repository_path"]):
+                self.assertTrue(set(record) <= properties)
+                self.assertTrue(set(document_schema["required"]) <= set(record))
+
+    def test_document_schema_enums_cover_the_expanded_values(self):
+        properties = read_json(ROOT / "mwe-document.schema.json")["properties"]
+        for field in (
+            "surface_role",
+            "public_surface_status",
+            "authority_ceiling",
+            "relation_default",
+            "classification_evidence",
+        ):
+            allowed = set(properties[field]["enum"])
+            used = {record[field] for record in self.registry_records}
+            with self.subTest(field=field):
+                self.assertTrue(used <= allowed, f"{field}: {sorted(used - allowed)}")
 
 
 class PolicyDocumentTests(EvidenceManifestBaseCase):
