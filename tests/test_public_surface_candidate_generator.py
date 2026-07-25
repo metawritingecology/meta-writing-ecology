@@ -102,6 +102,10 @@ HISTORICAL_DATA_PATH = GENERATOR_ROOT / "visualizations" / "public-surface-autho
 # implicit output path. No expanded artifact is produced by these tests.
 EXPANDED_RECORD_COUNT = 59
 
+# Pinned generation source commit for the expanded adjacency product (P5). Used
+# only by the synthetic expanded fixture manifest below.
+EXPANDED_SOURCE_COMMIT = "933274af9693d6d1d9fac36819aafdf56f9ab81d"
+
 # The pre-expansion registry size. After P3 the live registry carries 59 records,
 # so the expanded target's record-count protection is proved against an isolated
 # synthetic source of this size rather than against the live registry.
@@ -722,7 +726,40 @@ class ExpandedTargetTests(BaseCase):
         artifact_dir = root / "visualizations" / "public-surface-authority-map"
         artifact_dir.mkdir(parents=True)
         shutil.copy2(HISTORICAL_DATA_PATH, artifact_dir / "data.json")
+
+        # P5 makes --visualization-manifest mandatory for the expanded target.
+        # A syntactically valid placeholder manifest is written here so the
+        # record-count guard below is still what stops the run: the registry
+        # count is checked before any manifest content is compared, so this
+        # fixture proves the same contract it always did.
+        manifest_dir = root / "visualizations" / "public-surface-adjacency-map"
+        manifest_dir.mkdir(parents=True)
+        (manifest_dir / "visualization-manifest.json").write_text(
+            json.dumps(
+                {
+                    "$schema": "./visualization-manifest.schema.json",
+                    "manifest_version": "1.0",
+                    "describes": "../../mwe-public-documents.json",
+                    "scope": "expanded_public_surface_visualization_membership",
+                    "authority_ceiling": "visualization_membership_and_rendering_policy_only",
+                    "source_commit": EXPANDED_SOURCE_COMMIT,
+                    "record_count": EXPANDED_RECORD_COUNT,
+                    "records": [],
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         return root
+
+    def _fixture_manifest(self, root: Path) -> Path:
+        return (
+            root
+            / "visualizations"
+            / "public-surface-adjacency-map"
+            / "visualization-manifest.json"
+        )
 
     def test_missing_output_emits_failure_token(self):
         before = self._snapshot()
@@ -743,7 +780,14 @@ class ExpandedTargetTests(BaseCase):
         result = run_cli_from(
             root / "scripts",
             "build_public_surface_authority_map.py",
-            ["--target", "expanded", "--output", str(out)],
+            [
+                "--target",
+                "expanded",
+                "--visualization-manifest",
+                str(self._fixture_manifest(root)),
+                "--output",
+                str(out),
+            ],
             cwd=self._cwd,
         )
         self.assertNotEqual(result.returncode, 0)
@@ -881,7 +925,14 @@ class ExpandedTargetTests(BaseCase):
         result = run_cli_from(
             root / "scripts",
             "build_public_surface_authority_map.py",
-            ["--target", "expanded", "--output", str(existing)],
+            [
+                "--target",
+                "expanded",
+                "--visualization-manifest",
+                str(self._fixture_manifest(root)),
+                "--output",
+                str(existing),
+            ],
             cwd=self._cwd,
         )
         self.assertNotEqual(result.returncode, 0)

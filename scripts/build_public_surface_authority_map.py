@@ -67,6 +67,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
@@ -90,6 +91,103 @@ MISREADING_REGISTER_FILE = "public-misreading-register.json"
 
 TARGET_HISTORICAL = "historical"
 TARGET_EXPANDED = "expanded"
+
+# ---------------------------------------------------------------------------
+# Expanded adjacency-map inputs.
+#
+# The expanded target builds a separate product: the public-surface adjacency
+# map. Its visualization membership and rendering policy live in an independent
+# visualization manifest, never in the document registry, so registry selection
+# and visualization membership stay separate contracts.
+# ---------------------------------------------------------------------------
+
+MODEL_ATLAS_FILE = "model-atlas/MODEL_ATLAS.md"
+RELATION_MAP_FILE = "model-atlas/RELATION_MAP.md"
+
+# Pinned commit the expanded dataset is generated from. Recorded as provenance
+# in the dataset and required to match the visualization manifest.
+EXPANDED_SOURCE_COMMIT = "933274af9693d6d1d9fac36819aafdf56f9ab81d"
+
+# Consumer ceiling for the tracked expanded dataset.
+EXPANDED_MAX_DATA_BYTES = 262144
+
+# Pinned identity of the authoritative visualization-manifest schema, computed
+# directly from the tracked file's raw bytes.
+#
+# The schema is resolved next to the caller-supplied manifest, so a caller could
+# otherwise place a weakened schema there — additionalProperties relaxed to true,
+# a const removed, an enum widened, a required entry dropped, the repository-path
+# pattern loosened — while still declaring Draft 2020-12 and using the right
+# filename. Checking the draft declaration alone does not prove the schema IS the
+# approved contract. Authorization is therefore byte identity, not semantic
+# equivalence: a whitespace, key-order or newline change is also rejected.
+EXPANDED_MANIFEST_SCHEMA_FILE = (
+    "visualizations/public-surface-adjacency-map/visualization-manifest.schema.json"
+)
+EXPANDED_MANIFEST_SCHEMA_BYTES = 4379
+EXPANDED_MANIFEST_SCHEMA_SHA256 = (
+    "17cfdf65fc8916387c10810812cde4def8ea3982a9a9dc1d1c99673c61c0c2de"
+)
+EXPANDED_MANIFEST_SCHEMA_BLOB = "321ae11c6cd8b16fe1ef18a54c9591c41b14af50"
+
+# Mechanical registry surface_role -> visualization_role mapping. This is a
+# rendering-band assignment only: it asserts nothing about classification,
+# Registry status, hierarchy, or ontology membership.
+VISUALIZATION_ROLE_BY_SURFACE_ROLE = {
+    "concept_node": "concept",
+    "repository_orientation": "orientation",
+    "public_anchor": "anchor",
+    "boundary_document": "boundary",
+    "interpretation_guide": "boundary",
+    "source_use_guide": "boundary",
+}
+
+ROLE_CONCEPT = "concept"
+ROLE_ORIENTATION = "orientation"
+ROLE_BOUNDARY = "boundary"
+ROLE_ANCHOR = "anchor"
+
+EXPECTED_ROLE_DISTRIBUTION = {
+    ROLE_CONCEPT: 49,
+    ROLE_ORIENTATION: 2,
+    ROLE_BOUNDARY: 7,
+    ROLE_ANCHOR: 1,
+}
+
+EDGE_CLASS_SOURCE_NAMED = "source_named_adjacency"
+EDGE_CLASS_NAVIGATION = "navigation_adjacency"
+
+# Relation classes that are deliberately NOT rendered as semantic edges in this
+# release. They are stated once at product level instead. Keeping the names here
+# makes their exclusion explicit and testable.
+NON_RENDERED_RELATION_CLASSES = [
+    "governance_reference",
+    "source_use_reference",
+    "visual_layout_adjacency",
+    "user_confirmed_relation",
+]
+
+CEILING_NONE = "none"
+
+EXPANDED_BOUNDARY_STATEMENTS = [
+    "Selected public surface only. This is not the full MWE archive, registry, "
+    "methodology, or authority layer.",
+    "All 59 registered public documents are represented; only concept records "
+    "enter the semantic graph layout.",
+    "MODEL_ATLAS field grouping is a navigation grouping. It is not a formal "
+    "classification, ontology, hierarchy, priority order, confirmed relation, "
+    "or internal Registry assignment.",
+    "Source-declared adjacency is adjacency as written in the source document. "
+    "It is not a confirmed relation, formal dependency, or ontology claim.",
+    "Provisional navigation adjacency is a navigation surface drawn from "
+    "RELATION_MAP.md. It is provisional and is not a confirmed relation.",
+    "Governance references and source-use references are recorded in the "
+    "document registry and are stated here at product level only. They are not "
+    "rendered as semantic edges and contribute nothing to layout or degree.",
+    "Visual position, band placement, and record order do not indicate "
+    "conceptual importance, priority, or internal authority.",
+    "Omission does not imply nonexistence.",
+]
 
 # Historical target: frozen artifact, verify-only, fixed path.
 HISTORICAL_OUTPUT_FILE = "visualizations/public-surface-authority-map/data.json"
@@ -123,6 +221,25 @@ HISTORICAL_DEPENDENCY_INVENTORY_COUNT = 39
 FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH = "HISTORICAL_ARTIFACT_IDENTITY_MISMATCH"
 FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION = "HISTORICAL_OUTPUT_PATH_COLLISION"
 FAILURE_EXPANDED_TARGET_REQUIRES_OUTPUT = "EXPANDED_TARGET_REQUIRES_OUTPUT"
+FAILURE_EXPANDED_TARGET_REQUIRES_MANIFEST = "EXPANDED_TARGET_REQUIRES_VISUALIZATION_MANIFEST"
+FAILURE_EXPANDED_MANIFEST_INVALID = "EXPANDED_VISUALIZATION_MANIFEST_INVALID"
+FAILURE_EXPANDED_GROUPING_UNRESOLVED = "EXPANDED_GROUPING_UNRESOLVED"
+FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED = "EXPANDED_EDGE_ENDPOINT_UNRESOLVED"
+FAILURE_EXPANDED_DATA_EXCEEDS_CEILING = "EXPANDED_DATA_EXCEEDS_CONSUMER_CEILING"
+FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED = "EXPANDED_SOURCE_ADJACENCY_UNRESOLVED"
+FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE = "EXPANDED_DUPLICATE_DIRECTED_EDGE"
+FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE = "EXPANDED_SOURCE_INPUT_UNREADABLE"
+
+# Closed read-purpose vocabulary for the expanded target. Deliberately separate
+# from the historical PURPOSE_* vocabulary: the expanded inventory is its own
+# mechanism and never widens the pinned historical reconstruction.
+EXPANDED_PURPOSE_REGISTRY = "expanded_registry_input"
+EXPANDED_PURPOSE_MANIFEST = "visualization_membership_manifest"
+EXPANDED_PURPOSE_MANIFEST_SCHEMA = "visualization_manifest_schema"
+EXPANDED_PURPOSE_GROUPING = "navigation_grouping_source"
+EXPANDED_PURPOSE_NAVIGATION = "navigation_adjacency_source"
+EXPANDED_PURPOSE_SOURCE_NAMED = "source_named_adjacency_source"
+EXPANDED_PURPOSE_EXISTENCE = "expanded_reference_existence_check"
 
 # Provenance-inventory contract identities. These are stable facts fixed by the
 # inventory schema/contract, not volatile run data.
@@ -410,6 +527,557 @@ def assemble_map_data(
         },
     }
     return data
+
+
+# ---------------------------------------------------------------------------
+# Expanded adjacency-map parsers.
+#
+# Every parser below is deterministic and refuses to guess. A reference that
+# cannot be mapped to exactly one of the registered repository paths by an
+# explicitly written path is reported and rejected, never resolved by name
+# similarity, filename inference, shared vocabulary, or proximity.
+# ---------------------------------------------------------------------------
+
+SOURCE_ADJACENCY_HEADING = re.compile(
+    r"^## Relationship to Adjacent (?:Models|Public Frameworks)\s*$"
+)
+MARKDOWN_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+ATLAS_FIELD_HEADING = re.compile(r"^## (.+?)\s*$")
+ATLAS_ENTRY_FILE = re.compile(r"^- \*\*File:\*\* `([^`]+)`\s*$")
+
+
+class ExpandedSources:
+    """Recording reader for every expanded-target source input.
+
+    Every expanded read goes through this object, so the dependency inventory it
+    produces is by construction exactly the set of files the expanded target
+    actually read, hashed, or existence-checked. Bytes are read once per path and
+    cached, so the inventory cannot drift from the reads that built the dataset.
+
+    This is deliberately separate from the historical collect_read_purposes()
+    enumeration. The pinned 39-entry historical reconstruction is not widened,
+    consulted, or modified here.
+    """
+
+    def __init__(self, root_resolved: Path) -> None:
+        self.root = root_resolved
+        self._bytes: dict[str, bytes] = {}
+        self._purposes: dict[str, set[str]] = {}
+
+    # -- internals ------------------------------------------------------
+    def _record(self, label: str, purpose: str) -> None:
+        self._purposes.setdefault(label, set()).add(purpose)
+
+    def _resolve(self, relative_path: str) -> Path:
+        resolved = resolve_under_root(self.root, relative_path)
+        if resolved is None:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                "path escapes the source root"
+            )
+        return resolved
+
+    # -- public API -----------------------------------------------------
+    def read_bytes(self, relative_path: str, purpose: str) -> bytes:
+        self._record(relative_path, purpose)
+        if relative_path in self._bytes:
+            return self._bytes[relative_path]
+        resolved = self._resolve(relative_path)
+        if not resolved.is_file():
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                "required source input is missing or is not a regular file"
+            )
+        try:
+            data = resolved.read_bytes()
+        except OSError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"unable to read source input: {exc}"
+            )
+        self._bytes[relative_path] = data
+        return data
+
+    def read_text(self, relative_path: str, purpose: str) -> str:
+        data = self.read_bytes(relative_path, purpose)
+        try:
+            return data.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"source input is not valid UTF-8: {exc}"
+            )
+
+    def read_json(self, relative_path: str, purpose: str) -> Any:
+        text = self.read_text(relative_path, purpose)
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"invalid JSON at line {exc.lineno}: {exc.msg}"
+            )
+
+    def existence_check(self, relative_path: str, purpose: str) -> bool:
+        self._record(relative_path, purpose)
+        resolved = resolve_under_root(self.root, relative_path)
+        return resolved is not None and resolved.is_file()
+
+    def adopt_external(self, label: str, data: bytes, purpose: str) -> None:
+        """Record an input read outside the source root (a CLI-supplied path)."""
+        self._record(label, purpose)
+        self._bytes.setdefault(label, data)
+
+    def dependency_inventory(self) -> dict[str, Any]:
+        """Deterministic in-memory provenance record of the expanded build."""
+        files: list[dict[str, Any]] = []
+        for label in sorted(self._purposes):
+            data = self._bytes.get(label, b"")
+            files.append(
+                {
+                    "path": label,
+                    "byte_length": len(data),
+                    "sha256": hashlib.sha256(data).hexdigest(),
+                    "git_blob_sha1": git_blob_sha1(data),
+                    "read_purposes": sorted(self._purposes[label]),
+                }
+            )
+        aggregate_material = "".join(f"{item['path']}:{item['sha256']}\n" for item in files)
+        return {
+            "inventory_schema_version": INVENTORY_SCHEMA_VERSION,
+            "source_repository": SOURCE_REPOSITORY,
+            "target": TARGET_EXPANDED,
+            "dependency_count": len(files),
+            "aggregate_sha256": hashlib.sha256(
+                aggregate_material.encode("utf-8")
+            ).hexdigest(),
+            "files": files,
+        }
+
+
+def classify_adjacency_link(href: str, containing_path: str) -> tuple[str, str | None, str]:
+    """Classify one Markdown link found inside a formal adjacency section.
+
+    Returns (kind, resolved_path, reason) where kind is one of:
+
+      "accepted"   - an internal, registered, repository-relative .md document
+      "ignored"    - not a repository-relative Markdown document reference at
+                     all (external URL, DOI, OSF, fragment-only anchor, or a
+                     non-Markdown target). These are not adjacency declarations
+                     and are never unresolved candidates.
+      "unresolved" - it does look like a repository-relative Markdown document
+                     reference, but escapes the repository, cannot be normalized
+                     mechanically, or lands outside the 59-record registry.
+
+    Only the href is used. The visible link label is never consulted, so no
+    edge can depend on a human-readable concept name.
+    """
+    raw = href.strip()
+    if not raw:
+        return ("ignored", None, "empty href")
+    if "://" in raw or raw.startswith("mailto:"):
+        return ("ignored", None, "external URL")
+    if raw.startswith("#"):
+        return ("ignored", None, "fragment-only anchor")
+
+    target = raw.split("#", 1)[0].strip()
+    if not target:
+        return ("ignored", None, "fragment-only anchor")
+    if not target.lower().endswith(".md"):
+        return ("ignored", None, "non-Markdown-document link")
+    if target.startswith("/"):
+        return ("unresolved", None, "absolute path escapes the repository")
+    if "\\" in target or PureWindowsPath(target).drive:
+        return ("unresolved", None, "not mechanically normalizable")
+
+    parts = containing_path.split("/")[:-1]
+    while target.startswith("./") or target.startswith("../"):
+        if target.startswith("./"):
+            target = target[2:]
+        else:
+            target = target[3:]
+            if not parts:
+                return ("unresolved", None, "path escapes the repository root")
+            parts = parts[:-1]
+    if not target:
+        return ("unresolved", None, "not mechanically normalizable")
+
+    resolved = "/".join([*parts, target]) if parts else target
+    if not is_repository_relative_path(resolved):
+        return ("unresolved", None, "path escapes the repository root")
+    return ("accepted", resolved, "")
+
+
+def build_visualization_roles(records: list[dict[str, Any]]) -> dict[str, str]:
+    """Map each registered repository path to its visualization role.
+
+    The mapping is mechanical from the registry's existing surface_role. It
+    introduces no new registry literal and changes no registry value.
+    """
+    roles: dict[str, str] = {}
+    for index, record in enumerate(records, start=1):
+        repository_path = record.get("repository_path")
+        if not isinstance(repository_path, str) or not repository_path:
+            fail(f"record {index}: missing repository_path")
+        surface_role = record.get("surface_role")
+        if surface_role not in VISUALIZATION_ROLE_BY_SURFACE_ROLE:
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: unknown "
+                f"surface_role {surface_role!r}; no visualization role is inferred "
+                "for an unmapped registry role"
+            )
+        roles[repository_path] = VISUALIZATION_ROLE_BY_SURFACE_ROLE[surface_role]
+    return roles
+
+
+def parse_model_atlas_fields(
+    sources: ExpandedSources,
+    records: list[dict[str, Any]],
+    roles: dict[str, str],
+) -> dict[str, str]:
+    """Resolve each concept record to exactly one MODEL_ATLAS navigation field.
+
+    MODEL_ATLAS entries declare their own file explicitly ('- **File:** `...`')
+    under a '## <field>' heading, so the assignment is read, never inferred from
+    a filename. Zero, duplicate, or ambiguous assignments stop the run.
+    """
+    text = sources.read_text(MODEL_ATLAS_FILE, EXPANDED_PURPOSE_GROUPING)
+    field: str | None = None
+    assignments: dict[str, list[str]] = {}
+
+    for line in text.split("\n"):
+        heading = ATLAS_FIELD_HEADING.match(line)
+        if heading:
+            field = heading.group(1)
+            continue
+        entry = ATLAS_ENTRY_FILE.match(line)
+        if not entry:
+            continue
+        if field is None:
+            fail(
+                f"{FAILURE_EXPANDED_GROUPING_UNRESOLVED}: {MODEL_ATLAS_FILE}: entry "
+                f"{entry.group(1)!r} appears before any field heading"
+            )
+        assignments.setdefault(entry.group(1), []).append(field)
+
+    grouping: dict[str, str] = {}
+    for repository_path, role in roles.items():
+        if role != ROLE_CONCEPT:
+            continue
+        fields = assignments.get(repository_path, [])
+        if len(fields) != 1:
+            fail(
+                f"{FAILURE_EXPANDED_GROUPING_UNRESOLVED}: {repository_path}: resolves "
+                f"to {len(fields)} MODEL_ATLAS navigation field(s) ({fields!r}); "
+                "exactly one is required and no field is selected by guessing"
+            )
+        grouping[repository_path] = fields[0]
+    return grouping
+
+
+def parse_source_named_adjacency(
+    sources: ExpandedSources,
+    records: list[dict[str, Any]],
+    roles: dict[str, str],
+) -> tuple[list[tuple[str, str]], dict[str, Any]]:
+    """Extract source-named adjacency from the registered source documents.
+
+    The approved contract is a machine-readable edge contract:
+
+        source_named_adjacency
+        = repository-relative Markdown document links written inside the
+          source document's formal adjacency section
+
+    Every Markdown link inside the formal section counts, wherever it appears —
+    at the start of a bullet, later in a bullet, in a sentence, in a table row,
+    or inside a fenced block. Only the href is resolved; the visible label is
+    never consulted.
+
+    Bare concept names, plain-text bullets, fenced comparison labels, prose,
+    '=' definitions, and short conceptual names are human-readable adjacency
+    discussion. They create no edge and are NOT unresolved candidates: this
+    parser attempts no alias, prefix, or fuzzy mapping of any kind.
+
+    Repeated links to the same target within one document's single formal
+    section are two evidence occurrences for one adjacency, not two edges, and
+    are consolidated into one directed edge with all evidence lines retained in
+    the audit. A document carrying more than one formal adjacency section fails
+    closed rather than having only its first section used.
+
+    Direction is preserved exactly as written; no reverse edge is manufactured.
+
+    Returns (retained concept-to-concept edges, audit).
+    """
+    registered = set(roles)
+    # (source, target) -> {"lines": [...], "hrefs": [...]}
+    evidence: dict[tuple[str, str], dict[str, list[Any]]] = {}
+    order: list[tuple[str, str]] = []
+    sections: list[dict[str, Any]] = []
+    totals = {
+        "documents_with_sections": 0,
+        "links_in_sections": 0,
+        "accepted_declarations": 0,
+        "ignored_links": 0,
+        "self_references_omitted": 0,
+        "same_section_repeated_evidence": 0,
+        "unresolved_internal_links": 0,
+    }
+
+    for repository_path in roles:
+        text = sources.read_text(repository_path, EXPANDED_PURPOSE_SOURCE_NAMED)
+        lines = text.split("\n")
+        starts = [i for i, line in enumerate(lines) if SOURCE_ADJACENCY_HEADING.match(line)]
+        if not starts:
+            continue
+        if len(starts) > 1:
+            fail(
+                f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: {repository_path}: "
+                f"{len(starts)} formal adjacency sections found at lines "
+                f"{[index + 1 for index in starts]}; exactly one is required and "
+                "no section is silently preferred"
+            )
+
+        start = starts[0]
+        end = len(lines)
+        for index in range(start + 1, len(lines)):
+            if lines[index].startswith("## "):
+                end = index
+                break
+
+        section = {
+            "repository_path": repository_path,
+            "heading_line": start + 1,
+            "section_end_line": end,
+            "links": [],
+            "accepted": [],
+            "ignored": [],
+            "self_references": [],
+            "repeated_evidence": [],
+            "unresolved": [],
+        }
+        totals["documents_with_sections"] += 1
+        # Section-scoped evidence: consolidation is only ever allowed inside one
+        # formal section of one document.
+        section_seen: dict[tuple[str, str], int] = {}
+
+        for index in range(start + 1, end):
+            line = lines[index]
+            line_number = index + 1
+            for href in MARKDOWN_LINK.findall(line):
+                totals["links_in_sections"] += 1
+                section["links"].append({"line": line_number, "href": href})
+                kind, target, reason = classify_adjacency_link(href, repository_path)
+
+                if kind == "ignored":
+                    totals["ignored_links"] += 1
+                    section["ignored"].append(
+                        {"line": line_number, "href": href, "reason": reason}
+                    )
+                    continue
+
+                if kind == "unresolved" or target not in registered:
+                    if kind == "accepted":
+                        reason = (
+                            f"resolves to {target!r}, which is outside the "
+                            f"{len(registered)}-record public registry"
+                        )
+                    totals["unresolved_internal_links"] += 1
+                    section["unresolved"].append(
+                        {"line": line_number, "href": href, "reason": reason}
+                    )
+                    fail(
+                        f"{FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED}: "
+                        f"{repository_path}:{line_number}: href {href!r} in the "
+                        f"formal adjacency section {reason}. Source line: "
+                        f"{line.strip()!r}"
+                    )
+
+                if target == repository_path:
+                    totals["self_references_omitted"] += 1
+                    section["self_references"].append(
+                        {"line": line_number, "href": href}
+                    )
+                    continue
+
+                key = (repository_path, target)
+                if key in section_seen:
+                    # Same document, same formal section, same resolved target,
+                    # same edge class: repeated evidence for one adjacency.
+                    totals["same_section_repeated_evidence"] += 1
+                    section["repeated_evidence"].append(
+                        {
+                            "line": line_number,
+                            "href": href,
+                            "first_line": section_seen[key],
+                            "target": target,
+                        }
+                    )
+                    evidence[key]["lines"].append(line_number)
+                    evidence[key]["hrefs"].append(href)
+                    continue
+
+                section_seen[key] = line_number
+                totals["accepted_declarations"] += 1
+                section["accepted"].append(
+                    {"line": line_number, "href": href, "target": target}
+                )
+                if key in evidence:
+                    # The same pair reached from a different formal section is a
+                    # structural problem, not repeated same-section evidence.
+                    fail(
+                        f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: "
+                        f"{EDGE_CLASS_SOURCE_NAMED}: {repository_path} -> {target}: "
+                        f"first declared at line {evidence[key]['lines'][0]}, "
+                        f"duplicated at line {line_number} from an incompatible "
+                        "evidence scope"
+                    )
+                evidence[key] = {"lines": [line_number], "hrefs": [href]}
+                order.append(key)
+
+        sections.append(section)
+
+    retained = [
+        edge
+        for edge in order
+        if roles[edge[0]] == ROLE_CONCEPT and roles[edge[1]] == ROLE_CONCEPT
+    ]
+    # Accepted declarations count each first occurrence; repeated same-section
+    # evidence is counted separately and consolidates into the same edge.
+    # Every accepted internal registered link declaration, including repeated
+    # same-section evidence for one adjacency. Declarations minus repeated
+    # evidence equals the number of unique directed edges.
+    totals["accepted_link_declarations"] = (
+        totals["accepted_declarations"] + totals["same_section_repeated_evidence"]
+    )
+    totals["unique_directed_edges"] = len(order)
+    totals["retained_concept_edges"] = len(retained)
+    totals["excluded_non_concept_edges"] = len(order) - len(retained)
+
+    audit = {
+        "totals": totals,
+        "sections": sections,
+        "evidence": [
+            {
+                "source": key[0],
+                "target": key[1],
+                "declaration_count": len(evidence[key]["lines"]),
+                "declaration_lines": list(evidence[key]["lines"]),
+                "declaration_hrefs": list(evidence[key]["hrefs"]),
+            }
+            for key in order
+        ],
+    }
+    return retained, audit
+
+
+def parse_navigation_adjacency(
+    sources: ExpandedSources,
+    records: list[dict[str, Any]],
+    roles: dict[str, str],
+) -> tuple[list[tuple[str, str]], int, int]:
+    """Extract provisional navigation adjacency as written in RELATION_MAP.md.
+
+    Only the table's own 'Adjacent entries' column is read. Nothing is inferred
+    from MODEL_ATLAS grouping, textual proximity, or shared vocabulary.
+    Direction is preserved as written; reciprocal pairs remain two directed
+    edges and are never collapsed.
+
+    Returns (retained concept-to-concept edges, raw directed count, count
+    excluded for a non-concept endpoint).
+    """
+    text = sources.read_text(RELATION_MAP_FILE, EXPANDED_PURPOSE_NAVIGATION)
+    registered = set(roles)
+    raw: list[tuple[str, str]] = []
+    seen: dict[tuple[str, str], int] = {}
+
+    for line_number, line in enumerate(text.split("\n"), start=1):
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) != 7:
+            continue
+        file_links = MARKDOWN_LINK.findall(cells[1])
+        if not file_links:
+            continue
+        kind, source, reason = classify_adjacency_link(file_links[0], RELATION_MAP_FILE)
+        if kind != "accepted" or source not in registered:
+            fail(
+                f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: "
+                f"{RELATION_MAP_FILE}:{line_number}: row entry {cells[1]!r} does not "
+                f"map to exactly one of the {len(registered)} registered public "
+                f"documents ({reason or 'outside the registry'})"
+            )
+        for reference in MARKDOWN_LINK.findall(cells[5]):
+            kind, target, reason = classify_adjacency_link(reference, RELATION_MAP_FILE)
+            if kind != "accepted" or target not in registered:
+                fail(
+                    f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: "
+                    f"{RELATION_MAP_FILE}:{line_number}: adjacent entry "
+                    f"{reference!r} on row {cells[1]!r} does not map to exactly one "
+                    f"of the {len(registered)} registered public documents "
+                    f"({reason or 'outside the registry'})"
+                )
+            if target == source:
+                continue
+            key = (source, target)
+            if key in seen:
+                # RELATION_MAP is a single curated navigation table; a repeated
+                # directed pair there is a structural problem, not repeated
+                # evidence for one edge, so it fails closed.
+                fail(
+                    f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: "
+                    f"{EDGE_CLASS_NAVIGATION}: {source} -> {target}: first declared "
+                    f"at {RELATION_MAP_FILE}:{seen[key]}, duplicated at "
+                    f"{RELATION_MAP_FILE}:{line_number}"
+                )
+            seen[key] = line_number
+            raw.append(key)
+
+    retained = [
+        edge
+        for edge in raw
+        if roles[edge[0]] == ROLE_CONCEPT and roles[edge[1]] == ROLE_CONCEPT
+    ]
+    return retained, len(raw), len(raw) - len(retained)
+
+
+def compute_relation_evidence_ceilings(
+    roles: dict[str, str],
+    source_named_audit: dict[str, Any],
+    navigation: list[tuple[str, str]],
+) -> dict[str, str]:
+    """Record the strongest approved machine-readable evidence per record.
+
+    The source-named ceiling is computed from accepted, non-self Markdown-link
+    declarations BEFORE non-concept rendering filtration, so a record keeps its
+    source-level evidence even when its valid targets are filtered out of the
+    rendered graph.
+
+    A formal adjacency section written only in bare conceptual names carries no
+    machine-readable link, so it does not by itself establish a source-named
+    ceiling. That is a statement about what P5 can encode mechanically without
+    an alias or authorial relation table — not a denial that the section
+    contains conceptual discussion.
+
+    This is a display-evidence fact only. It is not a classification, hierarchy,
+    confirmed relation, priority order, or ontology statement.
+    """
+    named_sources = {
+        item["source"] for item in source_named_audit["evidence"]
+    }
+    navigation_endpoints = {edge[0] for edge in navigation} | {edge[1] for edge in navigation}
+
+    ceilings: dict[str, str] = {}
+    for repository_path, role in roles.items():
+        if role != ROLE_CONCEPT:
+            ceilings[repository_path] = CEILING_NONE
+        elif repository_path in named_sources:
+            ceilings[repository_path] = EDGE_CLASS_SOURCE_NAMED
+        elif repository_path in navigation_endpoints:
+            ceilings[repository_path] = EDGE_CLASS_NAVIGATION
+        else:
+            ceilings[repository_path] = CEILING_NONE
+    return ceilings
 
 
 def collect_read_purposes(root_resolved: Path) -> dict[str, set[str]]:
@@ -728,21 +1396,562 @@ def resolve_expanded_output(path_str: str) -> Path:
     return output_resolved
 
 
-def run_expanded(output: str) -> int:
+JSON_SCHEMA_DRAFT_2020_12 = "https://json-schema.org/draft/2020-12/schema"
+
+
+def schema_instance_errors(schema: Any, instance: Any, path: str = "$") -> list[str]:
+    """Validate an instance against the keyword subset the manifest schema uses.
+
+    Supported keywords: type, const, enum, required, additionalProperties,
+    properties, items, minItems, maxItems, uniqueItems, minLength, pattern.
+
+    This repository has no third-party JSON Schema dependency, so validation is
+    implemented here in the standard library and shared by production generation
+    and the test suite, rather than existing twice and drifting apart.
+    """
+    errors: list[str] = []
+    if not isinstance(schema, dict):
+        return errors
+
+    if "const" in schema and instance != schema["const"]:
+        errors.append(f"{path}: {instance!r} does not equal const {schema['const']!r}")
+    if "enum" in schema and instance not in schema["enum"]:
+        errors.append(f"{path}: {instance!r} is not one of {schema['enum']!r}")
+
+    expected = schema.get("type")
+    if expected == "object":
+        if not isinstance(instance, dict):
+            return errors + [f"{path}: expected an object"]
+        properties = schema.get("properties", {})
+        for key in schema.get("required", []):
+            if key not in instance:
+                errors.append(f"{path}: missing required property {key!r}")
+        if schema.get("additionalProperties") is False:
+            for key in instance:
+                if key not in properties:
+                    errors.append(f"{path}: property {key!r} is not allowed")
+        for key, value in instance.items():
+            if key in properties:
+                errors.extend(schema_instance_errors(properties[key], value, f"{path}.{key}"))
+    elif expected == "array":
+        if not isinstance(instance, list):
+            return errors + [f"{path}: expected an array"]
+        if "minItems" in schema and len(instance) < schema["minItems"]:
+            errors.append(f"{path}: has {len(instance)} items, minimum {schema['minItems']}")
+        if "maxItems" in schema and len(instance) > schema["maxItems"]:
+            errors.append(f"{path}: has {len(instance)} items, maximum {schema['maxItems']}")
+        if schema.get("uniqueItems"):
+            seen = [json.dumps(item, sort_keys=True, ensure_ascii=False) for item in instance]
+            if len(set(seen)) != len(seen):
+                errors.append(f"{path}: items are not unique")
+        item_schema = schema.get("items")
+        if isinstance(item_schema, dict):
+            for index, item in enumerate(instance):
+                errors.extend(schema_instance_errors(item_schema, item, f"{path}[{index}]"))
+    elif expected == "string":
+        if not isinstance(instance, str):
+            return errors + [f"{path}: expected a string"]
+        if "minLength" in schema and len(instance) < schema["minLength"]:
+            errors.append(f"{path}: shorter than minLength {schema['minLength']}")
+        if "pattern" in schema and not re.search(schema["pattern"], instance):
+            errors.append(f"{path}: {instance!r} does not match pattern {schema['pattern']!r}")
+    elif expected == "integer":
+        if isinstance(instance, bool) or not isinstance(instance, int):
+            return errors + [f"{path}: expected an integer"]
+
+    return errors
+
+
+def validate_manifest_against_schema(
+    manifest: dict[str, Any],
+    manifest_path: Path,
+    sources: ExpandedSources,
+) -> None:
+    """Enforce the tracked manifest schema contract during production generation.
+
+    The schema reference is resolved relative to the manifest file itself, the
+    schema must be a readable regular Draft 2020-12 file, and the manifest is
+    then validated against every keyword the tracked schema uses.
+    """
+    declared = manifest.get("$schema")
+    if declared != "./visualization-manifest.schema.json":
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: $schema "
+            f"{declared!r} must be './visualization-manifest.schema.json'"
+        )
+
+    schema_path = (manifest_path.parent / declared).resolve()
+    if not schema_path.is_file():
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: visualization "
+            "manifest schema is missing or is not a regular file"
+        )
+    try:
+        schema_bytes = schema_path.read_bytes()
+    except OSError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: unable to read "
+            f"visualization manifest schema: {exc}"
+        )
+
+    label = schema_label_for(schema_path, sources.root)
+    sources.adopt_external(label, schema_bytes, EXPANDED_PURPOSE_MANIFEST_SCHEMA)
+
+    # Identity is checked BEFORE the schema is decoded, parsed or trusted, so a
+    # caller-supplied replacement can never redefine the manifest contract.
+    actual_length = len(schema_bytes)
+    actual_sha256 = hashlib.sha256(schema_bytes).hexdigest()
+    actual_blob = git_blob_sha1(schema_bytes)
+    if (
+        actual_length != EXPANDED_MANIFEST_SCHEMA_BYTES
+        or actual_sha256 != EXPANDED_MANIFEST_SCHEMA_SHA256
+        or actual_blob != EXPANDED_MANIFEST_SCHEMA_BLOB
+    ):
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: the adjacent "
+            "manifest schema is not the authoritative tracked schema "
+            f"({EXPANDED_MANIFEST_SCHEMA_FILE}). Authorization is byte identity, "
+            "not semantic equivalence, so a reformatted or weakened schema is "
+            "rejected even when it declares the correct draft. "
+            f"expected byte length {EXPANDED_MANIFEST_SCHEMA_BYTES}, sha256 "
+            f"{EXPANDED_MANIFEST_SCHEMA_SHA256}, git blob "
+            f"{EXPANDED_MANIFEST_SCHEMA_BLOB}; actual byte length {actual_length}, "
+            f"sha256 {actual_sha256}, git blob {actual_blob}"
+        )
+
+    try:
+        schema_text = schema_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema is "
+            f"not valid UTF-8: {exc}"
+        )
+    try:
+        schema = json.loads(schema_text)
+    except json.JSONDecodeError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema is "
+            f"not readable JSON at line {exc.lineno}: {exc.msg}"
+        )
+    if not isinstance(schema, dict):
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema "
+            "top-level value must be an object"
+        )
+    if schema.get("$schema") != JSON_SCHEMA_DRAFT_2020_12:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema "
+            f"draft {schema.get('$schema')!r} is not {JSON_SCHEMA_DRAFT_2020_12!r}"
+        )
+
+    errors = schema_instance_errors(schema, manifest)
+    if errors:
+        for message in errors[:20]:
+            print(f"build_public_surface_authority_map: manifest: {message}", file=sys.stderr)
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: manifest does not "
+            f"satisfy its schema contract ({len(errors)} error(s)); first: {errors[0]}"
+        )
+
+
+def schema_label_for(path: Path, root_resolved: Path) -> str:
+    """Stable inventory label: repository-relative when inside the source root."""
+    try:
+        return path.relative_to(root_resolved).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def load_visualization_manifest(manifest_path: str) -> dict[str, Any]:
+    """Read the independent visualization manifest, failing closed if unusable.
+
+    The manifest is a separate contract from mwe-public-documents.json. It is
+    read here and never written, and the registry is never treated as the
+    visualization-membership authority.
+    """
+    path = Path(manifest_path)
+    if not path.is_file():
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: visualization "
+            "manifest does not exist"
+        )
+    try:
+        raw_bytes = path.read_bytes()
+    except OSError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: unable to read "
+            f"visualization manifest: {exc}"
+        )
+    try:
+        raw = raw_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        # The manifest and its schema belong to the manifest-contract boundary,
+        # so a decode failure here is a manifest-contract failure and must emit
+        # the stable token rather than escape as a traceback.
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: visualization "
+            f"manifest is not valid UTF-8: {exc}"
+        )
+    try:
+        manifest = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: invalid JSON at "
+            f"line {exc.lineno}: {exc.msg}"
+        )
+    if not isinstance(manifest, dict):
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: top-level value "
+            "must be an object"
+        )
+    return manifest
+
+
+def assemble_adjacency_data(
+    root_resolved: Path,
+    manifest: dict[str, Any],
+    manifest_label: str,
+    manifest_path: Path | None = None,
+    manifest_bytes: bytes | None = None,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Assemble the expanded public-surface adjacency dataset.
+
+    Reads the registry for record identity, the visualization manifest for
+    membership and rendering policy, MODEL_ATLAS for concept navigation
+    grouping, RELATION_MAP for provisional navigation adjacency, and each
+    registered source document for its own declared adjacency.
+    """
+    sources = ExpandedSources(root_resolved)
+    documents = sources.read_json(DOCUMENTS_FILE, EXPANDED_PURPOSE_REGISTRY)
+    if not isinstance(documents, dict):
+        fail(f"{DOCUMENTS_FILE}: top-level value must be an object")
+
+    declared_count = documents.get("record_count")
+    if declared_count != EXPANDED_RECORD_COUNT:
+        fail(
+            f"{DOCUMENTS_FILE}: declared record_count {declared_count!r} "
+            f"!= {EXPANDED_RECORD_COUNT}"
+        )
+    records = documents.get("@graph")
+    if not isinstance(records, list):
+        fail(f"{DOCUMENTS_FILE}: @graph must be a list")
+    if len(records) != EXPANDED_RECORD_COUNT:
+        fail(
+            f"{DOCUMENTS_FILE}: @graph has {len(records)} records, expected "
+            f"{EXPANDED_RECORD_COUNT}"
+        )
+
+    roles = build_visualization_roles(records)
+    registry_order = [record["repository_path"] for record in records]
+
+    role_counts = {role: 0 for role in EXPECTED_ROLE_DISTRIBUTION}
+    for role in roles.values():
+        role_counts[role] = role_counts.get(role, 0) + 1
+    if role_counts != EXPECTED_ROLE_DISTRIBUTION:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: visualization role distribution "
+            f"{role_counts!r} != approved {EXPECTED_ROLE_DISTRIBUTION!r}"
+        )
+
+    # --- manifest contract -------------------------------------------------
+    if manifest_path is not None:
+        if manifest_bytes is not None:
+            sources.adopt_external(
+                schema_label_for(manifest_path, root_resolved),
+                manifest_bytes,
+                EXPANDED_PURPOSE_MANIFEST,
+            )
+        validate_manifest_against_schema(manifest, manifest_path, sources)
+
+    if manifest.get("source_commit") != EXPANDED_SOURCE_COMMIT:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_label}: source_commit "
+            f"{manifest.get('source_commit')!r} != pinned generation source commit "
+            f"{EXPANDED_SOURCE_COMMIT!r}"
+        )
+    if manifest.get("record_count") != EXPANDED_RECORD_COUNT:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_label}: record_count "
+            f"{manifest.get('record_count')!r} != {EXPANDED_RECORD_COUNT}"
+        )
+    manifest_records = manifest.get("records")
+    if not isinstance(manifest_records, list) or len(manifest_records) != EXPANDED_RECORD_COUNT:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_label}: records must be "
+            f"a list of exactly {EXPANDED_RECORD_COUNT} entries"
+        )
+
+    manifest_paths = [entry.get("repository_path") for entry in manifest_records]
+    if manifest_paths != registry_order:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_label}: records must be "
+            "exactly 1:1 with the registry, in registry order"
+        )
+
+    grouping = parse_model_atlas_fields(sources, records, roles)
+    source_named, source_audit = parse_source_named_adjacency(sources, records, roles)
+    navigation, navigation_raw, navigation_excluded = parse_navigation_adjacency(
+        sources, records, roles
+    )
+    ceilings = compute_relation_evidence_ceilings(roles, source_audit, navigation)
+    source_totals = source_audit["totals"]
+
+    by_path = {record["repository_path"]: record for record in records}
+    nodes: list[dict[str, Any]] = []
+
+    for entry in manifest_records:
+        repository_path = entry["repository_path"]
+        record = by_path[repository_path]
+        role = roles[repository_path]
+
+        if entry.get("visualization_membership") != "included":
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: "
+                f"visualization_membership {entry.get('visualization_membership')!r} "
+                "is not 'included'; the approved membership is all 59 records"
+            )
+        if entry.get("visualization_role") != role:
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: manifest "
+                f"visualization_role {entry.get('visualization_role')!r} != role "
+                f"{role!r} mapped from the registry surface_role"
+            )
+        if entry.get("display_label_source") != "registry_name":
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: "
+                "display_label_source must be 'registry_name'"
+            )
+        expected_grouping_source = (
+            "model_atlas_field" if role == ROLE_CONCEPT else "visualization_role"
+        )
+        if entry.get("grouping_source") != expected_grouping_source:
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: "
+                f"grouping_source {entry.get('grouping_source')!r} != "
+                f"{expected_grouping_source!r}"
+            )
+        if entry.get("relation_evidence_ceiling") != ceilings[repository_path]:
+            fail(
+                f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {repository_path}: manifest "
+                f"relation_evidence_ceiling {entry.get('relation_evidence_ceiling')!r} "
+                f"!= recomputed {ceilings[repository_path]!r}"
+            )
+
+        label = record.get("name")
+        if not isinstance(label, str) or not label:
+            fail(f"{repository_path}: registry record has no usable name")
+
+        nodes.append(
+            {
+                "id": repository_path,
+                "repository_path": repository_path,
+                "display_label": label,
+                "display_label_source": "registry_name",
+                "visualization_role": role,
+                "visualization_membership": "included",
+                "semantic_layout_participation": role == ROLE_CONCEPT,
+                "grouping_source": expected_grouping_source,
+                "grouping": grouping[repository_path] if role == ROLE_CONCEPT else role,
+                "relation_evidence_ceiling": ceilings[repository_path],
+                "canonical_public_url": record.get("canonical_public_url"),
+            }
+        )
+
+    edges: list[dict[str, Any]] = []
+    for edge_class, pairs, default_visible in (
+        (EDGE_CLASS_SOURCE_NAMED, source_named, True),
+        (EDGE_CLASS_NAVIGATION, navigation, False),
+    ):
+        for source, target in sorted(pairs):
+            edges.append(
+                {
+                    "id": f"{edge_class}::{source}->{target}",
+                    "source": source,
+                    "target": target,
+                    "edge_class": edge_class,
+                    "directed": True,
+                    "default_visible": default_visible,
+                    # Evidence/status/ceiling separation is retained. The status
+                    # is the evidence class itself and never says "confirmed";
+                    # the ceiling stays navigation_only. Neither field promotes
+                    # adjacency into a formal or confirmed relation.
+                    "relation_status": edge_class,
+                    "authority_ceiling": "navigation_only",
+                }
+            )
+
+    grouping_distribution: dict[str, int] = {}
+    for node in nodes:
+        if node["visualization_role"] == ROLE_CONCEPT:
+            key = node["grouping"]
+            grouping_distribution[key] = grouping_distribution.get(key, 0) + 1
+
+    ceiling_distribution: dict[str, int] = {}
+    for value in ceilings.values():
+        ceiling_distribution[value] = ceiling_distribution.get(value, 0) + 1
+
+    data = {
+        "schema_version": "1.0",
+        "title": "Public Surface Adjacency Map (expanded public surface)",
+        "scope": "expanded_public_surface_visualization_membership",
+        "authority_ceiling": "navigation_only",
+        "source_commit": EXPANDED_SOURCE_COMMIT,
+        "source_repository": SOURCE_REPOSITORY,
+        "generated_from": [
+            DOCUMENTS_FILE,
+            "visualizations/public-surface-adjacency-map/visualization-manifest.json",
+            MODEL_ATLAS_FILE,
+            RELATION_MAP_FILE,
+            "each registered public source document (declared adjacency section only)",
+        ],
+        "record_count": len(nodes),
+        "boundary_statements": EXPANDED_BOUNDARY_STATEMENTS,
+        "role_distribution": {
+            role: role_counts[role] for role in sorted(EXPECTED_ROLE_DISTRIBUTION)
+        },
+        "semantic_layout_participant_count": sum(
+            1 for node in nodes if node["semantic_layout_participation"]
+        ),
+        "fixed_band_record_count": sum(
+            1 for node in nodes if not node["semantic_layout_participation"]
+        ),
+        "grouping_distribution": {
+            key: grouping_distribution[key] for key in sorted(grouping_distribution)
+        },
+        "relation_evidence_ceiling_distribution": {
+            key: ceiling_distribution[key] for key in sorted(ceiling_distribution)
+        },
+        "edge_classes": [
+            {
+                "edge_class": EDGE_CLASS_SOURCE_NAMED,
+                "display_label": "Source-declared adjacency",
+                "directed": True,
+                "default_visible": True,
+                "evidence_source": (
+                    "repository-relative Markdown document links written inside "
+                    "the source document's formal adjacency section"
+                ),
+            },
+            {
+                "edge_class": EDGE_CLASS_NAVIGATION,
+                "display_label": "Provisional navigation adjacency",
+                "directed": True,
+                "default_visible": False,
+                "evidence_source": RELATION_MAP_FILE,
+            },
+        ],
+        "raw_edge_counts": {
+            EDGE_CLASS_NAVIGATION: navigation_raw,
+            EDGE_CLASS_SOURCE_NAMED: source_totals["unique_directed_edges"],
+        },
+        "edge_counts": {
+            EDGE_CLASS_NAVIGATION: len(navigation),
+            EDGE_CLASS_SOURCE_NAMED: len(source_named),
+        },
+        "excluded_non_concept_endpoint_counts": {
+            EDGE_CLASS_NAVIGATION: navigation_excluded,
+            EDGE_CLASS_SOURCE_NAMED: source_totals["excluded_non_concept_edges"],
+        },
+        "source_named_declaration_counts": {
+            "markdown_link_declarations": source_totals["accepted_link_declarations"],
+            "same_section_repeated_evidence": source_totals[
+                "same_section_repeated_evidence"
+            ],
+            "self_references_omitted": source_totals["self_references_omitted"],
+            "unique_directed_edges": source_totals["unique_directed_edges"],
+        },
+        "relation_classes_not_rendered": list(NON_RENDERED_RELATION_CLASSES),
+        "transform_notes": {
+            "record_order_implies_hierarchy": False,
+            "node_size_implies_importance": False,
+            "layout_position_implies_relation": False,
+            "grouping_implies_classification_or_ontology": False,
+            "adjacency_implies_formal_relation": False,
+            "reverse_edges_inferred": False,
+            "non_concept_records_participate_in_layout": False,
+            "governance_or_source_use_edges_rendered": False,
+        },
+        "nodes": nodes,
+        "edges": edges,
+    }
+    return data, source_audit, sources.dependency_inventory()
+
+
+def run_expanded(output: str, visualization_manifest: str | None) -> int:
+    # Collision checking runs first, before the manifest requirement, before any
+    # registry or edge processing, before parent creation, and before any write.
     output_resolved = resolve_expanded_output(output)
 
-    data = assemble_map_data(GENERATOR_ROOT_RESOLVED, EXPANDED_RECORD_COUNT)
-    write_json_file(output_resolved, data)
+    if visualization_manifest is None:
+        fail(
+            f"{FAILURE_EXPANDED_TARGET_REQUIRES_MANIFEST}: --target {TARGET_EXPANDED} "
+            "requires an explicit --visualization-manifest path; the document "
+            "registry is never the visualization-membership authority"
+        )
 
-    print("Public Surface and Authority-Ceiling Map data generated (expanded target).")
+    manifest_path = Path(visualization_manifest).resolve()
+    manifest = load_visualization_manifest(visualization_manifest)
+    try:
+        manifest_bytes = manifest_path.read_bytes()
+    except OSError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {visualization_manifest}: unable "
+            f"to read visualization manifest: {exc}"
+        )
+    data, source_audit, inventory = assemble_adjacency_data(
+        GENERATOR_ROOT_RESOLVED,
+        manifest,
+        visualization_manifest,
+        manifest_path,
+        manifest_bytes,
+    )
+    source_totals = source_audit["totals"]
+
+    payload = json.dumps(data, indent=2, ensure_ascii=False, sort_keys=False) + "\n"
+    encoded = payload.encode("utf-8")
+    if len(encoded) > EXPANDED_MAX_DATA_BYTES:
+        fail(
+            f"{FAILURE_EXPANDED_DATA_EXCEEDS_CEILING}: expanded dataset is "
+            f"{len(encoded)} bytes, above the {EXPANDED_MAX_DATA_BYTES}-byte "
+            "consumer ceiling"
+        )
+
+    output_resolved.parent.mkdir(parents=True, exist_ok=True)
+    with output_resolved.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(payload)
+
+    print("Public Surface Adjacency Map data generated (expanded target).")
     print(f"- output: {output_resolved}")
-    print(f"- expected records: {EXPANDED_RECORD_COUNT}")
-    print(f"- nodes: {len(data['nodes'])}")
-    print(f"- edges: {len(data['edges'])}")
-    for relation_type in sorted(REFERENCE_FIELDS.values()):
-        print(f"    - {relation_type}: {data['edge_counts'].get(relation_type, 0)}")
-    print(f"- self-reference edges omitted: {data['self_references_omitted_count']}")
-    print("- relation_status / authority_ceiling on every edge: navigation_only")
+    print(f"- visualization manifest: {visualization_manifest}")
+    print(f"- source commit: {EXPANDED_SOURCE_COMMIT}")
+    print(f"- records: {data['record_count']}")
+    print(f"- semantic-layout concepts: {data['semantic_layout_participant_count']}")
+    print(f"- fixed-band records: {data['fixed_band_record_count']}")
+    for edge_class in (EDGE_CLASS_SOURCE_NAMED, EDGE_CLASS_NAVIGATION):
+        print(
+            f"    - {edge_class}: raw {data['raw_edge_counts'][edge_class]}, "
+            f"retained {data['edge_counts'][edge_class]}, excluded non-concept "
+            f"endpoint {data['excluded_non_concept_endpoint_counts'][edge_class]}"
+        )
+    print(
+        "- source-named declarations: "
+        f"{source_totals['links_in_sections']} Markdown links in "
+        f"{source_totals['documents_with_sections']} formal sections, "
+        f"{source_totals['accepted_declarations']} accepted, "
+        f"{source_totals['ignored_links']} ignored, "
+        f"{source_totals['same_section_repeated_evidence']} same-section repeated "
+        f"evidence, {source_totals['self_references_omitted']} self-references "
+        f"omitted, {source_totals['unresolved_internal_links']} unresolved"
+    )
+    print(f"- byte length: {len(encoded)} (ceiling {EXPANDED_MAX_DATA_BYTES})")
+    print(f"- sha256: {hashlib.sha256(encoded).hexdigest()}")
+    print(f"- git blob: {git_blob_sha1(encoded)}")
+    print(f"- expanded dependencies: {inventory['dependency_count']}")
+    print(f"- expanded dependency aggregate_sha256: {inventory['aggregate_sha256']}")
+    print(
+        "- not rendered as semantic edges: "
+        + ", ".join(NON_RENDERED_RELATION_CLASSES)
+    )
     return 0
 
 
@@ -830,6 +2039,16 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
             "both the source root and the generator root."
         ),
     )
+    parser.add_argument(
+        "--visualization-manifest",
+        metavar="FILE",
+        help=(
+            "Independent visualization manifest declaring visualization "
+            "membership and rendering policy. Mandatory for the expanded "
+            "target. The document registry is never used as the "
+            "visualization-membership authority."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -847,8 +2066,8 @@ def main(argv: list[str] | None = None) -> int:
         unsupported = sorted(provided - {"--output"})
         if unsupported:
             fail(
-                f"--target {TARGET_EXPANDED} accepts only --output; "
-                f"remove: {', '.join(unsupported)}"
+                f"--target {TARGET_EXPANDED} accepts only --output and "
+                f"--visualization-manifest; remove: {', '.join(unsupported)}"
             )
         if args.output is None:
             fail(
@@ -856,7 +2075,13 @@ def main(argv: list[str] | None = None) -> int:
                 "requires an explicit --output path; no expanded output path is "
                 "selected implicitly"
             )
-        return run_expanded(args.output)
+        return run_expanded(args.output, args.visualization_manifest)
+
+    if args.visualization_manifest is not None:
+        fail(
+            "--visualization-manifest applies only to "
+            f"--target {TARGET_EXPANDED}"
+        )
 
     if args.target == TARGET_HISTORICAL:
         if provided:

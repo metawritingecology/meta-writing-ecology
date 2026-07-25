@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/visualizations/public-surface-adjacency-map/visualization-manifest.schema.json",
+  "title": "MWE Public Surface Adjacency Map — Visualization Manifest",
+  "description": "Schema for the independent visualization manifest of the expanded public-surface adjacency map. The manifest declares visualization membership and rendering policy only. It is a separate contract from mwe-public-documents.json: it is not embedded into the document registry, does not extend the registry contract, and asserts nothing about MWE classification, internal Registry status, confirmed relations, formal dependency, hierarchy, priority, ontology membership, or public/private status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "manifest_version",
+    "describes",
+    "scope",
+    "authority_ceiling",
+    "source_commit",
+    "record_count",
+    "records"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "./visualization-manifest.schema.json"
+    },
+    "manifest_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "describes": {
+      "type": "string",
+      "const": "../../mwe-public-documents.json",
+      "description": "The registry this manifest describes membership for. Reference only; the manifest is not part of the registry contract."
+    },
+    "scope": {
+      "type": "string",
+      "const": "expanded_public_surface_visualization_membership"
+    },
+    "authority_ceiling": {
+      "type": "string",
+      "const": "visualization_membership_and_rendering_policy_only"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "description": "Pinned generation source commit the manifest and dataset are generated from."
+    },
+    "record_count": {
+      "type": "integer",
+      "const": 59,
+      "description": "Must equal the number of manifest records and the registry record count."
+    },
+    "records": {
+      "type": "array",
+      "minItems": 59,
+      "maxItems": 59,
+      "uniqueItems": true,
+      "description": "Exactly one entry per registry record, in registry order.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repository_path",
+          "visualization_membership",
+          "visualization_role",
+          "display_label_source",
+          "grouping_source",
+          "relation_evidence_ceiling"
+        ],
+        "properties": {
+          "repository_path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^/][^\\\\]*$",
+            "description": "Repository-relative path of the registered public document. Unique across records."
+          },
+          "visualization_membership": {
+            "type": "string",
+            "enum": ["included", "excluded", "pending"],
+            "description": "Whether the record is represented in the visualization product. Membership is not Registry status."
+          },
+          "visualization_role": {
+            "type": "string",
+            "enum": ["concept", "orientation", "boundary", "anchor"],
+            "description": "Rendering band assignment mapped mechanically from the registry surface_role. It is not a classification, hierarchy, or ontology statement."
+          },
+          "display_label_source": {
+            "type": "string",
+            "enum": ["registry_name"],
+            "description": "The displayed label equals the registry name byte-for-byte."
+          },
+          "grouping_source": {
+            "type": "string",
+            "enum": ["model_atlas_field", "visualization_role"],
+            "description": "Concept records group by MODEL_ATLAS navigation field; non-concept records group by visualization role. MODEL_ATLAS field grouping is a navigation grouping, not a classification or ontology."
+          },
+          "relation_evidence_ceiling": {
+            "type": "string",
+            "enum": ["source_named_adjacency", "navigation_adjacency", "none"],
+            "description": "The strongest approved display evidence available for this record. It is not a classification, hierarchy, confirmed relation, or ontology statement."
+          }
+        }
+      }
+    }
+  }
+}
