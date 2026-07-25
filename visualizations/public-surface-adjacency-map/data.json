@@ -41,9 +41,9 @@
     "Semantic Field Foundations": 10
   },
   "relation_evidence_ceiling_distribution": {
-    "navigation_adjacency": 31,
+    "navigation_adjacency": 29,
     "none": 10,
-    "source_named_adjacency": 18
+    "source_named_adjacency": 20
   },
   "edge_classes": [
     {
@@ -51,29 +51,33 @@
       "display_label": "Source-declared adjacency",
       "directed": true,
       "default_visible": true,
-      "evidence_source": "the source document's own adjacency section",
-      "is_confirmed_relation": false
+      "evidence_source": "repository-relative Markdown document links written inside the source document's formal adjacency section"
     },
     {
       "edge_class": "navigation_adjacency",
       "display_label": "Provisional navigation adjacency",
       "directed": true,
       "default_visible": false,
-      "evidence_source": "model-atlas/RELATION_MAP.md",
-      "is_confirmed_relation": false
+      "evidence_source": "model-atlas/RELATION_MAP.md"
     }
   ],
   "raw_edge_counts": {
     "navigation_adjacency": 201,
-    "source_named_adjacency": 180
+    "source_named_adjacency": 189
   },
   "edge_counts": {
     "navigation_adjacency": 194,
-    "source_named_adjacency": 180
+    "source_named_adjacency": 189
   },
   "excluded_non_concept_endpoint_counts": {
     "navigation_adjacency": 7,
     "source_named_adjacency": 0
+  },
+  "source_named_declaration_counts": {
+    "markdown_link_declarations": 190,
+    "same_section_repeated_evidence": 1,
+    "self_references_omitted": 0,
+    "unique_directed_edges": 189
   },
   "relation_classes_not_rendered": [
     "governance_reference",
@@ -86,7 +90,7 @@
     "node_size_implies_importance": false,
     "layout_position_implies_relation": false,
     "grouping_implies_classification_or_ontology": false,
-    "adjacency_implies_confirmed_relation": false,
+    "adjacency_implies_formal_relation": false,
     "reverse_edges_inferred": false,
     "non_concept_records_participate_in_layout": false,
     "governance_or_source_use_edges_rendered": false
@@ -258,7 +262,7 @@
       "semantic_layout_participation": true,
       "grouping_source": "model_atlas_field",
       "grouping": "Proxy / Legibility / Provenance",
-      "relation_evidence_ceiling": "navigation_adjacency",
+      "relation_evidence_ceiling": "source_named_adjacency",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/generation-condition-disclosure-reproducibility-cross.md"
     },
     {
@@ -401,7 +405,7 @@
       "semantic_layout_participation": true,
       "grouping_source": "model_atlas_field",
       "grouping": "Proxy / Legibility / Provenance",
-      "relation_evidence_ceiling": "navigation_adjacency",
+      "relation_evidence_ceiling": "source_named_adjacency",
       "canonical_public_url": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/source-summary-citation-boundary-packet.md"
     },
     {
@@ -1772,6 +1776,56 @@
       "authority_ceiling": "navigation_only"
     },
     {
+      "id": "source_named_adjacency::generation-condition-disclosure-reproducibility-cross.md->ai-readable-knowledge-architecture.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "ai-readable-knowledge-architecture.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::generation-condition-disclosure-reproducibility-cross.md->model-use-reporting-boundary-protocol.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "model-use-reporting-boundary-protocol.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::generation-condition-disclosure-reproducibility-cross.md->provenance-validity-separation-model.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "provenance-validity-separation-model.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::generation-condition-disclosure-reproducibility-cross.md->reality-consistency.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "reality-consistency.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::generation-condition-disclosure-reproducibility-cross.md->verification-labor-compression.md",
+      "source": "generation-condition-disclosure-reproducibility-cross.md",
+      "target": "verification-labor-compression.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
       "id": "source_named_adjacency::origin-control-validity-burden-accelerated-submission-systems.md->benefit-burden-allocation-regimes.md",
       "source": "origin-control-validity-burden-accelerated-submission-systems.md",
       "target": "benefit-burden-allocation-regimes.md",
@@ -2595,6 +2649,46 @@
       "id": "source_named_adjacency::semantic-cyberpunk-condition.md->semantic-pressure.md",
       "source": "semantic-cyberpunk-condition.md",
       "target": "semantic-pressure.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::source-summary-citation-boundary-packet.md->ai-readable-knowledge-architecture.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "ai-readable-knowledge-architecture.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::source-summary-citation-boundary-packet.md->false-legibility.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "false-legibility.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::source-summary-citation-boundary-packet.md->model-use-reporting-boundary-protocol.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "model-use-reporting-boundary-protocol.md",
+      "edge_class": "source_named_adjacency",
+      "directed": true,
+      "default_visible": true,
+      "relation_status": "source_named_adjacency",
+      "authority_ceiling": "navigation_only"
+    },
+    {
+      "id": "source_named_adjacency::source-summary-citation-boundary-packet.md->provenance-validity-separation-model.md",
+      "source": "source-summary-citation-boundary-packet.md",
+      "target": "provenance-validity-separation-model.md",
       "edge_class": "source_named_adjacency",
       "directed": true,
       "default_visible": true,

@@ -109,7 +109,7 @@
       "visualization_role": "concept",
       "display_label_source": "registry_name",
       "grouping_source": "model_atlas_field",
-      "relation_evidence_ceiling": "navigation_adjacency"
+      "relation_evidence_ceiling": "source_named_adjacency"
     },
     {
       "repository_path": "verification-labor-compression.md",
@@ -197,7 +197,7 @@
       "visualization_role": "concept",
       "display_label_source": "registry_name",
       "grouping_source": "model_atlas_field",
-      "relation_evidence_ceiling": "navigation_adjacency"
+      "relation_evidence_ceiling": "source_named_adjacency"
     },
     {
       "repository_path": "provenance-validity-separation-model.md",
