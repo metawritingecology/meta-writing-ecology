@@ -255,6 +255,21 @@ EXPECTED_REGISTRY_PATHS = [
     "responsibility-alignment-model.md",
 ]
 
+# The registry-only paths: registered public surfaces that MODEL_ATLAS does not
+# declare, because it is a model atlas and does not list boundary, interpretation
+# or anchor surfaces. Their absence from the atlas is expected, not a divergence.
+REGISTRY_ONLY_PATHS = [
+    "SUMMARY_BOUNDARIES.md",
+    "SUMMARY_CONTRACT.md",
+    "MACHINE_INTERPRETATION_STATE.md",
+    "SOURCE_USE_GUIDE.md",
+    "MACHINE_READING_PRECEDENCE.md",
+    "RELATION_STATUS_GUIDE.md",
+    "public-anchors/ai-training-boundary-statement.md",
+]
+
+MODEL_ATLAS_FILE = "model-atlas/MODEL_ATLAS.md"
+MODEL_ATLAS_FILE_DECLARATION_RE = re.compile(r"^- \*\*File:\*\* `([^`]+)`", re.M)
 
 REQUIRED_DOES_NOT_ESTABLISH = {
     "third_party_intent",
@@ -420,6 +435,41 @@ def validate_classification_support(record: dict[str, Any], errors: list[str]) -
         append_error(
             errors,
             f"{repository_path}: declared classification not found in first 80 source lines",
+        )
+
+
+def validate_expected_paths_match_inventory(errors: list[str]) -> None:
+    """Prove the explicit safety list still equals the declared inventory.
+
+    EXPECTED_REGISTRY_PATHS is deliberately explicit, so it needs its own anchor:
+    it must equal the files MODEL_ATLAS declares with a literal `- **File:**`
+    line, plus the seven known registry-only paths. Without this the safety net
+    could drift away from the inventory it is meant to protect. This confirms an
+    inventory identity only; it establishes no classification and no relation.
+    """
+    atlas_text = read_repo_text(MODEL_ATLAS_FILE, errors)
+    if atlas_text is None:
+        return
+
+    declared = set(MODEL_ATLAS_FILE_DECLARATION_RE.findall(atlas_text))
+    expected_union = declared | set(REGISTRY_ONLY_PATHS)
+    listed = set(EXPECTED_REGISTRY_PATHS)
+
+    if len(EXPECTED_REGISTRY_PATHS) != len(listed):
+        append_error(errors, "validator: EXPECTED_REGISTRY_PATHS contains duplicate paths")
+
+    missing = sorted(expected_union - listed)
+    unexpected = sorted(listed - expected_union)
+    if missing:
+        append_error(
+            errors,
+            f"validator: EXPECTED_REGISTRY_PATHS is missing declared inventory paths {missing}",
+        )
+    if unexpected:
+        append_error(
+            errors,
+            "validator: EXPECTED_REGISTRY_PATHS contains paths that are neither "
+            f"MODEL_ATLAS-declared nor known registry-only paths {unexpected}",
         )
 
 
@@ -922,6 +972,8 @@ def validate_public_metadata() -> int:
         misreading_register = loaded["public-misreading-register.json"]
         evidence = loaded[EVIDENCE_FILE]
         evidence_schema = loaded[EVIDENCE_SCHEMA_FILE]
+
+        validate_expected_paths_match_inventory(errors)
 
         if isinstance(registry, dict) and isinstance(document_schema, dict):
             validate_document_registry(registry, document_schema, errors)
