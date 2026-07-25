@@ -36,7 +36,9 @@ temporary directory outside the repository root.
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
+import io
 import json
 import re
 import shutil
@@ -45,6 +47,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -66,6 +69,10 @@ HISTORICAL_DATA_PATH = (
 # Pinned generation source commit for the expanded product (Phase 3A P5 base).
 EXPANDED_SOURCE_COMMIT = "933274af9693d6d1d9fac36819aafdf56f9ab81d"
 
+# Previous P5 head, before the review follow-up. The manifest schema and the
+# candidate-generator tests must be byte-identical to this commit.
+PREVIOUS_P5_HEAD = "df38c22a18517e8db9a20e4fb9c2c815cb84430e"
+
 EXPECTED_RECORD_COUNT = 59
 EXPECTED_ROLE_DISTRIBUTION = {
     "concept": 49,
@@ -78,18 +85,37 @@ EXPECTED_FIXED_BAND = 10
 
 # Recomputed from the pinned source at P5 generation time and asserted here so a
 # silent parser drift becomes a test failure.
-EXPECTED_SOURCE_NAMED_RAW = 180
-EXPECTED_SOURCE_NAMED_RETAINED = 180
+EXPECTED_SOURCE_NAMED_RAW = 189
+EXPECTED_SOURCE_NAMED_RETAINED = 189
 EXPECTED_SOURCE_NAMED_EXCLUDED = 0
 EXPECTED_NAVIGATION_RAW = 201
 EXPECTED_NAVIGATION_RETAINED = 194
 EXPECTED_NAVIGATION_EXCLUDED = 7
 
+# Source-link declaration audit at the pinned source.
+EXPECTED_DOCS_WITH_SECTIONS = 28
+EXPECTED_LINKS_IN_SECTIONS = 190
+EXPECTED_ACCEPTED_LINK_DECLARATIONS = 190
+EXPECTED_IGNORED_LINKS = 0
+EXPECTED_SELF_REFERENCES = 0
+EXPECTED_SAME_SECTION_REPEATED = 1
+EXPECTED_UNRESOLVED_INTERNAL_LINKS = 0
+
+# The one authorized same-section evidence consolidation.
+CONSOLIDATED_SOURCE = "responsibility-alignment-diagnostics.md"
+CONSOLIDATED_TARGET = "responsibility-alignment-model.md"
+CONSOLIDATED_LINES = [446, 450]
+
 EXPECTED_CEILING_DISTRIBUTION = {
-    "source_named_adjacency": 18,
-    "navigation_adjacency": 31,
+    "source_named_adjacency": 20,
+    "navigation_adjacency": 29,
     "none": 10,
 }
+
+EXPECTED_DEPENDENCY_COUNT = 64
+EXPECTED_DEPENDENCY_AGGREGATE = (
+    "a89f1aefd341778f89e7b1e810ed760ddb7de7ff30564bda93fdaeb7a451918f"
+)
 
 EXPECTED_FIELD_DISTRIBUTION = {
     "AI-Readable Interface / Externalization": 6,
@@ -145,7 +171,17 @@ def run_builder(args, cwd=REPO_ROOT):
 
 
 def check_instance(schema, instance, path="$"):
-    """Return a list of validation error strings for instance against schema."""
+    """Validate via the SHARED production implementation.
+
+    The checker used to live only here. It now lives in the generator, so
+    production generation and the test suite enforce one implementation rather
+    than two that can drift apart. This wrapper keeps the test-side name.
+    """
+    return builder.schema_instance_errors(schema, instance, path)
+
+
+def _unused_reference_checker(schema, instance, path="$"):
+    """Retained only as documentation of the keyword subset in use."""
     errors = []
 
     if "const" in schema and instance != schema["const"]:
@@ -380,12 +416,14 @@ class ManifestIdentityTests(BaseCase):
                 self.assertEqual(entry["relation_evidence_ceiling"], "none")
 
     def test_ceilings_match_recomputed_evidence(self):
-        roles = builder.build_visualization_roles(self.records)
-        named, _, _ = builder.parse_source_named_adjacency(REPO_ROOT, self.records, roles)
-        navigation, _, _ = builder.parse_navigation_adjacency(REPO_ROOT, self.records, roles)
-        recomputed = builder.compute_relation_evidence_ceilings(
-            self.records, roles, named, navigation
-        )
+        sources = builder.ExpandedSources(REPO_ROOT)
+        records = sources.read_json(
+            builder.DOCUMENTS_FILE, builder.EXPANDED_PURPOSE_REGISTRY
+        )["@graph"]
+        roles = builder.build_visualization_roles(records)
+        _, audit = builder.parse_source_named_adjacency(sources, records, roles)
+        navigation, _, _ = builder.parse_navigation_adjacency(sources, records, roles)
+        recomputed = builder.compute_relation_evidence_ceilings(roles, audit, navigation)
         for entry in self.manifest["records"]:
             self.assertEqual(
                 entry["relation_evidence_ceiling"],
@@ -404,7 +442,10 @@ class GroupingTests(BaseCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.roles = builder.build_visualization_roles(cls.records)
-        cls.grouping = builder.parse_model_atlas_fields(REPO_ROOT, cls.records, cls.roles)
+        cls.sources = builder.ExpandedSources(REPO_ROOT)
+        cls.grouping = builder.parse_model_atlas_fields(
+            cls.sources, cls.records, cls.roles
+        )
 
     def test_every_concept_has_exactly_one_field(self):
         concepts = [p for p, role in self.roles.items() if role == "concept"]
@@ -474,16 +515,18 @@ class EdgeExtractionTests(BaseCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.roles = builder.build_visualization_roles(cls.records)
-        (
-            cls.named,
-            cls.named_raw,
-            cls.named_excluded,
-        ) = builder.parse_source_named_adjacency(REPO_ROOT, cls.records, cls.roles)
+        cls.sources = builder.ExpandedSources(REPO_ROOT)
+        cls.named, cls.audit = builder.parse_source_named_adjacency(
+            cls.sources, cls.records, cls.roles
+        )
+        cls.totals = cls.audit["totals"]
+        cls.named_raw = cls.totals["unique_directed_edges"]
+        cls.named_excluded = cls.totals["excluded_non_concept_edges"]
         (
             cls.navigation,
             cls.navigation_raw,
             cls.navigation_excluded,
-        ) = builder.parse_navigation_adjacency(REPO_ROOT, cls.records, cls.roles)
+        ) = builder.parse_navigation_adjacency(cls.sources, cls.records, cls.roles)
 
     def test_reported_raw_and_retained_counts_by_class(self):
         self.assertEqual(self.named_raw, EXPECTED_SOURCE_NAMED_RAW)
@@ -496,6 +539,40 @@ class EdgeExtractionTests(BaseCase):
             self.navigation_raw - len(self.navigation), self.navigation_excluded
         )
         self.assertEqual(self.named_raw - len(self.named), self.named_excluded)
+
+    def test_source_link_declaration_audit_totals(self):
+        self.assertEqual(self.totals["documents_with_sections"], EXPECTED_DOCS_WITH_SECTIONS)
+        self.assertEqual(self.totals["links_in_sections"], EXPECTED_LINKS_IN_SECTIONS)
+        self.assertEqual(
+            self.totals["accepted_link_declarations"], EXPECTED_ACCEPTED_LINK_DECLARATIONS
+        )
+        self.assertEqual(self.totals["ignored_links"], EXPECTED_IGNORED_LINKS)
+        self.assertEqual(
+            self.totals["self_references_omitted"], EXPECTED_SELF_REFERENCES
+        )
+        self.assertEqual(
+            self.totals["same_section_repeated_evidence"], EXPECTED_SAME_SECTION_REPEATED
+        )
+        self.assertEqual(
+            self.totals["unresolved_internal_links"], EXPECTED_UNRESOLVED_INTERNAL_LINKS
+        )
+        # declarations minus repeated same-section evidence == unique edges
+        self.assertEqual(
+            self.totals["accepted_link_declarations"]
+            - self.totals["same_section_repeated_evidence"],
+            self.totals["unique_directed_edges"],
+        )
+
+    def test_dataset_publishes_the_declaration_counts(self):
+        self.assertEqual(
+            self.data["source_named_declaration_counts"],
+            {
+                "markdown_link_declarations": EXPECTED_ACCEPTED_LINK_DECLARATIONS,
+                "same_section_repeated_evidence": EXPECTED_SAME_SECTION_REPEATED,
+                "self_references_omitted": EXPECTED_SELF_REFERENCES,
+                "unique_directed_edges": EXPECTED_SOURCE_NAMED_RAW,
+            },
+        )
 
     def test_dataset_reports_the_same_counts(self):
         self.assertEqual(
@@ -544,169 +621,328 @@ class EdgeExtractionTests(BaseCase):
         for edge in self.data["edges"]:
             self.assertIs(edge["directed"], True, edge["id"])
 
-    def test_no_inferred_reverse_edges(self):
-        # A reverse edge may exist only when it is independently written in the
-        # source. Every extracted pair must be traceable to a written entry.
-        written = self._written_source_named_pairs()
-        for edge in self.data["edges"]:
-            if edge["edge_class"] == "source_named_adjacency":
-                self.assertIn((edge["source"], edge["target"]), written, edge["id"])
+    # -- helpers --------------------------------------------------------
 
-    def _written_source_named_pairs(self):
-        pairs = set()
-        for path in self.roles:
-            lines = (REPO_ROOT / path).read_text(encoding="utf-8").split("\n")
-            starts = [
-                i
-                for i, line in enumerate(lines)
-                if builder.SOURCE_ADJACENCY_HEADING.match(line)
+    def _fixture(self, tmp, files):
+        root = Path(tmp)
+        for name, text in files.items():
+            target = root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(text, encoding="utf-8")
+        return builder.ExpandedSources(root.resolve())
+
+    def _parse(self, sources, roles):
+        return builder.parse_source_named_adjacency(sources, [], roles)
+
+    def _expect_fail(self, sources, roles, token):
+        buffer = io.StringIO()
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(buffer):
+            self._parse(sources, roles)
+        self.assertIn(token, buffer.getvalue())
+        return buffer.getvalue()
+
+    # -- accepted link positions ---------------------------------------
+
+    def test_link_at_the_beginning_of_a_bullet(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [B](./b.md) — leading bullet link.\n",
+                "b.md": "# b\n",
+            })
+            edges, _ = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [("a.md", "b.md")])
+
+    def test_link_later_in_a_bullet(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- This entry extends the [B model](./b.md) in scope.\n",
+                "b.md": "# b\n",
+            })
+            edges, _ = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [("a.md", "b.md")])
+
+    def test_link_in_prose_inside_the_section(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "A is a diagnostics-facing extension of the [B](./b.md).\n",
+                "b.md": "# b\n",
+            })
+            edges, _ = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [("a.md", "b.md")])
+
+    def test_link_in_a_table_row_and_in_a_fenced_block(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "| Entry | Adjacent |\n|---|---|\n"
+                        "| A | [B](./b.md) |\n\n"
+                        "```text\nsee [C](./c.md)\n```\n",
+                "b.md": "# b\n",
+                "c.md": "# c\n",
+            })
+            edges, _ = self._parse(
+                sources, {"a.md": "concept", "b.md": "concept", "c.md": "concept"}
+            )
+            self.assertEqual(sorted(edges), [("a.md", "b.md"), ("a.md", "c.md")])
+
+    # -- bare names and prose are not declarations ----------------------
+
+    def test_bare_name_creates_no_edge_and_no_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- B Model — described in prose only, no link.\n"
+                        "- Some Other Concept — also unlinked.\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [])
+            self.assertEqual(audit["totals"]["unresolved_internal_links"], 0)
+            self.assertEqual(audit["totals"]["links_in_sections"], 0)
+
+    def test_fenced_bare_labels_create_no_edge_and_no_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "```text\nB Model\n= a definition line\n\n"
+                        "ownership\n= another definition\n```\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [])
+            self.assertEqual(audit["totals"]["unresolved_internal_links"], 0)
+
+    def test_explanatory_prose_creates_no_edge(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "A is adjacent to, but distinct from, several models.\n"
+                        "It is also adjacent to B Model and C Model.\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [])
+            self.assertEqual(audit["totals"]["unresolved_internal_links"], 0)
+
+    def test_false_legibility_regression(self):
+        # Concrete regression for the motivating case: its formal adjacency
+        # section names adjacent models only as bare labels in a fenced block.
+        # Those are human-readable adjacency discussion. They must create no
+        # edge AND must not be treated as unresolved machine-readable links.
+        section = [s for s in self.audit["sections"]
+                   if s["repository_path"] == "false-legibility.md"]
+        self.assertEqual(len(section), 1, "false-legibility.md has one formal section")
+        section = section[0]
+        self.assertEqual(section["links"], [])
+        self.assertEqual(section["accepted"], [])
+        self.assertEqual(section["unresolved"], [])
+        self.assertEqual(section["repeated_evidence"], [])
+        # No source-named edge originates from it.
+        self.assertEqual([e for e in self.named if e[0] == "false-legibility.md"], [])
+        # Its bare labels really are present in the source.
+        body = "\n".join(
+            (REPO_ROOT / "false-legibility.md").read_text(encoding="utf-8").split("\n")[
+                section["heading_line"]: section["section_end_line"]
             ]
-            if not starts:
-                continue
-            start = starts[0]
-            end = len(lines)
-            for index in range(start + 1, len(lines)):
-                if lines[index].startswith("## "):
-                    end = index
-                    break
-            for line in lines[start + 1 : end]:
-                entry = builder.SOURCE_ADJACENCY_ENTRY.match(line)
-                if entry:
-                    target = builder.resolve_reference_path(entry.group(1), path)
-                    if target is not None:
-                        pairs.add((path, target))
-        return pairs
-
-    def test_extraction_only_reads_the_declared_adjacency_section(self):
-        # Links that appear in a source document but outside its adjacency
-        # section must never become edges.
-        sample = "ai-readable-knowledge-architecture.md"
-        lines = (REPO_ROOT / sample).read_text(encoding="utf-8").split("\n")
-        starts = [
-            i for i, line in enumerate(lines) if builder.SOURCE_ADJACENCY_HEADING.match(line)
-        ]
-        self.assertTrue(starts)
-        start = starts[0]
-        end = len(lines)
-        for index in range(start + 1, len(lines)):
-            if lines[index].startswith("## "):
-                end = index
-                break
-        outside = set()
-        for index, line in enumerate(lines):
-            if start < index < end:
-                continue
-            for reference in builder.MARKDOWN_LINK.findall(line):
-                target = builder.resolve_reference_path(reference, sample)
-                if target and target in self.roles:
-                    outside.add(target)
-        inside = {t for s, t in self.named if s == sample}
-        self.assertTrue(outside - inside or not outside)
-        for target in outside - inside:
-            self.assertNotIn((sample, target), self.named)
-
-    def test_file_with_multiple_directed_entries(self):
-        counts = {}
-        for source, _ in self.named:
-            counts[source] = counts.get(source, 0) + 1
-        self.assertTrue(any(value > 1 for value in counts.values()))
-        self.assertEqual(
-            counts.get("ai-readable-knowledge-architecture.md", 0),
-            len(
-                {
-                    target
-                    for source, target in self.named
-                    if source == "ai-readable-knowledge-architecture.md"
-                }
-            ),
+        )
+        for bare in ("Premature Coherence", "Reality Consistency", "Semantic Virology"):
+            self.assertIn(bare, body)
+        # Navigation adjacency remains available for it independently.
+        self.assertTrue(
+            [e for e in self.navigation if "false-legibility.md" in e],
+            "false-legibility.md still participates in navigation adjacency",
         )
 
-    def test_file_with_no_adjacency_section_contributes_no_edge(self):
-        sources = {source for source, _ in self.named}
-        without = [
-            path
-            for path in self.roles
-            if not any(
-                builder.SOURCE_ADJACENCY_HEADING.match(line)
-                for line in (REPO_ROOT / path).read_text(encoding="utf-8").split("\n")
-            )
-        ]
-        self.assertTrue(without)
-        for path in without:
-            self.assertNotIn(path, sources)
+    # -- ignored non-document links -------------------------------------
 
-    def test_unresolved_target_is_rejected(self):
-        roles = dict(self.roles)
+    def test_external_and_fragment_links_are_ignored_not_unresolved(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            (root / "a.md").write_text(
-                "## Relationship to Adjacent Models\n\n"
-                "- [Nowhere](./does-not-exist.md) — unresolved.\n",
-                encoding="utf-8",
-            )
-            roles = {"a.md": "concept"}
-            with self.assertRaises(SystemExit):
-                builder.parse_source_named_adjacency(root.resolve(), [], roles)
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [site](https://example.org/x.md) — external.\n"
+                        "- [doi](https://doi.org/10.1234/zenodo) — DOI.\n"
+                        "- [osf](https://osf.io/abcde/) — OSF.\n"
+                        "- [anchor](#a-section) — fragment only.\n"
+                        "- [asset](./diagram.png) — not a Markdown document.\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [])
+            self.assertEqual(audit["totals"]["ignored_links"], 5)
+            self.assertEqual(audit["totals"]["unresolved_internal_links"], 0)
 
-    def test_target_outside_the_registry_is_rejected(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            (root / "a.md").write_text(
-                "## Relationship to Adjacent Models\n\n"
-                "- [Other](./b.md) — outside the registry.\n",
-                encoding="utf-8",
-            )
-            (root / "b.md").write_text("# b\n", encoding="utf-8")
-            # b.md exists on disk but is not a registered record.
-            with self.assertRaises(SystemExit):
-                builder.parse_source_named_adjacency(root.resolve(), [], {"a.md": "concept"})
+    # -- fail-closed internal links -------------------------------------
 
-    def test_duplicate_identical_directed_entries_collapse_within_class(self):
+    def test_internal_link_to_a_missing_document_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            (root / "a.md").write_text(
-                "## Relationship to Adjacent Models\n\n"
-                "- [B](./b.md) — first.\n"
-                "- [B again](./b.md) — duplicate identical directed entry.\n",
-                encoding="utf-8",
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [Nowhere](./does-not-exist.md) — unresolved.\n",
+            })
+            err = self._expect_fail(
+                sources, {"a.md": "concept"},
+                builder.FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED,
             )
-            (root / "b.md").write_text("# b\n", encoding="utf-8")
-            roles = {"a.md": "concept", "b.md": "concept"}
-            edges, raw, excluded = builder.parse_source_named_adjacency(
-                root.resolve(), [], roles
+            self.assertIn("a.md:3", err)
+            self.assertIn("./does-not-exist.md", err)
+
+    def test_internal_link_outside_the_registry_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [Other](./b.md) — exists but is unregistered.\n",
+                "b.md": "# b\n",
+            })
+            self._expect_fail(
+                sources, {"a.md": "concept"},
+                builder.FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED,
             )
-            self.assertEqual(raw, 1)
+
+    def test_internal_link_escaping_the_repository_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [Escape](../outside.md) — escapes the root.\n",
+            })
+            self._expect_fail(
+                sources, {"a.md": "concept"},
+                builder.FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED,
+            )
+
+    # -- sections, self-references, consolidation ------------------------
+
+    def test_multiple_formal_sections_fail(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [B](./b.md) — first section.\n\n"
+                        "## Something Else\n\n"
+                        "## Relationship to Adjacent Public Frameworks\n\n"
+                        "- [B](./b.md) — second section.\n",
+                "b.md": "# b\n",
+            })
+            err = self._expect_fail(
+                sources, {"a.md": "concept", "b.md": "concept"},
+                builder.FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE,
+            )
+            self.assertIn("formal adjacency sections", err)
+
+    def test_self_reference_is_omitted_and_counted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "- [A itself](./a.md) — self reference.\n"
+                        "- [B](./b.md) — real edge.\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
             self.assertEqual(edges, [("a.md", "b.md")])
-            self.assertEqual(excluded, 0)
+            self.assertEqual(audit["totals"]["self_references_omitted"], 1)
+
+    def test_same_section_repeated_links_consolidate_to_one_edge(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "A extends the [B](./b.md) in prose.\n\n"
+                        "- [B](./b.md) — and again in the structured list.\n",
+                "b.md": "# b\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [("a.md", "b.md")])
+            self.assertEqual(audit["totals"]["same_section_repeated_evidence"], 1)
+            evidence = audit["evidence"][0]
+            self.assertEqual(evidence["declaration_count"], 2)
+            self.assertEqual(evidence["declaration_lines"], [3, 5])
+            self.assertEqual(evidence["declaration_hrefs"], ["./b.md", "./b.md"])
+
+    def test_consolidation_does_not_infer_a_reverse_edge(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n"
+                        "A extends the [B](./b.md).\n\n"
+                        "- [B](./b.md) — repeated evidence.\n",
+                "b.md": "# b\n",
+            })
+            edges, _ = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
+            self.assertEqual(edges, [("a.md", "b.md")])
+            self.assertNotIn(("b.md", "a.md"), edges)
+
+    def test_responsibility_alignment_diagnostics_regression(self):
+        # The one authorized same-section consolidation in the tracked source.
+        evidence = [
+            item
+            for item in self.audit["evidence"]
+            if item["source"] == CONSOLIDATED_SOURCE
+            and item["target"] == CONSOLIDATED_TARGET
+        ]
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual(evidence[0]["declaration_count"], 2)
+        self.assertEqual(evidence[0]["declaration_lines"], CONSOLIDATED_LINES)
+        # Exactly one rendered edge for the pair.
+        rendered = [
+            edge
+            for edge in self.data["edges"]
+            if edge["edge_class"] == "source_named_adjacency"
+            and edge["source"] == CONSOLIDATED_SOURCE
+            and edge["target"] == CONSOLIDATED_TARGET
+        ]
+        self.assertEqual(len(rendered), 1)
+        # It is the only consolidation in the whole tracked source.
+        multi = [i for i in self.audit["evidence"] if i["declaration_count"] > 1]
+        self.assertEqual(len(multi), 1)
 
     def test_no_reverse_edge_is_manufactured(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            (root / "a.md").write_text(
-                "## Relationship to Adjacent Models\n\n- [B](./b.md) — one way.\n",
-                encoding="utf-8",
-            )
-            (root / "b.md").write_text("# b\n", encoding="utf-8")
-            edges, _, _ = builder.parse_source_named_adjacency(
-                root.resolve(), [], {"a.md": "concept", "b.md": "concept"}
-            )
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n- [B](./b.md) — one way.\n",
+                "b.md": "# b\n",
+            })
+            edges, _ = self._parse(sources, {"a.md": "concept", "b.md": "concept"})
             self.assertEqual(edges, [("a.md", "b.md")])
             self.assertNotIn(("b.md", "a.md"), edges)
 
     def test_non_concept_endpoints_are_filtered_from_rendered_edges(self):
         with tempfile.TemporaryDirectory() as tmp:
+            sources = self._fixture(tmp, {
+                "a.md": "## Relationship to Adjacent Models\n\n- [Guide](./g.md) — boundary.\n",
+                "g.md": "# g\n",
+            })
+            edges, audit = self._parse(sources, {"a.md": "concept", "g.md": "boundary"})
+            self.assertEqual(edges, [])
+            self.assertEqual(audit["totals"]["unique_directed_edges"], 1)
+            self.assertEqual(audit["totals"]["excluded_non_concept_edges"], 1)
+
+    # -- navigation duplicates still fail -------------------------------
+
+    def test_duplicate_navigation_pair_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "a.md").write_text(
-                "## Relationship to Adjacent Models\n\n- [Guide](./g.md) — boundary.\n",
+            (root / "model-atlas").mkdir()
+            (root / "model-atlas" / "RELATION_MAP.md").write_text(
+                "| Entry | File | Field | Type | Function | Adjacent entries | Reading priority |\n"
+                "|---|---|---|---|---|---|---|\n"
+                "| A | [`a`](../a.md) | F | T | fn | [`b`](../b.md) | Core |\n"
+                "| A | [`a`](../a.md) | F | T | fn | [`b`](../b.md) | Core |\n",
                 encoding="utf-8",
             )
-            (root / "g.md").write_text("# g\n", encoding="utf-8")
-            edges, raw, excluded = builder.parse_source_named_adjacency(
-                root.resolve(), [], {"a.md": "concept", "g.md": "boundary"}
-            )
-            self.assertEqual(raw, 1)
-            self.assertEqual(edges, [])
-            self.assertEqual(excluded, 1)
+            (root / "a.md").write_text("# a\n", encoding="utf-8")
+            (root / "b.md").write_text("# b\n", encoding="utf-8")
+            sources = builder.ExpandedSources(root.resolve())
+            buffer = io.StringIO()
+            with self.assertRaises(SystemExit), contextlib.redirect_stderr(buffer):
+                builder.parse_navigation_adjacency(
+                    sources, [], {"a.md": "concept", "b.md": "concept"}
+                )
+            err = buffer.getvalue()
+            self.assertIn(builder.FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE, err)
+            self.assertIn("navigation_adjacency", err)
+            self.assertIn("a.md -> b.md", err)
+            # first and duplicate locations are both reported
+            self.assertIn(":3", err)
+            self.assertIn(":4", err)
 
     def test_reciprocal_navigation_pairs_stay_two_directed_edges(self):
         navigation = {
@@ -810,7 +1046,17 @@ class EdgeExtractionTests(BaseCase):
                 {"source_named_adjacency", "navigation_adjacency"},
             )
         for item in self.data["edge_classes"]:
-            self.assertIs(item["is_confirmed_relation"], False)
+            self.assertNotIn("is_confirmed_relation", item)
+            for key in item:
+                self.assertNotIn("confirm", key.lower())
+
+    def test_edge_status_and_ceiling_fields_are_retained_and_safe(self):
+        # Evidence/status/ceiling separation is retained deliberately; it must
+        # never promote adjacency into a formal or confirmed relation.
+        for edge in self.data["edges"]:
+            self.assertEqual(edge["relation_status"], edge["edge_class"])
+            self.assertEqual(edge["authority_ceiling"], "navigation_only")
+            self.assertNotEqual(edge["relation_status"], "confirmed")
 
 
 # ---------------------------------------------------------------------------
@@ -1236,13 +1482,413 @@ class CompatibilityGuardTests(BaseCase):
 # Tracked identity constants. These are recomputed from the generated dataset
 # and manifest rather than asserted from a plan, and are pinned here only after
 # the tracked files exist.
-TRACKED_DATA_BYTES = 202303
-TRACKED_DATA_SHA256 = "370cde8431641a4d5118e72379564deea0012cef42e49cf6542d319c8f46da69"
-TRACKED_DATA_BLOB = "161501533c2378a24aac666252577974fdee9acc"
+TRACKED_DATA_BYTES = 206617
+TRACKED_DATA_SHA256 = "0b763eb78fea5c53364609ecc5d7019422c54b950d32f29f79ad37f24f1637b7"
+TRACKED_DATA_BLOB = "3077568edeeb0d6a769899a1a3cf79c3f9152f83"
 
-TRACKED_MANIFEST_BYTES = 18550
-TRACKED_MANIFEST_SHA256 = "b1db120e3bbaef0d35ff95fa79de3231f9b4f8f183b2a60b7f8729c459112d12"
-TRACKED_MANIFEST_BLOB = "1ce71b0abd2e8485cf807db0a9ba0898b1f23e55"
+TRACKED_MANIFEST_BYTES = 18554
+TRACKED_MANIFEST_SHA256 = "b6ea211e265631b984f0e9ea53fb7301f3fd0986dbdaa2a9d349c0524591d0fe"
+TRACKED_MANIFEST_BLOB = "159ac950abf2172bcdd2cc420afde63578140eb8"
+
+
+class DatasetKeyHygieneTests(BaseCase):
+    def _keys(self):
+        found = []
+
+        def walk(node):
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    found.append(key)
+                    walk(value)
+            elif isinstance(node, list):
+                for value in node:
+                    walk(value)
+
+        walk(self.data)
+        return found
+
+    def test_no_dataset_key_implies_formal_or_confirmed_relation_status(self):
+        # Exact key names, because a disclaimer key such as
+        # node_size_implies_importance legitimately contains a banned word while
+        # asserting the opposite.
+        banned_exact = {
+            "confirmed",
+            "is_confirmed_relation",
+            "formal_relation_status",
+            "rank",
+            "centrality",
+            "degree",
+            "authority_score",
+            "importance",
+            "priority",
+            "confidence",
+            "relation_strength",
+        }
+        for key in self._keys():
+            lowered = key.lower()
+            self.assertNotIn(lowered, banned_exact, f"dataset key {key!r}")
+            # "confirmed" may never appear anywhere in a key, in any position.
+            self.assertNotIn("confirm", lowered, f"dataset key {key!r}")
+
+    def test_relation_status_key_is_present_but_never_confirmed(self):
+        # relation_status is retained by the planning contract; only a
+        # "confirmed" value or a confirmed-bearing key is forbidden.
+        self.assertIn("relation_status", self._keys())
+        for edge in self.data["edges"]:
+            self.assertIn(
+                edge["relation_status"],
+                {"source_named_adjacency", "navigation_adjacency"},
+            )
+
+    def test_boundary_prose_still_states_no_confirmed_relation(self):
+        statements = " ".join(self.data["boundary_statements"]).lower()
+        self.assertIn("not a confirmed relation", statements)
+        self.assertIn("user_confirmed_relation", self.data["relation_classes_not_rendered"])
+
+
+class ManifestProductionValidationTests(BaseCase):
+    """Every invalid manifest must be rejected by PRODUCTION generation."""
+
+    def _reject(self, mutate, token=None, schema_text=None):
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        mutate(manifest)
+        directory = Path(tempfile.mkdtemp(dir=self.tmp))
+        path = directory / "visualization-manifest.json"
+        path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+        if schema_text is None:
+            shutil.copy2(MANIFEST_SCHEMA_PATH, directory / "visualization-manifest.schema.json")
+        elif schema_text != "__missing__":
+            (directory / "visualization-manifest.schema.json").write_text(
+                schema_text, encoding="utf-8"
+            )
+        out = directory / "out.json"
+        result = run_builder(
+            [
+                "--target", "expanded",
+                "--visualization-manifest", str(path),
+                "--output", str(out),
+            ]
+        )
+        self.assertNotEqual(result.returncode, 0, "invalid manifest was accepted")
+        self.assertIn(
+            token or builder.FAILURE_EXPANDED_MANIFEST_INVALID, result.stderr
+        )
+        self.assertFalse(out.exists(), "invalid manifest produced output")
+        return result.stderr
+
+    def test_valid_manifest_and_schema_are_accepted(self):
+        directory = Path(tempfile.mkdtemp(dir=self.tmp))
+        shutil.copy2(MANIFEST_PATH, directory / "visualization-manifest.json")
+        shutil.copy2(MANIFEST_SCHEMA_PATH, directory / "visualization-manifest.schema.json")
+        out = directory / "out.json"
+        result = run_builder(
+            [
+                "--target", "expanded",
+                "--visualization-manifest", str(directory / "visualization-manifest.json"),
+                "--output", str(out),
+            ]
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(out.read_bytes(), DATA_PATH.read_bytes())
+
+    def test_extra_top_level_property(self):
+        self._reject(lambda m: m.update({"unexpected": 1}))
+
+    def test_extra_record_property(self):
+        self._reject(lambda m: m["records"][0].update({"unexpected": 1}))
+
+    def test_wrong_schema_reference(self):
+        self._reject(lambda m: m.update({"$schema": "./other.schema.json"}))
+
+    def test_wrong_manifest_version(self):
+        self._reject(lambda m: m.update({"manifest_version": "2.0"}))
+
+    def test_wrong_describes(self):
+        self._reject(lambda m: m.update({"describes": "../../elsewhere.json"}))
+
+    def test_wrong_scope(self):
+        self._reject(lambda m: m.update({"scope": "something_else"}))
+
+    def test_wrong_authority_ceiling(self):
+        self._reject(lambda m: m.update({"authority_ceiling": "full_authority"}))
+
+    def test_invalid_enum_value(self):
+        self._reject(lambda m: m["records"][0].update({"visualization_role": "model"}))
+
+    def test_invalid_membership_enum_value(self):
+        self._reject(
+            lambda m: m["records"][0].update({"visualization_membership": "maybe"})
+        )
+
+    def test_invalid_ceiling_enum_value(self):
+        self._reject(
+            lambda m: m["records"][0].update({"relation_evidence_ceiling": "confirmed"})
+        )
+
+    def test_missing_required_record_field(self):
+        self._reject(lambda m: m["records"][0].pop("grouping_source"))
+
+    def test_missing_required_top_level_field(self):
+        self._reject(lambda m: m.pop("scope"))
+
+    def test_duplicate_manifest_record(self):
+        def mutate(manifest):
+            manifest["records"][1] = json.loads(json.dumps(manifest["records"][0]))
+        self._reject(mutate)
+
+    def test_malformed_repository_path(self):
+        self._reject(lambda m: m["records"][0].update({"repository_path": "/absolute.md"}))
+
+    def test_wrong_record_count(self):
+        self._reject(lambda m: m.update({"record_count": 58}))
+
+    def test_too_few_records(self):
+        self._reject(lambda m: m["records"].pop())
+
+    def test_missing_schema_file(self):
+        self._reject(lambda m: None, schema_text="__missing__")
+
+    def test_schema_with_wrong_draft(self):
+        schema = json.loads(MANIFEST_SCHEMA_PATH.read_text(encoding="utf-8"))
+        schema["$schema"] = "http://json-schema.org/draft-07/schema#"
+        self._reject(lambda m: None, schema_text=json.dumps(schema))
+
+    def test_unreadable_schema_json(self):
+        self._reject(lambda m: None, schema_text="{not json")
+
+    def test_tracked_schema_is_unmodified(self):
+        result = subprocess.run(
+            ["git", "diff", "--name-only", PREVIOUS_P5_HEAD, "--",
+             "visualizations/public-surface-adjacency-map/visualization-manifest.schema.json"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True,
+        )
+        if result.returncode != 0:
+            self.skipTest("git unavailable")
+        self.assertEqual(result.stdout.strip(), "")
+
+
+class ExpandedDependencyProvenanceTests(BaseCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        manifest_bytes = MANIFEST_PATH.read_bytes()
+        _, _, cls.inventory = builder.assemble_adjacency_data(
+            REPO_ROOT,
+            json.loads(manifest_bytes.decode("utf-8")),
+            str(MANIFEST_PATH),
+            MANIFEST_PATH,
+            manifest_bytes,
+        )
+
+    def test_inventory_count_and_aggregate_are_deterministic(self):
+        self.assertEqual(self.inventory["dependency_count"], EXPECTED_DEPENDENCY_COUNT)
+        self.assertEqual(self.inventory["aggregate_sha256"], EXPECTED_DEPENDENCY_AGGREGATE)
+        manifest_bytes = MANIFEST_PATH.read_bytes()
+        _, _, again = builder.assemble_adjacency_data(
+            REPO_ROOT,
+            json.loads(manifest_bytes.decode("utf-8")),
+            str(MANIFEST_PATH),
+            MANIFEST_PATH,
+            manifest_bytes,
+        )
+        self.assertEqual(again, self.inventory)
+
+    def test_inventory_is_sorted_and_fully_populated(self):
+        paths = [item["path"] for item in self.inventory["files"]]
+        self.assertEqual(paths, sorted(paths))
+        self.assertEqual(len(set(paths)), len(paths))
+        for item in self.inventory["files"]:
+            self.assertGreater(item["byte_length"], 0)
+            self.assertEqual(len(item["sha256"]), 64)
+            self.assertEqual(len(item["git_blob_sha1"]), 40)
+            self.assertEqual(item["read_purposes"], sorted(item["read_purposes"]))
+            self.assertTrue(item["read_purposes"])
+
+    def test_inventory_covers_the_required_expanded_inputs(self):
+        by_path = {item["path"]: item for item in self.inventory["files"]}
+        self.assertIn(builder.DOCUMENTS_FILE, by_path)
+        self.assertIn(builder.MODEL_ATLAS_FILE, by_path)
+        self.assertIn(builder.RELATION_MAP_FILE, by_path)
+        manifest_label = "visualizations/public-surface-adjacency-map/visualization-manifest.json"
+        schema_label = "visualizations/public-surface-adjacency-map/visualization-manifest.schema.json"
+        self.assertIn(manifest_label, by_path)
+        self.assertIn(schema_label, by_path)
+        self.assertIn(
+            builder.EXPANDED_PURPOSE_MANIFEST_SCHEMA, by_path[schema_label]["read_purposes"]
+        )
+        # Every registered source document audited for adjacency is covered.
+        for record in self.records:
+            self.assertIn(record["repository_path"], by_path)
+
+    def test_inventory_purposes_are_from_the_closed_vocabulary(self):
+        allowed = {
+            builder.EXPANDED_PURPOSE_REGISTRY,
+            builder.EXPANDED_PURPOSE_MANIFEST,
+            builder.EXPANDED_PURPOSE_MANIFEST_SCHEMA,
+            builder.EXPANDED_PURPOSE_GROUPING,
+            builder.EXPANDED_PURPOSE_NAVIGATION,
+            builder.EXPANDED_PURPOSE_SOURCE_NAMED,
+            builder.EXPANDED_PURPOSE_EXISTENCE,
+        }
+        for item in self.inventory["files"]:
+            for purpose in item["read_purposes"]:
+                self.assertIn(purpose, allowed)
+
+    def test_recorded_hashes_match_the_files_on_disk(self):
+        for item in self.inventory["files"]:
+            path = REPO_ROOT / item["path"]
+            data = path.read_bytes()
+            self.assertEqual(item["byte_length"], len(data), item["path"])
+            self.assertEqual(item["sha256"], hashlib.sha256(data).hexdigest(), item["path"])
+            self.assertEqual(item["git_blob_sha1"], git_blob_sha1(data), item["path"])
+
+    def test_actual_reads_equal_the_enumerated_inventory(self):
+        """Bidirectional proof: enumerated dependencies == actual reads."""
+        observed = set()
+        real_read_bytes = Path.read_bytes
+        real_read_text = Path.read_text
+        real_open = Path.open
+
+        def note(path):
+            try:
+                observed.add(str(Path(path).resolve()))
+            except OSError:
+                pass
+
+        def spy_read_bytes(self):
+            note(self)
+            return real_read_bytes(self)
+
+        def spy_read_text(self, *a, **k):
+            note(self)
+            return real_read_text(self, *a, **k)
+
+        def spy_open(self, *a, **k):
+            note(self)
+            return real_open(self, *a, **k)
+
+        observed.clear()
+        with mock.patch.object(Path, "read_bytes", spy_read_bytes), mock.patch.object(
+            Path, "read_text", spy_read_text
+        ), mock.patch.object(Path, "open", spy_open):
+            # The manifest read happens inside the traced region too, so the
+            # proof covers the caller's read of it rather than exempting it.
+            manifest_bytes = MANIFEST_PATH.read_bytes()
+            manifest = json.loads(manifest_bytes.decode("utf-8"))
+            _, _, inventory = builder.assemble_adjacency_data(
+                REPO_ROOT, manifest, str(MANIFEST_PATH), MANIFEST_PATH, manifest_bytes
+            )
+
+        enumerated = {
+            str((REPO_ROOT / item["path"]).resolve()) for item in inventory["files"]
+        }
+        # Direction 1: nothing was read that the inventory does not enumerate.
+        self.assertEqual(
+            observed - enumerated, set(), "actual read is missing from the inventory"
+        )
+        # Direction 2: nothing is enumerated that was not actually read.
+        self.assertEqual(
+            enumerated - observed, set(), "inventory entry was never read"
+        )
+
+    def test_historical_inventory_remains_thirty_nine(self):
+        self.assertEqual(builder.HISTORICAL_DEPENDENCY_INVENTORY_COUNT, 39)
+        result = run_builder(["--target", "historical"])
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("39", result.stdout)
+
+    def test_expanded_inventory_does_not_widen_historical_enumeration(self):
+        historical = builder.collect_read_purposes(REPO_ROOT)
+        self.assertNotIn(builder.MODEL_ATLAS_FILE, historical)
+        self.assertNotIn(builder.RELATION_MAP_FILE, historical)
+        self.assertNotIn(
+            "visualizations/public-surface-adjacency-map/visualization-manifest.json",
+            historical,
+        )
+
+
+class ExpandedSourceInputFailureTests(BaseCase):
+    def _run_against(self, root):
+        manifest = root / "manifest.json"
+        out = root / "out.json"
+        result = subprocess.run(
+            [sys.executable, str(BUILDER), "--target", "expanded",
+             "--visualization-manifest", str(manifest), "--output", str(out)],
+            cwd=str(root), capture_output=True, text=True,
+            env={"PYTHONDONTWRITEBYTECODE": "1", "PATH": "/usr/bin:/bin"},
+        )
+        return result, out
+
+    def _generator_root(self, name):
+        root = Path(tempfile.mkdtemp(dir=self.tmp)) / name
+        (root / "scripts").mkdir(parents=True)
+        shutil.copy2(BUILDER, root / "scripts")
+        shutil.copy2(REGISTRY_PATH, root)
+        shutil.copy2(MANIFEST_PATH, root / "manifest.json")
+        # The schema is resolved next to the manifest, so it must be present or
+        # the run stops on the manifest contract before reaching source reads.
+        shutil.copy2(MANIFEST_SCHEMA_PATH, root / "visualization-manifest.schema.json")
+        artifact = root / "visualizations" / "public-surface-authority-map"
+        artifact.mkdir(parents=True)
+        shutil.copy2(HISTORICAL_DATA_PATH, artifact / "data.json")
+        return root
+
+    def _run_from(self, root):
+        out = Path(tempfile.mkdtemp(dir=self.tmp)) / "out.json"
+        result = subprocess.run(
+            [sys.executable, str(root / "scripts" / BUILDER.name),
+             "--target", "expanded",
+             "--visualization-manifest", str(root / "manifest.json"),
+             "--output", str(out)],
+            cwd=str(root), capture_output=True, text=True,
+            env={"PYTHONDONTWRITEBYTECODE": "1", "PATH": "/usr/bin:/bin"},
+        )
+        return result, out
+
+    def test_missing_source_document_fails_closed(self):
+        root = self._generator_root("missing-source")
+        # MODEL_ATLAS and the source documents are absent from this root.
+        result, out = self._run_from(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, result.stderr)
+        self.assertFalse(out.exists())
+
+    def test_invalid_utf8_source_fails_closed(self):
+        root = self._generator_root("bad-utf8")
+        (root / "model-atlas").mkdir(parents=True, exist_ok=True)
+        (root / "model-atlas" / "MODEL_ATLAS.md").write_bytes(b"## Field\n\xff\xfe not utf-8\n")
+        result, out = self._run_from(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, result.stderr)
+        self.assertFalse(out.exists())
+
+    def test_source_read_failure_names_the_path_and_reason(self):
+        root = self._generator_root("named-reason")
+        result, _ = self._run_from(root)
+        self.assertIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, result.stderr)
+        self.assertIn("MODEL_ATLAS.md", result.stderr)
+
+    def test_directory_in_place_of_a_source_file_fails_closed(self):
+        root = self._generator_root("dir-not-file")
+        (root / "model-atlas").mkdir(parents=True, exist_ok=True)
+        (root / "model-atlas" / "MODEL_ATLAS.md").mkdir()
+        result, out = self._run_from(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, result.stderr)
+        self.assertFalse(out.exists())
+
+    def test_path_escape_is_rejected(self):
+        sources = builder.ExpandedSources(REPO_ROOT)
+        with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()) as err:
+            sources.read_text("../outside.md", builder.EXPANDED_PURPOSE_SOURCE_NAMED)
+        self.assertIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, err.getvalue())
+
+    def test_historical_artifact_untouched_by_every_failure(self):
+        before = (HISTORICAL_DATA_PATH.read_bytes(), HISTORICAL_DATA_PATH.stat().st_mtime_ns)
+        self.test_missing_source_document_fails_closed()
+        self.test_invalid_utf8_source_fails_closed()
+        after = (HISTORICAL_DATA_PATH.read_bytes(), HISTORICAL_DATA_PATH.stat().st_mtime_ns)
+        self.assertEqual(before, after)
 
 
 if __name__ == "__main__":

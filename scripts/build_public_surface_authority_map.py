@@ -207,6 +207,20 @@ FAILURE_EXPANDED_MANIFEST_INVALID = "EXPANDED_VISUALIZATION_MANIFEST_INVALID"
 FAILURE_EXPANDED_GROUPING_UNRESOLVED = "EXPANDED_GROUPING_UNRESOLVED"
 FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED = "EXPANDED_EDGE_ENDPOINT_UNRESOLVED"
 FAILURE_EXPANDED_DATA_EXCEEDS_CEILING = "EXPANDED_DATA_EXCEEDS_CONSUMER_CEILING"
+FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED = "EXPANDED_SOURCE_ADJACENCY_UNRESOLVED"
+FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE = "EXPANDED_DUPLICATE_DIRECTED_EDGE"
+FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE = "EXPANDED_SOURCE_INPUT_UNREADABLE"
+
+# Closed read-purpose vocabulary for the expanded target. Deliberately separate
+# from the historical PURPOSE_* vocabulary: the expanded inventory is its own
+# mechanism and never widens the pinned historical reconstruction.
+EXPANDED_PURPOSE_REGISTRY = "expanded_registry_input"
+EXPANDED_PURPOSE_MANIFEST = "visualization_membership_manifest"
+EXPANDED_PURPOSE_MANIFEST_SCHEMA = "visualization_manifest_schema"
+EXPANDED_PURPOSE_GROUPING = "navigation_grouping_source"
+EXPANDED_PURPOSE_NAVIGATION = "navigation_adjacency_source"
+EXPANDED_PURPOSE_SOURCE_NAMED = "source_named_adjacency_source"
+EXPANDED_PURPOSE_EXISTENCE = "expanded_reference_existence_check"
 
 # Provenance-inventory contract identities. These are stable facts fixed by the
 # inventory schema/contract, not volatile run data.
@@ -508,37 +522,155 @@ def assemble_map_data(
 SOURCE_ADJACENCY_HEADING = re.compile(
     r"^## Relationship to Adjacent (?:Models|Public Frameworks)\s*$"
 )
-# The declared source adjacency syntax: a top-level list item whose leading
-# element is a Markdown link carrying an explicit repository-relative path.
-SOURCE_ADJACENCY_ENTRY = re.compile(r"^- \[[^\]]*\]\(([^)]+)\)")
 MARKDOWN_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 ATLAS_FIELD_HEADING = re.compile(r"^## (.+?)\s*$")
 ATLAS_ENTRY_FILE = re.compile(r"^- \*\*File:\*\* `([^`]+)`\s*$")
 
 
-def read_source_text(root_resolved: Path, relative_path: str) -> str:
-    """Read a source document as text, failing closed on an unreadable input."""
-    resolved = resolve_under_root(root_resolved, relative_path)
-    if resolved is None:
-        fail(f"{relative_path}: path escapes source root")
-    if not resolved.is_file():
-        fail(f"{relative_path}: required source file does not exist")
-    try:
-        return resolved.read_text(encoding="utf-8")
-    except OSError as exc:
-        fail(f"{relative_path}: unable to read source file: {exc}")
+class ExpandedSources:
+    """Recording reader for every expanded-target source input.
 
+    Every expanded read goes through this object, so the dependency inventory it
+    produces is by construction exactly the set of files the expanded target
+    actually read, hashed, or existence-checked. Bytes are read once per path and
+    cached, so the inventory cannot drift from the reads that built the dataset.
 
-def resolve_reference_path(reference: str, containing_path: str) -> str | None:
-    """Resolve a written Markdown reference to a repository-relative path.
-
-    Purely mechanical: strip any fragment, then apply './' and '../' against the
-    directory of the containing document. Returns None when the reference is not
-    a repository-relative path expression at all.
+    This is deliberately separate from the historical collect_read_purposes()
+    enumeration. The pinned 39-entry historical reconstruction is not widened,
+    consulted, or modified here.
     """
-    target = reference.split("#", 1)[0].strip()
-    if not target or target.startswith("/") or "://" in target:
-        return None
+
+    def __init__(self, root_resolved: Path) -> None:
+        self.root = root_resolved
+        self._bytes: dict[str, bytes] = {}
+        self._purposes: dict[str, set[str]] = {}
+
+    # -- internals ------------------------------------------------------
+    def _record(self, label: str, purpose: str) -> None:
+        self._purposes.setdefault(label, set()).add(purpose)
+
+    def _resolve(self, relative_path: str) -> Path:
+        resolved = resolve_under_root(self.root, relative_path)
+        if resolved is None:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                "path escapes the source root"
+            )
+        return resolved
+
+    # -- public API -----------------------------------------------------
+    def read_bytes(self, relative_path: str, purpose: str) -> bytes:
+        self._record(relative_path, purpose)
+        if relative_path in self._bytes:
+            return self._bytes[relative_path]
+        resolved = self._resolve(relative_path)
+        if not resolved.is_file():
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                "required source input is missing or is not a regular file"
+            )
+        try:
+            data = resolved.read_bytes()
+        except OSError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"unable to read source input: {exc}"
+            )
+        self._bytes[relative_path] = data
+        return data
+
+    def read_text(self, relative_path: str, purpose: str) -> str:
+        data = self.read_bytes(relative_path, purpose)
+        try:
+            return data.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"source input is not valid UTF-8: {exc}"
+            )
+
+    def read_json(self, relative_path: str, purpose: str) -> Any:
+        text = self.read_text(relative_path, purpose)
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as exc:
+            fail(
+                f"{FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE}: {relative_path}: "
+                f"invalid JSON at line {exc.lineno}: {exc.msg}"
+            )
+
+    def existence_check(self, relative_path: str, purpose: str) -> bool:
+        self._record(relative_path, purpose)
+        resolved = resolve_under_root(self.root, relative_path)
+        return resolved is not None and resolved.is_file()
+
+    def adopt_external(self, label: str, data: bytes, purpose: str) -> None:
+        """Record an input read outside the source root (a CLI-supplied path)."""
+        self._record(label, purpose)
+        self._bytes.setdefault(label, data)
+
+    def dependency_inventory(self) -> dict[str, Any]:
+        """Deterministic in-memory provenance record of the expanded build."""
+        files: list[dict[str, Any]] = []
+        for label in sorted(self._purposes):
+            data = self._bytes.get(label, b"")
+            files.append(
+                {
+                    "path": label,
+                    "byte_length": len(data),
+                    "sha256": hashlib.sha256(data).hexdigest(),
+                    "git_blob_sha1": git_blob_sha1(data),
+                    "read_purposes": sorted(self._purposes[label]),
+                }
+            )
+        aggregate_material = "".join(f"{item['path']}:{item['sha256']}\n" for item in files)
+        return {
+            "inventory_schema_version": INVENTORY_SCHEMA_VERSION,
+            "source_repository": SOURCE_REPOSITORY,
+            "target": TARGET_EXPANDED,
+            "dependency_count": len(files),
+            "aggregate_sha256": hashlib.sha256(
+                aggregate_material.encode("utf-8")
+            ).hexdigest(),
+            "files": files,
+        }
+
+
+def classify_adjacency_link(href: str, containing_path: str) -> tuple[str, str | None, str]:
+    """Classify one Markdown link found inside a formal adjacency section.
+
+    Returns (kind, resolved_path, reason) where kind is one of:
+
+      "accepted"   - an internal, registered, repository-relative .md document
+      "ignored"    - not a repository-relative Markdown document reference at
+                     all (external URL, DOI, OSF, fragment-only anchor, or a
+                     non-Markdown target). These are not adjacency declarations
+                     and are never unresolved candidates.
+      "unresolved" - it does look like a repository-relative Markdown document
+                     reference, but escapes the repository, cannot be normalized
+                     mechanically, or lands outside the 59-record registry.
+
+    Only the href is used. The visible link label is never consulted, so no
+    edge can depend on a human-readable concept name.
+    """
+    raw = href.strip()
+    if not raw:
+        return ("ignored", None, "empty href")
+    if "://" in raw or raw.startswith("mailto:"):
+        return ("ignored", None, "external URL")
+    if raw.startswith("#"):
+        return ("ignored", None, "fragment-only anchor")
+
+    target = raw.split("#", 1)[0].strip()
+    if not target:
+        return ("ignored", None, "fragment-only anchor")
+    if not target.lower().endswith(".md"):
+        return ("ignored", None, "non-Markdown-document link")
+    if target.startswith("/"):
+        return ("unresolved", None, "absolute path escapes the repository")
+    if "\\" in target or PureWindowsPath(target).drive:
+        return ("unresolved", None, "not mechanically normalizable")
+
     parts = containing_path.split("/")[:-1]
     while target.startswith("./") or target.startswith("../"):
         if target.startswith("./"):
@@ -546,12 +678,15 @@ def resolve_reference_path(reference: str, containing_path: str) -> str | None:
         else:
             target = target[3:]
             if not parts:
-                return None
+                return ("unresolved", None, "path escapes the repository root")
             parts = parts[:-1]
     if not target:
-        return None
+        return ("unresolved", None, "not mechanically normalizable")
+
     resolved = "/".join([*parts, target]) if parts else target
-    return resolved if is_repository_relative_path(resolved) else None
+    if not is_repository_relative_path(resolved):
+        return ("unresolved", None, "path escapes the repository root")
+    return ("accepted", resolved, "")
 
 
 def build_visualization_roles(records: list[dict[str, Any]]) -> dict[str, str]:
@@ -577,7 +712,7 @@ def build_visualization_roles(records: list[dict[str, Any]]) -> dict[str, str]:
 
 
 def parse_model_atlas_fields(
-    root_resolved: Path,
+    sources: ExpandedSources,
     records: list[dict[str, Any]],
     roles: dict[str, str],
 ) -> dict[str, str]:
@@ -587,7 +722,7 @@ def parse_model_atlas_fields(
     under a '## <field>' heading, so the assignment is read, never inferred from
     a filename. Zero, duplicate, or ambiguous assignments stop the run.
     """
-    text = read_source_text(root_resolved, MODEL_ATLAS_FILE)
+    text = sources.read_text(MODEL_ATLAS_FILE, EXPANDED_PURPOSE_GROUPING)
     field: str | None = None
     assignments: dict[str, list[str]] = {}
 
@@ -622,34 +757,67 @@ def parse_model_atlas_fields(
 
 
 def parse_source_named_adjacency(
-    root_resolved: Path,
+    sources: ExpandedSources,
     records: list[dict[str, Any]],
     roles: dict[str, str],
-) -> tuple[list[tuple[str, str]], int, int]:
-    """Extract source-declared adjacency from the registered source documents.
+) -> tuple[list[tuple[str, str]], dict[str, Any]]:
+    """Extract source-named adjacency from the registered source documents.
 
-    Only the declared adjacency syntax is read: a top-level list item inside the
-    document's own adjacency section whose leading element is a Markdown link to
-    an explicit repository-relative path. Ordinary prose, inline links, plain
-    text names, fenced comparison blocks, Related Node Index text, boundary
-    references, source-use links and DOI links are never treated as adjacency,
-    because none of them declares a path that can be resolved without guessing.
+    The approved contract is a machine-readable edge contract:
+
+        source_named_adjacency
+        = repository-relative Markdown document links written inside the
+          source document's formal adjacency section
+
+    Every Markdown link inside the formal section counts, wherever it appears —
+    at the start of a bullet, later in a bullet, in a sentence, in a table row,
+    or inside a fenced block. Only the href is resolved; the visible label is
+    never consulted.
+
+    Bare concept names, plain-text bullets, fenced comparison labels, prose,
+    '=' definitions, and short conceptual names are human-readable adjacency
+    discussion. They create no edge and are NOT unresolved candidates: this
+    parser attempts no alias, prefix, or fuzzy mapping of any kind.
+
+    Repeated links to the same target within one document's single formal
+    section are two evidence occurrences for one adjacency, not two edges, and
+    are consolidated into one directed edge with all evidence lines retained in
+    the audit. A document carrying more than one formal adjacency section fails
+    closed rather than having only its first section used.
 
     Direction is preserved exactly as written; no reverse edge is manufactured.
 
-    Returns (retained concept-to-concept edges, raw directed count, count
-    excluded for a non-concept endpoint).
+    Returns (retained concept-to-concept edges, audit).
     """
     registered = set(roles)
-    raw: list[tuple[str, str]] = []
-    seen: set[tuple[str, str]] = set()
+    # (source, target) -> {"lines": [...], "hrefs": [...]}
+    evidence: dict[tuple[str, str], dict[str, list[Any]]] = {}
+    order: list[tuple[str, str]] = []
+    sections: list[dict[str, Any]] = []
+    totals = {
+        "documents_with_sections": 0,
+        "links_in_sections": 0,
+        "accepted_declarations": 0,
+        "ignored_links": 0,
+        "self_references_omitted": 0,
+        "same_section_repeated_evidence": 0,
+        "unresolved_internal_links": 0,
+    }
 
     for repository_path in roles:
-        text = read_source_text(root_resolved, repository_path)
+        text = sources.read_text(repository_path, EXPANDED_PURPOSE_SOURCE_NAMED)
         lines = text.split("\n")
         starts = [i for i, line in enumerate(lines) if SOURCE_ADJACENCY_HEADING.match(line)]
         if not starts:
             continue
+        if len(starts) > 1:
+            fail(
+                f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: {repository_path}: "
+                f"{len(starts)} formal adjacency sections found at lines "
+                f"{[index + 1 for index in starts]}; exactly one is required and "
+                "no section is silently preferred"
+            )
+
         start = starts[0]
         end = len(lines)
         for index in range(start + 1, len(lines)):
@@ -657,38 +825,134 @@ def parse_source_named_adjacency(
                 end = index
                 break
 
-        for line in lines[start + 1 : end]:
-            entry = SOURCE_ADJACENCY_ENTRY.match(line)
-            if not entry:
-                continue
-            target = resolve_reference_path(entry.group(1), repository_path)
-            if target is None or target not in registered:
-                fail(
-                    f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: {repository_path}: "
-                    f"source adjacency entry {line.strip()!r} names "
-                    f"{entry.group(1)!r}, which does not map to exactly one of the "
-                    f"{len(registered)} registered public documents"
+        section = {
+            "repository_path": repository_path,
+            "heading_line": start + 1,
+            "section_end_line": end,
+            "links": [],
+            "accepted": [],
+            "ignored": [],
+            "self_references": [],
+            "repeated_evidence": [],
+            "unresolved": [],
+        }
+        totals["documents_with_sections"] += 1
+        # Section-scoped evidence: consolidation is only ever allowed inside one
+        # formal section of one document.
+        section_seen: dict[tuple[str, str], int] = {}
+
+        for index in range(start + 1, end):
+            line = lines[index]
+            line_number = index + 1
+            for href in MARKDOWN_LINK.findall(line):
+                totals["links_in_sections"] += 1
+                section["links"].append({"line": line_number, "href": href})
+                kind, target, reason = classify_adjacency_link(href, repository_path)
+
+                if kind == "ignored":
+                    totals["ignored_links"] += 1
+                    section["ignored"].append(
+                        {"line": line_number, "href": href, "reason": reason}
+                    )
+                    continue
+
+                if kind == "unresolved" or target not in registered:
+                    if kind == "accepted":
+                        reason = (
+                            f"resolves to {target!r}, which is outside the "
+                            f"{len(registered)}-record public registry"
+                        )
+                    totals["unresolved_internal_links"] += 1
+                    section["unresolved"].append(
+                        {"line": line_number, "href": href, "reason": reason}
+                    )
+                    fail(
+                        f"{FAILURE_EXPANDED_SOURCE_ADJACENCY_UNRESOLVED}: "
+                        f"{repository_path}:{line_number}: href {href!r} in the "
+                        f"formal adjacency section {reason}. Source line: "
+                        f"{line.strip()!r}"
+                    )
+
+                if target == repository_path:
+                    totals["self_references_omitted"] += 1
+                    section["self_references"].append(
+                        {"line": line_number, "href": href}
+                    )
+                    continue
+
+                key = (repository_path, target)
+                if key in section_seen:
+                    # Same document, same formal section, same resolved target,
+                    # same edge class: repeated evidence for one adjacency.
+                    totals["same_section_repeated_evidence"] += 1
+                    section["repeated_evidence"].append(
+                        {
+                            "line": line_number,
+                            "href": href,
+                            "first_line": section_seen[key],
+                            "target": target,
+                        }
+                    )
+                    evidence[key]["lines"].append(line_number)
+                    evidence[key]["hrefs"].append(href)
+                    continue
+
+                section_seen[key] = line_number
+                totals["accepted_declarations"] += 1
+                section["accepted"].append(
+                    {"line": line_number, "href": href, "target": target}
                 )
-            if target == repository_path:
-                continue
-            key = (repository_path, target)
-            # Duplicate identical directed entries are rejected within this
-            # class only; identical pairs in another class stay separate.
-            if key in seen:
-                continue
-            seen.add(key)
-            raw.append(key)
+                if key in evidence:
+                    # The same pair reached from a different formal section is a
+                    # structural problem, not repeated same-section evidence.
+                    fail(
+                        f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: "
+                        f"{EDGE_CLASS_SOURCE_NAMED}: {repository_path} -> {target}: "
+                        f"first declared at line {evidence[key]['lines'][0]}, "
+                        f"duplicated at line {line_number} from an incompatible "
+                        "evidence scope"
+                    )
+                evidence[key] = {"lines": [line_number], "hrefs": [href]}
+                order.append(key)
+
+        sections.append(section)
 
     retained = [
         edge
-        for edge in raw
+        for edge in order
         if roles[edge[0]] == ROLE_CONCEPT and roles[edge[1]] == ROLE_CONCEPT
     ]
-    return retained, len(raw), len(raw) - len(retained)
+    # Accepted declarations count each first occurrence; repeated same-section
+    # evidence is counted separately and consolidates into the same edge.
+    # Every accepted internal registered link declaration, including repeated
+    # same-section evidence for one adjacency. Declarations minus repeated
+    # evidence equals the number of unique directed edges.
+    totals["accepted_link_declarations"] = (
+        totals["accepted_declarations"] + totals["same_section_repeated_evidence"]
+    )
+    totals["unique_directed_edges"] = len(order)
+    totals["retained_concept_edges"] = len(retained)
+    totals["excluded_non_concept_edges"] = len(order) - len(retained)
+
+    audit = {
+        "totals": totals,
+        "sections": sections,
+        "evidence": [
+            {
+                "source": key[0],
+                "target": key[1],
+                "declaration_count": len(evidence[key]["lines"]),
+                "declaration_lines": list(evidence[key]["lines"]),
+                "declaration_hrefs": list(evidence[key]["hrefs"]),
+            }
+            for key in order
+        ],
+    }
+    return retained, audit
 
 
 def parse_navigation_adjacency(
-    root_resolved: Path,
+    sources: ExpandedSources,
     records: list[dict[str, Any]],
     roles: dict[str, str],
 ) -> tuple[list[tuple[str, str]], int, int]:
@@ -702,12 +966,12 @@ def parse_navigation_adjacency(
     Returns (retained concept-to-concept edges, raw directed count, count
     excluded for a non-concept endpoint).
     """
-    text = read_source_text(root_resolved, RELATION_MAP_FILE)
+    text = sources.read_text(RELATION_MAP_FILE, EXPANDED_PURPOSE_NAVIGATION)
     registered = set(roles)
     raw: list[tuple[str, str]] = []
-    seen: set[tuple[str, str]] = set()
+    seen: dict[tuple[str, str], int] = {}
 
-    for line in text.split("\n"):
+    for line_number, line in enumerate(text.split("\n"), start=1):
         if not line.startswith("|"):
             continue
         cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
@@ -716,28 +980,38 @@ def parse_navigation_adjacency(
         file_links = MARKDOWN_LINK.findall(cells[1])
         if not file_links:
             continue
-        source = resolve_reference_path(file_links[0], RELATION_MAP_FILE)
-        if source is None or source not in registered:
+        kind, source, reason = classify_adjacency_link(file_links[0], RELATION_MAP_FILE)
+        if kind != "accepted" or source not in registered:
             fail(
-                f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: {RELATION_MAP_FILE}: "
-                f"row entry {cells[1]!r} does not map to exactly one of the "
-                f"{len(registered)} registered public documents"
+                f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: "
+                f"{RELATION_MAP_FILE}:{line_number}: row entry {cells[1]!r} does not "
+                f"map to exactly one of the {len(registered)} registered public "
+                f"documents ({reason or 'outside the registry'})"
             )
         for reference in MARKDOWN_LINK.findall(cells[5]):
-            target = resolve_reference_path(reference, RELATION_MAP_FILE)
-            if target is None or target not in registered:
+            kind, target, reason = classify_adjacency_link(reference, RELATION_MAP_FILE)
+            if kind != "accepted" or target not in registered:
                 fail(
                     f"{FAILURE_EXPANDED_EDGE_ENDPOINT_UNRESOLVED}: "
-                    f"{RELATION_MAP_FILE}: adjacent entry {reference!r} on row "
-                    f"{cells[1]!r} does not map to exactly one of the "
-                    f"{len(registered)} registered public documents"
+                    f"{RELATION_MAP_FILE}:{line_number}: adjacent entry "
+                    f"{reference!r} on row {cells[1]!r} does not map to exactly one "
+                    f"of the {len(registered)} registered public documents "
+                    f"({reason or 'outside the registry'})"
                 )
             if target == source:
                 continue
             key = (source, target)
             if key in seen:
-                continue
-            seen.add(key)
+                # RELATION_MAP is a single curated navigation table; a repeated
+                # directed pair there is a structural problem, not repeated
+                # evidence for one edge, so it fails closed.
+                fail(
+                    f"{FAILURE_EXPANDED_DUPLICATE_DIRECTED_EDGE}: "
+                    f"{EDGE_CLASS_NAVIGATION}: {source} -> {target}: first declared "
+                    f"at {RELATION_MAP_FILE}:{seen[key]}, duplicated at "
+                    f"{RELATION_MAP_FILE}:{line_number}"
+                )
+            seen[key] = line_number
             raw.append(key)
 
     retained = [
@@ -749,17 +1023,29 @@ def parse_navigation_adjacency(
 
 
 def compute_relation_evidence_ceilings(
-    records: list[dict[str, Any]],
     roles: dict[str, str],
-    source_named: list[tuple[str, str]],
+    source_named_audit: dict[str, Any],
     navigation: list[tuple[str, str]],
 ) -> dict[str, str]:
-    """Record the strongest approved display evidence available per record.
+    """Record the strongest approved machine-readable evidence per record.
+
+    The source-named ceiling is computed from accepted, non-self Markdown-link
+    declarations BEFORE non-concept rendering filtration, so a record keeps its
+    source-level evidence even when its valid targets are filtered out of the
+    rendered graph.
+
+    A formal adjacency section written only in bare conceptual names carries no
+    machine-readable link, so it does not by itself establish a source-named
+    ceiling. That is a statement about what P5 can encode mechanically without
+    an alias or authorial relation table — not a denial that the section
+    contains conceptual discussion.
 
     This is a display-evidence fact only. It is not a classification, hierarchy,
     confirmed relation, priority order, or ontology statement.
     """
-    named_sources = {edge[0] for edge in source_named}
+    named_sources = {
+        item["source"] for item in source_named_audit["evidence"]
+    }
     navigation_endpoints = {edge[0] for edge in navigation} | {edge[1] for edge in navigation}
 
     ceilings: dict[str, str] = {}
@@ -1091,6 +1377,143 @@ def resolve_expanded_output(path_str: str) -> Path:
     return output_resolved
 
 
+JSON_SCHEMA_DRAFT_2020_12 = "https://json-schema.org/draft/2020-12/schema"
+
+
+def schema_instance_errors(schema: Any, instance: Any, path: str = "$") -> list[str]:
+    """Validate an instance against the keyword subset the manifest schema uses.
+
+    Supported keywords: type, const, enum, required, additionalProperties,
+    properties, items, minItems, maxItems, uniqueItems, minLength, pattern.
+
+    This repository has no third-party JSON Schema dependency, so validation is
+    implemented here in the standard library and shared by production generation
+    and the test suite, rather than existing twice and drifting apart.
+    """
+    errors: list[str] = []
+    if not isinstance(schema, dict):
+        return errors
+
+    if "const" in schema and instance != schema["const"]:
+        errors.append(f"{path}: {instance!r} does not equal const {schema['const']!r}")
+    if "enum" in schema and instance not in schema["enum"]:
+        errors.append(f"{path}: {instance!r} is not one of {schema['enum']!r}")
+
+    expected = schema.get("type")
+    if expected == "object":
+        if not isinstance(instance, dict):
+            return errors + [f"{path}: expected an object"]
+        properties = schema.get("properties", {})
+        for key in schema.get("required", []):
+            if key not in instance:
+                errors.append(f"{path}: missing required property {key!r}")
+        if schema.get("additionalProperties") is False:
+            for key in instance:
+                if key not in properties:
+                    errors.append(f"{path}: property {key!r} is not allowed")
+        for key, value in instance.items():
+            if key in properties:
+                errors.extend(schema_instance_errors(properties[key], value, f"{path}.{key}"))
+    elif expected == "array":
+        if not isinstance(instance, list):
+            return errors + [f"{path}: expected an array"]
+        if "minItems" in schema and len(instance) < schema["minItems"]:
+            errors.append(f"{path}: has {len(instance)} items, minimum {schema['minItems']}")
+        if "maxItems" in schema and len(instance) > schema["maxItems"]:
+            errors.append(f"{path}: has {len(instance)} items, maximum {schema['maxItems']}")
+        if schema.get("uniqueItems"):
+            seen = [json.dumps(item, sort_keys=True, ensure_ascii=False) for item in instance]
+            if len(set(seen)) != len(seen):
+                errors.append(f"{path}: items are not unique")
+        item_schema = schema.get("items")
+        if isinstance(item_schema, dict):
+            for index, item in enumerate(instance):
+                errors.extend(schema_instance_errors(item_schema, item, f"{path}[{index}]"))
+    elif expected == "string":
+        if not isinstance(instance, str):
+            return errors + [f"{path}: expected a string"]
+        if "minLength" in schema and len(instance) < schema["minLength"]:
+            errors.append(f"{path}: shorter than minLength {schema['minLength']}")
+        if "pattern" in schema and not re.search(schema["pattern"], instance):
+            errors.append(f"{path}: {instance!r} does not match pattern {schema['pattern']!r}")
+    elif expected == "integer":
+        if isinstance(instance, bool) or not isinstance(instance, int):
+            return errors + [f"{path}: expected an integer"]
+
+    return errors
+
+
+def validate_manifest_against_schema(
+    manifest: dict[str, Any],
+    manifest_path: Path,
+    sources: ExpandedSources,
+) -> None:
+    """Enforce the tracked manifest schema contract during production generation.
+
+    The schema reference is resolved relative to the manifest file itself, the
+    schema must be a readable regular Draft 2020-12 file, and the manifest is
+    then validated against every keyword the tracked schema uses.
+    """
+    declared = manifest.get("$schema")
+    if declared != "./visualization-manifest.schema.json":
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: $schema "
+            f"{declared!r} must be './visualization-manifest.schema.json'"
+        )
+
+    schema_path = (manifest_path.parent / declared).resolve()
+    if not schema_path.is_file():
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: visualization "
+            "manifest schema is missing or is not a regular file"
+        )
+    try:
+        schema_bytes = schema_path.read_bytes()
+    except OSError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: unable to read "
+            f"visualization manifest schema: {exc}"
+        )
+
+    label = schema_label_for(schema_path, sources.root)
+    sources.adopt_external(label, schema_bytes, EXPANDED_PURPOSE_MANIFEST_SCHEMA)
+
+    try:
+        schema = json.loads(schema_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema is "
+            f"not readable JSON: {exc}"
+        )
+    if not isinstance(schema, dict):
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema "
+            "top-level value must be an object"
+        )
+    if schema.get("$schema") != JSON_SCHEMA_DRAFT_2020_12:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema "
+            f"draft {schema.get('$schema')!r} is not {JSON_SCHEMA_DRAFT_2020_12!r}"
+        )
+
+    errors = schema_instance_errors(schema, manifest)
+    if errors:
+        for message in errors[:20]:
+            print(f"build_public_surface_authority_map: manifest: {message}", file=sys.stderr)
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: manifest does not "
+            f"satisfy its schema contract ({len(errors)} error(s)); first: {errors[0]}"
+        )
+
+
+def schema_label_for(path: Path, root_resolved: Path) -> str:
+    """Stable inventory label: repository-relative when inside the source root."""
+    try:
+        return path.relative_to(root_resolved).as_posix()
+    except ValueError:
+        return str(path)
+
+
 def load_visualization_manifest(manifest_path: str) -> dict[str, Any]:
     """Read the independent visualization manifest, failing closed if unusable.
 
@@ -1130,7 +1553,9 @@ def assemble_adjacency_data(
     root_resolved: Path,
     manifest: dict[str, Any],
     manifest_label: str,
-) -> dict[str, Any]:
+    manifest_path: Path | None = None,
+    manifest_bytes: bytes | None = None,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     """Assemble the expanded public-surface adjacency dataset.
 
     Reads the registry for record identity, the visualization manifest for
@@ -1138,7 +1563,8 @@ def assemble_adjacency_data(
     grouping, RELATION_MAP for provisional navigation adjacency, and each
     registered source document for its own declared adjacency.
     """
-    documents = load_json(root_resolved, DOCUMENTS_FILE)
+    sources = ExpandedSources(root_resolved)
+    documents = sources.read_json(DOCUMENTS_FILE, EXPANDED_PURPOSE_REGISTRY)
     if not isinstance(documents, dict):
         fail(f"{DOCUMENTS_FILE}: top-level value must be an object")
 
@@ -1170,6 +1596,15 @@ def assemble_adjacency_data(
         )
 
     # --- manifest contract -------------------------------------------------
+    if manifest_path is not None:
+        if manifest_bytes is not None:
+            sources.adopt_external(
+                schema_label_for(manifest_path, root_resolved),
+                manifest_bytes,
+                EXPANDED_PURPOSE_MANIFEST,
+            )
+        validate_manifest_against_schema(manifest, manifest_path, sources)
+
     if manifest.get("source_commit") != EXPANDED_SOURCE_COMMIT:
         fail(
             f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_label}: source_commit "
@@ -1195,14 +1630,13 @@ def assemble_adjacency_data(
             "exactly 1:1 with the registry, in registry order"
         )
 
-    grouping = parse_model_atlas_fields(root_resolved, records, roles)
-    source_named, source_named_raw, source_named_excluded = parse_source_named_adjacency(
-        root_resolved, records, roles
-    )
+    grouping = parse_model_atlas_fields(sources, records, roles)
+    source_named, source_audit = parse_source_named_adjacency(sources, records, roles)
     navigation, navigation_raw, navigation_excluded = parse_navigation_adjacency(
-        root_resolved, records, roles
+        sources, records, roles
     )
-    ceilings = compute_relation_evidence_ceilings(records, roles, source_named, navigation)
+    ceilings = compute_relation_evidence_ceilings(roles, source_audit, navigation)
+    source_totals = source_audit["totals"]
 
     by_path = {record["repository_path"]: record for record in records}
     nodes: list[dict[str, Any]] = []
@@ -1279,6 +1713,10 @@ def assemble_adjacency_data(
                     "edge_class": edge_class,
                     "directed": True,
                     "default_visible": default_visible,
+                    # Evidence/status/ceiling separation is retained. The status
+                    # is the evidence class itself and never says "confirmed";
+                    # the ceiling stays navigation_only. Neither field promotes
+                    # adjacency into a formal or confirmed relation.
                     "relation_status": edge_class,
                     "authority_ceiling": "navigation_only",
                 }
@@ -1294,7 +1732,7 @@ def assemble_adjacency_data(
     for value in ceilings.values():
         ceiling_distribution[value] = ceiling_distribution.get(value, 0) + 1
 
-    return {
+    data = {
         "schema_version": "1.0",
         "title": "Public Surface Adjacency Map (expanded public surface)",
         "scope": "expanded_public_surface_visualization_membership",
@@ -1331,8 +1769,10 @@ def assemble_adjacency_data(
                 "display_label": "Source-declared adjacency",
                 "directed": True,
                 "default_visible": True,
-                "evidence_source": "the source document's own adjacency section",
-                "is_confirmed_relation": False,
+                "evidence_source": (
+                    "repository-relative Markdown document links written inside "
+                    "the source document's formal adjacency section"
+                ),
             },
             {
                 "edge_class": EDGE_CLASS_NAVIGATION,
@@ -1340,12 +1780,11 @@ def assemble_adjacency_data(
                 "directed": True,
                 "default_visible": False,
                 "evidence_source": RELATION_MAP_FILE,
-                "is_confirmed_relation": False,
             },
         ],
         "raw_edge_counts": {
             EDGE_CLASS_NAVIGATION: navigation_raw,
-            EDGE_CLASS_SOURCE_NAMED: source_named_raw,
+            EDGE_CLASS_SOURCE_NAMED: source_totals["unique_directed_edges"],
         },
         "edge_counts": {
             EDGE_CLASS_NAVIGATION: len(navigation),
@@ -1353,7 +1792,15 @@ def assemble_adjacency_data(
         },
         "excluded_non_concept_endpoint_counts": {
             EDGE_CLASS_NAVIGATION: navigation_excluded,
-            EDGE_CLASS_SOURCE_NAMED: source_named_excluded,
+            EDGE_CLASS_SOURCE_NAMED: source_totals["excluded_non_concept_edges"],
+        },
+        "source_named_declaration_counts": {
+            "markdown_link_declarations": source_totals["accepted_link_declarations"],
+            "same_section_repeated_evidence": source_totals[
+                "same_section_repeated_evidence"
+            ],
+            "self_references_omitted": source_totals["self_references_omitted"],
+            "unique_directed_edges": source_totals["unique_directed_edges"],
         },
         "relation_classes_not_rendered": list(NON_RENDERED_RELATION_CLASSES),
         "transform_notes": {
@@ -1361,7 +1808,7 @@ def assemble_adjacency_data(
             "node_size_implies_importance": False,
             "layout_position_implies_relation": False,
             "grouping_implies_classification_or_ontology": False,
-            "adjacency_implies_confirmed_relation": False,
+            "adjacency_implies_formal_relation": False,
             "reverse_edges_inferred": False,
             "non_concept_records_participate_in_layout": False,
             "governance_or_source_use_edges_rendered": False,
@@ -1369,6 +1816,7 @@ def assemble_adjacency_data(
         "nodes": nodes,
         "edges": edges,
     }
+    return data, source_audit, sources.dependency_inventory()
 
 
 def run_expanded(output: str, visualization_manifest: str | None) -> int:
@@ -1383,8 +1831,23 @@ def run_expanded(output: str, visualization_manifest: str | None) -> int:
             "registry is never the visualization-membership authority"
         )
 
+    manifest_path = Path(visualization_manifest).resolve()
     manifest = load_visualization_manifest(visualization_manifest)
-    data = assemble_adjacency_data(GENERATOR_ROOT_RESOLVED, manifest, visualization_manifest)
+    try:
+        manifest_bytes = manifest_path.read_bytes()
+    except OSError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {visualization_manifest}: unable "
+            f"to read visualization manifest: {exc}"
+        )
+    data, source_audit, inventory = assemble_adjacency_data(
+        GENERATOR_ROOT_RESOLVED,
+        manifest,
+        visualization_manifest,
+        manifest_path,
+        manifest_bytes,
+    )
+    source_totals = source_audit["totals"]
 
     payload = json.dumps(data, indent=2, ensure_ascii=False, sort_keys=False) + "\n"
     encoded = payload.encode("utf-8")
@@ -1412,9 +1875,21 @@ def run_expanded(output: str, visualization_manifest: str | None) -> int:
             f"retained {data['edge_counts'][edge_class]}, excluded non-concept "
             f"endpoint {data['excluded_non_concept_endpoint_counts'][edge_class]}"
         )
+    print(
+        "- source-named declarations: "
+        f"{source_totals['links_in_sections']} Markdown links in "
+        f"{source_totals['documents_with_sections']} formal sections, "
+        f"{source_totals['accepted_declarations']} accepted, "
+        f"{source_totals['ignored_links']} ignored, "
+        f"{source_totals['same_section_repeated_evidence']} same-section repeated "
+        f"evidence, {source_totals['self_references_omitted']} self-references "
+        f"omitted, {source_totals['unresolved_internal_links']} unresolved"
+    )
     print(f"- byte length: {len(encoded)} (ceiling {EXPANDED_MAX_DATA_BYTES})")
     print(f"- sha256: {hashlib.sha256(encoded).hexdigest()}")
     print(f"- git blob: {git_blob_sha1(encoded)}")
+    print(f"- expanded dependencies: {inventory['dependency_count']}")
+    print(f"- expanded dependency aggregate_sha256: {inventory['aggregate_sha256']}")
     print(
         "- not rendered as semantic edges: "
         + ", ".join(NON_RENDERED_RELATION_CLASSES)
