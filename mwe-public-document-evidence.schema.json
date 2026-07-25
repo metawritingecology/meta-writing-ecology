@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metawritingecology/meta-writing-ecology/blob/main/mwe-public-document-evidence.schema.json",
+  "title": "Meta-Writing Ecology Public-Document Field Evidence Manifest",
+  "description": "Validates the shape of the per-field evidence manifest that accompanies mwe-public-documents.json. It records, for each public-document record, which derivation kind produced each tracked metadata value. It records provenance only. It does not validate conceptual truth, empirical validity, internal Registry status, formal classification, formal relation status, ontology membership, conceptual priority, or authoritative-copy identity, and it carries no classification or relation value of its own.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "evidence_schema_version",
+    "describes",
+    "scope",
+    "authority_ceiling",
+    "scope_note",
+    "record_count",
+    "records"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "describes": {
+      "type": "string",
+      "const": "./mwe-public-documents.json"
+    },
+    "scope": {
+      "type": "string",
+      "const": "field_level_evidence_provenance_only"
+    },
+    "authority_ceiling": {
+      "type": "string",
+      "const": "metadata_only"
+    },
+    "scope_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceRecord"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "evidenceValue": {
+      "type": "string",
+      "enum": [
+        "source_declared",
+        "source_h1",
+        "source_declared_display_title",
+        "inventory_declared",
+        "mechanical",
+        "registry_policy",
+        "schema_const",
+        "not_asserted",
+        "user_decision"
+      ]
+    },
+    "evidenceRecord": {
+      "type": "object",
+      "required": [
+        "repository_path",
+        "field_evidence"
+      ],
+      "properties": {
+        "repository_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_evidence": {
+          "$ref": "#/$defs/fieldEvidence"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fieldEvidence": {
+      "type": "object",
+      "required": [
+        "inclusion",
+        "name",
+        "repository_path",
+        "canonical_public_url",
+        "surface_role",
+        "public_surface_status",
+        "authority_ceiling",
+        "relation_default",
+        "classification",
+        "boundary_references",
+        "source_use_reference"
+      ],
+      "properties": {
+        "inclusion": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "name": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "repository_path": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "canonical_public_url": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "surface_role": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "public_surface_status": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "authority_ceiling": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "relation_default": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "classification": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "boundary_references": {
+          "$ref": "#/$defs/evidenceValue"
+        },
+        "source_use_reference": {
+          "$ref": "#/$defs/evidenceValue"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
