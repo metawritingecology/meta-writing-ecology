@@ -5,14 +5,16 @@ Standard-library unittest only (no third-party dependency). These tests cover
 the isolated candidate mode of the public-surface authority-map builder and the
 preflight / verify-inventory modes of the public-metadata validator:
 
-- default builder and validator backward compatibility;
+- historical-target verification and validator backward compatibility;
 - source/generator separation (content read only from the explicit source root);
 - output/inventory isolation outside both roots;
 - path traversal and symlink/reparse-point escape rejection;
 - deterministic snapshot and inventory bytes;
 - dependency-inventory schema, coverage, ordering, and identity recomputation;
 - source-root Python import isolation (no execution of source-tree modules);
-- default-mode working-tree identity (exactly 92,903 bytes / 30 records);
+- historical artifact identity (exactly 92,903 bytes / 30 records);
+- historical generator isolation: verification writes nothing, and no expanded
+  output can resolve to the historical artifact path;
 - pinned-commit historical identity (exactly 83,727 bytes / 27 records);
 - source-root and generator-root no-write proofs on success and failure.
 
@@ -22,6 +24,9 @@ own state (no working-tree overlay is ever introduced into the pinned checkout):
 * DefaultModeTests validate the CURRENT working tree in place. The working tree
   carries the 30-record public registry, so its production identity is the
   EXPECTED_* constants below (30 records / 161 edges / 39 inventory items).
+  These tests no longer write the tracked artifact: in-place regeneration is
+  retired, and both the zero-argument invocation and --target historical are
+  verify-only.
 
 * IntegrationTests reconstruct and validate a FIXED HISTORICAL commit
   (INTEGRATION_SHA) hermetically, using that commit's OWN builder and validator
@@ -46,6 +51,7 @@ B. A full production integration source (and its own generator), materialised at
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import importlib.util
 import io
@@ -70,14 +76,34 @@ FIXTURE = GENERATOR_ROOT / "tests" / "fixtures" / "public-surface-candidate"
 # is 27), so IntegrationTests stay hermetic to it without any working-tree overlay.
 INTEGRATION_SHA = "89550fea8317e535f9569461e71fec8d46e9ad8e"
 
-# Default-mode / working-tree identity (current 30-record public registry).
-# Used by DefaultModeTests, which build the tracked data.json in place.
+# Historical artifact identity (the frozen 30-record public registry snapshot).
+# Used by DefaultModeTests, which verify the tracked data.json without writing
+# it: in-place regeneration of this path is retired.
 EXPECTED_DATA_BYTES = 92903
 EXPECTED_DATA_SHA256 = "3b1e5993a52cbce340b85472fea1ae5ea6f921cf8f7751d2d635edc7b17216ea"
 EXPECTED_DATA_BLOB = "2d59c4fdd07a2a9ddfad94e2e214a2d1c84912af"
 EXPECTED_NODES = 30
 EXPECTED_EDGES = 161
 EXPECTED_INVENTORY_COUNT = 39
+EXPECTED_BOUNDARY_REFERENCE_EDGES = 132
+EXPECTED_SOURCE_USE_REFERENCE_EDGES = 29
+EXPECTED_SELF_REFERENCES_OMITTED = 7
+
+# Source commit the historical artifact is reconstructed from. Distinct from
+# INTEGRATION_SHA, which pins a different, earlier state.
+HISTORICAL_SOURCE_COMMIT = "3219fa03149b4bf1a229f059b4912b632028422b"
+
+HISTORICAL_DATA_RELATIVE = "visualizations/public-surface-authority-map/data.json"
+HISTORICAL_DATA_PATH = GENERATOR_ROOT / "visualizations" / "public-surface-authority-map" / "data.json"
+
+# Expanded target: a separate generation target with its own record count and no
+# implicit output path. No expanded artifact is produced by these tests.
+EXPANDED_RECORD_COUNT = 59
+
+# Stable failure tokens emitted by the builder.
+FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH = "HISTORICAL_ARTIFACT_IDENTITY_MISMATCH"
+FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION = "HISTORICAL_OUTPUT_PATH_COLLISION"
+FAILURE_EXPANDED_TARGET_REQUIRES_OUTPUT = "EXPANDED_TARGET_REQUIRES_OUTPUT"
 
 # Pinned-commit historical identity (27-record registry at INTEGRATION_SHA),
 # produced by that commit's own builder. Used by IntegrationTests only. These are
@@ -196,31 +222,336 @@ def materialise_integration_source(dest: Path) -> None:
 
 
 class DefaultModeTests(BaseCase):
-    def test_default_builder_bytes_identical(self):
-        # Snapshot the tracked production data.json, run the default builder in
-        # place, and confirm the bytes are unchanged and match the identity.
-        data_path = GENERATOR_ROOT / "visualizations" / "public-surface-authority-map" / "data.json"
-        original = data_path.read_bytes()
-        try:
-            result = run_cli("build_public_surface_authority_map.py", [], cwd=GENERATOR_ROOT)
-            self.assertEqual(result.returncode, 0, result.stderr)
-            produced = data_path.read_bytes()
-            self.assertEqual(len(produced), EXPECTED_DATA_BYTES)
-            self.assertEqual(sha256_bytes(produced), EXPECTED_DATA_SHA256)
-            self.assertEqual(git_blob_sha1_bytes(produced), EXPECTED_DATA_BLOB)
-            parsed = json.loads(produced)
-            self.assertEqual(len(parsed["nodes"]), EXPECTED_NODES)
-            self.assertEqual(len(parsed["edges"]), EXPECTED_EDGES)
-            inventory = builder.build_dependency_inventory(GENERATOR_ROOT.resolve())
-            self.assertEqual(inventory["dependency_count"], EXPECTED_INVENTORY_COUNT)
-            self.assertEqual(produced, original, "default builder changed tracked data.json")
-        finally:
-            data_path.write_bytes(original)
+    """Zero-argument and explicit-historical behaviour.
+
+    The former default mode rebuilt the tracked data.json in place and restored
+    it afterwards. That behaviour is retired: the historical artifact is
+    immutable and both invocations are verify-only. Every assertion the previous
+    builder test made about the produced bytes is retained here against the
+    tracked artifact, which the builder no longer writes.
+    """
+
+    def test_historical_artifact_identity(self):
+        produced = HISTORICAL_DATA_PATH.read_bytes()
+        result = run_cli("build_public_surface_authority_map.py", [], cwd=GENERATOR_ROOT)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+        self.assertEqual(len(produced), EXPECTED_DATA_BYTES)
+        self.assertEqual(sha256_bytes(produced), EXPECTED_DATA_SHA256)
+        self.assertEqual(git_blob_sha1_bytes(produced), EXPECTED_DATA_BLOB)
+        parsed = json.loads(produced)
+        self.assertEqual(len(parsed["nodes"]), EXPECTED_NODES)
+        self.assertEqual(len(parsed["edges"]), EXPECTED_EDGES)
+        inventory = builder.build_dependency_inventory(GENERATOR_ROOT.resolve())
+        self.assertEqual(inventory["dependency_count"], EXPECTED_INVENTORY_COUNT)
+
+        # Structural invariants the artifact itself carries.
+        self.assertEqual(
+            parsed["edge_counts"]["boundary_reference"], EXPECTED_BOUNDARY_REFERENCE_EDGES
+        )
+        self.assertEqual(
+            parsed["edge_counts"]["source_use_reference"], EXPECTED_SOURCE_USE_REFERENCE_EDGES
+        )
+        self.assertEqual(
+            parsed["self_references_omitted_count"], EXPECTED_SELF_REFERENCES_OMITTED
+        )
+
+        # The bytes on disk are still the bytes read before the run.
+        self.assertEqual(HISTORICAL_DATA_PATH.read_bytes(), produced)
+
+    def test_historical_verification_reports_pinned_identity(self):
+        for args in ([], ["--target", "historical"]):
+            with self.subTest(args=args):
+                result = run_cli("build_public_surface_authority_map.py", args, cwd=GENERATOR_ROOT)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn("Nothing was written", result.stdout)
+                self.assertIn(HISTORICAL_SOURCE_COMMIT, result.stdout)
+                for pinned in (
+                    str(EXPECTED_DATA_BYTES),
+                    EXPECTED_DATA_SHA256,
+                    EXPECTED_DATA_BLOB,
+                    str(EXPECTED_BOUNDARY_REFERENCE_EDGES),
+                    str(EXPECTED_SOURCE_USE_REFERENCE_EDGES),
+                    str(EXPECTED_SELF_REFERENCES_OMITTED),
+                    str(EXPECTED_INVENTORY_COUNT),
+                ):
+                    self.assertIn(pinned, result.stdout)
+
+    def test_pinned_constants_match_generator_specification(self):
+        # The builder's pinned historical specification and this module's
+        # expectations cannot drift apart.
+        self.assertEqual(builder.HISTORICAL_DATA_BYTES, EXPECTED_DATA_BYTES)
+        self.assertEqual(builder.HISTORICAL_DATA_SHA256, EXPECTED_DATA_SHA256)
+        self.assertEqual(builder.HISTORICAL_DATA_BLOB, EXPECTED_DATA_BLOB)
+        self.assertEqual(builder.HISTORICAL_NODE_COUNT, EXPECTED_NODES)
+        self.assertEqual(builder.HISTORICAL_EDGE_COUNT, EXPECTED_EDGES)
+        self.assertEqual(
+            builder.HISTORICAL_BOUNDARY_REFERENCE_EDGES, EXPECTED_BOUNDARY_REFERENCE_EDGES
+        )
+        self.assertEqual(
+            builder.HISTORICAL_SOURCE_USE_REFERENCE_EDGES, EXPECTED_SOURCE_USE_REFERENCE_EDGES
+        )
+        self.assertEqual(
+            builder.HISTORICAL_SELF_REFERENCES_OMITTED, EXPECTED_SELF_REFERENCES_OMITTED
+        )
+        self.assertEqual(
+            builder.HISTORICAL_DEPENDENCY_INVENTORY_COUNT, EXPECTED_INVENTORY_COUNT
+        )
+        self.assertEqual(builder.HISTORICAL_SOURCE_COMMIT, HISTORICAL_SOURCE_COMMIT)
+        self.assertEqual(builder.HISTORICAL_RECORD_COUNT, EXPECTED_NODES)
+        self.assertEqual(builder.EXPANDED_RECORD_COUNT, EXPANDED_RECORD_COUNT)
+        self.assertEqual(builder.HISTORICAL_OUTPUT_FILE, HISTORICAL_DATA_RELATIVE)
+        self.assertEqual(
+            builder.FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH,
+            FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH,
+        )
+        self.assertEqual(
+            builder.FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION,
+            FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION,
+        )
+        self.assertEqual(
+            builder.FAILURE_EXPANDED_TARGET_REQUIRES_OUTPUT,
+            FAILURE_EXPANDED_TARGET_REQUIRES_OUTPUT,
+        )
 
     def test_default_validator_passes(self):
         result = run_cli("validate_public_metadata.py", [], cwd=GENERATOR_ROOT)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("Public metadata validation passed.", result.stdout)
+
+
+class HistoricalNoWriteTests(BaseCase):
+    """Proof that verification never touches the tracked artifact."""
+
+    def _snapshot(self):
+        stat = HISTORICAL_DATA_PATH.stat()
+        data = HISTORICAL_DATA_PATH.read_bytes()
+        return {
+            "bytes": data,
+            "length": len(data),
+            "sha256": sha256_bytes(data),
+            "git_blob": git_blob_sha1_bytes(data),
+            "mtime_ns": stat.st_mtime_ns,
+        }
+
+    def _assert_no_write(self, args):
+        before = self._snapshot()
+        result = run_cli("build_public_surface_authority_map.py", args, cwd=GENERATOR_ROOT)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        after = self._snapshot()
+        for key in ("bytes", "length", "sha256", "git_blob", "mtime_ns"):
+            self.assertEqual(before[key], after[key], f"{key} changed for args {args!r}")
+
+    def test_zero_argument_invocation_writes_nothing(self):
+        self._assert_no_write([])
+
+    def test_explicit_historical_target_writes_nothing(self):
+        self._assert_no_write(["--target", "historical"])
+
+    def test_verification_creates_no_sibling_artifact(self):
+        directory = HISTORICAL_DATA_PATH.parent
+        before = sorted(p.name for p in directory.iterdir())
+        for args in ([], ["--target", "historical"]):
+            result = run_cli("build_public_surface_authority_map.py", args, cwd=GENERATOR_ROOT)
+            self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(before, sorted(p.name for p in directory.iterdir()))
+
+    def test_explicit_historical_target_rejects_output_flags(self):
+        # An explicit historical target must never be able to regenerate the
+        # artifact, so it accepts no output-bearing flag at all.
+        out = self.out_dir() / "data.json"
+        for args in (
+            ["--target", "historical", "--output", str(out)],
+            ["--target", "historical", "--source-root", str(FIXTURE)],
+            ["--target", "historical", "--inventory-output", str(out)],
+        ):
+            with self.subTest(args=args):
+                before = self._snapshot()
+                result = run_cli("build_public_surface_authority_map.py", args, cwd=GENERATOR_ROOT)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("verify-only", result.stderr)
+                self.assertFalse(out.exists())
+                self.assertEqual(before, self._snapshot())
+
+
+class HistoricalIdentityFailureTests(BaseCase):
+    """HISTORICAL_ARTIFACT_IDENTITY_MISMATCH, proven without touching the
+    tracked artifact.
+
+    The mismatch path is exercised through dependency injection against an
+    isolated temporary copy. The tracked historical file is never edited and
+    never restored.
+    """
+
+    def _run_against(self, data: bytes | None):
+        path = self.out_dir() / "injected-data.json"
+        if data is not None:
+            path.write_bytes(data)
+        stderr = io.StringIO()
+        with contextlib.redirect_stderr(stderr), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaises(SystemExit) as raised:
+                builder.run_historical(path)
+        return raised.exception.code, stderr.getvalue()
+
+    def test_missing_artifact_emits_failure_token(self):
+        before = HISTORICAL_DATA_PATH.read_bytes()
+        code, stderr = self._run_against(None)
+        self.assertNotEqual(code, 0)
+        self.assertIn(FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH, stderr)
+        self.assertEqual(HISTORICAL_DATA_PATH.read_bytes(), before)
+
+    def test_altered_bytes_emit_failure_token(self):
+        before_stat = HISTORICAL_DATA_PATH.stat()
+        before = HISTORICAL_DATA_PATH.read_bytes()
+        code, stderr = self._run_against(before + b"\n")
+        self.assertNotEqual(code, 0)
+        self.assertIn(FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH, stderr)
+        self.assertIn("byte length", stderr)
+        self.assertIn("sha256", stderr)
+        self.assertIn("git blob", stderr)
+        # The tracked artifact was never the subject of the run.
+        self.assertEqual(HISTORICAL_DATA_PATH.read_bytes(), before)
+        self.assertEqual(HISTORICAL_DATA_PATH.stat().st_mtime_ns, before_stat.st_mtime_ns)
+
+    def test_unreadable_artifact_emits_failure_token(self):
+        code, stderr = self._run_against(b"{ not valid json ")
+        self.assertNotEqual(code, 0)
+        self.assertIn(FAILURE_HISTORICAL_ARTIFACT_IDENTITY_MISMATCH, stderr)
+
+    def test_structural_invariants_are_checked(self):
+        original = json.loads(HISTORICAL_DATA_PATH.read_text("utf-8"))
+
+        def mutated(mutate):
+            data = json.loads(json.dumps(original))
+            mutate(data)
+            return json.dumps(data, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+
+        cases = {
+            "nodes": lambda d: d["nodes"].pop(),
+            "edges": lambda d: d["edges"].pop(),
+            "boundary-reference edges": lambda d: d["edge_counts"].update(
+                {"boundary_reference": 0}
+            ),
+            "source-use-reference edges": lambda d: d["edge_counts"].update(
+                {"source_use_reference": 0}
+            ),
+            "self-references omitted": lambda d: d.update(
+                {"self_references_omitted_count": 0}
+            ),
+        }
+        for label, mutate in cases.items():
+            with self.subTest(invariant=label):
+                mismatches = builder.historical_identity_mismatches(mutated(mutate))
+                self.assertTrue(
+                    any(entry.startswith(label + ":") for entry in mismatches),
+                    f"{label} not reported in {mismatches}",
+                )
+
+    def test_unmodified_bytes_report_no_mismatch(self):
+        self.assertEqual(
+            builder.historical_identity_mismatches(HISTORICAL_DATA_PATH.read_bytes()), []
+        )
+
+
+class ExpandedTargetTests(BaseCase):
+    """Expanded-target contract and the historical path-collision guard."""
+
+    def _snapshot(self):
+        stat = HISTORICAL_DATA_PATH.stat()
+        data = HISTORICAL_DATA_PATH.read_bytes()
+        return data, stat.st_mtime_ns
+
+    def test_missing_output_emits_failure_token(self):
+        before = self._snapshot()
+        result = run_cli(
+            "build_public_surface_authority_map.py", ["--target", "expanded"], cwd=GENERATOR_ROOT
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(FAILURE_EXPANDED_TARGET_REQUIRES_OUTPUT, result.stderr)
+        self.assertEqual(before, self._snapshot())
+
+    def test_expanded_expects_fifty_nine_records(self):
+        # The live registry currently carries 30 records. The expanded target
+        # must stop on its own record-count protection rather than accept the
+        # historical count as a valid expanded dataset.
+        out = self.out_dir() / "expanded.json"
+        result = run_cli(
+            "build_public_surface_authority_map.py",
+            ["--target", "expanded", "--output", str(out)],
+            cwd=GENERATOR_ROOT,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(str(EXPANDED_RECORD_COUNT), result.stderr)
+        self.assertFalse(out.exists(), "expanded target left an artifact behind")
+        self.assertEqual(builder.EXPANDED_RECORD_COUNT, EXPANDED_RECORD_COUNT)
+        self.assertNotEqual(builder.EXPANDED_RECORD_COUNT, builder.HISTORICAL_RECORD_COUNT)
+
+    def _assert_collision_rejected(self, output_arg, cwd):
+        before_bytes, before_mtime_ns = self._snapshot()
+        directory = HISTORICAL_DATA_PATH.parent
+        before_names = sorted(p.name for p in directory.iterdir())
+
+        result = run_cli(
+            "build_public_surface_authority_map.py",
+            ["--target", "expanded", "--output", str(output_arg)],
+            cwd=cwd,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(FAILURE_HISTORICAL_OUTPUT_PATH_COLLISION, result.stderr)
+
+        after_bytes, after_mtime_ns = self._snapshot()
+        self.assertEqual(before_bytes, after_bytes)
+        self.assertEqual(before_mtime_ns, after_mtime_ns)
+        # No temporary replacement file was left beside the artifact.
+        self.assertEqual(before_names, sorted(p.name for p in directory.iterdir()))
+
+    def test_exact_historical_relative_path_rejected(self):
+        self._assert_collision_rejected(HISTORICAL_DATA_RELATIVE, GENERATOR_ROOT)
+
+    def test_absolute_historical_path_rejected(self):
+        self._assert_collision_rejected(HISTORICAL_DATA_PATH.resolve(), self._cwd)
+
+    def test_parent_traversal_to_historical_path_rejected(self):
+        traversing = (
+            GENERATOR_ROOT.resolve()
+            / "scripts"
+            / ".."
+            / "visualizations"
+            / "public-surface-authority-map"
+            / "data.json"
+        )
+        self.assertIn("..", traversing.parts)
+        self._assert_collision_rejected(traversing, self._cwd)
+
+    @unittest.skipUnless(hasattr(os, "symlink"), "symlinks unsupported on platform")
+    def test_symlink_alias_of_historical_path_rejected(self):
+        link = self.out_dir() / "historical-alias.json"
+        try:
+            os.symlink(HISTORICAL_DATA_PATH.resolve(), link)
+        except (OSError, NotImplementedError) as exc:
+            self.skipTest(f"symlink creation unsupported: {exc}")
+        self.assertTrue(link.is_symlink())
+        self._assert_collision_rejected(link, self._cwd)
+
+    def test_guard_compares_resolved_paths(self):
+        # Unit-level proof that the guard resolves rather than string-matches.
+        with self.assertRaises(SystemExit):
+            builder.resolve_expanded_output(str(HISTORICAL_DATA_PATH.resolve()))
+        safe = builder.resolve_expanded_output(str(self.out_dir() / "elsewhere.json"))
+        self.assertNotEqual(safe, HISTORICAL_DATA_PATH.resolve())
+
+    def test_expanded_target_rejects_isolated_flags(self):
+        out = self.out_dir() / "expanded.json"
+        inv = self.out_dir() / "inventory.json"
+        for extra in (["--source-root", str(FIXTURE)], ["--inventory-output", str(inv)]):
+            with self.subTest(extra=extra):
+                result = run_cli(
+                    "build_public_surface_authority_map.py",
+                    ["--target", "expanded", "--output", str(out), *extra],
+                    cwd=GENERATOR_ROOT,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertFalse(out.exists())
 
 
 class IntegrationTests(BaseCase):
