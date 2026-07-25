@@ -111,6 +111,25 @@ EXPANDED_SOURCE_COMMIT = "933274af9693d6d1d9fac36819aafdf56f9ab81d"
 # Consumer ceiling for the tracked expanded dataset.
 EXPANDED_MAX_DATA_BYTES = 262144
 
+# Pinned identity of the authoritative visualization-manifest schema, computed
+# directly from the tracked file's raw bytes.
+#
+# The schema is resolved next to the caller-supplied manifest, so a caller could
+# otherwise place a weakened schema there — additionalProperties relaxed to true,
+# a const removed, an enum widened, a required entry dropped, the repository-path
+# pattern loosened — while still declaring Draft 2020-12 and using the right
+# filename. Checking the draft declaration alone does not prove the schema IS the
+# approved contract. Authorization is therefore byte identity, not semantic
+# equivalence: a whitespace, key-order or newline change is also rejected.
+EXPANDED_MANIFEST_SCHEMA_FILE = (
+    "visualizations/public-surface-adjacency-map/visualization-manifest.schema.json"
+)
+EXPANDED_MANIFEST_SCHEMA_BYTES = 4379
+EXPANDED_MANIFEST_SCHEMA_SHA256 = (
+    "17cfdf65fc8916387c10810812cde4def8ea3982a9a9dc1d1c99673c61c0c2de"
+)
+EXPANDED_MANIFEST_SCHEMA_BLOB = "321ae11c6cd8b16fe1ef18a54c9591c41b14af50"
+
 # Mechanical registry surface_role -> visualization_role mapping. This is a
 # rendering-band assignment only: it asserts nothing about classification,
 # Registry status, hierarchy, or ontology membership.
@@ -1478,12 +1497,41 @@ def validate_manifest_against_schema(
     label = schema_label_for(schema_path, sources.root)
     sources.adopt_external(label, schema_bytes, EXPANDED_PURPOSE_MANIFEST_SCHEMA)
 
+    # Identity is checked BEFORE the schema is decoded, parsed or trusted, so a
+    # caller-supplied replacement can never redefine the manifest contract.
+    actual_length = len(schema_bytes)
+    actual_sha256 = hashlib.sha256(schema_bytes).hexdigest()
+    actual_blob = git_blob_sha1(schema_bytes)
+    if (
+        actual_length != EXPANDED_MANIFEST_SCHEMA_BYTES
+        or actual_sha256 != EXPANDED_MANIFEST_SCHEMA_SHA256
+        or actual_blob != EXPANDED_MANIFEST_SCHEMA_BLOB
+    ):
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: the adjacent "
+            "manifest schema is not the authoritative tracked schema "
+            f"({EXPANDED_MANIFEST_SCHEMA_FILE}). Authorization is byte identity, "
+            "not semantic equivalence, so a reformatted or weakened schema is "
+            "rejected even when it declares the correct draft. "
+            f"expected byte length {EXPANDED_MANIFEST_SCHEMA_BYTES}, sha256 "
+            f"{EXPANDED_MANIFEST_SCHEMA_SHA256}, git blob "
+            f"{EXPANDED_MANIFEST_SCHEMA_BLOB}; actual byte length {actual_length}, "
+            f"sha256 {actual_sha256}, git blob {actual_blob}"
+        )
+
     try:
-        schema = json.loads(schema_bytes.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        schema_text = schema_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
         fail(
             f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema is "
-            f"not readable JSON: {exc}"
+            f"not valid UTF-8: {exc}"
+        )
+    try:
+        schema = json.loads(schema_text)
+    except json.JSONDecodeError as exc:
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {schema_path}: manifest schema is "
+            f"not readable JSON at line {exc.lineno}: {exc.msg}"
         )
     if not isinstance(schema, dict):
         fail(
@@ -1528,11 +1576,21 @@ def load_visualization_manifest(manifest_path: str) -> dict[str, Any]:
             "manifest does not exist"
         )
     try:
-        raw = path.read_text(encoding="utf-8")
+        raw_bytes = path.read_bytes()
     except OSError as exc:
         fail(
             f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: unable to read "
             f"visualization manifest: {exc}"
+        )
+    try:
+        raw = raw_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        # The manifest and its schema belong to the manifest-contract boundary,
+        # so a decode failure here is a manifest-contract failure and must emit
+        # the stable token rather than escape as a traceback.
+        fail(
+            f"{FAILURE_EXPANDED_MANIFEST_INVALID}: {manifest_path}: visualization "
+            f"manifest is not valid UTF-8: {exc}"
         )
     try:
         manifest = json.loads(raw)

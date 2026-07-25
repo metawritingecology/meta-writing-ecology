@@ -1667,6 +1667,177 @@ class ManifestProductionValidationTests(BaseCase):
         self.assertEqual(result.stdout.strip(), "")
 
 
+class ManifestSchemaAuthorityTests(BaseCase):
+    """The adjacent schema must BE the authoritative tracked schema, by bytes.
+
+    The schema is resolved next to the caller-supplied manifest, so a correct
+    draft declaration and filename are not sufficient authorization: a caller
+    could otherwise substitute a weakened schema and redefine the contract.
+    """
+
+    def _run(self, schema_bytes, manifest_bytes=None):
+        directory = Path(tempfile.mkdtemp(dir=self.tmp))
+        manifest = directory / "visualization-manifest.json"
+        if manifest_bytes is None:
+            shutil.copy2(MANIFEST_PATH, manifest)
+        else:
+            manifest.write_bytes(manifest_bytes)
+        if schema_bytes is not None:
+            (directory / "visualization-manifest.schema.json").write_bytes(schema_bytes)
+        out = directory / "out.json"
+        result = run_builder(
+            [
+                "--target", "expanded",
+                "--visualization-manifest", str(manifest),
+                "--output", str(out),
+            ]
+        )
+        return result, out
+
+    def _expect_rejected(self, schema_bytes, manifest_bytes=None):
+        result, out = self._run(schema_bytes, manifest_bytes)
+        self.assertNotEqual(result.returncode, 0, "a non-authoritative schema was accepted")
+        self.assertIn(builder.FAILURE_EXPANDED_MANIFEST_INVALID, result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertFalse(out.exists(), "rejected input produced output")
+        return result.stderr
+
+    def _mutated_schema(self, mutate):
+        schema = json.loads(MANIFEST_SCHEMA_PATH.read_text(encoding="utf-8"))
+        mutate(schema)
+        return (json.dumps(schema, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+
+    # -- pinned constants ------------------------------------------------
+
+    def test_pinned_constants_match_the_tracked_schema(self):
+        data = MANIFEST_SCHEMA_PATH.read_bytes()
+        self.assertEqual(len(data), builder.EXPANDED_MANIFEST_SCHEMA_BYTES)
+        self.assertEqual(
+            hashlib.sha256(data).hexdigest(), builder.EXPANDED_MANIFEST_SCHEMA_SHA256
+        )
+        self.assertEqual(git_blob_sha1(data), builder.EXPANDED_MANIFEST_SCHEMA_BLOB)
+
+    def test_pinned_schema_path_constant_is_the_tracked_path(self):
+        self.assertEqual(
+            REPO_ROOT / builder.EXPANDED_MANIFEST_SCHEMA_FILE, MANIFEST_SCHEMA_PATH
+        )
+
+    # -- the authoritative schema is accepted ----------------------------
+
+    def test_byte_identical_copy_is_accepted(self):
+        result, out = self._run(MANIFEST_SCHEMA_PATH.read_bytes())
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(out.read_bytes(), DATA_PATH.read_bytes())
+
+    # -- weakened schemas are rejected -----------------------------------
+
+    def test_weakened_additional_properties_is_rejected(self):
+        def mutate(schema):
+            schema["properties"]["records"]["items"]["additionalProperties"] = True
+        err = self._expect_rejected(self._mutated_schema(mutate))
+        self.assertIn("byte identity", err)
+
+    def test_removed_const_is_rejected(self):
+        self._expect_rejected(
+            self._mutated_schema(lambda s: s["properties"]["scope"].pop("const"))
+        )
+
+    def test_changed_const_is_rejected(self):
+        self._expect_rejected(
+            self._mutated_schema(
+                lambda s: s["properties"]["authority_ceiling"].update({"const": "anything"})
+            )
+        )
+
+    def test_widened_enum_is_rejected(self):
+        def mutate(schema):
+            schema["properties"]["records"]["items"]["properties"]["visualization_role"][
+                "enum"
+            ].append("model")
+        self._expect_rejected(self._mutated_schema(mutate))
+
+    def test_removed_required_field_is_rejected(self):
+        def mutate(schema):
+            schema["properties"]["records"]["items"]["required"].remove("grouping_source")
+        self._expect_rejected(self._mutated_schema(mutate))
+
+    def test_relaxed_repository_path_pattern_is_rejected(self):
+        def mutate(schema):
+            schema["properties"]["records"]["items"]["properties"]["repository_path"][
+                "pattern"
+            ] = ".*"
+        self._expect_rejected(self._mutated_schema(mutate))
+
+    # -- byte identity, not semantic equivalence -------------------------
+
+    def test_whitespace_only_change_is_rejected(self):
+        schema = json.loads(MANIFEST_SCHEMA_PATH.read_text(encoding="utf-8"))
+        self._expect_rejected(
+            (json.dumps(schema, indent=4, ensure_ascii=False) + "\n").encode("utf-8")
+        )
+
+    def test_key_order_change_is_rejected(self):
+        schema = json.loads(MANIFEST_SCHEMA_PATH.read_text(encoding="utf-8"))
+        self._expect_rejected(
+            (json.dumps(schema, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode(
+                "utf-8"
+            )
+        )
+
+    def test_trailing_newline_change_is_rejected(self):
+        self._expect_rejected(MANIFEST_SCHEMA_PATH.read_bytes().rstrip(b"\n"))
+
+    def test_rejection_reports_expected_and_actual_identity(self):
+        err = self._expect_rejected(MANIFEST_SCHEMA_PATH.read_bytes() + b"\n")
+        self.assertIn(str(builder.EXPANDED_MANIFEST_SCHEMA_BYTES), err)
+        self.assertIn(builder.EXPANDED_MANIFEST_SCHEMA_SHA256, err)
+        self.assertIn(builder.EXPANDED_MANIFEST_SCHEMA_BLOB, err)
+        self.assertIn("actual byte length", err)
+
+    # -- invalid UTF-8 ---------------------------------------------------
+
+    def test_invalid_utf8_schema_fails_with_the_manifest_token(self):
+        err = self._expect_rejected(b"\xff\xfe{ not utf-8 }\n")
+        # It is a manifest-contract failure, not a generic source-input failure.
+        self.assertNotIn(builder.FAILURE_EXPANDED_SOURCE_INPUT_UNREADABLE, err)
+
+    def test_invalid_utf8_manifest_fails_with_the_stable_token(self):
+        err = self._expect_rejected(
+            MANIFEST_SCHEMA_PATH.read_bytes(),
+            manifest_bytes=b'{"$schema": "./visualization-manifest.schema.json", '
+            b'"name": "\xff\xfe"}\n',
+        )
+        self.assertIn("not valid UTF-8", err)
+        self.assertNotIn("UnicodeDecodeError", err.replace("codec", ""))
+
+    def test_invalid_utf8_leaves_the_historical_artifact_untouched(self):
+        before = (
+            HISTORICAL_DATA_PATH.read_bytes(),
+            HISTORICAL_DATA_PATH.stat().st_mtime_ns,
+        )
+        self.test_invalid_utf8_schema_fails_with_the_manifest_token()
+        self.test_invalid_utf8_manifest_fails_with_the_stable_token()
+        after = (
+            HISTORICAL_DATA_PATH.read_bytes(),
+            HISTORICAL_DATA_PATH.stat().st_mtime_ns,
+        )
+        self.assertEqual(before, after)
+
+    def test_no_weakened_schema_ever_produced_output(self):
+        # Belt-and-braces sweep: every mutation above must leave no artifact.
+        for schema_bytes in (
+            self._mutated_schema(
+                lambda s: s["properties"]["records"]["items"].update(
+                    {"additionalProperties": True}
+                )
+            ),
+            b"\xff\xfe bad\n",
+            MANIFEST_SCHEMA_PATH.read_bytes() + b" ",
+        ):
+            _, out = self._run(schema_bytes)
+            self.assertFalse(out.exists())
+
+
 class ExpandedDependencyProvenanceTests(BaseCase):
     @classmethod
     def setUpClass(cls):
