@@ -7,11 +7,14 @@ constraints. It is not conceptual, empirical, Registry, relation, ontology, or
 corpus-completeness authority.
 
 The evidence checks confirm that mwe-public-document-evidence.json covers the
-public-document registry one-to-one, that every recorded evidence value is drawn
-from the closed vocabulary in PUBLIC_DOCUMENT_REGISTRY_POLICY.md, and that every
-source-derived claim is supported by the source file while every registry-policy
-claim corresponds to the absence of such a declaration. The manifest records
-provenance only; it establishes no classification and no relation.
+public-document registry one-to-one and that every recorded evidence value is
+drawn from the closed vocabulary in PUBLIC_DOCUMENT_REGISTRY_POLICY.md. They
+confirm source-derived claims where they can be mechanically verified. For
+declaration-sensitive fields, including public_surface_status,
+authority_ceiling, and classification, they also confirm that registry_policy or
+not_asserted corresponds to the absence of the relevant source declaration. The
+manifest records provenance only; it establishes no classification and no
+relation.
 
 Three invocation modes:
 
@@ -664,8 +667,9 @@ def validate_evidence_against_source(
     field_evidence: dict[str, Any],
     errors: list[str],
 ) -> None:
-    """Confirm each source-derived evidence claim against the source file, and
-    confirm each registry-policy claim corresponds to an absent declaration."""
+    """Validate mechanically checkable evidence claims against the source file,
+    including bidirectional declaration checks for public-surface status,
+    authority ceiling, and classification."""
     source_text = read_repo_text(path, errors)
     if source_text is None:
         return
