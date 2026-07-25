@@ -12,7 +12,7 @@ preflight / verify-inventory modes of the public-metadata validator:
 - deterministic snapshot and inventory bytes;
 - dependency-inventory schema, coverage, ordering, and identity recomputation;
 - source-root Python import isolation (no execution of source-tree modules);
-- default-mode working-tree identity (exactly 92,901 bytes / 30 records);
+- default-mode working-tree identity (exactly 92,903 bytes / 30 records);
 - pinned-commit historical identity (exactly 83,727 bytes / 27 records);
 - source-root and generator-root no-write proofs on success and failure.
 
@@ -72,9 +72,9 @@ INTEGRATION_SHA = "89550fea8317e535f9569461e71fec8d46e9ad8e"
 
 # Default-mode / working-tree identity (current 30-record public registry).
 # Used by DefaultModeTests, which build the tracked data.json in place.
-EXPECTED_DATA_BYTES = 92901
-EXPECTED_DATA_SHA256 = "7cdc5441cb31b55427b0e4a2e271e5cc835f57b6668a7b7513240015c51bf33e"
-EXPECTED_DATA_BLOB = "3f5278fe2e097a9b3d3758db893c1cb49fc3e73a"
+EXPECTED_DATA_BYTES = 92903
+EXPECTED_DATA_SHA256 = "3b1e5993a52cbce340b85472fea1ae5ea6f921cf8f7751d2d635edc7b17216ea"
+EXPECTED_DATA_BLOB = "2d59c4fdd07a2a9ddfad94e2e214a2d1c84912af"
 EXPECTED_NODES = 30
 EXPECTED_EDGES = 161
 EXPECTED_INVENTORY_COUNT = 39
@@ -207,6 +207,7 @@ class DefaultModeTests(BaseCase):
             produced = data_path.read_bytes()
             self.assertEqual(len(produced), EXPECTED_DATA_BYTES)
             self.assertEqual(sha256_bytes(produced), EXPECTED_DATA_SHA256)
+            self.assertEqual(git_blob_sha1_bytes(produced), EXPECTED_DATA_BLOB)
             parsed = json.loads(produced)
             self.assertEqual(len(parsed["nodes"]), EXPECTED_NODES)
             self.assertEqual(len(parsed["edges"]), EXPECTED_EDGES)
