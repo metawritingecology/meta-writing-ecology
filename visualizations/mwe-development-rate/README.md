@@ -12,6 +12,39 @@ or a complete account of the work.
     monthly_development_rate.csv  the monthly figures
     summary.json                  the rebuild's own totals and dating tiers
 
+## How the CSV says nothing was measured
+
+A zero and an absence are different claims, and the file keeps them apart. **An
+empty cell is never a zero.** It means no value exists for that month, and two
+columns say which kind of absence it is.
+
+    posts_coverage   measured        the export covers this month
+                     not_in_export   outside the Medium export window
+    ai_coverage      measured        a token figure was logged
+                     not_logged      nothing was logged for this month
+
+So 2025-09 reads `posts=0` with `posts_coverage=measured` - the export covers it
+and it contains no posts, which is a measurement. 2026-07 reads `posts=` with
+`posts_coverage=not_in_export` - the Medium index was exported 2026-07-07 and
+cannot contain anything published after that date, so there is no measurement to
+report. The first eight months read `ai_total=` with `ai_coverage=not_logged`.
+
+An earlier version of this file wrote `0` in all three cases. It was corrected
+before publication: for anyone reading the CSV on its own, `0` says
+measured-and-zero, which is the one thing two of those months do not say.
+
+## Fields transcribed rather than computed
+
+`summary.json` carries five fields that the two files here cannot derive:
+`medium_export_date`, `ai_logging_first_record`, `week_tag_absent_from`,
+`week_tagged_files_seen` and `week_tagged_discarded_by_filter_first`. They were
+recorded by the 2026-08-02 rebuild run that produced this dataset and are
+transcribed, not recomputed. The `provenance` field in that file says so.
+
+They are here because the page quotes them. A figure quoted on a page whose whole
+claim is that the reader need not take anything on trust should have a shipped
+source, even one that names itself as a transcription.
+
 This folder holds figures, not a rendering of them. The page that draws them is
 on the website, under Artistic Research, and it pins its evidence to this folder
 at a fixed commit.

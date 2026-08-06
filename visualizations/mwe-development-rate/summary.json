@@ -1,4 +1,5 @@
 {
+  "ai_logging_first_record": "2026-05-24",
   "ai_total_tokens": 1815940311,
   "bulk_minutes_filtered": 10,
   "cutoff": "2026-07",
@@ -13,16 +14,21 @@
   },
   "files_dated_after_cutoff_excluded": 4,
   "index_base": "2025-10",
+  "medium_export_date": "2026-07-07",
   "medium_index": "medium_posts_index.csv",
   "months": 11,
   "posts_total": 192,
   "posts_undated": 9,
+  "provenance": "The five fields above were recorded by the 2026-08-02 rebuild run that produced this dataset. They are transcribed here, not recomputed by the commit that adds this file, and they cannot be derived from the two files in this folder. They are listed so that figures quoted on the page have a shipped source instead of none.",
   "tier": {
     "1 week tag": 835,
     "1 week tag, recovered from a bulk minute": 384,
     "2 mtime, clean": 830,
     "3 batch day, undatable": 2
   },
+  "week_tag_absent_from": "2026-07",
+  "week_tagged_discarded_by_filter_first": 772,
+  "week_tagged_files_seen": 1677,
   "written_total": 1683003,
   "written_total_v3_ordering": 1519581
 }
