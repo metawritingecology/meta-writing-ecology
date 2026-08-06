@@ -1565,6 +1565,9 @@ class CompatibilityGuardTests(BaseCase):
             "*.md",
             ":!AGENT_WORKLOG.md",
             ":!visualizations/public-surface-adjacency-map/README.md",
+            # Same exclusion, same reason: a visualization folder's own README
+            # is not source markdown and is not covered by the S1 header guard.
+            ":!visualizations/mwe-development-rate/README.md",
         )
         self.assertEqual(set(changed), S1_NORMALIZED_TARGETS)
         block = "\n".join(S1_BLOCK_LINES)
