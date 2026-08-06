@@ -1,0 +1,28 @@
+{
+  "ai_total_tokens": 1815940311,
+  "bulk_minutes_filtered": 10,
+  "cutoff": "2026-07",
+  "docs_total": 1661,
+  "dropped": {
+    "bulk-minute, untagged": 861,
+    "duplicate": 1821,
+    "extraction-155": 160,
+    "extraction-xix": 552,
+    "process": 490,
+    "undatable": 2
+  },
+  "files_dated_after_cutoff_excluded": 4,
+  "index_base": "2025-10",
+  "medium_index": "medium_posts_index.csv",
+  "months": 11,
+  "posts_total": 192,
+  "posts_undated": 9,
+  "tier": {
+    "1 week tag": 835,
+    "1 week tag, recovered from a bulk minute": 384,
+    "2 mtime, clean": 830,
+    "3 batch day, undatable": 2
+  },
+  "written_total": 1683003,
+  "written_total_v3_ordering": 1519581
+}
