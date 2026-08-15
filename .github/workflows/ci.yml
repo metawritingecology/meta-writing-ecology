@@ -1,0 +1,39 @@
+name: Corpus CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corpus-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  corpus-ci:
+    name: corpus-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository without persisting credentials
+        # actions/checkout v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Validate public metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 --version
+          python3 scripts/validate_public_metadata.py
+
+      - name: Run standard-library unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -v
