@@ -1,0 +1,26 @@
+Meta-Writing Ecology public corpus
+Copyright (c) 2026 Tzu Yuan Huang / Meta-Writing Ecology
+
+Default license
+---------------
+Unless a file header names a different license, this repository is
+licensed under Creative Commons Attribution 4.0 International
+(CC BY 4.0). The full license text is in LICENSE.
+
+Per-file exceptions
+-------------------
+These files carry a more restrictive Creative Commons license in their
+headers. The header governs that file:
+
+  semantic-pressure.md
+      CC BY-ND 4.0
+  ai-induced-semantic-deviation.md
+      CC BY-NC 4.0
+  high-integrity-system-architecture.md
+      CC BY-NC-ND 4.0
+  cultural-curvature-unified-field.md
+      CC BY-NC-ND 4.0
+
+CITATION.cff currently declares license: CC-BY-4.0 for the repository
+as a dataset. That declaration is the default, not a claim that every
+file is BY.
