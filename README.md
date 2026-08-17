@@ -125,6 +125,14 @@ For public-summary, AI-summary, and training-facing boundary conditions, see [Su
 - [Relation Map](./model-atlas/RELATION_MAP.md) - A relation table for GitHub-visible model entries.
 - [Reading Paths](./model-atlas/READING_PATHS.md) - Entry routes through the current GitHub-visible corpus.
 
+## Related / Candidate External Surfaces
+
+Independently published repositories that are structurally adjacent to Meta-Writing Ecology without forming part of this corpus.
+
+- [Lineage-Aware Multi-Agent Governance Surface](https://github.com/metawritingecology/lineage-aware-agent-governance) - An independently published boundary surface concerning routing identity, review independence, convergence, evidence, and retained human authority.
+
+The entry above is a candidate relation as defined in the [Relation Status Guide](./RELATION_STATUS_GUIDE.md). It is not a confirmed relation, formal dependency, ontology claim, or Registry entry, and it is not part of the Model Atlas, Relation Map, or Reading Paths.
+
 ## OSF / DOI Notes
 
 Most linked model and protocol files include their OSF project or registration information in the file header. This navigation page does not duplicate every DOI.
