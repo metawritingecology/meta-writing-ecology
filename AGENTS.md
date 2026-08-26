@@ -176,4 +176,11 @@ When available, run `node scripts/check-agent-worklog-governance.mjs` as read-on
 
 Line endings are pinned to LF by `.gitattributes` so that this byte comparison does not depend on any machine's `core.autocrlf` setting.
 
+### Guard lifecycle
+
+Every guard introduced here carries a review date and a stated sunset condition, so that it is retired deliberately rather than accumulating by default.
+
+- Byte-prefix append-only check (`scripts/check-agent-worklog-governance.mjs`, append-only evidence): review_after 2026-11-26; sunset_condition: retired when the repository migrates to per-run immutable records (`agent-runs/` plus a generated index) and `AGENT_WORKLOG.md` is archived with a pinned identity.
+- CI evidence step (`.github/workflows/ci.yml`, "Worklog governance evidence (non-blocking)"): review_after 2026-11-26; sunset_condition: becomes blocking or is removed once 30 days of runs show zero false INDETERMINATE results.
+
 The user remains final authority for publication, naming, classification, relation confirmation, OSF registration, and merge decisions.
