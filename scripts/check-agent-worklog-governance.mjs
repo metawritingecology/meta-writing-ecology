@@ -200,12 +200,21 @@ function fetchPrMetadata() {
   }
 }
 
+// Parse `git ls-remote --heads` output strictly. Every non-empty line must be
+// `<40-hex> refs/heads/<name>`; anything else is counted as malformed rather
+// than dropped, so a zero-exit command with unusable output cannot be mistaken
+// for a remote that simply has no branches (Codex round-3 finding A).
 function parseRemoteBranches(output) {
-  return splitLines(output)
-    .map((line) => line.match(/^([0-9a-f]{40})\s+refs\/heads\/(.+)$/i))
-    .filter(Boolean)
-    .map((match) => ({ tipSha: match[1], name: match[2] }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const branches = [];
+  let malformedLines = 0;
+  for (const line of splitLines(output)) {
+    if (line.trim().length === 0) continue;
+    const match = line.match(/^([0-9a-f]{40})\s+refs\/heads\/(.+)$/i);
+    if (match) branches.push({ tipSha: match[1], name: match[2] });
+    else malformedLines += 1;
+  }
+  branches.sort((a, b) => a.name.localeCompare(b.name));
+  return { branches, malformedLines };
 }
 
 function normalizeBranchName(branchName) {
@@ -282,8 +291,21 @@ function collectEvidence() {
   // Derive the integration-branch tip from the same ls-remote snapshot used for
   // the branch list, instead of a possibly-stale origin/<branch> tracking ref.
   const remoteResult = runGit(["ls-remote", "--heads", "origin"]);
-  const remoteBranches = remoteResult.ok ? parseRemoteBranches(remoteResult.stdout) : [];
-  const integrationRemote = remoteBranches.find((b) => b.name === INTEGRATION_BRANCH) ?? null;
+  const parsedRemote = remoteResult.ok ? parseRemoteBranches(remoteResult.stdout) : { branches: [], malformedLines: 0 };
+  const remoteBranches = parsedRemote.branches;
+  // The remote counts as OBSERVED only when the command succeeded AND its
+  // output was fully parsable AND named at least one branch. A zero-exit
+  // ls-remote with empty or malformed output proves nothing about `main`; it
+  // is an indeterminate observation, never bootstrap.
+  const remoteObserved = remoteResult.ok && parsedRemote.malformedLines === 0 && remoteBranches.length > 0;
+  const remoteObservationProblem = !remoteResult.ok
+    ? `remote branch observation failed (${remoteResult.stderr || "git ls-remote error"})`
+    : parsedRemote.malformedLines > 0
+      ? `git ls-remote exited 0 but ${parsedRemote.malformedLines} output line(s) were not parsable as heads`
+      : remoteBranches.length === 0
+        ? "git ls-remote exited 0 but listed no branches at all"
+        : null;
+  const integrationRemote = remoteObserved ? (remoteBranches.find((b) => b.name === INTEGRATION_BRANCH) ?? null) : null;
   const originMainSha = integrationRemote ? integrationRemote.tipSha : null;
   // Ancestry needs the integration tip object locally; if it is absent,
   // containedInMainByAncestry returns "unknown" rather than a stale answer.
@@ -304,15 +326,16 @@ function collectEvidence() {
   // be resolved even after a read-only fetch, the invariant is INDETERMINATE and
   // fails closed rather than passing green.
   let worklogAppendOnly;
-  if (!remoteResult.ok) {
-    // The remote could not be observed at all. That is not bootstrap: the
-    // integration commit is unknown, so the invariant is unverifiable.
+  if (!remoteObserved) {
+    // The remote could not be observed (command failure, unparsable output,
+    // or no refs at all). That is not bootstrap: the integration commit is
+    // unknown, so the invariant is unverifiable.
     worklogAppendOnly = {
       checked: false,
       preserved: null,
       indeterminate: true,
       baseSha: null,
-      reason: `remote branch observation failed (${remoteResult.stderr || "git ls-remote error"}) -- append-only unverifiable`,
+      reason: `${remoteObservationProblem} -- append-only unverifiable`,
     };
   } else if (originMainSha === null) {
     worklogAppendOnly = {
@@ -390,9 +413,9 @@ function collectEvidence() {
     originMainSha,
     originMainObservation: originMainSha
       ? "ls-remote (same window as branch inventory)"
-      : remoteResult.ok
+      : remoteObserved
         ? "remote observed; no integration branch present"
-        : "unavailable",
+        : `unavailable (${remoteObservationProblem})`,
     agentWorklog: {
       byteSize: worklogBuffer.byteLength,
       lineCount: splitLines(worklogText).length,
@@ -404,7 +427,8 @@ function collectEvidence() {
       appendOnly: worklogAppendOnly,
     },
     agentsCanonicalPointerPresent,
-    remoteBranchEvidenceAvailable: remoteResult.ok,
+    remoteBranchEvidenceAvailable: remoteObserved,
+    remoteObservationProblem,
     currentBranchExclusion: currentBranch,
     excludedCurrentBranches,
     botDependencyPrefixes: BOT_BRANCH_PREFIXES,
