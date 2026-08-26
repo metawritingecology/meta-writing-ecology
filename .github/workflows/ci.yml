@@ -37,3 +37,14 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m unittest discover -s tests -v
+
+      - name: Worklog governance evidence (non-blocking)
+        # Evidence only, per AGENTS.md "Worklog Governance": the checker's
+        # output does not determine authorization or merge readiness, so its
+        # exit status does not block CI on this first landing.
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          node scripts/check-agent-worklog-governance.mjs
