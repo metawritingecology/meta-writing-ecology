@@ -1,0 +1,8 @@
+# Normalize line endings so the byte-for-byte worklog append-only invariant
+# (AGENTS.md "Worklog Governance") does not depend on any machine's
+# core.autocrlf / checkout configuration. This repository is LF throughout;
+# a Windows clone with core.autocrlf=true previously smudged every text file to
+# CRLF on checkout, which makes a working-copy byte comparison against the
+# committed blob fail for reasons unrelated to the content.
+* text=auto eol=lf
+AGENT_WORKLOG.md text eol=lf
