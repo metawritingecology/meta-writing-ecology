@@ -70,6 +70,20 @@ function gitShowBytes(spec) {
   }
 }
 
+// Tri-state path inspection at a commit. `git ls-tree <commit> -- <path>`
+// exits 0 with an entry when the path exists, exits 0 with EMPTY output when
+// the path is provably absent from that tree, and exits non-zero on any
+// inspection failure (bad commit, corrupt object, I/O). Only the empty-output
+// case is "absent"; a failure is "error" and must fail closed upstream.
+function pathStateAt(sha, path) {
+  const res = spawnSync("git", ["-c", "core.longpaths=true", "ls-tree", sha, "--", path], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (res.status !== 0) return "error";
+  return res.stdout.trim().length > 0 ? "present" : "absent";
+}
+
 function gitObjectExists(spec) {
   return (
     spawnSync("git", ["-c", "core.longpaths=true", "cat-file", "-e", spec], {
@@ -83,8 +97,8 @@ function gitObjectExists(spec) {
 // locally. Distinguishes:
 //   found         - blob obtained (compare it as the append-only base)
 //   path_absent   - commit present AND the path is provably absent from its
-//                   tree (bootstrap); proven by cat-file -e on the path, not
-//                   inferred from a failed `git show`
+//                   tree (bootstrap); proven by an ls-tree that succeeds with
+//                   no entry, never inferred from a failed git command
 //   indeterminate - commit could not be resolved even after a read-only fetch,
 //                   OR the blob exists but could not be read (I/O, corrupt
 //                   object, buffer limit) -- every such case fails closed
@@ -92,7 +106,11 @@ function worklogBaseAt(sha) {
   const spec = `${sha}:AGENT_WORKLOG.md`;
   const attempt = () => {
     if (!gitObjectExists(`${sha}^{commit}`)) return null;
-    if (!gitObjectExists(spec)) return { state: "path_absent" };
+    const pathState = pathStateAt(sha, "AGENT_WORKLOG.md");
+    if (pathState === "absent") return { state: "path_absent" };
+    if (pathState === "error") {
+      return { state: "indeterminate", reason: "integration commit present but its tree could not be inspected" };
+    }
     const blob = gitShowBytes(spec);
     if (blob.ok) return { state: "found", buf: blob.buf };
     return { state: "indeterminate", reason: "worklog blob exists at the integration commit but could not be read" };
@@ -370,7 +388,11 @@ function collectEvidence() {
     currentHead,
     integrationBranch: INTEGRATION_BRANCH,
     originMainSha,
-    originMainObservation: originMainSha ? "ls-remote (same window as branch inventory)" : "unavailable",
+    originMainObservation: originMainSha
+      ? "ls-remote (same window as branch inventory)"
+      : remoteResult.ok
+        ? "remote observed; no integration branch present"
+        : "unavailable",
     agentWorklog: {
       byteSize: worklogBuffer.byteLength,
       lineCount: splitLines(worklogText).length,
