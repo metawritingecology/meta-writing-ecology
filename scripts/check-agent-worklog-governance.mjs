@@ -60,6 +60,9 @@ function gitShowBytes(spec) {
       ok: true,
       buf: execFileSync("git", ["-c", "core.longpaths=true", "show", spec], {
         stdio: ["ignore", "pipe", "pipe"],
+        // The worklog grows without bound; the 1 MiB default would turn a
+        // large-but-valid file into a spurious failure.
+        maxBuffer: 256 * 1024 * 1024,
       }),
     };
   } catch {
@@ -79,22 +82,32 @@ function gitObjectExists(spec) {
 // read-only (objects only, no ref or working-tree change) if it is not present
 // locally. Distinguishes:
 //   found         - blob obtained (compare it as the append-only base)
-//   path_absent   - commit present but the file did not exist there (bootstrap)
-//   indeterminate - commit could not be resolved even after a read-only fetch
+//   path_absent   - commit present AND the path is provably absent from its
+//                   tree (bootstrap); proven by cat-file -e on the path, not
+//                   inferred from a failed `git show`
+//   indeterminate - commit could not be resolved even after a read-only fetch,
+//                   OR the blob exists but could not be read (I/O, corrupt
+//                   object, buffer limit) -- every such case fails closed
 function worklogBaseAt(sha) {
-  let blob = gitShowBytes(`${sha}:AGENT_WORKLOG.md`);
-  if (blob.ok) return { state: "found", buf: blob.buf };
-  if (gitObjectExists(`${sha}^{commit}`)) return { state: "path_absent" };
+  const spec = `${sha}:AGENT_WORKLOG.md`;
+  const attempt = () => {
+    if (!gitObjectExists(`${sha}^{commit}`)) return null;
+    if (!gitObjectExists(spec)) return { state: "path_absent" };
+    const blob = gitShowBytes(spec);
+    if (blob.ok) return { state: "found", buf: blob.buf };
+    return { state: "indeterminate", reason: "worklog blob exists at the integration commit but could not be read" };
+  };
+  let result = attempt();
+  if (result) return result;
   const fetched =
     spawnSync("git", ["-c", "core.longpaths=true", "fetch", "--quiet", "--no-tags", "origin", sha], {
       stdio: ["ignore", "pipe", "pipe"],
     }).status === 0;
   if (fetched) {
-    blob = gitShowBytes(`${sha}:AGENT_WORKLOG.md`);
-    if (blob.ok) return { state: "found", buf: blob.buf };
-    if (gitObjectExists(`${sha}^{commit}`)) return { state: "path_absent" };
+    result = attempt();
+    if (result) return result;
   }
-  return { state: "indeterminate" };
+  return { state: "indeterminate", reason: "observed integration commit unavailable locally and could not be fetched" };
 }
 
 function splitLines(text) {
@@ -273,12 +286,22 @@ function collectEvidence() {
   // be resolved even after a read-only fetch, the invariant is INDETERMINATE and
   // fails closed rather than passing green.
   let worklogAppendOnly;
-  if (originMainSha === null) {
+  if (!remoteResult.ok) {
+    // The remote could not be observed at all. That is not bootstrap: the
+    // integration commit is unknown, so the invariant is unverifiable.
+    worklogAppendOnly = {
+      checked: false,
+      preserved: null,
+      indeterminate: true,
+      baseSha: null,
+      reason: `remote branch observation failed (${remoteResult.stderr || "git ls-remote error"}) -- append-only unverifiable`,
+    };
+  } else if (originMainSha === null) {
     worklogAppendOnly = {
       checked: false,
       preserved: null,
       indeterminate: false,
-      reason: "no remote integration branch observed (bootstrap / pre-first-push)",
+      reason: "remote observed but no integration branch present (bootstrap / pre-first-push)",
     };
   } else {
     const base = worklogBaseAt(originMainSha);
@@ -309,7 +332,7 @@ function collectEvidence() {
         preserved: null,
         indeterminate: true,
         baseSha: originMainSha,
-        reason: "observed integration commit unavailable locally and could not be fetched -- append-only unverifiable",
+        reason: `${base.reason} -- append-only unverifiable`,
       };
     }
   }
