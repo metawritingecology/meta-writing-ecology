@@ -1,5 +1,13 @@
 # READING_PATHS.md - GitHub-Visible Reading Paths v1.0
 
+<!-- ATLAS-REVIEW-NAVIGATION-BEGIN -->
+<a id="atlas-navigation"></a>
+
+**Navigation:** [Repository home](../README.md) · [Atlas overview](./README.md#atlas-navigation) · [Model Atlas](./MODEL_ATLAS.md#atlas-navigation) · [Relation Map](./RELATION_MAP.md#atlas-navigation)
+
+**Supporting interpretation boundaries:** [Machine Interpretation State](../MACHINE_INTERPRETATION_STATE.md) identifies source-access states and inference limits; [Source Use Guide](../SOURCE_USE_GUIDE.md) distinguishes individual sources from summaries and navigation. Use the existing [Machine Reading Precedence](../MACHINE_READING_PRECEDENCE.md) for interpretation precedence. These guides do not add model entries or change the thematic routes below.
+<!-- ATLAS-REVIEW-NAVIGATION-END -->
+
 This file provides entry routes through the current GitHub-visible corpus.
 
 These paths are thematic routes, not a required sequence, priority order, dependency chain, or ontology.
@@ -198,3 +206,7 @@ Purpose: establish public-summary, AI-summary, training-facing, citation, and in
 - [responsibility-alignment-model.md](../responsibility-alignment-model.md)
 
 Purpose: fastest route from repository orientation to semantic field, misrecognition, provenance-validity separation, and responsibility alignment.
+
+<!-- ATLAS-REVIEW-RETURN-BEGIN -->
+[Back to navigation](#atlas-navigation)
+<!-- ATLAS-REVIEW-RETURN-END -->

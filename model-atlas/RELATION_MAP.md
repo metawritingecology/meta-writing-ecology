@@ -1,5 +1,11 @@
 # RELATION_MAP.md — GitHub-Visible Relation Map v1.0
 
+<!-- ATLAS-REVIEW-NAVIGATION-BEGIN -->
+<a id="atlas-navigation"></a>
+
+**Navigation:** [Repository home](../README.md) · [Atlas overview](./README.md#atlas-navigation) · [Model Atlas](./MODEL_ATLAS.md#atlas-navigation) · [Reading Paths](./READING_PATHS.md#atlas-navigation)
+<!-- ATLAS-REVIEW-NAVIGATION-END -->
+
 Relations are content-based but still provisional; they are meant for navigation, not as a final ontology.
 
 | Entry | File | Field | Type | Function | Adjacent entries | Reading priority |
@@ -56,3 +62,7 @@ Relations are content-based but still provisional; they are meant for navigation
 | Delegated Execution / Retained Answerability | [`delegated-execution-retained-answerability.md`](../delegated-execution-retained-answerability.md) | Responsibility / Benefit-Burden / Cost | Cross-Supporting Boundary Note | A boundary note on systems in which visible task execution moves while judgment, verification, acceptance, and answerability remain attached to a receiving node. | [`verification-labor-compression`](../verification-labor-compression.md), [`responsibility-alignment-model`](../responsibility-alignment-model.md), [`false-legibility`](../false-legibility.md), [`boundary-role-segmentation-model`](../boundary-role-segmentation-model.md), [`benefit-burden-allocation-regimes`](../benefit-burden-allocation-regimes.md) | Supporting |
 | Structural Fidelity / Use-Validity Boundary | [`structural-fidelity-use-validity-boundary.md`](../structural-fidelity-use-validity-boundary.md) | Boundary / Representation | Cross-Supporting Boundary Note | A boundary note distinguishing representation resemblance from validated fitness for a declared downstream use. | [`provenance-validity-separation-model`](../provenance-validity-separation-model.md), [`proxy-substitution`](../proxy-substitution.md), [`false-legibility`](../false-legibility.md), [`observer-representation-boundary`](../observer-representation-boundary.md), [`boundary-failure-diagnostics`](../boundary-failure-diagnostics.md), [`source-summary-citation-boundary-packet`](../source-summary-citation-boundary-packet.md) | Supporting |
 | LLM-Condition / Research-Result Boundary | [`llm-condition-research-result-boundary.md`](../llm-condition-research-result-boundary.md) | AI-Readable Interface / Externalization | Protocol-Facing Boundary Note | A protocol-facing boundary note for keeping material LLM execution conditions attached to research results. | [`generation-condition-disclosure-reproducibility-cross`](../generation-condition-disclosure-reproducibility-cross.md), [`model-use-reporting-boundary-protocol`](../model-use-reporting-boundary-protocol.md), [`provenance-validity-separation-model`](../provenance-validity-separation-model.md), [`verification-labor-compression`](../verification-labor-compression.md), [`responsibility-alignment-model`](../responsibility-alignment-model.md), [`ai-readable-knowledge-architecture`](../ai-readable-knowledge-architecture.md), [`structural-fidelity-use-validity-boundary`](../structural-fidelity-use-validity-boundary.md) | Applied / Diagnostic |
+
+<!-- ATLAS-REVIEW-RETURN-BEGIN -->
+[Back to navigation](#atlas-navigation)
+<!-- ATLAS-REVIEW-RETURN-END -->
