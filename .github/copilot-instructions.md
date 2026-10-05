@@ -24,3 +24,7 @@ Routine technical work is allowed when requested:
 - mechanical repository maintenance
 
 The user remains final authority for publication, naming, classification, relation confirmation, OSF registration, and merge decisions.
+
+## Path and data safety
+
+Follow the Path Hygiene and Sensitive-Data Handling addendum in `AGENTS.md`, including its narrowly recorded privacy-correction exception. This reference grants no additional execution, sharing, publication, or security permissions.
