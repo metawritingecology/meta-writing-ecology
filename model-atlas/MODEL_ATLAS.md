@@ -1,5 +1,13 @@
 # MODEL_ATLAS.md — GitHub-Visible Model Atlas v1.0
 
+<!-- ATLAS-REVIEW-NAVIGATION-BEGIN -->
+<a id="atlas-navigation"></a>
+
+**Navigation:** [Repository home](../README.md) · [Atlas overview](./README.md#atlas-navigation) · [Relation Map](./RELATION_MAP.md#atlas-navigation) · [Reading Paths](./READING_PATHS.md#atlas-navigation)
+
+The formulations below are abbreviated, source-grounded navigation summaries. Consult the linked individual source files for definitions, conditions, and interpretation boundaries. These summaries do not replace those sources or establish new classifications, confirmed relations, or operational validation.
+<!-- ATLAS-REVIEW-NAVIGATION-END -->
+
 
 ## Entry / Orientation
 
@@ -46,7 +54,7 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 
 - **Declared function:** A qualitative framework for observing how AI and search mediated systems transform pressure dense texts.
 
-- **Minimal formulation:** AI Induced Semantic Deviation refers to the structural shift that occurs when pressure dense texts are processed by AI models, search engine summaries, indexing systems, or machine mediated language environments. The question is not whether an AI system “understands” a text correctly in a final sense. The question is what happens to the text’s semantic pressure, ambiguity, recursive structure, emphasis, and pressure bearing fragments when the text is summarized, ranked, re expressed, or stabiliz
+- **Minimal formulation:** AI-Induced Semantic Deviation refers to structural shifts in pressure-dense texts when AI models, search summaries, indexing systems, or other machine-mediated environments summarize, rank, re-express, or stabilize them. It asks what happens to semantic pressure, ambiguity, recursive structure, emphasis, and pressure-bearing fragments, rather than whether the system has finally understood the text. An output may remain readable while losing structural fidelity.
 
 
 ### [AI-Readable Knowledge Architecture for Structural Misreading Prevention: Documentation Boundaries and Machine-Facing Interpretation Constraints](../ai-readable-knowledge-architecture.md)
@@ -57,7 +65,7 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 
 - **Declared function:** A structural orientation for preventing AI mediated misreading through documentation boundaries and machine facing interpretation constraints.
 
-- **Minimal formulation:** AI Readable Knowledge Architecture for Structural Misreading Prevention describes the condition under which documentation systems must be structured so that AI systems can retrieve, summarize, cite, classify, and operationalize documents without mislocating their scope, relation, authority, responsibility, version status, or boundary. The framework begins from the distinction: and: and: In compressed form: The goal is not only for AI to find a document. The goal is for AI not to mistake what it 
+- **Minimal formulation:** AI-Readable Knowledge Architecture for Structural Misreading Prevention concerns documentation boundaries that keep machine retrieval, summary, citation, classification, and use from mislocating a document's scope, relations, authority, responsibility, version, or boundary. AI readability is not AI understanding; retrieval is not correct positioning; machine access is not bounded interpretation. The aim is for AI not to mistake what it has found.
 
 
 ### [Semantic Cyberpunk Condition: Infrastructural Identity, Externalized Cognition, and Machine-Readable Selfhood](../semantic-cyberpunk-condition.md)
@@ -68,7 +76,7 @@ Documents that make the system machine-readable, reduce AI-mediated misreading, 
 
 - **Declared function:** A structural model for semantic identity under AI, search, platform readability, and machine readable infrastructure.
 
-- **Minimal formulation:** Semantic Cyberpunk Condition describes the structural condition in which a subject’s semantic identity becomes dependent on technical infrastructures that read, classify, reproduce, summarize, route, or reframe it. The model does not refer to cyberpunk as a visual genre, fictional aesthetic, or cultural style. It isolates a structural condition beneath cyberpunk motifs: In compressed form: Operationally: The central question is not only: The question becomes:
+- **Minimal formulation:** Semantic Cyberpunk Condition describes a subject's semantic identity becoming dependent on technical infrastructures that read, classify, reproduce, summarize, route, or reframe it. It concerns infrastructure-compiled selfhood rather than cyberpunk as a visual genre or aesthetic: an external identity surface can be compressed, substituted, misread, or stabilized by infrastructure, making semantic anchoring and maintenance necessary.
 
 
 ### [Model-Use Reporting Boundary Protocol](../model-use-reporting-boundary-protocol.md)
@@ -117,7 +125,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** A curvature based architecture for modeling civilizational field dynamics.
 
-- **Minimal formulation:** Cultural Curvature Unified Field is a theoretical framework for modeling civilizational dynamics through curvature rather than historical, sociopolitical, or geographic categories. It treats cultural behavior as the expression of a high dimensional field composed of symbolic mass, identity coherence, gradient stability, interaction load, and field memory accumulation. Cultural fields do not evolve through linear progression alone. They evolve through curvature regimes. What differs across civili
+- **Minimal formulation:** Cultural Curvature Unified Field is a theoretical framework for modeling civilizational dynamics through curvature rather than historical, sociopolitical, or geographic categories. It treats cultural behavior as the expression of a high-dimensional field composed of symbolic mass, identity coherence, gradient stability, interaction load, and field-memory accumulation. Cultural fields evolve through curvature regimes as well as linear progression; differences across civilizations are described as curvature configurations rather than different underlying logics.
 
 
 ### [Irreversibility Conditions in Semantic Collapse](../irreversibility-conditions.md)
@@ -128,7 +136,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** Structural thresholds and no return regimes in meaning bearing systems.
 
-- **Minimal formulation:** Irreversibility Conditions describe the structural thresholds after which semantic collapse can no longer be repaired by additional information, improved coordination, renewed intent, or corrective effort. Irreversibility is not the moment of failure. It is the structural aftermath. Once certain thresholds are crossed, lost distinctions cannot be restored, collapsed boundaries cannot be re articulated, and alternative framings become structurally inaccessible. The system may continue to operate.
+- **Minimal formulation:** Irreversibility Conditions describe structural thresholds after which semantic collapse can no longer be repaired by additional information, improved coordination, renewed intent, or corrective effort. Irreversibility is the structural aftermath of failure: lost distinctions cannot be restored, collapsed boundaries cannot be re-articulated, and alternative framings become inaccessible. A system may continue operating within a permanently narrowed semantic space.
 
 
 ### [Semantic Curvature Dynamics: Migration, Growth, Dominance, and Delayed Cohesion in Meaning-Bearing Systems](../semantic-curvature-dynamics.md)
@@ -161,7 +169,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** Structural constructs for identifying drift, substitution, boundary stress, and collapse.
 
-- **Minimal formulation:** Semantic Field Diagnostics is a structural vocabulary for recognizing drift, projection, boundary substitution, and collapse within meaning bearing systems. It is not a method, toolkit, checklist, evaluative procedure, or intervention strategy. It names structural states that constrain interpretation before observable failure occurs. Systems rarely fail where they are observed. By the time operational failure becomes visible, the semantic field in which interpretation and judgment occur may alre
+- **Minimal formulation:** Semantic Field Diagnostics is a structural vocabulary for recognizing drift, projection, boundary substitution, and collapse within meaning-bearing systems. It is not a method, toolkit, checklist, evaluative procedure, or intervention strategy. It names structural states that constrain interpretation before observable failure; the semantic field in which interpretation and judgment occur may already have deformed by the time operational failure becomes visible.
 
 
 ### [Semantic Physics: Field Dynamics of Meaning Systems](../semantic-physics.md)
@@ -172,7 +180,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** A field dynamic framework for studying meaning bearing systems.
 
-- **Minimal formulation:** Semantic Physics is a theoretical framework for analyzing meaning systems as relational fields. It proposes that languages, narratives, beliefs, knowledge systems, and information environments do not evolve only through isolated symbols or individual interpretations. They develop as structured semantic fields shaped by density, pressure, curvature, observer interaction, and interpretive drift. Rather than asking only what a symbol means, Semantic Physics asks how a meaning bearing environment fo
+- **Minimal formulation:** Semantic Physics is a theoretical framework for analyzing meaning systems as relational fields shaped by density, pressure, curvature, observer interaction, and interpretive drift. It asks how meaning-bearing environments form, stabilize, bend, drift, reorganize, or collapse. These terms are conceptual structural operators, not physical quantities, validated measurement units, or a quantitative semantic metric.
 
 
 ### [Semantic Pressure: Compression, Localization, and Collapse in Meaning-Bearing Systems](../semantic-pressure.md)
@@ -194,7 +202,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** Structural dynamics of symbolic pattern transmission in generative environments.
 
-- **Minimal formulation:** Semantic Propagation Mechanics is a structural framework for describing how symbolic patterns move, stabilize, amplify, or decay within meaning bearing systems. It does not treat propagation as neutral diffusion, communication, persuasion, imitation, or simple transmission. Meaning spreads not because it convinces. It spreads because it fits the structure through which it moves. Semantic propagation is therefore a constrained traversal through semantic space, shaped by compatibility, curvature, 
+- **Minimal formulation:** Semantic Propagation Mechanics describes how symbolic patterns move, stabilize, amplify, or decay within meaning-bearing systems. It distinguishes propagation from neutral diffusion, communication, persuasion, imitation, or simple transmission: meaning moves because it fits the structure through which it travels. This constrained traversal is shaped by compatibility, curvature, coherence pressure, representational dominance, and boundary conditions.
 
 
 ### [Semantic Virology: A Structural Framework for Field-Level Semantic Transmission](../semantic-virology.md)
@@ -205,7 +213,7 @@ Foundational semantic-field models: pressure, curvature, propagation, virology, 
 
 - **Declared function:** Field transmission, host rewrite, and replication without copying in meaning bearing systems.
 
-- **Minimal formulation:** Semantic Virology describes a structural condition in which a high density semantic field interacts with a lower density system, producing structural deformation, host system reconfiguration, and propagation through transformed outputs without direct copying. The framework is descriptive rather than operational. It does not treat transmission as intentional infection. It treats transmission as structural reconfiguration under field contact. In compressed form: Meaning may propagate without dupli
+- **Minimal formulation:** Semantic Virology describes contact between a high-density semantic field and a lower-density system that produces structural deformation, host-system reconfiguration, and propagation through transformed outputs without direct copying. It is descriptive rather than operational and treats transmission as structural reconfiguration under field contact, not intentional infection. Meaning may propagate without duplication, instruction, or explicit agreement.
 
 
 ### [Zero-Field: Extremism, Collapse, and the Structural Consequences of Semantic Null States](../zero-field.md)
@@ -232,7 +240,7 @@ Boundary, observability, representation, segmentation, integration, and failure 
 
 - **Declared function:** Structural thickness, entry conditions, and governance stability.
 
-- **Minimal formulation:** Boundary Engineering is a structural framework for understanding how boundaries regulate semantic entry, interpretive load, and system stability within high stakes institutions. Boundaries are not merely administrative lines. They are structural regions. Their stability depends not only on where they are placed, but on how much interpretive pressure they can absorb before that pressure reaches the institutional core. Boundary thickness, rather than boundary location, determines whether instituti
+- **Minimal formulation:** Boundary Engineering describes how boundaries regulate semantic entry, interpretive load, and system stability within high-stakes institutions. Boundaries are structural regions rather than merely administrative lines. Their stability depends on the interpretive pressure they can absorb before it reaches the institutional core; the framework emphasizes boundary thickness, rather than location alone, in institutional governability under pressure.
 
 
 ### [Evaluation Boundary Failure under Permitted Surface Variation](../evaluation-boundary-failure-permitted-surface-variation.md)
@@ -252,7 +260,7 @@ Boundary, observability, representation, segmentation, integration, and failure 
 
 - **Declared function:** A workflow facing cross architecture for identifying boundary over fusion, boundary over separation, and functional boundary calibration in AI mediated and institutional systems.
 
-- **Minimal formulation:** Boundary Failure Diagnostics for AI Mediated Workflows describes the condition under which workflow failure is analyzed as boundary miscalibration between over fusion and over separation. The framework begins from two central distinctions: and: It uses two paired diagnostic poles: In compressed form: Most compressed:
+- **Minimal formulation:** Boundary Failure Diagnostics for AI-Mediated Workflows examines workflow failure as boundary miscalibration between over-fusion and over-separation. Integration is not boundary dissolution, and local role coherence is not system coherence. It pairs Boundary Integration Failure with failure by over-fusion and Boundary-Role Segmentation with failure by over-separation, asking whether boundaries preserve the relevant distinctions with functional permeability.
 
 
 ### [Boundary Failure: Non-Entry, Irreversibility, and Structural Lock-in in Coherent Systems](../boundary-failure.md)
@@ -274,7 +282,7 @@ Boundary, observability, representation, segmentation, integration, and failure 
 
 - **Declared function:** A structural framework for how integration can fail through boundary dissolution rather than separation.
 
-- **Minimal formulation:** Boundary Integration Failure describes the condition in which boundaries that should preserve role distinction, instruction type, authority scope, risk location, or operational layer separation dissolve or are forced to merge, causing incompatible logics to operate on a single undifferentiated plane. The model begins from the distinction: A system may become connected without becoming functionally integrated. In compressed form: Functional integration requires: Boundary Integration Failure occur
+- **Minimal formulation:** Boundary Integration Failure describes boundaries between roles, instruction types, authority scopes, risk locations, or operational layers dissolving or being forced to merge, so incompatible logics operate on an undifferentiated plane. Connection does not by itself establish functional integration. Functional permeability requires flow without collapse and distinction without fragmentation; the failure occurs when a system pursues flow by sacrificing distinction.
 
 
 ### [Boundary-Role Segmentation Model: Segment-Limited Coherence, Contradiction Immunity, and Local Authority Preservation in Role-Bound Systems](../boundary-role-segmentation-model.md)
@@ -285,7 +293,7 @@ Boundary, observability, representation, segmentation, integration, and failure 
 
 - **Declared function:** A structural framework for how role boundaries produce local coherence while allowing system level contradiction to persist.
 
-- **Minimal formulation:** Boundary Role Segmentation describes the condition in which a role bound segment maintains local coherence while contradictions across segments remain unperceived, unowned, or unactionable. In compressed form: Core distinction: Core mechanism: Role bound systems do not necessarily fail because people reason poorly. They fail because the system divides the field of reasoning.
+- **Minimal formulation:** Boundary-Role Segmentation describes a role-bound segment maintaining local coherence while contradictions across segments remain unperceived, unowned, or unactionable. Local role coherence is not system coherence: the boundary defines the local logic, and preserving that boundary can leave cross-segment contradictions unregistered. The model locates the problem in a divided field of reasoning rather than necessarily in poor individual reasoning.
 
 
 ### [Observer–Representation Boundary: Visibility, Recognition, and Structural Limits of Observation](../observer-representation-boundary.md)
@@ -296,7 +304,7 @@ Boundary, observability, representation, segmentation, integration, and failure 
 
 - **Declared function:** A structural framework for observability limits in coherent systems.
 
-- **Minimal formulation:** The Observer–Representation Boundary is the structural limit between what a system represents and what an observer can actually see, recognize, interpret, or govern. Observation does not operate directly on reality. It operates through representations. As systems scale, stabilize, and accumulate complexity, representation can exceed observation. The system may remain coherent and apparently legible while losing visibility into its own operations. Observers do not fail to see because they err. Th
+- **Minimal formulation:** The Observer–Representation Boundary is the structural limit between what a system represents and what an observer can see, recognize, interpret, or govern. Observation operates through representations. As systems scale, stabilize, and accumulate complexity, representation can outrun observability. A system may remain coherent and apparently legible while losing visibility into its own operations.
 
 
 ### [Text-Conditioned Semantic Rendering](../text-conditioned-semantic-rendering.md)
@@ -345,7 +353,7 @@ Structures where surface readability, proxy substitution, or apparent legibility
 
 - **Declared function:** A structural framework for how readable forms can become accepted before they are structurally recognized.
 
-- **Minimal formulation:** False Legibility describes the condition in which a form becomes readable before it becomes structurally recognized. It does not mean that nothing is visible. It means that what is visible becomes prematurely stabilized as enough. In compressed form: Operationally: The system fails not because the form was hidden. It fails because the form became legible too early.
+- **Minimal formulation:** False Legibility describes the condition in which a form becomes readable before it becomes structurally recognized. It does not mean that nothing is visible. It means that what is visible becomes prematurely stabilized as enough. Readable is not the same as understood. The structural sequence runs from surface readability through premature recognition and inquiry suppression to consequential contact and reactive correction. The system fails not because the form was hidden. It fails because the form became legible too early.
 
 
 ### [Provenance–Validity Separation Model: Traceable Origin, Validity Gap, and Semantic Adequacy in AI-Mediated Evidence and Information Systems](../provenance-validity-separation-model.md)
@@ -427,7 +435,7 @@ Models about premature coherence, circulation-before-recognition, drift, verific
 
 - **Declared function:** Movement before recognition, verification lag, and downstream correction in platform, institutional, and machine mediated systems.
 
-- **Minimal formulation:** Premature Circulation Diagnostics describes the condition under which movement is evaluated relative to recognition maturity. It extends the Premature Circulation Model into a diagnostics facing orientation for AI mediated information flows. The framework begins from the distinctions: In compressed form: Most compressed: Premature circulation occurs when movement outruns recognition. Diagnostics begins when the system asks how, where, and why that outrunning occurred.
+- **Minimal formulation:** Premature Circulation Diagnostics describes the condition under which movement is evaluated relative to recognition maturity. It extends the Premature Circulation Model into a diagnostics-facing orientation for AI-mediated information flows. Circulation is not recognition, movement is not structural accountability, and shareability is not verification. An element may appear portable and begin circulating while recognition remains incomplete; contact multiplies, verification lags, consequences accumulate, correction becomes downstream, and residue persists. Premature circulation occurs when movement outruns recognition. Diagnostics begins when the system asks how, where, and why that outrunning occurred.
 
 
 ### [Premature Circulation Model: Pre-Recognized Objects, Verification Lag, and Downstream Correction in AI-Mediated Information Flows](../premature-circulation-model.md)
@@ -438,7 +446,7 @@ Models about premature coherence, circulation-before-recognition, drift, verific
 
 - **Declared function:** A structural framework for how elements enter circulation before recognition, verification, or accountability has stabilized.
 
-- **Minimal formulation:** Premature Circulation describes the condition in which an element enters movement before adequate recognition, verification, accountability, or structural positioning has matured. The model begins from the distinction: and: In compressed form: A related subcondition is Pre Recognized Circulation : Premature Circulation describes the broader timing failure. Pre Recognized Circulation describes the status condition that often enables it. Together, the model describes cases where an element becomes
+- **Minimal formulation:** Premature Circulation describes the condition in which an element enters movement before adequate recognition, verification, accountability, or structural positioning has matured. Circulation is not recognition, and movement is not structural accountability. A portable form may cross a circulation threshold under assumed recognizability, followed by recognition lag, multiplied contact, displaced verification, reactive recognition, downstream correction, and circulation residue. Pre-Recognized Circulation is the related subcondition of movement under assumed recognition before adequate recognition has occurred. Premature Circulation describes the broader timing failure; Pre-Recognized Circulation describes the status condition that often enables it. The element moves before the system knows what it is moving.
 
 
 ### [Premature Coherence as Systemic Risk](../premature-coherence.md)
@@ -449,7 +457,7 @@ Models about premature coherence, circulation-before-recognition, drift, verific
 
 - **Declared function:** Structural closure and the loss of semantic resolution in meaning bearing systems.
 
-- **Minimal formulation:** Premature Coherence is the systemic condition in which alignment, consistency, or symbolic closure emerges before a meaning bearing system has accumulated sufficient differentiation, variation, or interpretive capacity. It describes a form of apparent stability that conceals the loss of semantic resolution. The system appears coherent not because tensions have been resolved, but because unresolved distinctions have been compressed, eliminated, or made structurally unavailable. Coherence is not i
+- **Minimal formulation:** Premature Coherence is the systemic condition in which alignment, consistency, or symbolic closure emerges before a meaning-bearing system has accumulated sufficient differentiation, variation, or interpretive capacity. It describes a form of apparent stability that conceals the loss of semantic resolution. The system appears coherent not because tensions have been resolved, but because unresolved distinctions have been compressed, eliminated, or made structurally unavailable. Coherence is not inherently stabilizing. It is structurally timed.
 
 
 ### [Reality Consistency Model: First Recognizability, Progressive Coherence, and Structural Verification in AI-Mediated Environments](../reality-consistency.md)
@@ -460,7 +468,7 @@ Models about premature coherence, circulation-before-recognition, drift, verific
 
 - **Declared function:** A structural framework for evaluating reality retention and breakdown in AI mediated environments.
 
-- **Minimal formulation:** Reality Consistency is the structural condition in which an event, claim, media object, institutional output, or machine generated result remains supportable as more dimensions of it become visible. It distinguishes first recognizability from sustained reality . A structure may look real at first contact because it has familiar surface features: fluent language, institutional formatting, photographic appearance, citation form, procedural coherence, or genre conforming presentation. But first rec
+- **Minimal formulation:** Reality Consistency is the structural condition in which an event, claim, media object, institutional output, or machine-generated result remains supportable as more dimensions of it become visible. It distinguishes first recognizability from sustained reality. A structure may look real at first contact because it has familiar surface features: fluent language, institutional formatting, photographic appearance, citation form, procedural coherence, or genre-conforming presentation. But first recognizability is not sustained reality. Reality consistency requires continued coherence across source, form, scale, exchange, process, and subject-position under progressive scrutiny.
 
 
 ### [Calibration Without Failure: Reference Drift in High-Precision Decision Systems](../reference-drift.md)
@@ -471,7 +479,7 @@ Models about premature coherence, circulation-before-recognition, drift, verific
 
 - **Declared function:** Reference drift as a governance problem in high precision decision systems.
 
-- **Minimal formulation:** Reference Drift is the structural governance condition in which a high precision decision system maintains internal coherence and operational stability while gradually losing alignment with the reference baseline that originally justified its operation. Nothing appears broken. Outputs remain consistent. Indicators converge. Operational variance decreases. Yet the system increasingly answers a different question than the one it was originally designed to address. Reference Drift does not arise fr
+- **Minimal formulation:** Reference Drift is the structural governance condition in which a high-precision decision system maintains internal coherence and operational stability while gradually losing alignment with the reference baseline that originally justified its operation. Nothing appears broken. Outputs remain consistent. Indicators converge. Operational variance decreases. Yet the system increasingly answers a different question than the one it was originally designed to address. Reference Drift does not arise from error or malfunction. It arises from the absence of recalibration.
 
 
 ## Constraint / Residue / Capability Shift
@@ -487,7 +495,7 @@ Models about capability expansion, constraint displacement, failure residue, gov
 
 - **Declared function:** Production accessibility, downstream constraint relocation, and post generation value formation.
 
-- **Minimal formulation:** Constraint Displacement after Capability Expansion describes a structural condition in which expanded production capability lowers entry barriers while leaving downstream constraints intact. The constraint does not disappear. It relocates. The system shifts from: to: Value therefore moves from basic generation toward conversion, alignment, validation, integration, and execution.
+- **Minimal formulation:** Constraint Displacement after Capability Expansion describes a structural condition in which expanded production capability lowers entry barriers while leaving downstream constraints intact. The constraint does not disappear. It relocates. The system shifts from being unable to produce to being able to produce but unable to use the output directly. Value therefore moves from basic generation toward conversion, alignment, validation, integration, and execution.
 
 
 ### [Constraint Residue Accumulation Model: Failure Traces, Post-Hoc Restrictions, and Instruction-Layer Sedimentation in AI-Mediated and Institutional Control Systems](../constraint-residue-accumulation-model.md)
@@ -498,7 +506,7 @@ Models about capability expansion, constraint displacement, failure residue, gov
 
 - **Declared function:** A structural framework for how prior failures become embedded as persistent control rules.
 
-- **Minimal formulation:** Constraint Residue Accumulation describes the condition in which repeated deviations, failures, undesirable outputs, exceptions, or unresolved system behaviors become embedded as persistent control rules within an instruction, governance, interface, workflow, or policy layer. A system may respond to failure by adding a restriction. The restriction may suppress the visible deviation. But suppression is not the same as source level resolution. In compressed form: Core distinction: Layer structure:
+- **Minimal formulation:** Constraint Residue Accumulation describes the condition in which repeated deviations, failures, undesirable outputs, exceptions, or unresolved system behaviors become embedded as persistent control rules within an instruction, governance, interface, workflow, or policy layer. A system may respond to failure by adding a restriction. The restriction may suppress the visible deviation. But suppression is not the same as source-level resolution. A deviation becomes a local restriction that persists, loses context, interacts with later controls, and accumulates as residue. The present control layer combines current design with past failure residue. Constraint residue is the persistent trace left when a prior deviation is converted into a standing control element, not merely the existence of a rule.
 
 
 ### [Constraint Residue Governance: Instruction-Layer Sedimentation and Post-Hoc Control Drift in AI-Mediated and Institutional Systems](../constraint-residue-governance.md)
@@ -509,7 +517,7 @@ Models about capability expansion, constraint displacement, failure residue, gov
 
 - **Declared function:** A governance facing structural orientation for how accumulated failure traces become active control layers.
 
-- **Minimal formulation:** Constraint Residue Governance describes the condition in which post hoc controls added after failures become the active governance layer of a system without resolving the source conditions that generated those failures. It begins from the distinctions: In compressed form: Most compressed: Operationally:
+- **Minimal formulation:** Constraint Residue Governance describes the condition in which post-hoc controls added after failures become the active governance layer of a system without resolving the source conditions that generated those failures. Restriction is not recalibration, a guardrail is not source repair, and control density is not governance coherence. Post-hoc restrictions suppress visible deviations while source conditions remain; restrictions persist, context decays, and controls interact, producing governance by accumulated failure traces. The question is not only what a rule prevents, but what unresolved failure it preserves.
 
 
 ### [High-Integrity System Architecture for Closed Functional Worlds](../high-integrity-system-architecture.md)
@@ -520,7 +528,7 @@ Models about capability expansion, constraint displacement, failure residue, gov
 
 - **Declared function:** A constraint driven, curvature based framework for consistent system design.
 
-- **Minimal formulation:** High Integrity System Architecture is a structural framework for constructing internally coherent closed functional worlds. It defines a minimal grammar for systems that must remain stable, bounded, scalable, and self consistent under expansion. The framework integrates: A closed functional world does not remain coherent because it contains many rules. It remains coherent because every capability, escalation, boundary, and transformation remains derivable from its foundational constraints.
+- **Minimal formulation:** High-Integrity System Architecture is a structural framework for constructing internally coherent closed functional worlds. It defines a minimal grammar for systems that must remain stable, bounded, scalable, and self-consistent under expansion. The framework integrates constraint-driven mechanics, layered ontology, curvature-based regulation, and coherence architecture. A closed functional world does not remain coherent because it contains many rules. It remains coherent because every capability, escalation, boundary, and transformation remains derivable from its foundational constraints.
 
 
 ## Responsibility / Benefit-Burden / Cost
@@ -536,7 +544,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Declared function:** A structural framework for how benefits and burdens are distributed, concentrated, coupled, absorbed, and naturalized across systems.
 
-- **Minimal formulation:** Benefit–Burden Allocation Regimes describe the structural patterns by which positive and negative outcomes are distributed across nodes in a system. The model begins from the distinction: Benefits and burdens are separate but interactable dimensions. They may be distributed together, separated, concentrated, externalized, absorbed, or narratively coupled after the fact. A regime does not indicate fairness or unfairness by itself. It describes a recurring configuration of: In compressed form:
+- **Minimal formulation:** Benefit–Burden Allocation Regimes describe the structural patterns by which positive and negative outcomes are distributed across nodes in a system. Benefits and burdens are separate but interactable dimensions; their allocation determines the regime. They may be distributed together, separated, concentrated, externalized, absorbed, or narratively coupled after the fact. A regime does not indicate fairness or unfairness by itself. It describes a recurring configuration of who gains, carries load, absorbs risk, receives visibility, performs maintenance, becomes accountable, or is treated as naturally responsible. As benefits and burdens are mapped and a distribution pattern stabilizes, a coupling narrative emerges and the regime is normalized, transitions, or fails.
 
 
 ### [Cost Visibility and Redistribution Model: Perceived Cost, Structural Externalization, and Default Lock-In in AI-Mediated and Infrastructural Systems](../cost-visibility-redistribution.md)
@@ -547,7 +555,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Declared function:** A structural framework for how visible cost, hidden burden, and redistribution shape optimization and default behavior.
 
-- **Minimal formulation:** Cost Visibility and Redistribution describes the condition in which total cost becomes decision relevant only when cost is made visible, represented, decomposable, comparable, or redistributed into an actionable layer. It begins from the distinction: A cost may exist materially, temporally, cognitively, institutionally, environmentally, or infrastructurally while remaining outside the system’s decision field. Systems do not optimize total cost automatically. They optimize around visible cost. In
+- **Minimal formulation:** Cost Visibility and Redistribution describes the condition in which total cost becomes decision-relevant only when cost is made visible, represented, decomposable, comparable, or redistributed into an actionable layer. Perceived cost is not total cost. A cost may exist materially, temporally, cognitively, institutionally, environmentally, or infrastructurally while remaining outside the system’s decision field. Systems do not optimize total cost automatically. They optimize around visible cost. As cost is partitioned across dimensions and nodes, some becomes visible while some remains opaque; a perceived cost field forms, optimization activates or collapses, and default behavior, redistribution, or lock-in emerges.
 
 
 ### [External Lifeline Collapse under Residual Infrastructure Cross](../external-lifeline-collapse-under-residual-infrastructure-cross.md)
@@ -569,7 +577,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Declared function:** A structural diagnostics orientation for testing whether responsibility, authority, visibility, capacity, ownership, and burden remain aligned.
 
-- **Minimal formulation:** Responsibility Alignment Diagnostics describes the condition under which responsibility assignment is tested against the alignment of ownership, authority, capacity, visibility, scope, accountability, and burden. It begins from three central distinctions: In compressed form: Most compressed: Responsibility Alignment Diagnostics does not dissolve accountability. It asks whether accountability is structurally supported by ownership, authority, visibility, capacity, scope, and burden location.
+- **Minimal formulation:** Responsibility Alignment Diagnostics describes the condition under which responsibility assignment is tested against the alignment of ownership, authority, capacity, visibility, scope, accountability, and burden. Capacity is not ownership, visibility is not responsibility, and assistance is not transfer. A visible node notices a problem and a capable node assists; assistance becomes expected while boundaries remain unclear, accountability drifts, and burden normalizes. The question is not only who can fix the problem, but who owns the condition that made fixing necessary. Responsibility Alignment Diagnostics does not dissolve accountability. It asks whether accountability is structurally supported by ownership, authority, visibility, capacity, scope, and burden location.
 
 
 ### [Responsibility Alignment Model: Ownership, Capacity, and Accountability Calibration in AI-Mediated and Institutional Systems](../responsibility-alignment-model.md)
@@ -580,7 +588,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Declared function:** A structural framework for how responsibility drifts toward visible, capable, or absorptive nodes.
 
-- **Minimal formulation:** Responsibility Alignment describes the condition in which responsibility corresponds to actual ownership, legitimate scope, sufficient authority, process visibility, operational capacity, and accountable position. In compressed form: Core principle: Operationally: Aligned involvement can take three forms: The analytical failure occurs when:
+- **Minimal formulation:** Responsibility Alignment describes the condition in which responsibility corresponds to actual ownership, legitimate scope, sufficient authority, process visibility, operational capacity, and accountable position. Capacity is not ownership, visibility is not responsibility, and assistance is not transfer. Responsibility should not expand merely because capacity is present. A problem can make a recognizing node visible, pull responsibility toward capacity, blur contribution boundaries, and concentrate burden; alignment requires mapping origin, ownership, authority, visibility, capacity, and accountability. Aligned involvement can take the form of directional assistance, scoped contribution, or full ownership. The analytical failure occurs when directional assistance is treated as scoped contribution, scoped contribution as full ownership, or capacity as obligation.
 
 
 ### [Verification Labor Compression](../verification-labor-compression.md)
@@ -591,7 +599,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Declared function:** Hidden human review, downstream validation burden, and output acceleration in AI mediated workflows.
 
-- **Minimal formulation:** Verification Labor Compression describes the condition in which AI mediated output acceleration reduces visible production labor while the human or downstream labor required for validation, correction, alignment, integration, accountability, and acceptance becomes hidden, concentrated, displaced, or temporally compressed. The model begins from the distinction: and: and: In compressed form: Most compressed: Diagnostic question:
+- **Minimal formulation:** Verification Labor Compression describes the condition in which AI-mediated output acceleration reduces visible production labor while the human or downstream labor required for validation, correction, alignment, integration, accountability, and acceptance becomes hidden, concentrated, displaced, or temporally compressed. Output acceleration is not work reduction, generation is not validation, and human-in-the-loop is not verification alignment. Faster production can make outputs appear complete while verification remains necessary, review moves downstream, verification labor becomes hidden, responsibility concentrates, and work reduction is overstated. Output acceleration does not equal work reduction when verification remains human, hidden, and compressed. The diagnostic question is where the verification labor went.
 
 
 ### [Delegated Execution / Retained Answerability](../delegated-execution-retained-answerability.md)
@@ -604,3 +612,7 @@ Models and Cross structures about responsibility alignment, burden distribution,
 
 - **Minimal formulation:** Delegated Execution / Retained Answerability describes the condition in which a system, tool, process, or external actor performs part of the visible execution of a task while answerability remains attached to another node. Most compressed: execution can move without answerability moving.
 
+
+<!-- ATLAS-REVIEW-RETURN-BEGIN -->
+[Back to navigation](#atlas-navigation)
+<!-- ATLAS-REVIEW-RETURN-END -->
