@@ -113,17 +113,34 @@ EXPECTED_CEILING_DISTRIBUTION = {
 }
 
 EXPECTED_DEPENDENCY_COUNT = 64
-# The aggregate is a live hash over the working-tree dependency set, not a value
-# recorded in any frozen artifact. S1 normalized 28 concept source headers after
-# the pinned P5 base, so the live aggregate moved while the tracked P5 dataset
-# and manifest stayed byte-identical. The P5-base value is kept below so the
-# pre-S1 provenance identity remains stated rather than lost.
+# Live dependency provenance, separate from the frozen P5 data/manifest.
+# S1 normalized 28 concept headers; the approved Atlas reconstruction later
+# changed MODEL_ATLAS and RELATION_MAP bytes without changing the dataset.
+# Keep both historical aggregates and prove the Atlas-only transition below.
 EXPECTED_DEPENDENCY_AGGREGATE = (
+    "f5fcfd87f47849963c33f26c045a1518b8d10d2143a51b928c3f72d4711142a4"
+)
+EXPECTED_DEPENDENCY_AGGREGATE_BEFORE_ATLAS = (
     "7967eeab06f55e3ed649f7cea1391259947f404881f096b86bd15499223d737f"
 )
 EXPECTED_DEPENDENCY_AGGREGATE_AT_P5_BASE = (
     "a89f1aefd341778f89e7b1e810ed760ddb7de7ff30564bda93fdaeb7a451918f"
 )
+
+# Owner-approved four-page Atlas snapshot from PR #36, 2026-10-05.
+# Exact byte pins replace the P5 comparison only for these paths; this is
+# neither a directory-wide exemption nor permission for further prose edits.
+ATLAS_RECONSTRUCTION_BASE = "ab5304b71fee9fb2f78f6f32997f2fa2109fb83f"
+ATLAS_RECONSTRUCTION_SHA256 = {
+    "model-atlas/MODEL_ATLAS.md":
+        "12a948d49600e0907bb2c4355eed3ccba6f7d57485ccfa22d7593e55fed3291a",
+    "model-atlas/READING_PATHS.md":
+        "6502a5fee5a111e4f0e3585f3d2f4e0b7994fe7d0fa6d179896f95d63636e139",
+    "model-atlas/README.md":
+        "7f79cd20bfa7f3744aa52d5eda36df702ffe346b7a397d24bdf300c8c69ec450",
+    "model-atlas/RELATION_MAP.md":
+        "2bc8f5808aaf49f3b4d4070ed0b1eb1c0c6585b6d35b2e3e9b740d2b3512bb0e",
+}
 
 # S1 source-header normalization: the exact block and the exact 28 targets. The
 # compatibility guards below allow this change and nothing else.
@@ -1514,9 +1531,6 @@ class CompatibilityGuardTests(BaseCase):
             "mwe-public-documents.json",
             "visualizations/public-surface-authority-map/data.json",
             "visualizations/public-surface-authority-map/README.md",
-            "model-atlas/MODEL_ATLAS.md",
-            "model-atlas/RELATION_MAP.md",
-            "model-atlas/READING_PATHS.md",
             "README.md",
             "AUTHOR.md",
         ]
@@ -1525,6 +1539,23 @@ class CompatibilityGuardTests(BaseCase):
         # what changed there, so nothing is merely exempted.
         self.assertNotIn("mwe-public-document-evidence.json", protected)
         self.assertEqual(self._diff_names(*protected), [])
+
+    def test_atlas_pages_match_the_exact_approved_reconstruction(self):
+        # Removing the three content pages from the P5 list does not leave
+        # them unprotected: all four Atlas pages now have exact byte guards.
+        self.assertEqual(
+            set(ATLAS_RECONSTRUCTION_SHA256),
+            {
+                "model-atlas/MODEL_ATLAS.md",
+                "model-atlas/READING_PATHS.md",
+                "model-atlas/README.md",
+                "model-atlas/RELATION_MAP.md",
+            },
+        )
+        for path, expected in ATLAS_RECONSTRUCTION_SHA256.items():
+            with self.subTest(path=path):
+                data = (REPO_ROOT / path).read_bytes()
+                self.assertEqual(hashlib.sha256(data).hexdigest(), expected)
 
     def test_evidence_changed_only_by_the_s1_provenance_flip(self):
         # The evidence manifest is the one protected file S1 touches, and it may
@@ -1559,8 +1590,9 @@ class CompatibilityGuardTests(BaseCase):
 
     def test_source_markdown_changed_only_by_the_s1_header_block(self):
         # S1 normalized 28 concept headers after the pinned P5 base. Every other
-        # source markdown file must still be byte-identical to that base, and
-        # each normalized file must differ by the four inserted lines alone.
+        # source markdown file must still be byte-identical to that base, apart
+        # from the four separately byte-pinned Atlas pages. Each normalized
+        # concept file must differ by the four inserted lines alone.
         changed = self._diff_names(
             "*.md",
             ":!AGENT_WORKLOG.md",
@@ -1571,6 +1603,8 @@ class CompatibilityGuardTests(BaseCase):
             # Agent coordination instructions are not source markdown; the
             # "Worklog Governance" section landed there after the P5 base.
             ":!AGENTS.md",
+            # Exact files only; the dedicated Atlas test pins every byte.
+            *(f":!{path}" for path in ATLAS_RECONSTRUCTION_SHA256),
         )
         self.assertEqual(set(changed), S1_NORMALIZED_TARGETS)
         block = "\n".join(S1_BLOCK_LINES)
@@ -1961,11 +1995,14 @@ class ExpandedDependencyProvenanceTests(BaseCase):
     def test_inventory_count_and_aggregate_are_deterministic(self):
         self.assertEqual(self.inventory["dependency_count"], EXPECTED_DEPENDENCY_COUNT)
         self.assertEqual(self.inventory["aggregate_sha256"], EXPECTED_DEPENDENCY_AGGREGATE)
-        # S1 moved the live aggregate off its P5-base value. The two must stay
-        # distinct: if they coincided again, a source header would have been
-        # reverted or the pin would have been silently restored.
+        # Both approved provenance transitions remain explicit. Neither
+        # historical value may silently replace the current live pin.
         self.assertNotEqual(
             EXPECTED_DEPENDENCY_AGGREGATE, EXPECTED_DEPENDENCY_AGGREGATE_AT_P5_BASE
+        )
+        self.assertNotEqual(
+            EXPECTED_DEPENDENCY_AGGREGATE,
+            EXPECTED_DEPENDENCY_AGGREGATE_BEFORE_ATLAS,
         )
         manifest_bytes = MANIFEST_PATH.read_bytes()
         _, _, again = builder.assemble_adjacency_data(
@@ -1976,6 +2013,36 @@ class ExpandedDependencyProvenanceTests(BaseCase):
             manifest_bytes,
         )
         self.assertEqual(again, self.inventory)
+
+    def test_aggregate_transition_changes_only_approved_atlas_dependencies(self):
+        # Restore only Atlas dependency hashes to the observed pre-Atlas
+        # main snapshot. All other live dependency hashes and membership
+        # must still reconstruct the previously pinned aggregate.
+        # Missing git history is a failure, not a skipped provenance check.
+        restored = []
+        touched = set()
+        for item in self.inventory["files"]:
+            path = item["path"]
+            digest = item["sha256"]
+            if path in ATLAS_RECONSTRUCTION_SHA256:
+                self.assertEqual(digest, ATLAS_RECONSTRUCTION_SHA256[path], path)
+                result = subprocess.run(
+                    ["git", "show", f"{ATLAS_RECONSTRUCTION_BASE}:{path}"],
+                    cwd=str(REPO_ROOT),
+                    capture_output=True,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8"))
+                digest = hashlib.sha256(result.stdout).hexdigest()
+                touched.add(path)
+            restored.append(f"{path}:{digest}\n")
+        self.assertEqual(
+            touched,
+            {"model-atlas/MODEL_ATLAS.md", "model-atlas/RELATION_MAP.md"},
+        )
+        self.assertEqual(
+            hashlib.sha256("".join(restored).encode("utf-8")).hexdigest(),
+            EXPECTED_DEPENDENCY_AGGREGATE_BEFORE_ATLAS,
+        )
 
     def test_inventory_is_sorted_and_fully_populated(self):
         paths = [item["path"] for item in self.inventory["files"]]
