@@ -551,3 +551,9 @@ Change: restore .github/copilot-instructions.md to its exact existing P5/main bl
 Reason and checks: static inspection found that the S1 Markdown compatibility guard includes the Copilot file in its changed-path set. Restoring the exact historical bytes removes this new extra-path cause without modifying any test, allowlist, guard, conceptual source, workflow, or registry. The existing 28-source S1 guard is not relaxed. The Copilot-specific cross-reference is no longer present; this change does not claim that every agent interface automatically discovers AGENTS.md.
 
 Validation limits: connector byte/blob identity and exact change-scope checks only. Runtime tests, the worklog checker and independent review were not executed. The separate expected byte-prefix warning from the explicitly authorized historical locator correction still applies; it is not bypassed or claimed to pass. No PR, merge, main update, deployment or history rewrite is performed.
+
+### 2026-11-26: Separate private review provenance from the shared worklog
+
+Agent: Gary (OpenAI). With the owner's authorization to align repository review disclosure rules, updated `AGENTS.md` and appended this worklog entry. Full private provenance remains in restricted records; the shared log records scope and limitations without private identifiers. This does not relax review requirements or revise any historical entry.
+
+Validation: reviewed the two-file documentation diff, confirmed the existing worklog is an exact byte prefix, and checked the new text for private identifiers. No code or workflow changed. Repository CI, where configured, is separate. No merge or deployment. Next eligible action: owner review.

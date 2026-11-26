@@ -140,7 +140,7 @@ After any change, update AGENT_WORKLOG.md with:
 - unresolved questions
 - risks or assumptions
 
-For boundary-sensitive work that relied on an independent review, also record the review so it is evidenced rather than merely asserted:
+For boundary-sensitive work that relied on an independent review, record the following provenance in accordance with the review disclosure rule below:
 
 - reviewer (which reviewer / interface)
 - reviewer lineage
@@ -148,7 +148,15 @@ For boundary-sensitive work that relied on an independent review, also record th
 - reviewed commit or snapshot
 - review evidence / reference
 
-Ordinary mechanical tasks do not need these extra fields. Where a field cannot be established (for example a reviewer lineage that was not disclosed to the executing agent), record it as unknown rather than omitting it.
+Ordinary mechanical tasks do not need these extra fields. Where a field in the complete record cannot be established (for example a reviewer lineage that was not disclosed to the executing agent), record it as unknown rather than omitting it.
+
+### Review provenance and disclosure
+
+For boundary-sensitive work or changes that received independent review, keep a traceable review record. Record the reviewer interface, model lineage, review mode, exact reviewed commit or immutable snapshot, and the evidence reference and verdict. Use `unknown` only when a value cannot be established.
+
+- **Private review:** Keep the complete record in owner-authorized, access-controlled storage outside Git. In `AGENT_WORKLOG.md` and other shared or public records, record only the fact, scope, and limitations of the review. Do not disclose private paths, executable commands, reviewer or routing identifiers, model and tool details, unpublished commit or snapshot identifiers, private receipt IDs, or links to restricted evidence. Do not substitute `unknown` for intentionally withheld details.
+- **Public review:** When the review, reviewed revision, and evidence are already public and safe to reference, the shared worklog may record public provenance and link to the public evidence. While any necessary part remains private, use the private-review rule.
+- This is a disclosure rule, not an instruction to weaken any review or evidence requirement, promote a review to a later revision, or rewrite prior log entries. Check the complete diff for disclosures before pushing.
 
 ## Worklog Governance
 
