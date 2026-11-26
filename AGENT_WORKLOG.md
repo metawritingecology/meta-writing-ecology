@@ -552,6 +552,12 @@ Reason and checks: static inspection found that the S1 Markdown compatibility gu
 
 Validation limits: connector byte/blob identity and exact change-scope checks only. Runtime tests, the worklog checker and independent review were not executed. The separate expected byte-prefix warning from the explicitly authorized historical locator correction still applies; it is not bypassed or claimed to pass. No PR, merge, main update, deployment or history rewrite is performed.
 
+### 2026-11-26: Separate private review provenance from the shared worklog
+
+Agent: Gary (OpenAI). With the owner's authorization to align repository review disclosure rules, updated `AGENTS.md` and appended this worklog entry. Full private provenance remains in restricted records; the shared log records scope and limitations without private identifiers. This does not relax review requirements or revise any historical entry.
+
+Validation: reviewed the two-file documentation diff, confirmed the existing worklog is an exact byte prefix, and checked the new text for private identifiers. No code or workflow changed. Repository CI, where configured, is separate. No merge or deployment. Next eligible action: owner review.
+
 
 ### 2026-10-05 — OpenAI assistant — Atlas summary reconstruction and navigation
 
@@ -587,3 +593,9 @@ Tests and review limits: no repository runtime suite, worklog-governance executi
 Result and handoff: a two-parent integration commit is prepared for a non-force update of this existing PR branch only. Remote success and CI results are not asserted in this record before they occur.
 Unresolved questions and risks: conflict-free does not mean independently reviewed, functionally accepted, or approved to merge. Older Git history and external copies are not erased. No checker or test is weakened to hide an evidence limitation.
 Next eligible action: verify the published branch and applicable CI, then return the still-open PR to the owner for review.
+
+### 2026-11-26: Reconcile the Atlas worklog with main
+
+Agent: Gary (OpenAI). With owner authorization, resolved the append-only worklog conflict for Atlas PR #36. Preserved the current main worklog byte-for-byte, followed by the earlier Atlas entries in their original order. No Atlas prose, source guard, test, workflow, or concept classification was changed by the conflict resolution.
+
+Validation: verified the merge scope, historical byte preservation, and exact identities of the four Atlas documents and their tests. Exact-head Corpus CI is required before merge. The earlier review does not cover this integration commit.
